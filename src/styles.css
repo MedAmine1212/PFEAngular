@@ -1,0 +1,295 @@
+
+html, body{
+  height: 100%;
+  width: 100%;
+  font-family:'Poppins', sans-serif;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.navbar {
+  padding: 1rem;
+  background-color:  white ! important;
+}
+.navbar-nav li {
+  padding-right: 33px;
+}
+.nav-link{
+  font-size: 1.1em ! important;
+  color:rgb(255,202,99);
+}
+.active{
+  border-bottom: 2px solid rgb(255,202,99);
+  color: rgb(255,202,99) ! important;
+}
+#guilty{
+  font-size: 1.4em ! important;
+  color: black;
+  font-weight: bold;
+}
+#team
+{
+  font-size: 1.4em ! important;
+  color: rgb(255,202,99) ! important;
+}
+.nav-link:hover {
+  border-bottom: 2px solid rgb(255,202,99);
+  color: rgb(255,202,99) ! important;
+  cursor: pointer;
+}
+
+.carousel-inner img{
+  width: 100%;
+  height: 39.8em !important;
+}
+.carousel-caption {
+  position: absolute;
+  top: 49%;
+  transform: translateY(-50%);
+}
+.carousel-caption h1{
+  font-size: 800%;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 15px #000;
+}
+.carousel-caption h6{
+  font-size: 400%;
+  font-weight: 500;
+  text-shadow: 1px 1px 10px #000;
+  padding-bottom: 1rem;
+}
+.carousel-caption
+{
+  position: fixed;
+}
+.btn-primary
+{
+  background-color: rgb(2,179,228);
+  border: 1px solid rgb(2,179,228);
+}
+.btn-primary:hover{
+  background-color: white;
+  color: rgb(2,179,228);
+  border: 1px solid white;
+}
+.padding{
+  padding-bottom: 2rem;
+}
+.welcome{
+  width: 75%;
+  margin: 0 auto;
+  padding-top: 2rem;
+}
+.welcome hr {
+  border-top: 3px solid #b4b4b4;
+  width: 95%;
+  margin-top: .3rem;
+  margin-bottom: .7rem;
+}
+.display-4{
+  font-size: 350%;
+}
+.lead{
+  text-align: justify;
+}
+.fa-cogs, .fa-graduation-cap
+{
+  font-size: 6rem;
+  margin: 1rem;
+  color: black;
+}
+.fa-book, .fa-handshake{
+  font-size: 6rem;
+  margin: 1rem;
+  color: rgb(2,179,228);
+}
+.fa-book:hover,.fa-handshake:hover{
+  color: black;
+  cursor: pointer;
+}
+.fa-cogs:hover, .fa-graduation-cap:hover
+{
+  color: rgb(2,179,228);
+  cursor: pointer;
+}
+.BlueTitle
+{
+  color: rgb(255,202,99);
+}
+
+footer{
+  background-color: rgb(62,69,81);
+  color: white;
+}
+footer a{
+  color: white;
+}
+footer a:hover{
+  color: rgb(2,179,228);
+  text-decoration: none;
+}
+.footer-copyright
+{
+  background-color: rgb(50, 55, 65);
+}
+.btn-danger{
+  background-color: rgb(2,179,228) !important;
+  border-color: rgb(2,179,228) !important;
+}
+.btn-danger:hover{
+  background-color: white !important;
+  border-color: rgb(2,179,228) !important;
+  color: rgb(2,179,228) ! important;
+}
+.btn-floating{
+  font-size: 3rem;
+  cursor: pointer;
+}
+.btn-tw
+{
+  color: #1da1f2! important;
+}
+.btn-fb{
+  color: #3C5A99 ! important;
+}
+.btn-gplus{
+  color: rgb(221, 75, 57)! important;
+}
+.btn-li{
+  color: #0077B5 ! important;
+}
+.btn-dribbble{
+  color: rgb(221, 75, 100)! important;
+}
+.card img{
+  width: 100%;
+  height: 12rem;
+}
+
+
+/*---Firefox Bug Fix --*/
+.carousel-item {
+  transition: -webkit-transform 0.5s ease;
+  transition: transform 0.5s ease;
+  transition: transform 0.5s ease, -webkit-transform 0.5s ease;
+  -webkit-backface-visibility: visible;
+  backface-visibility: visible;
+}
+/*--- Fixed Background Image --*/
+
+/*--- Bootstrap Padding Fix --*/
+[class*="col-"] {
+  padding: 1rem;
+}
+
+#myBtn {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 99;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  padding: 15px;
+  border-radius: 20px;
+  opacity:0.7;
+}
+
+#myBtn:hover {
+  opacity:0.9;
+  background-color: #555;
+}
+
+.more{
+  color:darkgrey;
+  padding:10px;
+  padding-left:4px;
+}
+
+.more:hover{
+  color:darkgrey;
+}
+
+.location
+{
+  color:rgb(255,202,99);
+  cursor: pointer;
+}
+
+.location:hover
+{
+  color:lightblue;
+  text-decoration: none;
+}
+
+#contactDiv
+{
+  margin-left:3em;
+}
+input[type=submit],input[type=button]{
+
+  width:125px;
+  height:40px;
+  margin-top: 1em;
+  color:white;
+  font-weight:bolder;
+  background:rgb(0,102,145);
+  border-radius: 9px;
+  margin:2em;
+  margin-left:2em;
+
+}
+input[type=submit]:hover {
+  color:white;
+  border:1px solid white;
+  cursor:pointer;
+}
+input[type=button]:hover {
+  color:white;
+  border:1px solid white;
+  cursor:pointer;
+}
+
+input[type=email],input[type=text],input[type=password]{
+  background:transparent;
+  width: 65%;
+  padding: 12px 20px;
+  margin: 2px;
+  border: none;
+  border-bottom:1px solid rgb(0,102,145);
+  box-sizing: border-box;
+  color:black;
+  outline: none;
+}
+
+textarea{
+  background:transparent;
+  width: 90%;
+  padding: 12px 20px;
+  margin: 2px;
+  border: none;
+  border-bottom:1px solid rgb(0,102,145);
+  box-sizing: border-box;
+  color:black;
+  outline: none;
+}
+
+input[type=email]:focus {
+  border-bottom:1px solid rgb(255,202,99);
+}
+
+input[type=text]:focus {
+  border-bottom:1px solid rgb(255,202,99);
+}
+
+textarea:focus {
+  border-bottom:1px solid rgb(255,202,99);
+}
+

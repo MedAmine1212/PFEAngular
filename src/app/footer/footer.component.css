@@ -1,0 +1,11 @@
+.catFoot
+{
+  cursor:pointer;
+  font-weight: bolder;
+  font-size: 15px;
+}
+.catFoot:hover{
+  color:#337ab7;
+}
+
+
