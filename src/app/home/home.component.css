@@ -1,0 +1,22 @@
+.bgDivStyle {
+  height: 300px;
+}
+  .bgImageStyle{
+    max-height:300px;
+}
+.wlcm {
+  font-size:2.1px;
+  margin-left :12em;
+  margin-top :22em;
+}
+  .wlcm1 {
+    font-size :4px;
+    margin-left : 6em;
+    margin-top : 2em;
+  }
+    .wlcm2 {
+      font-size :2.4px;
+      margin-left : 10em;
+      margin-top : 4em;
+    }
+

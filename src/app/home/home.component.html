@@ -8,16 +8,16 @@
     </ol>
 
     <!-- Wrapper for slides -->
-    <div id="bgDiv" class="carousel-inner">
+    <div id="bgDiv"  [ngStyle]="{'height':isMobile ? '300px' : 'auto' }" class="carousel-inner">
       <div class="item active">
-        <img src="../../assets/Images/bg1.jpg" style="cursor:pointer"/>
+        <img src="../../assets/Images/bg1.jpg" [ngStyle]="{'max-height':isMobile ? '300px' : 'auto' }" style="cursor:pointer"/>
 
         <div style="width:85%;height:100%;margin-left: -12%" class="carousel-caption slide"><br><br>
           <div class="container-fluid padding">
-            <div class="row welcome text-center">
-              <div id="wlcm" style="font-size:11px" class="col-12">
-                <div style="text-align: center;">
-                  <h1 class="display-4" style="font-weight:normal;" >Welcome to the <span style="font-weight: bold;">Vape Or DIE</span><span style="color: rgb(255,202,99);"> website</span></h1>
+            <div class="row welcome text-center" [ngStyle]="{'margin-left':isMobile ? '30px' : 'auto' }">
+              <div [ngStyle]="{'font-size':isMobile ? '4.9px' : 'auto' }" style="font-size:11px" class="col-12">
+                <div style="text-align: center;"  [ngStyle]="{'margin-right':isMobile ? '-10em' : 'auto' }">
+                  <h1 class="display-4" [ngStyle]="{'margin-top':isMobile ? '-10px' : 'auto' }" style="font-weight:normal;" >Welcome to the <span style="font-weight: bold;">Vape Or DIE</span><span style="color: rgb(255,202,99);"> website</span></h1>
                   </div>
               </div>
 
@@ -27,12 +27,12 @@
       </div>
 
       <div class="item">
-        <img src="../../assets/Images/bg2.jpeg" style="cursor:pointer"/>
+        <img src="../../assets/Images/bg2.jpeg" [ngStyle]="{'max-height':isMobile ? '300px' : 'auto' }" style="cursor:pointer"/>
         <div style="width:85%;height:80%;margin-left: -12%" class="carousel-caption slide">
           <div class="container-fluid padding">
             <div class="row welcome text-center">
-              <div id="wlcm1" style="font-size:11px" class="col-12">
-                <div style="text-align: center;">
+              <div [ngStyle]="{'font-size':isMobile ? '3.7px' : 'auto' }" style="font-size:11px" class="col-12">
+                <div [ngStyle]="{'margin-right':isMobile ? '-15em' : 'auto' }" style="text-align: center;">
 
                   <h1 class="display-4" style="font-weight:normal" >Check out our<br><span style="color: rgb(255,202,99);"> Awesome Products</span></h1><br>
                   <ul class="list-unstyled list-inline text-center py-2">
@@ -50,12 +50,12 @@
       </div>
 
       <div class="item">
-        <img id="bg3" src="../../assets/Images/bg3.jpg" style="width:100%;">
+        <img id="bg3" src="../../assets/Images/bg3.jpg" [ngStyle]="{'max-height':isMobile ? '300px' : 'auto' }" style="width:100%;">
         <div style="width:85%;height:80%;margin-left: -12%  " class="carousel-caption slide">
           <div class="container-fluid padding">
-            <div class="row welcome text-center">
-              <div id="wlcm2" style="font-size:11px" class="col-12">
-                <div style="text-align: center;">
+            <div  class="row welcome text-center">
+              <div [ngStyle]="{'font-size':isMobile ? '3.7px' : 'auto' }" style="font-size:11px" class="col-12">
+                <div [ngStyle]="{'margin-right':isMobile ? '-15em' : 'auto' }"  style="text-align: center;">
                   <h1 class="display-4" style="font-weight:normal;" >Need a hand ?<br><span style="color: rgb(255,202,99);"> Check out our tools</span></h1>
                   <ul class="list-unstyled list-inline text-center py-2">
 
@@ -81,5 +81,5 @@
     <span class="glyphicon glyphicon-chevron-right"></span>
     <span class="sr-only">Next</span>
   </a>
+
 </div>
-<app-category-list></app-category-list>

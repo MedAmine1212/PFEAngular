@@ -6,10 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  private isMobile: boolean;
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor() {
   }
 
+  ngOnInit() {
+    this.isMobile = /msie\s|trident\/|edge\//i.test(window.navigator.userAgent);
+  }
 }
+

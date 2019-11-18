@@ -11,6 +11,8 @@ import { FooterComponent } from './footer/footer.component';
 import {HttpClientModule} from '@angular/common/http';
 import {CategoryDetailsComponent} from './category-details/category-details.component';
 import {CategoryListComponent} from './category-list/category-list.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MiniPanierComponent } from './mini-panier/mini-panier.component';
 
 @NgModule({
   declarations: [
@@ -21,12 +23,14 @@ import {CategoryListComponent} from './category-list/category-list.component';
     ContactComponent,
     FooterComponent,
     CategoryDetailsComponent,
-    CategoryListComponent
+    CategoryListComponent,
+    MiniPanierComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

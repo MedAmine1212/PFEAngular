@@ -3,6 +3,8 @@ import {Observable} from 'rxjs';
 import {CategoryService} from '../category.service';
 import {Router} from '@angular/router';
 import {Category} from '../category';
+import {NavComponent} from '../nav/nav.component';
+import {CategoryDetailsComponent} from '../category-details/category-details.component';
 
 @Component({
   selector: 'app-category-list',
@@ -10,8 +12,7 @@ import {Category} from '../category';
   styleUrls: ['./category-list.component.css']
 })
 export class CategoryListComponent implements OnInit {
-  categories;
-  tab: [];
+  categories: Category[];
   constructor(private categoryService: CategoryService, private router: Router) {
   }
 
@@ -20,9 +21,9 @@ export class CategoryListComponent implements OnInit {
   }
 
   reloadData() {
-    this.categories = this.categoryService.getCategoriesList().subscribe( r => { this.tab = r ; console.log(this.tab)});
-
-
+     this.categoryService.getCategoriesList().subscribe( r => {
+       this.categories = r;
+     });
   }
 
   deleteCategory(id: number) {
@@ -40,4 +41,5 @@ export class CategoryListComponent implements OnInit {
     this.reloadData();
     this.router.navigate(['updateCategory', id]);
   }
+
 }

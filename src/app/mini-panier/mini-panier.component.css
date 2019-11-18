@@ -1,0 +1,45 @@
+.prdTab
+{
+  border:3px solid rgb(255,202,99);
+  height: 100%;
+}
+
+.prodList{
+  margin: 7px;
+   float:right;
+  border-bottom-left-radius: 20px;
+  min-height: 230px;
+  max-height:230px;
+  overflow: auto;
+  width: 200px;
+  display:list-item;
+  list-style-type: none;
+  padding:5px;
+  color:rgb(255,202,99) ;
+  font-weight: bolder;
+  background-color: white;
+
+}
+.prodList:before{
+  margin-top:-60px;
+  margin-right: 12px;
+  float: right;
+  border: 30px solid transparent;
+  border-bottom-color: white;
+  content: "";
+}
+
+
+
+th, td {
+  padding: 5px;
+}
+.prodDiv
+{
+  width:100%;
+  position:fixed;
+  margin-top: 26px;
+  height: 30%;
+  z-index: 9999999999999999999999999999;
+
+}
