@@ -1,0 +1,12 @@
+
+.panComp
+{
+  width:100%;
+  margin-right: 10px;
+  position:fixed;
+  margin-top: 6px;
+  min-height:50px;
+  max-height: 400px;
+  padding: 10px;
+  z-index: 666666;
+}

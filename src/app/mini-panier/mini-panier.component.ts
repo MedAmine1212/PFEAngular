@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {style} from '@angular/animations';
+import {NavComponent} from '../nav/nav.component';
 
 @Component({
   selector: 'app-mini-panier',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MiniPanierComponent implements OnInit {
 
-  constructor() { }
+  constructor(private navComponent: NavComponent) { }
 
   ngOnInit() {
   }
 
+  hide() {
+    this.navComponent.hideShowPan(2);
+  }
 }
