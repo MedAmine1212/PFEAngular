@@ -13,6 +13,7 @@ import {CategoryDetailsComponent} from './category-details/category-details.comp
 import {CategoryListComponent} from './category-list/category-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MiniPanierComponent } from './mini-panier/mini-panier.component';
+import { ProductListComponent } from './product-list/product-list.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { MiniPanierComponent } from './mini-panier/mini-panier.component';
     FooterComponent,
     CategoryDetailsComponent,
     CategoryListComponent,
-    MiniPanierComponent
+    MiniPanierComponent,
+    ProductListComponent
   ],
   imports: [
     BrowserModule,
