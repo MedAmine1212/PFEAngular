@@ -24,16 +24,11 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 })
 export class NavComponent implements OnInit {
   constructor() { }
-  private isOn: boolean;
   private isOnP: boolean;
   ngOnInit() {
-    this.isOn = false;
     this.isOnP = true;
   }
 
-  hideShowCat() {
-    this.isOn = !this.isOn;
-  }
   hideShowPan(x) {
     if (x === 1) {
     this.isOnP = false;

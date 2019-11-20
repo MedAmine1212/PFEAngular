@@ -1,11 +1,11 @@
-<nav id="nav" style="border-radius:0px;position: fixed;width:100%;z-index:666666 " class="navbar navbar-expand-md navbar-light bg-light sticky-top ">
+<nav id="nav" style="diplay:flex;border-radius:0px;position: fixed;width:100%;z-index:666666 " class="navbar navbar-expand-md navbar-light bg-light sticky-top ">
   <div class="container-fluid">
-    <img src="../../assets/Images/Logo2.png" routerLink="/"  height="70px" style="cursor:pointer"/>
-    <a class="navbar-brand" routerLink="/" style="margin-top:10px;margin-left:1px;margin-right: 10%" >
+    <img src="../../assets/Images/Logo2.png" routerLink="/"  height="70px" style="margin-left: -20px;cursor:pointer"/>
+    <a class="navbar-brand" routerLink="/" style="margin-left: -30px;margin-top:10px;margin-left:1px" >
       <span id="guilty">Vape </span><span id="team">or </span><span id="guilty">DIE </span>
 
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+    <button class="navbar-toggler" type="button" style="margin-left: -30px" data-toggle="collapse" data-target="#navbarResponsive">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div  style="width:100%;height:100%"  class="collapse navbar-collapse" id="navbarResponsive">
@@ -17,9 +17,6 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/Login">Login</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" (click)="hideShowCat()" aria-disabled="true">Categories <span style="font-size: 12px">▼</span></a>
-        </li>
 
         <li class="nav-item">
           <a class="nav-link"  routerLink="/Contact">Contact us</a>
@@ -28,11 +25,10 @@
 
     </div>
 
-    <img src="../../assets/Images/panier.png" (mouseenter)="hideShowPan(1)"  height="30px" style="z-index:6666666666;margin-left:0px;margin-right:10px;cursor:pointer" title="Shopping cart"/>
-  </div>
+    <img src="../../assets/Images/panier.png" (mouseenter)="hideShowPan(1)"  height="30px" style="z-index:6666666666;cursor:pointer" title="Shopping cart"/>
 
+   </div>
 
 </nav>
   <app-mini-panier class="panComp" [@smoothCollapse]="isOnP?'initial':'final'" (mouseleave)="hideShowPan(2)" ></app-mini-panier>
-  <app-category-list *ngIf="isOn"></app-category-list>
 
