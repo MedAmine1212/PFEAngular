@@ -1,10 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
-import {CategoryService} from '../category.service';
 import {Router} from '@angular/router';
-import {Category} from '../category';
-import {NavComponent} from '../nav/nav.component';
-import {CategoryDetailsComponent} from '../category-details/category-details.component';
+
+import {CategoryService} from '../services/category/category.service';
+import {Category} from '../entities/category';
 
 
 @Component({

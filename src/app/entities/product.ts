@@ -8,5 +8,5 @@ export class Product {
   price: number;
   Productcategory: Category;
 
-  Product(){}
+  Product() {}
 }

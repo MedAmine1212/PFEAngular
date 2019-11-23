@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {CategoryService} from './category.service';
-import {catchError} from 'rxjs/operators';
+import {CategoryService} from '../category/category.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
   private baseUrl = 'http://127.0.0.1:81/rest/products';
-  constructor(private http: HttpClient, private categoryService: CategoryService) {
+  constructor(private http: HttpClient) {
 
   }
   getProducts(): Observable<any> {
