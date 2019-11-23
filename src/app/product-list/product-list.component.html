@@ -7,7 +7,7 @@
           <h4 class="card-title">{{product.name}}</h4>
           <p>{{product.description}}<br><br>PRICE: {{product.price}}DT<br><br> Quantity: {{product.quantity}}</p>
          </div>
-        <a style="float:right;margin-right: 10px" href="#" class="btn btn-outline-secondary">Add to cart</a>
+        <a style="float:right;margin-right: 10px"  class="btn btn-outline-secondary" (click)="addToCarta(product.idProduct,product.name,product.price)">Add to cart</a>
 
       </div>
     </div>

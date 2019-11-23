@@ -5,7 +5,7 @@
   float:right;
   border-bottom-right-radius: 20px;
   border-bottom-left-radius: 20px;
-  min-height: 200px;
+  min-height: 50px;
   max-height: 400px;
   width: 320px;
   display:list-item;
@@ -34,10 +34,10 @@
  }
 
 .item {
-  height: auto;
+  height: 90px;
+  width:90%;
   margin: 10px;
   padding-bottom: 10px;
-  border-bottom:1px solid darkgrey;
   display: flex;
 }
 
@@ -45,9 +45,10 @@
   border-top:  1px solid #E1E8EE;
   border-bottom:  1px solid #E1E8EE;
 }
+
 .buttons {
   position: relative;
-  padding-top: 30px;
+  padding-top: 20px;
 }
 .btn btn-danger{
   padding-right: 8px;
@@ -70,14 +71,15 @@
 .image {
 margin-left: -28px;
   height:70px;
-  width: 100px;
+  width:50%;
 }
 
 .description {
 
-  margin-top: 30px;
-  margin-left: -10px;
+  margin-top: 20px;
+  margin-left: -110px;
   margin-right: 30px;
+  width:60px;
 }
 
 .description span {
@@ -125,18 +127,20 @@ margin-left: -28px;
 }
 .total-price {
    width: 83px;
-   padding-top: 34px;
+   padding-top: 25px;
    text-align: center;
    font-size: 16px;
    color: #43484D;
    font-weight: 300;
+  margin-left: 5px;
  }
-input[type=text]
+.qte
 {
-  margin-left: -12px;
-  border-top-style: hidden;
-  border-right-style: hidden;
-  border-left-style: hidden;
-  border-bottom-style: none;
+
+  width: 100%;
+  margin-top: 2px;
+  text-align: center;
+  height: 3px;
+  color:black;
   font-size: 15px;
 }

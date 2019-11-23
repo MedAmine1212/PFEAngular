@@ -6,11 +6,13 @@ import {Category} from '../category';
 import {NavComponent} from '../nav/nav.component';
 import {CategoryDetailsComponent} from '../category-details/category-details.component';
 
+
 @Component({
   selector: 'app-category-list',
   templateUrl: './category-list.component.html',
   styleUrls: ['./category-list.component.css']
 })
+
 export class CategoryListComponent implements OnInit {
   categories: Category[];
   constructor(private categoryService: CategoryService, private router: Router) {
@@ -21,9 +23,9 @@ export class CategoryListComponent implements OnInit {
   }
 
   reloadData() {
-     this.categoryService.getCategoriesList().subscribe( r => {
-       this.categories = r;
-     });
+    this.categoryService.getCategoriesList().subscribe( r => {
+      this.categories = r;
+    });
   }
 
   deleteCategory(id: number) {

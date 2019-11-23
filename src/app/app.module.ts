@@ -14,6 +14,11 @@ import {CategoryListComponent} from './category-list/category-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MiniPanierComponent } from './mini-panier/mini-panier.component';
 import { ProductListComponent } from './product-list/product-list.component';
+import {MatButtonModule} from '@angular/material/button';
+import {MatMenuItem, MatMenuModule, MatMenuTrigger} from '@angular/material/menu';
+
+
+
 
 @NgModule({
   declarations: [
@@ -32,7 +37,7 @@ import { ProductListComponent } from './product-list/product-list.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule, MatButtonModule, MatMenuModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
