@@ -1,0 +1,44 @@
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+<div class="panel panel-primary" style="margin-top:150px">
+  <div style="background-color: rgb(52,58,64)" class="panel-heading">
+    <h2>Product List</h2>
+    <button ng-mouse="ajouter categorie" (click)="addProduct()" class="btn btn-success" style="margin-left: 10px; float: right; margin-top: -45px"><span class="glyphicon glyphicon-plus"></span></button>
+  </div>
+  <div class="panel-body">
+    <table class="table table-striped table-bordered">
+      <thead class="thead-light">
+      <tr>
+        <th>Id </th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Image</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Category</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tr *ngFor="let product of products | async">
+        <td>{{product.idProduct}}</td>
+        <td>{{product.name}}</td>
+        <td>{{product.description}}</td>
+        <td><img src="{{product.image}}" width="150" height="100"/> </td>
+        <td>{{product.quantity}}</td>
+        <td>{{product.price}}</td>
+        <td>{{product.category.name}}</td>
+        <td>
+          <button (click)="deleteProduct(product.idProduct)" class="btn btn-danger" style="margin-left: 10px"><span class="glyphicon glyphicon-trash"></span> </button>
+          <button (click)="productDetails(product.idProduct)" class="btn btn-dark" style="margin-left: 10px"><span class="glyphicon glyphicon-th-list"></span></button>
+          <button (click)="updateProduct(product.idProduct)" class="btn btn-info" style="margin-left: 10px"><span class="glyphicon glyphicon-pencil"></span></button>
+
+          </td>
+      </tr>
+    </table>
+  </div>
+</div>

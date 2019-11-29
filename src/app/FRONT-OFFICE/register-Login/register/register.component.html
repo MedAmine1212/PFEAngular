@@ -1,0 +1,152 @@
+<div class="medium-list" >
+  <div class="list-viewer-wrapper " align="center">
+    <div class="list-header-title">S'INSCRIRE</div>
+    <form [formGroup]="registerForm"  (ngSubmit)="registerForm.valid" novalidate>
+      <div class="form-container">
+        <table align="center">
+          <tr >
+            <td colspan="2" align="center">
+              <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput
+                       id="email"
+                       #email
+                       required
+                       placeholder="exemple@exemple.exp"
+                       formControlName="email"
+                       [(ngModel)]="user.email"
+                >
+                <mat-error *ngIf="registerForm.get('email').hasError('required')">Email obligatoires</mat-error>
+                <mat-error *ngIf="registerForm.get('email').hasError('email')">Format email incorrect</mat-error>
+              </mat-form-field>
+            </td>
+
+          </tr>
+          <tr>
+            <td>
+              <mat-form-field appearance="outline">
+                <mat-label>Mot de passe</mat-label>
+                <mat-pass-toggle-visibility #toggle  matSuffix></mat-pass-toggle-visibility>
+
+                <input matInput
+                       [type]="toggle.type"
+                       #password
+
+                       required
+                       placeholder="Entrez votre mot de passe"
+                       formControlName="password"
+                       [(ngModel)]="user.password"
+                >
+
+                <mat-error *ngIf="registerForm.get('password').hasError('required')">mot de passe obligatoires</mat-error>
+                <!--        <mat-error *ngIf="f.c">Taille minimum 8 caractéres ! </mat-error>-->
+
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field appearance="outline">
+                <mat-label>Confirmation</mat-label>
+                <mat-pass-toggle-visibility #toggle2 matSuffix></mat-pass-toggle-visibility>
+
+                <input matInput
+                       [type]="toggle2.type"
+                       required
+                       formControlName="confirmPassword"
+                       placeholder="Confirmer votre mot de passe"
+                >
+                <mat-error *ngIf="registerForm.get('confirmPassword').hasError('required')">confirmation obligatoires ! </mat-error>
+                <mat-error *ngIf="registerForm.get('confirmPassword').hasError('validator')">max</mat-error>
+
+              </mat-form-field>
+
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <mat-button-toggle-group formControlName="gender" appearance="outline" [(ngModel)]="user.gender" name="fontStyle" aria-label="Font Style">
+                <mat-button-toggle value="Male" >Male</mat-button-toggle>
+                <mat-button-toggle value="F emale" >Female</mat-button-toggle>
+              </mat-button-toggle-group>
+
+            </td>
+
+            <td>
+              <mat-form-field class="outline">
+                <mat-label>Date de naissance</mat-label>
+                <input
+                  matInput
+                  [max]="maxDate"
+                  [min]="minDate"
+                  #dateBirth
+                  required
+                  [matDatepicker]="picker"
+                  placeholder="JJ/MM/YYYY"
+                  formControlName="dateBirth"
+                  [(ngModel)]="user.dateOfBirth"
+
+
+                >
+                <mat-error *ngIf="registerForm.get('dateBirth').hasError('required')">Date de naissance obligatoire !</mat-error>
+
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <mat-form-field appearance="outline">
+                <mat-label>Nom</mat-label>
+                <input matInput
+                       formControllName="name"
+                       placeholder="Entrez votre nom"
+                       required
+                       formControlName="name"
+                       [(ngModel)]="user.firstName"
+                       #name
+                >
+                <mat-error *ngIf="registerForm.get('name').hasError('required')">nom obligatoire !!</mat-error>
+
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field appearance="outline">
+                <mat-label>Prenom</mat-label>
+                <input matInput
+                       #lastname
+                       required
+                       placeholder="Entrez votre Prenom"
+                       formControlName="lastname"
+                       [(ngModel)]="user.lastName"
+                >
+                <mat-error *ngIf="registerForm.get('lastname').hasError('required')">nom obligatoire !!</mat-error>
+
+              </mat-form-field>
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan="2" align="center">
+              <form [formGroup]="reactiveForm" >
+                <re-captcha formControlName="recaptchaReactive"></re-captcha>
+              </form>
+            </td>
+          </tr>
+
+          <tr >
+            <td colspan="2" align="center">
+              <button [disabled]="registerForm.invalid || reactiveForm.invalid" mat-raised-button  type="submit" (click)="add()">ENREGISTRER</button>
+            </td>
+          </tr>
+
+        </table>
+      </div>
+
+
+
+
+    </form>
+  </div>
+</div>

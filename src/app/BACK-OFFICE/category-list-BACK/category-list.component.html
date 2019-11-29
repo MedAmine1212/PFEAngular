@@ -1,0 +1,39 @@
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<div class="panel panel-primary" style="margin-top:150px;">
+  <div style="background-color: rgb(52,58,64)" class="panel-heading">
+    <h2>Category List</h2>
+    <button (click)="addCategory()" class="btn btn-success" style="margin-left: 10px; float: right; margin-top: -45px"><span class="glyphicon glyphicon-plus"></span></button>
+  </div>
+  <div class="panel-body" >
+
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let category of categories | async">
+        <td>{{category.idCategory}}</td>
+        <td>{{category.name}}</td>
+        <td>{{category.description}}</td>
+        <td>
+          <div style="display: flex">
+          <button (click)="deleteCategory(category.idCategory)" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button>
+          <button (click)="categoryDetails(category.idCategory)" class="btn btn-dark" style="margin-left: 10px"><span class="glyphicon glyphicon-th-list"></span></button>
+          <button (click)="updateCategory(category.idCategory)" class="btn btn-info" style="margin-left: 10px"><span class="glyphicon glyphicon-pencil"></span></button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
