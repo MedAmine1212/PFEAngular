@@ -1,0 +1,51 @@
+
+<div class="medium-list" style="align-content: end"  style="margin-top:130px">
+  <div class="list-viewer-wrapper " align="center">
+    <div class="list-header-title">SE CONNECTER</div>
+    <form [formGroup]="loginForm"  (ngSubmit)="loginForm.valid" novalidate>
+      <div class="form-container">
+        <table align="center" >
+          <tr >
+            <td colspan="2" align="center">
+              <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput
+                       id="email"
+                       #email
+                       required
+                       placeholder="Entrez votre Email"
+                       formControlName="email"
+                >
+                <mat-error *ngIf="loginForm.get('email').hasError('required')">Email obligatoires</mat-error>
+                <mat-error *ngIf="loginForm.get('email').hasError('email')">Format email incorrect</mat-error>
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <mat-form-field appearance="outline">
+                <mat-label>Mot de passe</mat-label>
+                <mat-pass-toggle-visibility #toggle matSuffix></mat-pass-toggle-visibility>
+                <input matInput
+                       [type]="toggle.type"
+                       #password
+                       required
+                       placeholder="Entrez votre mot de passe"
+                       formControlName="password"
+                >
+                <mat-error *ngIf="loginForm.get('email').hasError('required')">Email obligatoires</mat-error>
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td align="center">
+              <button
+                mat-raised-button  type="submit" [disabled]="loginForm.invalid" >CONNECTER</button>
+            </td>
+          </tr>
+
+        </table>
+      </div>
+    </form>
+  </div>
+</div>

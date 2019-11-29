@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
-import {Product} from '../entities/product';
-import {Category} from '../entities/category';
-import {ProductService} from '../services/product/product.service';
+import {Product} from '../../entities/product';
+import {Category} from '../../entities/category';
+import {ProductService} from '../../services/product/product.service';
 interface CartProdcut {
   id: number;
   name: string;

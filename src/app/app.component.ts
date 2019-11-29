@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import {fader} from './animation/route-animation';
+import {Component, ElementRef, ViewChild} from '@angular/core';
+import {fader} from './FRONT-OFFICE/animation/route-animation';
 import {RouterOutlet} from '@angular/router';
 
 @Component({
@@ -14,6 +14,7 @@ import {RouterOutlet} from '@angular/router';
 })
 export class AppComponent {
   title = 'VapeOrDie';
+  @ViewChild('recaptcha', {static: true }) recaptchaElement: ElementRef;
 
   prepareRoute(outlet: RouterOutlet) {
     return  outlet && outlet.activatedRouteData;
