@@ -105,4 +105,16 @@ Let’s add some basic style to  product name and description.
   font-weight: bolder;
   color: darkgreen;
 }
+.bg-img
+{
 
+  position: fixed;
+  text-align:center;
+  width: 100%;
+  z-index: 6666;
+  top:90px;
+  left:0;
+}
+.bg-img img{
+  height: 600px;
+}
