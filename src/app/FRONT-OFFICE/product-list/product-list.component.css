@@ -6,4 +6,29 @@
   top: 200px;margin-left: -30px ;
   text-align: center;
 }
+.quantity
+{
+  padding: 4px;
+  width: 170px;
+  margin-left:15%;
+  height: 70px;
+  float: left;
+}
+.pmBut
+{
+  border: 1px solid;
+  width:23px;
+  height:20px;
+  background-color: #555555;
+  color: white;
+  border-radius:20px;
+}
 
+.pmBut:hover
+{
+
+  border: 1px solid #555555;
+  background-color: white;
+  color: #555555;
+
+}

@@ -35,7 +35,7 @@ export class NavComponent implements OnInit {
       this.isOnP = false;
 
     } else {
-
+      console.log('closed here');
       this.isOnP = true;
     }
 

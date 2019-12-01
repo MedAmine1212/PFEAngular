@@ -1,34 +1,39 @@
-
-
-<div   class="prodList" (mouseenter)="recup()" (mouseleave)="hide()">
+<div class="prodContainer" (mouseenter)="recup()" (mouseleave)="hide()">
+<div   class="prodList">
     <div class="shopping-cart">
       <!-- Title -->
       <h4 class="title">
         Shopping Bag
       </h4>
-<!--End Item 1 -->
+<!--Item -->
       <div class="item" *ngFor="let t of tabRes">
-        <div >
-          <img class="image" src="../../../assets/Images/VapeEx.png" alt="" />
-        </div>
+      <div class="imageContainer">
+        <img class="image" src="{{t.productToAdd.image}}" alt="" />
+      </div>
 
-        <div class="description">
-          <span>{{t.name}}</span>
-        </div>
+      <span class="description">{{t.productToAdd.name}}</span>
 
-        <div class="quantity">
-          <button (click)="incr(t.id)" class="pmBut">+</button><br>
-          <div class="qte">{{t.qte}}</div><br>
-          <button (click)="decr(t.id)" class="pmBut">-</button>
-        </div>
+      <div class="quantity">
+        <button (click)="incr(t.productToAdd.idProduct)" class="pmBut">+</button><br>
+        <div class="qte">{{t.qte}}</div><br>
+        <button (click)="decr(t.productToAdd.idProduct)" class="pmBut">-</button>
+      </div>
 
-        <div class="total-price">{{t.price}} DT</div>
+      <div class="total-price">{{t.productToAdd.price}} DT</div>
 
-        <div class="buttons">
-          <button (click)="suppProduct(t.id)" class="delBut">X</button>
-        </div>
+      <div class="buttons">
+        <button (click)="suppProduct(t.productToAdd.idProduct)" class="delBut">X</button>
+      </div>
     </div>
+      <!--end item-->
 
     </div>
 
   </div>
+<div class="validateContainer" *ngIf="tabRes.length>0">
+  <span style="float: left;margin-left: 20px">Total price: </span>
+  <span style="float: right;margin-right: 20px">{{this.totalPrice}}DT</span>
+  <br><br>
+  <button class="validerBt" >See Cart</button>
+</div>
+</div>

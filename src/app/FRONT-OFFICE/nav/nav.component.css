@@ -10,3 +10,35 @@
   padding: 10px;
   z-index: 66666666666;
 }
+.navbar {
+  padding: 1rem;
+  background-color:  white ! important;
+}
+.navbar-nav li {
+  padding-right: 33px;
+}
+.nav-link{
+  font-size: 1.1em ! important;
+  color:rgb(255,202,99);
+}
+.active{
+  border-bottom: 2px solid rgb(255,202,99);
+  color: rgb(255,202,99) ! important;
+}
+
+#guilty{
+  font-size: 1.4em ! important;
+  color: black;
+  font-weight: bold;
+}
+#team
+{
+  font-size: 1.4em ! important;
+  color: rgb(255,202,99) ! important;
+}
+.nav-link:hover {
+  border-bottom: 2px solid rgb(255,202,99);
+  color: rgb(255,202,99) ! important;
+  cursor: pointer;
+}
+

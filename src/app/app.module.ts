@@ -39,8 +39,7 @@ import {UpdateProductComponent} from './BACK-OFFICE/update-product/update-produc
 import {ProductListBACKComponent} from './BACK-OFFICE/product-list-BACK/product-list.component';
 import {CategoryListBACKComponent} from './BACK-OFFICE/category-list-BACK/category-list.component';
 import {CategoryDetailsBACKComponent} from './BACK-OFFICE/category-details-BACK/category-details.component';
-import {BACKOFFICEComponent} from './BACK-OFFICE/back-office.component';
-
+import {BACKOFFICEComponent} from './BACK-OFFICE/back-Nav/back-office.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +65,7 @@ import {BACKOFFICEComponent} from './BACK-OFFICE/back-office.component';
     ProductListComponent,
     ProductListBACKComponent,
     CategoryDetailsBACKComponent,
-    BACKOFFICEComponent
+    BACKOFFICEComponent,
 
   ],
   imports: [

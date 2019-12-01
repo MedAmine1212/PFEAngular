@@ -19,5 +19,6 @@
 }
 .catDiv
 {
+  margin-top:0px;
   text-align: center;position:fixed;top:92px;width:100%;min-height: 40px;z-index: 999;background-color:white;border-top:3px solid ghostwhite;
 }
