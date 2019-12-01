@@ -40,6 +40,7 @@ import {ProductListBACKComponent} from './BACK-OFFICE/product-list-BACK/product-
 import {CategoryListBACKComponent} from './BACK-OFFICE/category-list-BACK/category-list.component';
 import {CategoryDetailsBACKComponent} from './BACK-OFFICE/category-details-BACK/category-details.component';
 import {BACKOFFICEComponent} from './BACK-OFFICE/back-Nav/back-office.component';
+import { PanierComponent } from './FRONT-OFFICE/panier/panier.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import {BACKOFFICEComponent} from './BACK-OFFICE/back-Nav/back-office.component'
     ProductListBACKComponent,
     CategoryDetailsBACKComponent,
     BACKOFFICEComponent,
+    PanierComponent,
 
   ],
   imports: [
