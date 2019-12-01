@@ -4,8 +4,8 @@ import {Router} from '@angular/router';
 import {Product} from '../../entities/product';
 import {Category} from '../../entities/category';
 import {ProductService} from '../../services/product/product.service';
-import {element} from "protractor";
-import {MiniPanierComponent} from "../mini-panier/mini-panier.component";
+import {MiniPanierComponent} from '../mini-panier/mini-panier.component';
+import * as SecureLS from 'secure-ls';
 interface CartProdcut {
   productToAdd: Product;
   qte: number;
@@ -23,11 +23,15 @@ export class ProductListComponent implements OnInit {
   private allProductStringRes: string;
   private test = true;
   private pan: MiniPanierComponent;
+  private ls: SecureLS;
+
 
   constructor(private productService: ProductService, private router: Router) {
   }
 
   ngOnInit() {
+
+    this.ls = new SecureLS({encodingType: 'aes'});
     this.reloadData();
   }
   reloadData() {
@@ -54,8 +58,8 @@ export class ProductListComponent implements OnInit {
   }
 
   addToCarta(newProduct: Product) {
-    this.allProductStringRes = localStorage.getItem('panierKey');
-    this.tabRes = JSON.parse(this.allProductStringRes);
+    this.tabRes = this.ls.get('_temp_user_p_key');
+   // this.tabRes = JSON.parse(this.allProductStringRes);
     console.log(this.tabRes) ;
     // tslint:disable-next-line:triple-equals
     if (this.tabRes == null || this.tabRes == undefined || this.tabRes.length == 0) {
@@ -73,8 +77,8 @@ export class ProductListComponent implements OnInit {
         this.tabRes.push(this.cart);
         console.log('zedna produit jdid khater ' ); }
     }
-    this.allProductStringRes = JSON.stringify(this.tabRes);
-    localStorage.setItem('panierKey', this.allProductStringRes);
+    // this.allProductStringRes = JSON.stringify(this.tabRes);
+    this.ls.set('_temp_user_p_key', this.tabRes);
     // tslint:disable-next-line:no-unused-expression label-position
   }
 }
