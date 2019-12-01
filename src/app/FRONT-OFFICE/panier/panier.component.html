@@ -1,4 +1,13 @@
 <app-nav ></app-nav>
+
+<div *ngIf="emptyTab" style="text-align:center;width: 100%;margin-top: 120px">
+  <h4 style="font-weight: bolder">Oups! Your shopping cart is empty</h4>
+  <img style="margin-right:-15%;height: 50%;width: 50%" src="../../../assets/Images/emptyCart.png"/>
+  <div style="float:right;margin-right:5%;margin-top: 10%"><h4 style="font-weight: bolder">It's okay don't panic ! </h4><a class="btn btn-success btn-lg" routerLink="/" style="color: white">Go Shopping ! </a></div>
+</div>
+
+
+<div *ngIf="!emptyTab">
 <div [ngStyle]="{'filter':showHideImg ? 'blur(4px)' : 'none' }">
 
   <div style="margin-top:110px;font-size: 20px" class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Shopping cart </div>
@@ -7,31 +16,30 @@
 
   <tbody>
 
-  <tr>
+  <tr *ngFor="let t of tabRes">
     <td style="padding-top: 40px">
-      <button class="btn btn-danger">x</button>
+      <button class="btn btn-danger" (click)="suppProduct(t.productToAdd.idProduct)">x</button>
     </td>
     <td>
-      <img class="image" alt="Product image" title="See image" (click)="showImg(1,'https://lh3.googleusercontent.com/LIACjXDBVVigW0x07xNb68nairYATW7XSgpUWZVwC_3tWmDYhPnbVgOVrwdJzS96RUL2LK8uaIyCq74vdCIx29ta2_blE93P4hUOX2tg31nqfZki-8vhKyGZmawBRvPX7ASmTDlm0EWZbddNOugE6lqjVjNtjnIvYmihogYuvRfbkco6HwF7FJ9aeSj_jhlaZck1X85PB6_mbtnncWPVd37244WTtVV5quigmjP2l6a4ka95WweopX2P2CbON7kJ7NzGVctTBEg48599wvq-Qb1iLqOmcd6IBrhulHtcSGCqkX_Q-VjxpW3pwZpojQnN2JR8_KWOnAkX84-Nu5KR8vlE5hCCPA8NNlQOjCcnL0Kg3Qe7qNY044WBrxJzrhFCYgbOjiNgzPYTRcyJxiC4lKtLz962EehhZHS1OIoidv9uwzEgssAG0J_dHru9tOAfsCeFhR65WjLS7K4QP9Fws6Ck1vE-2Xe9YuNWAd4Uhqss45KqWTgzQ4RFzs4zn8Ow3x5Lf4uuSAOQkRROcNJ1_D40vBKKD9uN5rI7TYCcJ7EnI1TD74QIIC1dDwtn5kNmFpEp2orxzfw0rNCzuLSVOd1wPdBW6Fw-hI0X-CPyzTfdHS74z14pmVuzyxaaCISiI5Gy-bi82jOtpuKVqw6AKNwrEwZS0VqMPoqkaAAPJDGXOqwlRzxy2BaNVwVHy1AUj-41UXRG4nSXMgHss4_k1bCm9aMtZVQ9wXnkV0cROaBOaw=w228-h701-no')" style="cursor: pointer;border-radius: 15px; margin-right: 50px;height:100px;width:40px" src="https://lh3.googleusercontent.com/LIACjXDBVVigW0x07xNb68nairYATW7XSgpUWZVwC_3tWmDYhPnbVgOVrwdJzS96RUL2LK8uaIyCq74vdCIx29ta2_blE93P4hUOX2tg31nqfZki-8vhKyGZmawBRvPX7ASmTDlm0EWZbddNOugE6lqjVjNtjnIvYmihogYuvRfbkco6HwF7FJ9aeSj_jhlaZck1X85PB6_mbtnncWPVd37244WTtVV5quigmjP2l6a4ka95WweopX2P2CbON7kJ7NzGVctTBEg48599wvq-Qb1iLqOmcd6IBrhulHtcSGCqkX_Q-VjxpW3pwZpojQnN2JR8_KWOnAkX84-Nu5KR8vlE5hCCPA8NNlQOjCcnL0Kg3Qe7qNY044WBrxJzrhFCYgbOjiNgzPYTRcyJxiC4lKtLz962EehhZHS1OIoidv9uwzEgssAG0J_dHru9tOAfsCeFhR65WjLS7K4QP9Fws6Ck1vE-2Xe9YuNWAd4Uhqss45KqWTgzQ4RFzs4zn8Ow3x5Lf4uuSAOQkRROcNJ1_D40vBKKD9uN5rI7TYCcJ7EnI1TD74QIIC1dDwtn5kNmFpEp2orxzfw0rNCzuLSVOd1wPdBW6Fw-hI0X-CPyzTfdHS74z14pmVuzyxaaCISiI5Gy-bi82jOtpuKVqw6AKNwrEwZS0VqMPoqkaAAPJDGXOqwlRzxy2BaNVwVHy1AUj-41UXRG4nSXMgHss4_k1bCm9aMtZVQ9wXnkV0cROaBOaw=w228-h701-no"/>
+      <img class="image" alt="Product image" title="See image" (click)="showImg(1,t.productToAdd.image)" style="cursor: pointer;border-radius: 15px; margin-right: 50px;height:100px;width:40px" src="{{t.productToAdd.image}}"/>
 
     </td>
     <td style="padding-top: 40px;">
-      <h4>Vape</h4>
+      <h4>{{t.productToAdd.name}}</h4>
     </td>
     <td>
       <div class="description" style="margin-right:5px;margin-top: 20px ">
-        <span>Stock: 15</span>
-        <span>Color: Black</span>
-        <span>Description Description Description Description Description </span>
+        <span>Stock: {{t.productToAdd.quantity}}</span>
+        <span>{{t.productToAdd.description}}</span>
       </div>
     </td>
     <td  [ngStyle]="{'padding-top':isMobile ? '23px' : '40px'}">
-      <button class="btn btn-success" type="button" name="button">+</button>
-      <span class="qte" style="margin-right: 12px">1</span>
-      <button class="btn btn-warning" type="button" style="width:35px">-</button>
+      <button class="btn btn-success" (click)="incr(t.productToAdd.idProduct)" type="button" name="button">+</button>
+      <span class="qte" style="margin-right: 12px">{{t.qte}}</span>
+      <button class="btn btn-warning" (click)="decr(t.productToAdd.idProduct)" type="button" style="width:35px">-</button>
     </td>
     <td>
-      <div class="total-price">$549</div>
+      <div class="total-price">{{t.productToAdd.price}}DT</div>
     </td>
   </tr>
   </tbody>
@@ -41,22 +49,25 @@
 <div class="p-4">
   <p class="font-italic mb-4">Shipping and additional costs are calculated based on values you have entered.</p>
   <ul class="list-unstyled mb-4">
-    <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Order Subtotal </strong><strong>$390.00</strong></li>
-    <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Shipping and handling</strong><strong>$10.00</strong></li>
-    <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Tax</strong><strong>$0.00</strong></li>
+    <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Order Subtotal </strong><strong>{{totalPrice}}DT</strong></li>
+    <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Shipping and handling</strong><strong>10DT</strong></li>
+    <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Tax</strong><strong>0.00DT</strong></li>
     <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted"><h3>Total</h3></strong>
-      <h3 class="font-weight-bold">$400.00</h3>
+      <h3 class="font-weight-bold">{{totalPrice+10}}DT</h3>
     </li>
   </ul>
   <div style="text-align: right">
     <a class="btn btn-success btn-lg" style="margin-right: 20px;color: white">Procceed to checkout</a>
-    <a class="btn btn-lg"><span class="cntSh">Continue shopping</span></a>
+    <a routerLink="/" class="btn btn-lg"><span class="cntSh">Continue shopping</span></a>
   </div>
 </div>
 
-  <app-footer></app-footer>
 
 </div>
 <div (click)="showImg(2,'')"  class="bg-img" [ngStyle]="{'display':showHideImg ? 'inherit' : 'none' }">
   <img src="{{imgSrc}}"/>
+</div>
+</div>
+<div [ngStyle]="{'filter':showHideImg ? 'blur(4px)' : 'none' }">
+  <app-footer></app-footer>
 </div>

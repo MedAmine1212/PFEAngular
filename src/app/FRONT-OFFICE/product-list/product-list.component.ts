@@ -20,7 +20,6 @@ export class ProductListComponent implements OnInit {
   category: Category;
   cart: CartProdcut;
   private tabRes: CartProdcut[];
-  private allProductStringRes: string;
   private test = true;
   private pan: MiniPanierComponent;
   private ls: SecureLS;

@@ -17,7 +17,6 @@ interface CartProdcut {
 export class MiniPanierComponent implements OnInit {
   private tabRes: CartProdcut[];
   private totalPrice: number;
-  private allProductStringRes: string;
   private ls: SecureLS;
 
   constructor(private navComponent: NavComponent) {
@@ -27,24 +26,20 @@ export class MiniPanierComponent implements OnInit {
     this.ls = new SecureLS({encodingType: 'aes'});
     this.totalPrice = 0;
     this.tabRes = this.ls.get('_temp_user_p_key');
-   // this.tabRes = JSON.parse(this.allProductStringRes);
     if (this.tabRes.length > 0) {
       for (const f of this.tabRes) {
         this.totalPrice += (f.productToAdd.price * f.qte);
       }
       }
-    this.ls.set('_temp_p_u_key', this.totalPrice);
   }
  recup() {
    this.tabRes = this.ls.get('_temp_user_p_key');
-   // this.tabRes = JSON.parse(this.allProductStringRes);
    this.totalPrice = 0;
    if (this.tabRes.length > 0) {
      for (const f of this.tabRes) {
        this.totalPrice += (f.productToAdd.price * f.qte);
      }
    }
-   this.ls.set('_temp_p_u_key', this.totalPrice);
 }
 
   hide() {
@@ -57,9 +52,7 @@ export class MiniPanierComponent implements OnInit {
       if (f.productToAdd.idProduct === idProd) {
         f.qte++;
         this.totalPrice += (f.productToAdd.price);
-        this.ls.set('_temp_p_u_key', this.totalPrice);
         break; }}
-   // this.allProductStringRes = JSON.stringify(this.tabRes);
     this.ls.set('_temp_user_p_key', this.tabRes);
   }
 
@@ -68,19 +61,16 @@ export class MiniPanierComponent implements OnInit {
       if (f.productToAdd.idProduct === idProd) {
         f.qte--;
         this.totalPrice -= (f.productToAdd.price);
-        this.ls.set('_temp_p_u_key', this.totalPrice);
         if ( f.qte === 0) {
           this.suppProduct(f.productToAdd.idProduct) ;
         }
         break; }}
-    // this.allProductStringRes = JSON.stringify(this.tabRes);
     this.ls.set('_temp_user_p_key', this.tabRes);
   }
 
 
   suppProduct(idProd: number) {
     this.tabRes = this.ls.get('_temp_user_p_key');
-   // this.tabRes = JSON.parse(this.allProductStringRes);
     console.log(this.tabRes) ;
     let i = 0 ;
     for (const f of this.tabRes) {
@@ -90,7 +80,6 @@ export class MiniPanierComponent implements OnInit {
        }
        i++ ;
     }
-   // this.allProductStringRes = JSON.stringify(this.tabRes);
     this.ls.set('_temp_user_p_key', this.tabRes);
     this.recup();
   }
