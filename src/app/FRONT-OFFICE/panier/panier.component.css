@@ -96,4 +96,13 @@ Let’s add some basic style to  product name and description.
   color: #43484D;
   font-weight: 300;
 }
+.cntSh{
+  font-weight: bold;
+  color:forestgreen;
+}
+.cntSh:hover
+{
+  font-weight: bolder;
+  color: darkgreen;
+}
 

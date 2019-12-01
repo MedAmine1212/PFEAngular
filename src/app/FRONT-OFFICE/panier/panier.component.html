@@ -1,6 +1,6 @@
 <app-nav></app-nav>
 
-<div style="margin-top:110px" class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Shopping cart </div>
+<div style="margin-top:110px;font-size: 20px" class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Shopping cart </div>
 
 <table class="table table-striped">
 
@@ -23,30 +23,59 @@
         <span>Description Description Description Description Description </span>
       </div>
     </td>
-    <td style="padding-top: 23px;">
-      <div *ngIf="!isMobile" style="margin-top: 17px"></div>
-      <button class="btn btn-success" type="button" name="button">+</button><br *ngIf="isMobile">
-      <span class="qte">1</span><br *ngIf="isMobile"><span *ngIf="!isMobile" style="margin-left: 12px"></span>
-      <button class="btn btn-warning" type="button" style="width:35px" name="button">-</button>
+    <td  [ngStyle]="{'padding-top':isMobile ? '23px' : '40px'}">
+      <button class="btn btn-success" type="button" name="button">+</button>
+      <span class="qte" style="margin-right: 12px">1</span>
+      <button class="btn btn-warning" type="button" style="width:35px">-</button>
     </td>
     <td>
       <div class="total-price">$549</div>
     </td>
   </tr>
   <!-- End item 1 -->
-
+  <tr>
+    <td style="padding-top: 40px">
+      <button class="btn btn-danger">x</button>
+    </td>
+    <td>
+      <img class="image" style="border-radius: 15px; margin-right: 50px;height:100px;width:40px" src="https://lh3.googleusercontent.com/LIACjXDBVVigW0x07xNb68nairYATW7XSgpUWZVwC_3tWmDYhPnbVgOVrwdJzS96RUL2LK8uaIyCq74vdCIx29ta2_blE93P4hUOX2tg31nqfZki-8vhKyGZmawBRvPX7ASmTDlm0EWZbddNOugE6lqjVjNtjnIvYmihogYuvRfbkco6HwF7FJ9aeSj_jhlaZck1X85PB6_mbtnncWPVd37244WTtVV5quigmjP2l6a4ka95WweopX2P2CbON7kJ7NzGVctTBEg48599wvq-Qb1iLqOmcd6IBrhulHtcSGCqkX_Q-VjxpW3pwZpojQnN2JR8_KWOnAkX84-Nu5KR8vlE5hCCPA8NNlQOjCcnL0Kg3Qe7qNY044WBrxJzrhFCYgbOjiNgzPYTRcyJxiC4lKtLz962EehhZHS1OIoidv9uwzEgssAG0J_dHru9tOAfsCeFhR65WjLS7K4QP9Fws6Ck1vE-2Xe9YuNWAd4Uhqss45KqWTgzQ4RFzs4zn8Ow3x5Lf4uuSAOQkRROcNJ1_D40vBKKD9uN5rI7TYCcJ7EnI1TD74QIIC1dDwtn5kNmFpEp2orxzfw0rNCzuLSVOd1wPdBW6Fw-hI0X-CPyzTfdHS74z14pmVuzyxaaCISiI5Gy-bi82jOtpuKVqw6AKNwrEwZS0VqMPoqkaAAPJDGXOqwlRzxy2BaNVwVHy1AUj-41UXRG4nSXMgHss4_k1bCm9aMtZVQ9wXnkV0cROaBOaw=w228-h701-no" alt="" />
+    </td>
+    <td style="padding-top: 40px;">
+      <h4>Vape</h4>
+    </td>
+    <td>
+      <div class="description" style="margin-right:5px;margin-top: 20px ">
+        <span>Stock: 15</span>
+        <span>Color: Black</span>
+        <span>Description Description Description Description Description </span>
+      </div>
+    </td>
+    <td  [ngStyle]="{'padding-top':isMobile ? '23px' : '40px'}">
+      <button class="btn btn-success" type="button" name="button">+</button>
+      <span class="qte" style="margin-right: 12px">1</span>
+      <button class="btn btn-warning" type="button" style="width:35px">-</button>
+    </td>
+    <td>
+      <div class="total-price">$549</div>
+    </td>
+  </tr>
   </tbody>
 </table>
-<div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Order summary </div>
+<hr style="border:1px solid lightgrey">
+<div style="margin-top: 20px;font-size: 20px" class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Order summary </div>
 <div class="p-4">
   <p class="font-italic mb-4">Shipping and additional costs are calculated based on values you have entered.</p>
   <ul class="list-unstyled mb-4">
     <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Order Subtotal </strong><strong>$390.00</strong></li>
     <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Shipping and handling</strong><strong>$10.00</strong></li>
     <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Tax</strong><strong>$0.00</strong></li>
-    <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Total</strong>
-      <h5 class="font-weight-bold">$400.00</h5>
+    <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted"><h3>Total</h3></strong>
+      <h3 class="font-weight-bold">$400.00</h3>
     </li>
-  </ul><a href="#" class="btn btn-dark rounded-pill py-2 btn-block">Procceed to checkout</a>
+  </ul>
+  <div style="text-align: right">
+    <a class="btn btn-success btn-lg" style="margin-right: 20px;color: white">Procceed to checkout</a>
+    <a class="btn btn-lg"><span class="cntSh">Continue shopping</span></a>
+  </div>
 </div>
 <app-footer></app-footer>
