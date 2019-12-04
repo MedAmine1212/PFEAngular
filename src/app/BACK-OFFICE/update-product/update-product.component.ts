@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Category} from '../../entities/category';
 import {Product} from '../../entities/product';
@@ -12,6 +12,8 @@ import {ProductService} from '../../services/product/product.service';
   styleUrls: ['./update-product.component.css']
 })
 export class UpdateProductComponent implements OnInit {
+  @Output() closeAll = new EventEmitter<boolean>();
+  @Input() id: number;
   idProduct: number;
   category: Category;
   product: Product;
@@ -21,8 +23,9 @@ export class UpdateProductComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.product = new Product();
-    this.idProduct = this.route.snapshot.params.id;
+    this.idProduct = this.id;
     this.productService.getProductById(this.idProduct).subscribe(data => {
       console.log(data);
       this.product = data;
@@ -39,14 +42,11 @@ export class UpdateProductComponent implements OnInit {
     this.productService.updateProduct(this.idProduct, this.product.Productcategory.idCategory, this.product)
       .subscribe(data => console.log(data), error => console.log(error));
     this.product = new Product();
-    this.goToList();
   }
 
-  onSubmit() {
+
+  closeThis() {
     this.updateProduct();
-  }
-
-  goToList() {
-    this.router.navigate(['admin/products']);
+    this.closeAll.emit(true);
   }
 }

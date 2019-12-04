@@ -6,12 +6,12 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 </head>
-<div class="panel panel-primary" style="margin-top:150px">
+<div class="panel panel-primary" style="margin-top:150px" [ngStyle]="{'filter':showHideImg ? 'blur(4px)' : 'none' }">
   <div style="background-color: rgb(52,58,64)" class="panel-heading">
     <h2>Product List</h2>
     <button ng-mouse="ajouter categorie" (click)="addProduct()" class="btn btn-success" style="margin-left: 10px; float: right; margin-top: -45px"><span class="glyphicon glyphicon-plus"></span></button>
   </div>
-  <div class="panel-body">
+  <div class="panel-body" [ngStyle]="{'filter':blurAll ? 'blur(2px)' : 'none' }">
     <table class="table table-striped table-bordered">
       <thead class="thead-light">
       <tr>
@@ -29,7 +29,7 @@
         <td>{{product.idProduct}}</td>
         <td>{{product.name}}</td>
         <td>{{product.description}}</td>
-        <td><img src="{{product.image}}" width="150" height="100"/> </td>
+        <td style="text-align: center"><img style="cursor: pointer" title="Show image" (click)="showImg(1,product.image)" src="{{product.image}}" width="20%" height="100"/> </td>
         <td>{{product.quantity}}</td>
         <td>{{product.price}}</td>
         <td>{{product.category.name}}</td>
@@ -41,5 +41,29 @@
           </td>
       </tr>
     </table>
+  </div>
+  <div (click)="showImg(2,'')"  class="bg-img" [ngStyle]="{'display':showHideImg ? 'inherit' : 'none' }">
+    <img src="{{imgSrc}}"/>
+  </div>
+
+    <div *ngIf="showAddProduct" class="formStyleContainer">
+    <div class="formStyle" >
+    <app-create-product (closeAll)="closeAddFromAdd($event)"></app-create-product>
+      <button style="margin-left: 20%;margin-top:-13%;float:bottom" class="btn btn-dribbble" (click)="closeAdd()">Cancel</button>
+    </div>
+  </div>
+
+  <div *ngIf="showModifProduct" class="formStyleContainer">
+    <div class="formStyle" >
+      <app-update-product [id]="id" (closeAll)="closeAddFromAdd($event)"></app-update-product>
+      <button style="margin-left: 20%;margin-top:-13%;float:bottom" class="btn btn-dribbble" (click)="closeAdd()">Cancel</button>
+    </div>
+  </div>
+
+  <div *ngIf="showDetails" class="formStyleContainer">
+    <div style="margin-top: 8%;width: 80%;height: 50%" class="formStyle" >
+      <button style="float: right" class="btn btn-dribbble" (click)="closeAdd()">Close</button>
+      <app-product-details [id]="id" (closeAll)="closeAddFromAdd($event)"></app-product-details>
+    </div>
   </div>
 </div>

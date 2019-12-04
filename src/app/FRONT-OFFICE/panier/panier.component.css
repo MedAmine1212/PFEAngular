@@ -123,15 +123,14 @@ Let’s add some basic style to  product name and description.
   align-content: center;
   width: 100%;
   height: 100%;
-  top:100px;
+  top:75px;
 }
 .formStyle{
   box-shadow: 2px 1px 15px #333;
   background-color:white;
-  padding-top:20px;
   margin: 0 auto;
   border-radius:15px;
   width: 70%;
-  height: 84%;
+  height: 88%;
   overflow-y: auto;
 }

@@ -14,12 +14,24 @@ export class ProductListBACKComponent implements OnInit {
   products: Observable<any>;
   product: Product;
   category: Category;
-  constructor(private productService: ProductService, private router: Router) { }
+  id: number;
+  private imgSrc: string;
+  private showHideImg: boolean;
+  public showAddProduct: boolean;
+  blurAll: boolean;
+  showModifProduct: boolean;
+  showDetails: boolean;
+  constructor(private productService: ProductService, private router: Router) {
+    this.router.events.subscribe((val) => {this.reloadData(); }); }
 
   ngOnInit() {
-    this.reloadData();
+    this.blurAll = false;
+    this.showHideImg = false;
+    this.imgSrc = '';
+    this.showHideImg = false;
   }
   reloadData() {
+
     this.product = new Product();
     this.products = this.productService.getProducts();
   }
@@ -30,14 +42,44 @@ export class ProductListBACKComponent implements OnInit {
     }, error => console.log(error));
   }
   productDetails(id: number) {
-    this.router.navigate(['admin/detailProduct', id]);
+    this.id = id;
+    this.showDetails = true;
+    this.blurAll = true;
   }
   updateProduct(id: number) {
+    this.id = id;
     this.reloadData();
-    this.router.navigate(['admin/updateProduct', id]);
+    this.showModifProduct = true;
+    this.blurAll = true;
   }
   addProduct() {
-    this.reloadData();
-    this.router.navigate(['admin/addProduct']);
+    this.showAddProduct = true;
+    this.blurAll = true;
+    // this.router.navigate(['admin/addProduct']);
+  }
+
+  showImg(x, src) {
+    if (x === 1) {
+      this.imgSrc = src;
+      console.log('show');
+      this.showHideImg = true;
+    } else {
+      console.log('show');
+      this.showHideImg = false;
+    }
+  }
+
+  closeAdd() {
+  this.showDetails = false;
+  this.showAddProduct = false;
+  this.showModifProduct = false;
+  this.blurAll = false;
+  this.reloadData();
+  }
+
+  closeAddFromAdd($event) {
+    if ($event === true) {
+      this.closeAdd();
+    }
   }
 }

@@ -26,10 +26,12 @@ table{
 }
 
 .list-viewer-wrapper{
-  border-color: rgb(255,202,99);
-  border-radius: 15px;
-  border-bottom-left-radius: 50px;
-  border-bottom-right-radius: 50px;
+  margin-top: 40px;
+  border: 3px solid rgb(255,202,99)  ! important;
+  border-radius: 15px ! important;
+  border-bottom-left-radius: 50px ! important;
+  border-bottom-right-radius: 50px ! important;
+  padding: 20px;
 }
 button{
   background-color:rgb(255,202,99);

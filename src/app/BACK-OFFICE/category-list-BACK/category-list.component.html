@@ -37,4 +37,24 @@
       </tbody>
     </table>
   </div>
+  <div *ngIf="showAddCategory" class="formStyleContainer">
+    <div style="margin-top: 8%;width: 30%;height: 40%" class="formStyle" >
+      <app-create-category (closeAll)="closeAddFromAdd($event)"></app-create-category>
+      <button style="margin-left: 20%;margin-top:-13%;float:bottom" class="btn btn-dribbble" (click)="closeAdd()">Cancel</button>
+    </div>
+  </div>
+
+  <div *ngIf="showModifCategory" class="formStyleContainer">
+    <div style="margin-top: 8%;width: 30%;height: 40%" class="formStyle" >
+      <app-update-category [idCat]="id" (closeAll)="closeAddFromAdd($event)"></app-update-category>
+      <button style="margin-left: 20%;margin-top:-13%;float:bottom" class="btn btn-dribbble" (click)="closeAdd()">Cancel</button>
+    </div>
+  </div>
+
+  <div *ngIf="showDetails" class="formStyleContainer">
+    <div style="margin-top: 8%;width: 80%;height: 35%" class="formStyle" >
+      <button style="float: right" class="btn btn-dribbble" (click)="closeAdd()">Close</button>
+      <app-category-details-back [idCat]="id" (closeAll)="closeAddFromAdd($event)"></app-category-details-back>
+    </div>
+  </div>
 </div>

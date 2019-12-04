@@ -1,6 +1,6 @@
-<h3 style="margin-top:150px;">Update Category</h3>
+<h3>Update Category</h3>
 <div style="width: 400px">
-  <form (ngSubmit)="onSubmit()">
+  <form >
     <div class="form-group">
       <label for="nameCat">Name</label>
       <input type="text" class="form-control" id="nameCat" required [(ngModel)]="category.name" name="nameCat">
@@ -9,6 +9,6 @@
       <label for="description">Description</label>
       <input type="text" class="form-control" id="description" required [(ngModel)]="category.description" name="description">
     </div>
-    <button class="btn btn-success" type="submit">Update</button>
+    <button (click)="closeThis()" class="btn btn-success" type="submit">Update</button>
   </form>
 </div>
