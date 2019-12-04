@@ -10,7 +10,7 @@ import {AuthenticationService} from '../../../services/auth/authentication.servi
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-user: User;
+  user: User;
   constructor(private formBuilder: FormBuilder, private auth: AuthenticationService) { }
 
   ngOnInit() {
@@ -21,14 +21,14 @@ user: User;
     this.user = new User() ;
   }
 
-login() {
-return this.auth.login(this.user).subscribe(r => {
-  const jwt = r.headers.get('Authorization');
-  this.auth.saveToken(jwt) ;
-  console.log(this.auth.isUser());
-  console.log( this.auth.isAdmin());
-  console.log( this.auth.isAuthentified());
-  }, error => {});
-}
+  login() {
+    return this.auth.login(this.user).subscribe(r => {
+      const jwt = r.headers.get('Authorization');
+      this.auth.saveToken(jwt) ;
+      console.log(this.auth.isUser());
+      console.log( this.auth.isAdmin());
+      console.log( this.auth.isAuthentified());
+    }, error => {});
+  }
 
 }
