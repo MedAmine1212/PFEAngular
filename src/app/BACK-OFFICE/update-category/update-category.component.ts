@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Category} from '../../entities/category';
 import {CategoryService} from '../../services/category/category.service';
@@ -10,6 +10,8 @@ import {CategoryService} from '../../services/category/category.service';
   styleUrls: ['./update-category.component.css']
 })
 export class UpdateCategoryComponent implements OnInit {
+  @Output() closeAll = new EventEmitter<boolean>();
+  @Input() idCat: number;
   id: number;
   category: Category;
 
@@ -18,7 +20,7 @@ export class UpdateCategoryComponent implements OnInit {
 
   ngOnInit() {
     this.category = new Category();
-    this.id = this.route.snapshot.params.id;
+    this.id = this.idCat;
     this.categoryService.getCategory(this.id).subscribe(data => {
         console.log(data);
         this.category = data;
@@ -29,14 +31,12 @@ export class UpdateCategoryComponent implements OnInit {
   updateCategory() {
     this.categoryService.updateCategory(this.id, this.category).subscribe(data => console.log(data), error1 => console.log(error1));
     this.category = new Category();
-    this.goToList();
   }
 
-  onSubmit() {
+
+
+  closeThis() {
     this.updateCategory();
-  }
-
-  goToList() {
-    this.router.navigate(['admin/categories']);
+    this.closeAll.emit(true);
   }
 }

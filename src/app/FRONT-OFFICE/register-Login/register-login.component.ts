@@ -6,10 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./register-login.component.css']
 })
 export class RegisterLoginComponent implements OnInit {
-
+  thisPage: string
   constructor() { }
 
   ngOnInit() {
+    this.thisPage = 'logReg';
   }
 
 }

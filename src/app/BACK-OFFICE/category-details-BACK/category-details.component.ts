@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Category} from '../../entities/category';
 import {CategoryService} from '../../services/category/category.service';
@@ -11,11 +11,13 @@ import {CategoryService} from '../../services/category/category.service';
 export class CategoryDetailsBACKComponent implements OnInit {
   id: number;
   category: Category;
+  @Output() closeAll = new EventEmitter<boolean>();
+  @Input() idCat: number;
   constructor(private route: ActivatedRoute, private router: Router, private categoryService: CategoryService) { }
 
   ngOnInit() {
     this.category = new Category();
-    this.id = this.route.snapshot.params.id;
+    this.id = this.idCat;
     this.categoryService.getCategory(this.id).subscribe(data => {
       console.log(data);
       this.category = data;

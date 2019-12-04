@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 import {Router} from '@angular/router';
 import {Category} from '../../entities/category';
@@ -11,6 +11,7 @@ import {CategoryService} from '../../services/category/category.service';
   styleUrls: ['./create-category.component.css']
 })
 export class CreateCategoryComponent implements OnInit {
+  @Output() closeAll = new EventEmitter<boolean>();
   category: Category = new Category();
   submitted = false;
 
@@ -31,9 +32,10 @@ export class CreateCategoryComponent implements OnInit {
     this.goToList();
   }
 
-  onSubmit() {
+  closeThis() {
     this.submitted = true;
     this.save();
+    this.closeAll.emit(true);
   }
 
   goToList() {

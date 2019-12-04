@@ -119,7 +119,7 @@ Let’s add some basic style to  product name and description.
 }
 .formStyleContainer{
   position: fixed;
-  z-index: 666;
+  z-index: 6666;
   align-content: center;
   width: 100%;
   height: 100%;

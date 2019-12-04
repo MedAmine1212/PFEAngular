@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {style} from '@angular/animations';
 import {NavComponent} from '../nav/nav.component';
+import {Product} from '../../entities/product';
+import * as SecureLS from 'secure-ls';
 interface CartProdcut {
-  id: number,
-  name: string;
-  price: number;
+  productToAdd: Product;
   qte: number;
 }
 
@@ -12,73 +12,75 @@ interface CartProdcut {
   selector: 'app-mini-panier',
   templateUrl: './mini-panier.component.html',
   styleUrls: ['./mini-panier.component.css']
+
 })
 export class MiniPanierComponent implements OnInit {
   private tabRes: CartProdcut[];
-  private allProductStringRes: string;
-  private qte: number;
+  private totalPrice: number;
+  private ls: SecureLS;
 
   constructor(private navComponent: NavComponent) {
   }
 
   ngOnInit() {
-    this.qte = 0;
-    this.allProductStringRes = localStorage.getItem('panierKey');
-    this.tabRes = JSON.parse(this.allProductStringRes);
-    console.log(this.tabRes);
+    this.ls = new SecureLS({encodingType: 'aes'});
+    this.totalPrice = 0;
+    this.tabRes = this.ls.get('_temp_user_p_key');
+    if (this.tabRes.length > 0) {
+      for (const f of this.tabRes) {
+        this.totalPrice += (f.productToAdd.price * f.qte);
+      }
+      }
   }
-recup() {
-
-  this.allProductStringRes = localStorage.getItem('panierKey');
-  this.tabRes = JSON.parse(this.allProductStringRes);
-  console.log(this.tabRes) ;
+ recup() {
+   this.tabRes = this.ls.get('_temp_user_p_key');
+   this.totalPrice = 0;
+   if (this.tabRes.length > 0) {
+     for (const f of this.tabRes) {
+       this.totalPrice += (f.productToAdd.price * f.qte);
+     }
+   }
 }
 
   hide() {
-
     this.navComponent.hideShowPan(2);
   }
 
   incr(idProd: number) {
     for (const f of this.tabRes) {
-      if (f.id === idProd) {
+      if (f.productToAdd.idProduct === idProd) {
         f.qte++;
-        this.qte++;
+        this.totalPrice += (f.productToAdd.price);
         break; }}
-    this.allProductStringRes = JSON.stringify(this.tabRes);
-    localStorage.setItem('panierKey', this.allProductStringRes);
+    this.ls.set('_temp_user_p_key', this.tabRes);
   }
 
   decr(idProd: number) {
     for (const f of this.tabRes) {
-      if (f.id === idProd) {
+      if (f.productToAdd.idProduct === idProd) {
         f.qte--;
-        this.qte--;
-        if ( f.qte === 0)
-        {
-          this.suppProduct(f.id) ;
+        this.totalPrice -= (f.productToAdd.price);
+        if ( f.qte === 0) {
+          this.suppProduct(f.productToAdd.idProduct) ;
         }
         break; }}
-    this.allProductStringRes = JSON.stringify(this.tabRes);
-    localStorage.setItem('panierKey', this.allProductStringRes);
+    this.ls.set('_temp_user_p_key', this.tabRes);
   }
 
 
   suppProduct(idProd: number) {
-    this.allProductStringRes = localStorage.getItem('panierKey');
-    this.tabRes = JSON.parse(this.allProductStringRes);
+    this.tabRes = this.ls.get('_temp_user_p_key');
     console.log(this.tabRes) ;
     let i = 0 ;
     for (const f of this.tabRes) {
-       if (f.id === idProd) {
+       if (f.productToAdd.idProduct === idProd) {
        this.tabRes.splice(i, 1);
        break;
        }
        i++ ;
     }
-    this.allProductStringRes = JSON.stringify(this.tabRes);
-    localStorage.setItem('panierKey', this.allProductStringRes);
+    this.ls.set('_temp_user_p_key', this.tabRes);
+    this.recup();
   }
-
 }
 

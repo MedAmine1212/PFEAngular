@@ -4,10 +4,10 @@ import {Router} from '@angular/router';
 import {Product} from '../../entities/product';
 import {Category} from '../../entities/category';
 import {ProductService} from '../../services/product/product.service';
+import {MiniPanierComponent} from '../mini-panier/mini-panier.component';
+import * as SecureLS from 'secure-ls';
 interface CartProdcut {
-  id: number;
-  name: string;
-  price: number;
+  productToAdd: Product;
   qte: number;
 }
 @Component({
@@ -20,16 +20,19 @@ export class ProductListComponent implements OnInit {
   category: Category;
   cart: CartProdcut;
   private tabRes: CartProdcut[];
-  private allProductStringRes: string;
   private test = true;
+  private pan: MiniPanierComponent;
+  private ls: SecureLS;
+
 
   constructor(private productService: ProductService, private router: Router) {
   }
 
   ngOnInit() {
+
+    this.ls = new SecureLS({encodingType: 'aes'});
     this.reloadData();
   }
-
   reloadData() {
     this.productService.getProducts().subscribe(r => {
       this.products = r;
@@ -53,28 +56,28 @@ export class ProductListComponent implements OnInit {
     this.router.navigate(['updateProduct', id]);
   }
 
-  addToCarta(idProd: number, n: string, p: number) {
-    this.allProductStringRes = localStorage.getItem('panierKey');
-    this.tabRes = JSON.parse(this.allProductStringRes);
+  addToCarta(newProduct: Product) {
+    this.tabRes = this.ls.get('_temp_user_p_key');
+   // this.tabRes = JSON.parse(this.allProductStringRes);
     console.log(this.tabRes) ;
     // tslint:disable-next-line:triple-equals
     if (this.tabRes == null || this.tabRes == undefined || this.tabRes.length == 0) {
       this.tabRes = [] ;
-      this.tabRes.push(this.cart = {id: idProd, name: n, price: p, qte: 1}); console.log('tab jdida ');
+      this.tabRes.push(this.cart = {productToAdd: newProduct, qte: 1}); console.log('tab jdida ');
     } else if (this.tabRes.length > 0) {
       for (const f of this.tabRes) {
-        if (f.id === idProd) {
+        if (f.productToAdd.idProduct === newProduct.idProduct) {
           f.qte = f.qte + 1;
-          console.log('zedna quantité khater ' + f.name + ' === ' + n);
           this.test = false;
           break;
         } else { this.test = true ; }}
       if (this.test === true) {
-        this.cart = {id: idProd, name: n, price: p, qte: 1};
+        this.cart = {productToAdd: newProduct, qte: 1};
         this.tabRes.push(this.cart);
         console.log('zedna produit jdid khater ' ); }
     }
-    this.allProductStringRes = JSON.stringify(this.tabRes);
-    localStorage.setItem('panierKey', this.allProductStringRes);
+    // this.allProductStringRes = JSON.stringify(this.tabRes);
+    this.ls.set('_temp_user_p_key', this.tabRes);
+    // tslint:disable-next-line:no-unused-expression label-position
   }
 }

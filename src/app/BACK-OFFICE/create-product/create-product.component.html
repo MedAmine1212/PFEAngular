@@ -1,6 +1,6 @@
-<h3 style="margin-top:150px;">Create Product</h3>
+<h3>Create Product</h3>
 <div [hidden]="submitted" style="width: 400px;">
-  <form (ngSubmit)="onSubmit()">
+  <form>
     <div class="form-group">
       <label for="name">Product name</label>
       <input type="text" class="form-control" id="name" required="true" [(ngModel)]="product.name" name="name">
@@ -39,9 +39,7 @@
        <input
       type="file" (change)="onFileChanged($event)" #fileInput>-->
 
-    <button type="submit" class="btn btn-success">Submit</button>
+    <button type="submit" (click)="closeThis()" class="btn btn-success">Submit</button>
   </form>
 </div>
-<div [hidden]="!submitted">
-  <h4>You submitted successfully!</h4>
-</div>
+

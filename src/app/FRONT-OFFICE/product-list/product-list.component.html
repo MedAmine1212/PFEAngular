@@ -1,18 +1,19 @@
-<div  class="container-fluid padding">
+<div   class="container-fluid padding">
   <div  class="col-xs-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let product of products">
     <div class="card">
       <div style="height: 300px" >
-        <img style="float:left;width:70px " class="card-img-top" src="../../../assets/Images/VapeEx.png">
+        <img style="float:left;width:70px;margin:20px " class="card-img-top" src="{{product.image}}">
         <div class="card-body" style="min-height: 250px;max-height: 250px;overflow-y: auto">
           <h4 class="card-title">{{product.name}}</h4>
-          <p>{{product.description}}<br><br>PRICE: {{product.price}}DT<br><br> Quantity: {{product.quantity}}</p>
+          <p><span style="max-height: 50px;overflow-y: scroll">{{product.description}}</span><br><br>PRICE: {{product.price}}DT<br><br> Quantity: {{product.quantity}}</p>
          </div>
-        <a style="float:right;margin-right: 10px"  class="btn btn-outline-secondary" (click)="addToCarta(product.idProduct,product.name,product.price)">Add to cart</a>
+        <a style="float:right;margin-right: 10px;margin-top: -2px"  class="btn btn-outline-secondary" (click)="addToCarta(product)">Add to cart</a>
 
       </div>
     </div>
   </div>
 </div>
+<br><br>
 
 
 

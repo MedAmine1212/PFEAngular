@@ -1,10 +1,11 @@
+<app-back-office></app-back-office>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<div class="panel panel-primary" style="margin-top:150px;">
+<div class="panel panel-primary" style="margin-top:70px;">
   <div style="background-color: rgb(52,58,64)" class="panel-heading">
     <h2>Category List</h2>
     <button (click)="addCategory()" class="btn btn-success" style="margin-left: 10px; float: right; margin-top: -45px"><span class="glyphicon glyphicon-plus"></span></button>
@@ -35,5 +36,25 @@
       </tr>
       </tbody>
     </table>
+  </div>
+  <div *ngIf="showAddCategory" class="formStyleContainer">
+    <div style="margin-top: 8%;width: 30%;height: 40%" class="formStyle" >
+      <app-create-category (closeAll)="closeAddFromAdd($event)"></app-create-category>
+      <button style="margin-left: 20%;margin-top:-13%;float:bottom" class="btn btn-dribbble" (click)="closeAdd()">Cancel</button>
+    </div>
+  </div>
+
+  <div *ngIf="showModifCategory" class="formStyleContainer">
+    <div style="margin-top: 8%;width: 30%;height: 40%" class="formStyle" >
+      <app-update-category [idCat]="id" (closeAll)="closeAddFromAdd($event)"></app-update-category>
+      <button style="margin-left: 20%;margin-top:-13%;float:bottom" class="btn btn-dribbble" (click)="closeAdd()">Cancel</button>
+    </div>
+  </div>
+
+  <div *ngIf="showDetails" class="formStyleContainer">
+    <div style="margin-top: 8%;width: 80%;height: 35%" class="formStyle" >
+      <button style="float: right" class="btn btn-dribbble" (click)="closeAdd()">Close</button>
+      <app-category-details-back [idCat]="id" (closeAll)="closeAddFromAdd($event)"></app-category-details-back>
+    </div>
   </div>
 </div>

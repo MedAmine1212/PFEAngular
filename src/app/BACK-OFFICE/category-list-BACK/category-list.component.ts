@@ -11,9 +11,18 @@ import {Category} from '../../entities/category';
 })
 export class CategoryListBACKComponent implements OnInit {
   categories: Observable<any>;
+  showAddCategory: boolean;
+  id: number;
+  showModifCategory: boolean;
+  showDetails: boolean;
+  blurAll: boolean;
   constructor(private categoryService: CategoryService, private router: Router) { }
 
   ngOnInit() {
+    this.blurAll = false;
+    this.showAddCategory = false;
+    this.showModifCategory = false;
+    this.showDetails = false;
     this.reloadData();
   }
   reloadData() {
@@ -26,14 +35,33 @@ export class CategoryListBACKComponent implements OnInit {
     }, error1 => console.log(error1));
   }
   categoryDetails(id: number) {
-    this.router.navigate(['admin/detailCategory', id]);
+    this.reloadData();
+    this.id = id;
+    this.showDetails = true;
+    this.blurAll = true;
   }
   updateCategory(id: number) {
     this.reloadData();
-    this.router.navigate(['admin/updateCategory', id]);
+    this.id = id;
+    this.showModifCategory = true;
+    this.blurAll = true;
   }
   addCategory() {
+    this.showAddCategory = true;
+    this.blurAll = true;
+  }
+
+  closeAdd() {
+    this.showDetails = false;
+    this.showAddCategory = false;
+    this.showModifCategory = false;
+    this.blurAll = false;
     this.reloadData();
-    this.router.navigate(['admin/addCategory']);
+  }
+
+  closeAddFromAdd($event) {
+    if ($event === true) {
+      this.closeAdd();
+    }
   }
 }

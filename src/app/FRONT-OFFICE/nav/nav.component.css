@@ -4,9 +4,43 @@
   width:100%;
   margin-right: 10px;
   position:fixed;
-  margin-top: -20px;
   min-height:50px;
   max-height: 400px;
   padding: 10px;
-  z-index: 66666666666;
+  margin-top: 75px;
+  z-index: 6666;
 }
+.navbar {
+  padding: 1rem;
+  background-color:  white ! important;
+}
+.navbar-nav li {
+  padding-right: 33px;
+}
+.nav-link{
+
+  border-bottom: 2px solid white;
+  font-size: 1.1em ! important;
+  color:rgb(255,202,99);
+}
+.active{
+  border-bottom: 2px solid rgb(255,202,99);
+  color: rgb(255,202,99) ! important;
+}
+
+.guilty{
+  font-size: 1.4em ! important;
+  color: black;
+  font-weight: bold;
+}
+.team
+{
+  font-size: 1.4em ! important;
+  color: rgb(255,202,99) ! important;
+}
+.nav-link:hover {
+  border-bottom: 2px solid rgb(255,202,99);
+  color: rgb(255,202,99) ! important;
+  cursor: pointer;
+}
+

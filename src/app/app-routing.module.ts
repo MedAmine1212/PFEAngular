@@ -9,18 +9,19 @@ import {UpdateCategoryComponent} from './BACK-OFFICE/update-category/update-cate
 import {CreateProductComponent} from './BACK-OFFICE/create-product/create-product.component';
 import {ProductDetailsComponent} from './BACK-OFFICE/product-details/product-details.component';
 import {UpdateProductComponent} from './BACK-OFFICE/update-product/update-product.component';
-import {BACKOFFICEComponent} from './BACK-OFFICE/back-office.component';
+import {BACKOFFICEComponent} from './BACK-OFFICE/back-Nav/back-office.component';
 import {CategoryDetailsBACKComponent} from './BACK-OFFICE/category-details-BACK/category-details.component';
 import {ProductListBACKComponent} from './BACK-OFFICE/product-list-BACK/product-list.component';
 import {CategoryDetailsComponent} from './FRONT-OFFICE/category-details/category-details.component';
+import {PanierComponent} from './FRONT-OFFICE/panier/panier.component';
 
 
 const routes: Routes = [
   {path : '' , component: HomeComponent},
   {path : 'Contact', component: ContactComponent},
   {path : 'Login', component: RegisterLoginComponent},
+  {path : 'panier', component: PanierComponent},
   {path : 'client/product/:id', component: CategoryDetailsComponent},
-  {path: 'admin', component: BACKOFFICEComponent},
   {path: 'admin/categories', component: CategoryListBACKComponent},
   {path: 'admin/addCategory', component: CreateCategoryComponent},
   {path: 'admin/updateCategory/:id', component: UpdateCategoryComponent},
