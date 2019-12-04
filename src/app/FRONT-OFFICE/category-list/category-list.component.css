@@ -1,24 +1,24 @@
 .catList{
-
   display: inline-block;
   list-style-type: none;
   padding:5px;
   margin: 0px;
 }
 
-.catListElement
-{
-  display:inline;
-  color: black;
-  cursor:pointer
-}
-
-.catListElement:hover{
-  color: rgb(255,202,99);
-  text-decoration: none;
-}
 .catDiv
 {
-  margin-top:0px;
-  text-align: center;position:fixed;top:92px;width:100%;min-height: 40px;z-index: 999;background-color:white;border-top:3px solid ghostwhite;
+  text-align: center;
+  width:100%;
+  min-height: 40px;
+  z-index: 666666666666;
+  background-color:white;
+}
+.btn-cat{
+  background-color: white !important;
+  color: black;
+  font-weight: bolder;
+  font-size: 15px;
+}
+.btn-cat:hover{
+  color: rgb(255,202,99) ! important;
 }

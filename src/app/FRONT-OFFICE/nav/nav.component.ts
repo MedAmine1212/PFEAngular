@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {CategoryListComponent} from '../category-list/category-list.component';
+import {Component, Input, OnInit} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import {MiniPanierComponent} from '../mini-panier/mini-panier.component';
 
 @Component({
   selector: 'app-nav',
@@ -10,7 +8,7 @@ import {MiniPanierComponent} from '../mini-panier/mini-panier.component';
   animations: [
     trigger('smoothCollapse', [
       state('initial', style({
-        height: '0',
+        height: '0px',
         overflow: 'hidden',
         opacity: '0'
       })),
@@ -24,18 +22,42 @@ import {MiniPanierComponent} from '../mini-panier/mini-panier.component';
   ]
 })
 export class NavComponent implements OnInit {
+  @Input() alwaysHideMinPan: boolean;
+  @Input() actif: string;
+  acHome: boolean;
+  acLogReg: boolean;
+  acCon: boolean;
   constructor() { }
   private isOnP: boolean;
+  hideMinPan: boolean;
+
+
   ngOnInit() {
+
+    if (this.alwaysHideMinPan) {
+      this.acHome = false;
+      this.acLogReg = false;
+      this.acCon = false;
+      this.hideMinPan = true;
+    } else{
+      if (this.actif === 'home') {
+        this.acHome = true;
+      } else if (this.actif === 'contact') {
+        this.acCon = true;
+      } else {
+        this.acLogReg = true;
+      }
+    }
+    this.alwaysHideMinPan = false;
     this.isOnP = true;
   }
+
 
   hideShowPan(x) {
     if (x === 1) {
       this.isOnP = false;
 
     } else {
-      console.log('closed here');
       this.isOnP = true;
     }
 

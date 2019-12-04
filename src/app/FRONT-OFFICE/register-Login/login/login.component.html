@@ -1,7 +1,7 @@
 
 <div class="medium-list" style="align-content: end"  style="margin-top:130px">
   <div class="list-viewer-wrapper " align="center">
-    <div class="list-header-title">SE CONNECTER</div>
+    <div style="font-weight: bolder;font-size:30px" class="list-header-title">Sign in</div>
     <form [formGroup]="loginForm"  (ngSubmit)="loginForm.valid" novalidate>
       <div class="form-container">
         <table align="center" >
@@ -13,34 +13,34 @@
                        id="email"
                        #email
                        required
-                       placeholder="Entrez votre Email"
+                       placeholder="Type your email"
                        formControlName="email"
                 >
-                <mat-error *ngIf="loginForm.get('email').hasError('required')">Email obligatoires</mat-error>
-                <mat-error *ngIf="loginForm.get('email').hasError('email')">Format email incorrect</mat-error>
+                <mat-error *ngIf="loginForm.get('email').hasError('required')">Email required</mat-error>
+                <mat-error *ngIf="loginForm.get('email').hasError('email')">Incorrect email format</mat-error>
               </mat-form-field>
             </td>
           </tr>
           <tr>
             <td>
               <mat-form-field appearance="outline">
-                <mat-label>Mot de passe</mat-label>
+                <mat-label>Password</mat-label>
                 <mat-pass-toggle-visibility #toggle matSuffix></mat-pass-toggle-visibility>
                 <input matInput
                        [type]="toggle.type"
                        #password
                        required
-                       placeholder="Entrez votre mot de passe"
+                       placeholder="Type your password"
                        formControlName="password"
                 >
-                <mat-error *ngIf="loginForm.get('email').hasError('required')">Email obligatoires</mat-error>
+                <mat-error *ngIf="loginForm.get('password').hasError('required')">Password required</mat-error>
               </mat-form-field>
             </td>
           </tr>
           <tr>
             <td align="center">
               <button
-                mat-raised-button  type="submit" [disabled]="loginForm.invalid" >CONNECTER</button>
+                mat-raised-button  type="submit" [disabled]="loginForm.invalid" >SIGN IN</button>
             </td>
           </tr>
 

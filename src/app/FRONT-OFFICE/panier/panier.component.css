@@ -107,7 +107,6 @@ Let’s add some basic style to  product name and description.
 }
 .bg-img
 {
-
   position: fixed;
   text-align:center;
   width: 100%;
@@ -117,4 +116,22 @@ Let’s add some basic style to  product name and description.
 }
 .bg-img img{
   height: 600px;
+}
+.formStyleContainer{
+  position: fixed;
+  z-index: 6666;
+  align-content: center;
+  width: 100%;
+  height: 100%;
+  top:100px;
+}
+.formStyle{
+  box-shadow: 2px 1px 15px #333;
+  background-color:white;
+  padding-top:20px;
+  margin: 0 auto;
+  border-radius:15px;
+  width: 70%;
+  height: 84%;
+  overflow-y: auto;
 }

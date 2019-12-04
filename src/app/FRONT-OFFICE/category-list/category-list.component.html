@@ -2,8 +2,8 @@
 
   |<ul class="catList"*ngFor="let c of categories;">
   <li class="catListElement">
-    <a class="catListElement" routerLink="/client/product/{{c.idCategory}}" role="button" routerLinkActive="active">{{c.name}} </a>
-  </li><span style="margin-left: 5px">|</span>
+    <button class="btn btn-cat" routerLink="/client/product/{{c.idCategory}}" role="button" routerLinkActive="active">{{c.name}} </button><span style="margin-left: 7px">|</span>
+  </li>
 </ul>
 </div>
 

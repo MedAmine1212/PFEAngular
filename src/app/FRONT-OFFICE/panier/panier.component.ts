@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import * as SecureLS from 'secure-ls';
 import {Product} from '../../entities/product';
+import {NavComponent} from '../nav/nav.component';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 interface CartProdcut {
   productToAdd: Product;
   qte: number;
@@ -11,6 +13,8 @@ interface CartProdcut {
   styleUrls: ['./panier.component.css']
 })
 export class PanierComponent implements OnInit {
+  private logged: boolean;
+
   private isMobile: boolean;
   private showHideImg: boolean;
   imgSrc: string;
@@ -18,11 +22,12 @@ export class PanierComponent implements OnInit {
   private ls: SecureLS;
   private totalPrice: number;
   private emptyTab: boolean;
-
-
+  private showLogIns: boolean;
   constructor() { }
 
   ngOnInit() {
+    this.showLogIns = false;
+    this.logged = false;
     this.emptyTab = false;
     this.imgSrc = '';
     this.showHideImg = false;
@@ -87,4 +92,14 @@ export class PanierComponent implements OnInit {
       this.emptyTab = true;
     }
   }
+
+  checkIfLoggedIn() {
+
+    // test ken logged in or not
+    this.showLogIns = true;
+  }
+  closeLogIns() {
+    this.showLogIns = false;
+  }
 }
+

@@ -7,11 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
   private isMobile: boolean;
-
+  private thisPage: string;
   constructor() {
   }
 
   ngOnInit() {
+    this.thisPage = 'home';
     this.isMobile = /msie\s|trident\/|edge\//i.test(window.navigator.userAgent);
   }
 }
