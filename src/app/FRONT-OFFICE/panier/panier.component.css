@@ -1,0 +1,136 @@
+.title {
+
+  height: 60px;
+  border-bottom: 1px solid #E1E8EE;
+  padding: 20px 30px;
+  color: #5E6977;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.item {
+  padding: 20px 30px;
+  height: 120px;
+  display: flex;
+}
+
+.item:nth-child(3) {
+  border-top:  1px solid #E1E8EE;
+  border-bottom:  1px solid #E1E8EE;
+}
+button {
+  border-radius: 10px;
+}
+
+
+image {
+  border-radius: 15px;
+}
+
+Let’s add some basic style to  product name and description.
+.description {
+  padding-top: 10px;
+  width: 115px;
+}
+
+.description span {
+  display: block;
+  font-size: 14px;
+  color: #43484D;
+  font-weight: 400;
+}
+
+.description span:first-child {
+  margin-bottom: 5px;
+}
+.description span:last-child {
+  font-weight: 300;
+  margin-top: 8px;
+  color: #86939E;
+}
+.quantity {
+  padding-top: 20px;
+}
+.quantity input {
+  -webkit-appearance: none;
+  border: none;
+  text-align: center;
+  width: 32px;
+  font-size: 16px;
+  color: #43484D;
+  font-weight: 300;
+}
+
+.pmBut
+{
+  border: none;
+  width:23px;
+  height:20px;
+  background-color: #555555;
+  color: white;
+  border-radius:20px;
+}
+
+.pmBut:hover
+{
+
+  border: 1px solid #555555;
+  background-color: white;
+  color: #555555;
+
+}
+
+.qte
+{
+  margin-left: 12px;
+  text-align: center;
+  color:black;
+  font-size: 15px;
+}
+
+.total-price {
+  width: 83px;
+  padding-top: 40px;
+  text-align: center;
+  font-size: 16px;
+  color: #43484D;
+  font-weight: 300;
+}
+.cntSh{
+  font-weight: bold;
+  color:forestgreen;
+}
+.cntSh:hover
+{
+  font-weight: bolder;
+  color: darkgreen;
+}
+.bg-img
+{
+  position: fixed;
+  text-align:center;
+  width: 100%;
+  z-index: 6666;
+  top:90px;
+  left:0;
+}
+.bg-img img{
+  height: 600px;
+}
+.formStyleContainer{
+  position: fixed;
+  z-index: 666;
+  align-content: center;
+  width: 100%;
+  height: 100%;
+  top:75px;
+}
+.formStyle{
+  box-shadow: 2px 1px 15px #333;
+  background-color:white;
+  margin: 0 auto;
+  border-radius:15px;
+  width: 70%;
+  height: 88%;
+  overflow-y: auto;
+}
