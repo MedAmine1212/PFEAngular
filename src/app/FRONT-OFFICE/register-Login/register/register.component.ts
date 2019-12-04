@@ -37,6 +37,7 @@ export function MustMatch(controlName: string, matchingControlName: string) {
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
+  form: any = {};
   user: User = new User();
   registerForm: FormGroup;
   maxDate = new Date(2003, 0, 0);
@@ -82,12 +83,5 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  add() {
-    this.userService.add(this.user).subscribe(data => console.log(data), error1 => console.log(error1));
-    this.dialogComponent = this.dialog.open(DialogComponent, {
-      width: '350px',
-      data : {firstName: this.user.firstName, lastName: this.user.lastName}
-    });
-    this.registerForm.reset();
-  }
+
 }

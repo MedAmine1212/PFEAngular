@@ -40,6 +40,7 @@ import {ProductListBACKComponent} from './BACK-OFFICE/product-list-BACK/product-
 import {CategoryListBACKComponent} from './BACK-OFFICE/category-list-BACK/category-list.component';
 import {CategoryDetailsBACKComponent} from './BACK-OFFICE/category-details-BACK/category-details.component';
 import {BACKOFFICEComponent} from './BACK-OFFICE/back-office.component';
+import {httpInterceptorProviders} from './services/auth/auth-interceptor';
 
 
 @NgModule({
@@ -96,12 +97,12 @@ import {BACKOFFICEComponent} from './BACK-OFFICE/back-office.component';
 
   ],
   entryComponents: [DialogComponent],
-  providers: [{
+  providers: [/*{
     provide: RECAPTCHA_SETTINGS,
     useValue: {
       siteKey: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI',
     } as RecaptchaSettings,
-  }],
+  },*/ httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

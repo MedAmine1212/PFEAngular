@@ -4,7 +4,7 @@
     <form [formGroup]="registerForm"  (ngSubmit)="registerForm.valid" novalidate>
       <div class="form-container">
         <table align="center">
-          <tr >
+          <tr>
             <td colspan="2" align="center">
               <mat-form-field appearance="outline">
                 <mat-label>Email</mat-label>
@@ -14,10 +14,21 @@
                        required
                        placeholder="exemple@exemple.exp"
                        formControlName="email"
-                       [(ngModel)]="user.email"
-                >
+                       [(ngModel)]="user.email">
                 <mat-error *ngIf="registerForm.get('email').hasError('required')">Email obligatoires</mat-error>
                 <mat-error *ngIf="registerForm.get('email').hasError('email')">Format email incorrect</mat-error>
+              </mat-form-field>
+            </td>
+
+          </tr>
+          <tr>
+            <td colspan="2" align="center">
+              <mat-form-field appearance="outline">
+                <mat-label>username</mat-label>
+                <input matInput
+                       id="username"
+                       #username
+                       [(ngModel)]="user.username">
               </mat-form-field>
             </td>
 

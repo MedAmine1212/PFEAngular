@@ -15,6 +15,7 @@
                        required
                        placeholder="Entrez votre Email"
                        formControlName="email"
+                       [(ngModel)]="user.email"
                 >
                 <mat-error *ngIf="loginForm.get('email').hasError('required')">Email obligatoires</mat-error>
                 <mat-error *ngIf="loginForm.get('email').hasError('email')">Format email incorrect</mat-error>
@@ -31,7 +32,7 @@
                        #password
                        required
                        placeholder="Entrez votre mot de passe"
-                       formControlName="password"
+                       formControlName="password" [(ngModel)]="user.password"
                 >
                 <mat-error *ngIf="loginForm.get('email').hasError('required')">Email obligatoires</mat-error>
               </mat-form-field>
@@ -39,7 +40,7 @@
           </tr>
           <tr>
             <td align="center">
-              <button
+              <button (click)="login()"
                 mat-raised-button  type="submit" [disabled]="loginForm.invalid" >CONNECTER</button>
             </td>
           </tr>
