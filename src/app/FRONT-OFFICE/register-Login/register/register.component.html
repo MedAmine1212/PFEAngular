@@ -126,6 +126,38 @@
               </mat-form-field>
             </td>
           </tr>
+          <tr>
+            <td>
+              <mat-form-field appearance="outline">
+                <mat-label>Adress</mat-label>
+                <input matInput
+                       #adress
+                       required
+                       placeholder="Entrez votre adress"
+                       formControlName="adress"
+                       [(ngModel)]="user.adress"
+                >
+                <mat-error *ngIf="registerForm.get('adress').hasError('required')">adress obligatoire !!</mat-error>
+
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field appearance="outline">
+                <mat-label>phone number</mat-label>
+                <ngx-mat-intl-tel-input  matInput
+                                         [preferredCountries]="['tn']"
+                                         [enablePlaceholder]="true"
+                                         [enableSearch]="true"
+                                         placeholder="Entrez votre number"
+                                         #phoneNumber
+                                         [(ngModel)]="user.phoneNumber"
+                                         formControlName="phoneNumber"></ngx-mat-intl-tel-input>
+                <mat-error *ngIf="registerForm.get('phoneNumber').hasError('required')">phone number obligatoire !!</mat-error>
+
+              </mat-form-field>
+
+            </td>
+          </tr>
 
           <tr>
             <td colspan="2" align="center">

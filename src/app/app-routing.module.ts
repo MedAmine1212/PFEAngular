@@ -14,6 +14,7 @@ import {CategoryDetailsBACKComponent} from './BACK-OFFICE/category-details-BACK/
 import {ProductListBACKComponent} from './BACK-OFFICE/product-list-BACK/product-list.component';
 import {CategoryDetailsComponent} from './FRONT-OFFICE/category-details/category-details.component';
 import {PanierComponent} from './FRONT-OFFICE/panier/panier.component';
+import {SupprimeUserComponent} from "./BACK-OFFICE/supprime-user/supprime-user.component";
 
 
 const routes: Routes = [
@@ -23,6 +24,7 @@ const routes: Routes = [
   {path : 'panier', component: PanierComponent},
   {path : 'client/product/:id', component: CategoryDetailsComponent},
   {path: 'admin/categories', component: CategoryListBACKComponent},
+  {path: 'admin/users', component: SupprimeUserComponent},
   {path: 'admin/addCategory', component: CreateCategoryComponent},
   {path: 'admin/updateCategory/:id', component: UpdateCategoryComponent},
   {path: 'admin/detailCategory/:id', component: CategoryDetailsBACKComponent},

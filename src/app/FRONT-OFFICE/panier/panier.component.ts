@@ -3,6 +3,7 @@ import * as SecureLS from 'secure-ls';
 import {Product} from '../../entities/product';
 import {NavComponent} from '../nav/nav.component';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {AuthenticationService} from "../../services/auth/authentication.service";
 interface CartProdcut {
   productToAdd: Product;
   qte: number;
@@ -23,9 +24,11 @@ export class PanierComponent implements OnInit {
   private totalPrice: number;
   private emptyTab: boolean;
   private showLogIns: boolean;
-  constructor() { }
+  private showValidateCom: boolean;
+  constructor(private auth: AuthenticationService) { }
 
   ngOnInit() {
+    this.showValidateCom = false;
     this.showLogIns = false;
     this.logged = false;
     this.emptyTab = false;
@@ -96,7 +99,11 @@ export class PanierComponent implements OnInit {
   checkIfLoggedIn() {
 
     // test ken logged in or not
-    this.showLogIns = true;
+    if (!this.auth.isAuthentified()) {
+      this.showLogIns = true;
+    } else {
+      this.showValidateCom = true;
+    }
   }
   closeLogIns() {
     this.showLogIns = false;

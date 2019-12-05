@@ -41,6 +41,9 @@ import {CategoryListBACKComponent} from './BACK-OFFICE/category-list-BACK/catego
 import {CategoryDetailsBACKComponent} from './BACK-OFFICE/category-details-BACK/category-details.component';
 import {BACKOFFICEComponent} from './BACK-OFFICE/back-Nav/back-office.component';
 import { PanierComponent } from './FRONT-OFFICE/panier/panier.component';
+import {NgxMatIntlTelInputModule} from 'ngx-mat-intl-tel-input';
+import { SupprimeUserComponent } from './BACK-OFFICE/supprime-user/supprime-user.component';
+import {httpInterceptorProviders} from "./services/auth/auth-interceptor";
 
 @NgModule({
   declarations: [
@@ -68,6 +71,7 @@ import { PanierComponent } from './FRONT-OFFICE/panier/panier.component';
     CategoryDetailsBACKComponent,
     BACKOFFICEComponent,
     PanierComponent,
+    SupprimeUserComponent,
 
   ],
   imports: [
@@ -93,7 +97,8 @@ import { PanierComponent } from './FRONT-OFFICE/panier/panier.component';
     FormsModule,
     HttpClientModule,
     MatNativeDateModule,
-    MaterialModule, MatDialogModule
+    MaterialModule, MatDialogModule,
+    NgxMatIntlTelInputModule
 
   ],
   entryComponents: [DialogComponent],
@@ -102,7 +107,7 @@ import { PanierComponent } from './FRONT-OFFICE/panier/panier.component';
     useValue: {
       siteKey: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI',
     } as RecaptchaSettings,
-  }],
+  }, httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

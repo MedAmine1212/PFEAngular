@@ -49,4 +49,9 @@ this.roles = jwtObject.roles ;
     return this.roles && (this.isAdmin() || this.isUser());
   }
 
+  loggedIn()
+  {
+return !!localStorage.getItem('token');
+  }
+
 }

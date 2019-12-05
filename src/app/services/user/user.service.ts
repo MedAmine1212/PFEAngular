@@ -11,25 +11,10 @@ export class UserService {
   private baseUrl = 'http://localhost:81/rest';
   constructor(private http: HttpClient) { }
 
-  add(user: User): Observable<object> {
-    return this.http.post(this.baseUrl + '/register', user);
-  }
-
-  list(): Observable<any> {
-    return this.http.get(this.baseUrl + '/list', );
-  }
-
   remove(id) {
-    return this.http.delete(this.baseUrl + 'Users/' + id, );
+    return this.http.delete(this.baseUrl + '/delete/' + id, );
   }
-
-  modify(user) {
-    return this.http.put(this.baseUrl + 'Users/', user );
+  listUsers(): Observable<any> {
+    return this.http.get(this.baseUrl + '/listUsers', );
   }
-
-  findById(id): Observable<User> {
-    // @ts-ignore
-    return this.http.get(this.baseUrl + 'Users/' + id);
-  }
-
 }

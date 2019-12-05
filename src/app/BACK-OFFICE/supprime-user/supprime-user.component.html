@@ -1,0 +1,46 @@
+<app-back-office></app-back-office>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<div class="panel panel-primary" style="margin-top:70px;">
+  <div style="background-color: rgb(52,58,64)" class="panel-heading">
+    <h2>Users List</h2>
+  </div>
+  <div class="panel-body" >
+
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>Email</th>
+        <th>Firstname</th>
+        <th>Lastname</th>
+        <th>Date of birth</th>
+        <th>Gender</th>
+        <th>Adress</th>
+        <th>Phone number</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of users | async">
+        <td>{{user.idUser}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.firstname}}</td>
+        <td>{{user.lastname}}</td>
+        <td>{{user.dateOfBirth}}</td>
+        <td>{{user.gender}}</td>
+        <td>{{user.adress}}</td>
+        <td>{{user.phoneNumber}}</td>
+        <td>
+          <div style="display: flex">
+            <button (click)="deleteUser(user.idUser)" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
