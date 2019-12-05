@@ -1,9 +1,14 @@
 <div class="catDiv">
 
-  |<ul class="catList"*ngFor="let c of categories;">
-  <li class="catListElement">
-    <button class="btn btn-cat" routerLink="/client/product/{{c.idCategory}}" role="button" routerLinkActive="active">{{c.name}} </button><span style="margin-left: 7px">|</span>
-  </li>
-</ul>
+  <button class="btn btn-cat" [ngStyle]="{'color':catId === -1 ? 'rgb(255,202,99)' : 'black' }" (click)="getProductsById(-1)" role="button" routerLinkActive="active">All</button>|
+  <ul class="catList"*ngFor="let c of categories;">
+    <li class="catListElement">
+      <button class="btn btn-cat" [ngStyle]="{'color':catId === c.idCategory ? 'rgb(255,202,99)' : 'black' }" (click)="getProductsById(c.idCategory)" role="button" routerLinkActive="active">{{c.name}} </button><span style="margin-left: 7px">|</span>
+    </li>
+  </ul>
 </div>
 
+
+<h3 style="margin-left:20px;font-weight: bolder ">Products: </h3>
+<br>
+<app-product-list [idCat]=catId></app-product-list>

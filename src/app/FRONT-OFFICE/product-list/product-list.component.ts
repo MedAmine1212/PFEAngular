@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
 import {Product} from '../../entities/product';
@@ -15,51 +15,45 @@ interface CartProdcut {
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css']
 })
-export class ProductListComponent implements OnInit {
+export class ProductListComponent implements OnInit, OnChanges {
+  @Input() idCat: number;
   products: Product[];
   category: Category;
   cart: CartProdcut;
+  nb: number;
   private tabRes: CartProdcut[];
   private test = true;
   private pan: MiniPanierComponent;
   private ls: SecureLS;
 
-
+  ngOnChanges(changes: SimpleChanges): void {
+    this.reloadData();
+  }
   constructor(private productService: ProductService, private router: Router) {
+    console.log(this.idCat);
+    if (this.idCat !== this.nb) {this.ngOnInit(); }
   }
 
   ngOnInit() {
-
-    this.ls = new SecureLS({encodingType: 'aes'});
     this.reloadData();
   }
   reloadData() {
-    this.productService.getProducts().subscribe(r => {
-      this.products = r;
-      console.log(r);
-    });
-  }
-
-  deleteProduct(idProduct: number) {
-    this.productService.deleteProduct(idProduct).subscribe(data => {
-      console.log(data);
-      this.reloadData();
-    }, error => console.log(error));
-  }
-
-  productDetails(id: number) {
-    this.router.navigate(['detailProduct', id]);
-  }
-
-  updateProduct(id: number) {
-    this.reloadData();
-    this.router.navigate(['updateProduct', id]);
+    if (this.idCat === -1) {
+      this.productService.getProducts().subscribe(r => {
+        this.products = r;
+      });
+    } else {
+      this.productService.getProductByCategorieId(this.idCat).subscribe(r => {
+        this.products = r;
+      });
+    }
+    this.nb = this.idCat;
+    console.log(this.idCat);
   }
 
   addToCarta(newProduct: Product) {
     this.tabRes = this.ls.get('_temp_user_p_key');
-   // this.tabRes = JSON.parse(this.allProductStringRes);
-    console.log(this.tabRes) ;
+    // this.tabRes = JSON.parse(this.allProductStringRes);
     // tslint:disable-next-line:triple-equals
     if (this.tabRes == null || this.tabRes == undefined || this.tabRes.length == 0) {
       this.tabRes = [] ;

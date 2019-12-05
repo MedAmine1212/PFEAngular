@@ -31,6 +31,6 @@ export class ProductService {
     return this.http.get(`${this.baseUrl}/${id}`);
   }
   getProductByCategorieId(id: number): Observable<any> {
-    return this.http.get(`http://127.0.0.1:81/rest/productsByCategory/${id}`);
+    return this.http.get(`http://127.0.0.1:81/rest/products/productsByCategories/${id}`);
   }
 }

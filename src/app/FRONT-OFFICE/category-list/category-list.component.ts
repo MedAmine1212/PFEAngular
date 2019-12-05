@@ -13,22 +13,23 @@ import {Category} from '../../entities/category';
 
 export class CategoryListComponent implements OnInit {
   categories: Category[];
+  private catId: number;
 
   constructor(private categoryService: CategoryService, private router: Router) {
   }
 
   ngOnInit() {
-    this.reloadData();
+    this.catId = -1;
+    this.getProductsById(this.catId);
+    console.log(this.catId);
   }
-
   reloadData() {
     this.categoryService.getCategoriesList().subscribe(r => {
       this.categories = r;
-      console.log(this.categories);
     });
   }
-
-  categoryDetails(id: number) {
-    this.router.navigate(['detailCategory', id]);
+  getProductsById(idCategory: number) {
+    this.catId = idCategory;
+    this.reloadData();
   }
 }
