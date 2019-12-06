@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation} from '@angular/core';
 import {EmailValidator, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {User} from '../../../entities/user';
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
@@ -37,6 +37,9 @@ export function MustMatch(controlName: string, matchingControlName: string) {
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
+  @Input() panParent: boolean;
+  @Output() closeAll = new EventEmitter<boolean>();
+
   user: User = new User();
   registerForm: FormGroup;
   maxDate = new Date(2003, 0, 0);
@@ -91,5 +94,8 @@ export class RegisterComponent implements OnInit {
       data : {firstName: this.user.firstName, lastName: this.user.lastName}
     });
     this.registerForm.reset();
+    if (this.panParent) {
+    this.closeAll.emit(true);
+}
   }
 }

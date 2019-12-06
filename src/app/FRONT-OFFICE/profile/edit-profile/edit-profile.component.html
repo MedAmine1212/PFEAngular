@@ -1,0 +1,54 @@
+<div  style="align-content: end"  style="height:350px;">
+  <div class="list-viewer-wrapper " align="center">
+    <h3 class="list-header-title">MY INFORMATIONS</h3>
+
+
+  <table >
+    <tr>
+      <td><mat-form-field class="example-full-width">
+        <input matInput placeholder="Email" disabled [(ngModel)]="user.email"  >
+      </mat-form-field></td>
+      <td><mat-form-field class="example-full-width">
+        <input
+        matInput
+        [max]="maxDate"
+        [min]="minDate"
+        #dateBirth
+        required
+        [matDatepicker]="picker"
+        placeholder="JJ/MM/YYYY"
+        formControlName="dateBirth"
+
+         [formControl]="date" placeholder="Choose a date" >
+        <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
+        <mat-datepicker #picker [startAt]="date"></mat-datepicker>
+      </mat-form-field></td>
+    </tr>
+    <tr>
+    <td><mat-form-field class="example-full-width">
+      <input matInput placeholder="First name" [(ngModel)]="user.firstName">
+    </mat-form-field></td>
+    <td><mat-form-field class="example-full-width">
+      <input matInput placeholder="Last name" [(ngModel)]="user.lastName">
+    </mat-form-field></td>
+    </tr>
+    <tr>
+      <td><mat-form-field class="example-full-width">
+        <textarea matInput placeholder="Address" [(ngModel)]="user.adress"></textarea>
+      </mat-form-field></td>
+      <td><mat-form-field class="example-full-width">
+        <span matPrefix>+216 &nbsp;</span>
+        <input type="tel" matInput [(ngModel)]="user.phoneNumber" placeholder="Telephone">
+      </mat-form-field></td>
+    </tr>
+    <tr >
+      <td style="padding-left: 33%">
+        <button  mat-raised-button (click)="updateUser()">Save</button>
+      </td>
+    </tr>
+  </table>
+
+
+  </div>
+</div>
+

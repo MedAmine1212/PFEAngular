@@ -1,0 +1,31 @@
+<div class="panel panel-primary" style="margin-top:150px;">
+  <div style="background-color: rgb(52,58,64)" class="panel-heading">
+    <h2>Order List</h2>
+  </div>
+  <div class="panel-body" >
+
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>date</th>
+        <th>status</th>
+        <th>Products</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let order of orders | async">
+        <td>{{order.idOrder}}</td>
+        <td>05/12/2019</td>
+        <td>{{order.status}}</td>
+        <td>{{order.products}}</td>
+        <td>
+          <div style="display: flex">
+            <button (click)="updateOrder(order.idOrder)" class="btn btn-info" style="margin-left: 10px"><span class="glyphicon glyphicon-pencil"></span></button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

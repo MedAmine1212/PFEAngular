@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {User} from '../../../entities/user';
 import {AuthenticationService} from '../../../services/auth/authentication.service';
@@ -13,6 +13,9 @@ import {Router} from '@angular/router';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   user: User;
+  @Input() panParent: boolean;
+  @Output() closeAll = new EventEmitter<boolean>();
+
   constructor(private formBuilder: FormBuilder, private auth: AuthenticationService, private router: Router) { }
 
   ngOnInit() {
@@ -32,7 +35,11 @@ export class LoginComponent implements OnInit {
       console.log(this.auth.isUser());
       console.log( this.auth.isAdmin());
       console.log( this.auth.isAuthentified());
-      this.router.navigate(['/']);
+      if (!this.panParent) {
+     if (this.auth.isUser()) {this.router.navigate(['/']); }
+     if (this.auth.isAdmin()) {this.router.navigate(['/admin/categories']); }} else {
+      this.closeAll.emit(true);
+    }
     }, error => {
 
     });

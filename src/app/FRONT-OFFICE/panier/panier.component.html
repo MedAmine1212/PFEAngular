@@ -75,9 +75,9 @@
     <div class="formStyle">
       <button style="margin-left: 5px;float: left;margin-top: 20px" class="btn btn-dribbble" (click)="closeLogIns()">Cancel</button>
 
-     <app-login style="margin-top:7%;float: left;margin-left: 10px"></app-login>
+     <app-login [panParent]="true" (closeAll)="closeAddFromAdd($event)" style="margin-top:7%;float: left;margin-left: 10px"></app-login>
 
-      <app-register style="margin-top:-20px;float: right;margin-right: 10%"></app-register>
+      <app-register  [panParent]="true" (closeAll)="closeAddFromAdd($event)" style="margin-top:-20px;float: right;margin-right: 10%"></app-register>
 
     </div>
   </div>

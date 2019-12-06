@@ -1,0 +1,8 @@
+import {Product} from './product';
+
+export class Order {
+  idOrder: number;
+  date: Date ;
+  status: string;
+  products: Product [] ;
+}

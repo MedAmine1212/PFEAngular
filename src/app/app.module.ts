@@ -43,7 +43,11 @@ import {BACKOFFICEComponent} from './BACK-OFFICE/back-Nav/back-office.component'
 import { PanierComponent } from './FRONT-OFFICE/panier/panier.component';
 import {NgxMatIntlTelInputModule} from 'ngx-mat-intl-tel-input';
 import { SupprimeUserComponent } from './BACK-OFFICE/supprime-user/supprime-user.component';
-import {httpInterceptorProviders} from "./services/auth/auth-interceptor";
+import {httpInterceptorProviders} from './services/auth/auth-interceptor';
+import {OrderListBACKComponent} from './BACK-OFFICE/order-list-back/order-list-back.component';
+import {ProfileComponent} from './FRONT-OFFICE/profile/profile.component';
+import {EditProfileComponent} from './FRONT-OFFICE/profile/edit-profile/edit-profile.component';
+import { OrdersFrontComponent } from './FRONT-OFFICE/profile/orders-front/orders-front.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +76,10 @@ import {httpInterceptorProviders} from "./services/auth/auth-interceptor";
     BACKOFFICEComponent,
     PanierComponent,
     SupprimeUserComponent,
+    OrderListBACKComponent,
+    ProfileComponent,
+    EditProfileComponent,
+    OrdersFrontComponent
 
   ],
   imports: [
@@ -98,8 +106,7 @@ import {httpInterceptorProviders} from "./services/auth/auth-interceptor";
     HttpClientModule,
     MatNativeDateModule,
     MaterialModule, MatDialogModule,
-    NgxMatIntlTelInputModule
-
+    NgxMatIntlTelInputModule,
   ],
   entryComponents: [DialogComponent],
   providers: [{

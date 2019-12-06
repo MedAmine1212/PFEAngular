@@ -14,7 +14,9 @@ import {CategoryDetailsBACKComponent} from './BACK-OFFICE/category-details-BACK/
 import {ProductListBACKComponent} from './BACK-OFFICE/product-list-BACK/product-list.component';
 import {CategoryDetailsComponent} from './FRONT-OFFICE/category-details/category-details.component';
 import {PanierComponent} from './FRONT-OFFICE/panier/panier.component';
-import {SupprimeUserComponent} from "./BACK-OFFICE/supprime-user/supprime-user.component";
+import {SupprimeUserComponent} from './BACK-OFFICE/supprime-user/supprime-user.component';
+import {OrderListBACKComponent} from './BACK-OFFICE/order-list-back/order-list-back.component';
+import {ProfileComponent} from './FRONT-OFFICE/profile/profile.component';
 
 
 const routes: Routes = [
@@ -23,6 +25,7 @@ const routes: Routes = [
   {path : 'Login', component: RegisterLoginComponent},
   {path : 'panier', component: PanierComponent},
   {path : 'client/product/:id', component: CategoryDetailsComponent},
+  {path : 'admin/orders', component: OrderListBACKComponent},
   {path: 'admin/categories', component: CategoryListBACKComponent},
   {path: 'admin/users', component: SupprimeUserComponent},
   {path: 'admin/addCategory', component: CreateCategoryComponent},
@@ -31,8 +34,8 @@ const routes: Routes = [
   {path: 'admin/products', component: ProductListBACKComponent},
   {path: 'admin/addProduct', component: CreateProductComponent},
   {path: 'admin/detailProduct/:id', component: ProductDetailsComponent},
-  {path: 'admin/updateProduct/:id', component: UpdateProductComponent}
-
+  {path: 'admin/updateProduct/:id', component: UpdateProductComponent},
+  {path : 'client/profile', component: ProfileComponent}
 ];
 
 @NgModule({

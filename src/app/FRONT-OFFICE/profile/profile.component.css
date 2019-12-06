@@ -1,0 +1,19 @@
+
+.formStyleContainer{
+  position: fixed;
+  z-index: 6666;
+  align-content: center;
+  width: 100%;
+  height: 100%;
+  top:90px;
+}
+.formStyle{
+  box-shadow: 2px 1px 15px #333;
+  background-color:white;
+  padding:20px;
+  margin: 0 auto;
+  border-radius:15px;
+  width: 30%;
+  height: 85%;
+}
+

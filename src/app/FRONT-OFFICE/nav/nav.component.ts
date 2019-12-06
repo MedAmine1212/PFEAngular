@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {AuthenticationService} from "../../services/auth/authentication.service";
 
 @Component({
   selector: 'app-nav',
@@ -27,7 +28,7 @@ export class NavComponent implements OnInit {
   acHome: boolean;
   acLogReg: boolean;
   acCon: boolean;
-  constructor() { }
+  constructor(private auth: AuthenticationService) { }
   private isOnP: boolean;
   hideMinPan: boolean;
 
@@ -50,6 +51,15 @@ export class NavComponent implements OnInit {
     }
     this.alwaysHideMinPan = false;
     this.isOnP = true;
+  }
+
+  isLoggedIn() {
+    return localStorage.getItem('token');
+  }
+
+  logOut(){
+     this.auth.loggedOut();
+     this.ngOnInit();
   }
 
 

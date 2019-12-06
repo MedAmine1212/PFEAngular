@@ -3,19 +3,27 @@ import * as SecureLS from 'secure-ls';
 import {Product} from '../../entities/product';
 import {NavComponent} from '../nav/nav.component';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {AuthenticationService} from "../../services/auth/authentication.service";
+import {AuthenticationService} from '../../services/auth/authentication.service';
+import {OrderService} from '../../services/order/order.service';
+import {OrderDto} from '../../entities/OrderDto';
+import {User} from "../../entities/user";
+import {DatePipe} from "@angular/common";
+import {Observable} from "rxjs";
+import {ProductQteDto} from "../../entities/ProductQteDto";
+
 interface CartProdcut {
   productToAdd: Product;
   qte: number;
 }
+
 @Component({
   selector: 'app-panier',
   templateUrl: './panier.component.html',
-  styleUrls: ['./panier.component.css']
+  styleUrls: ['./panier.component.css'],
+  providers: [DatePipe]
 })
 export class PanierComponent implements OnInit {
   private logged: boolean;
-
   private isMobile: boolean;
   private showHideImg: boolean;
   imgSrc: string;
@@ -25,9 +33,19 @@ export class PanierComponent implements OnInit {
   private emptyTab: boolean;
   private showLogIns: boolean;
   private showValidateCom: boolean;
-  constructor(private auth: AuthenticationService) { }
+  private orderDto: OrderDto;
+  private i: number;
+  private idProductToAdd: number;
+  private qteProductToAdd: number;
+  private user: Observable<any>;
+
+  constructor(private auth: AuthenticationService, private orderS: OrderService) {
+    this.orderDto = new OrderDto();
+    //this.user = auth.getUser();
+  }
 
   ngOnInit() {
+    this.i = 0;
     this.showValidateCom = false;
     this.showLogIns = false;
     this.logged = false;
@@ -63,7 +81,9 @@ export class PanierComponent implements OnInit {
       if (f.productToAdd.idProduct === idProd) {
         f.qte++;
         this.totalPrice += (f.productToAdd.price);
-        break; }}
+        break;
+      }
+    }
     this.ls.set('_temp_user_p_key', this.tabRes);
   }
 
@@ -72,23 +92,25 @@ export class PanierComponent implements OnInit {
       if (f.productToAdd.idProduct === idProd) {
         f.qte--;
         this.totalPrice -= (f.productToAdd.price);
-        if ( f.qte === 0) {
-          this.suppProduct(f.productToAdd.idProduct) ;
+        if (f.qte === 0) {
+          this.suppProduct(f.productToAdd.idProduct);
         }
-        break; }}
+        break;
+      }
+    }
     this.ls.set('_temp_user_p_key', this.tabRes);
   }
 
   suppProduct(idProd: number) {
     this.tabRes = this.ls.get('_temp_user_p_key');
-    console.log(this.tabRes) ;
-    let i = 0 ;
+    console.log(this.tabRes);
+    let i = 0;
     for (const f of this.tabRes) {
       if (f.productToAdd.idProduct === idProd) {
         this.tabRes.splice(i, 1);
         break;
       }
-      i++ ;
+      i++;
     }
     this.ls.set('_temp_user_p_key', this.tabRes);
     if (this.tabRes.length <= 0) {
@@ -96,17 +118,32 @@ export class PanierComponent implements OnInit {
     }
   }
 
+
   checkIfLoggedIn() {
 
     // test ken logged in or not
-    if (!this.auth.isAuthentified()) {
+    if (!localStorage.getItem('token')) {
       this.showLogIns = true;
     } else {
       this.showValidateCom = true;
+      for (const pr of this.tabRes) {
+        this.orderDto.userId = 1;
+        this.idProductToAdd = pr.productToAdd.idProduct;
+        this.qteProductToAdd = pr.qte;
+        /*this.orderDto.productDto[this.i].id = this.idProductToAdd;
+        this.orderDto.productDto[this.i].qte = this.qteProductToAdd;*/
+        this.i += 1;
+        console.log(this.orderDto);
+      }
     }
   }
+
   closeLogIns() {
     this.showLogIns = false;
+  }
+
+  closeAddFromAdd($event: boolean) {
+    this.closeLogIns();
   }
 }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {style} from '@angular/animations';
 import {NavComponent} from '../nav/nav.component';
 import {Product} from '../../entities/product';
@@ -18,7 +18,6 @@ export class MiniPanierComponent implements OnInit {
   private tabRes: CartProdcut[];
   private totalPrice: number;
   private ls: SecureLS;
-
   constructor(private navComponent: NavComponent) {
   }
 

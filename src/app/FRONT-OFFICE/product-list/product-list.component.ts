@@ -35,6 +35,7 @@ export class ProductListComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    this.ls = new SecureLS({encodingType: 'aes'});
     this.reloadData();
   }
   reloadData() {

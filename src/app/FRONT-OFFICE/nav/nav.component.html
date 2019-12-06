@@ -18,7 +18,11 @@
           <a [className]="acCon ? 'nav-link active' : 'nav-link'"  routerLink="/Contact">Contact us</a>
         </li>
         <li class="nav-item">
-          <a [className]="acLogReg ? 'nav-link active' : 'nav-link'" routerLink="/Login" title="Your account"><span class="glyphicon glyphicon-user"></span></a>
+          <a *ngIf="isLoggedIn()" (click)="logOut()" routerLink="/" class="nav-link" >Log out</a>
+          <a *ngIf="!isLoggedIn()" [className]="acLogReg ? 'nav-link active' : 'nav-link'" routerLink="/Login" title="Your account">Log in</a>
+        </li>
+        <li class="nav-item">
+          <a *ngIf="isLoggedIn()" [className]="acLogReg ? 'nav-link active' : 'nav-link'" routerLink="/client/profile" title="Your account"><span class="glyphicon glyphicon-user"></span></a>
         </li>
       </ul>
 

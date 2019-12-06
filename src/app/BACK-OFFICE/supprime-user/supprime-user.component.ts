@@ -21,7 +21,7 @@ export class SupprimeUserComponent implements OnInit {
   ngOnInit() {
   }
   reloadData() {
-    this.users = this.userService.listUsers();
+    this.users = this.userService.list();
   }
   deleteUser(id: number) {
     this.userService.remove(id).subscribe(data => {
