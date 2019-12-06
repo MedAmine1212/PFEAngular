@@ -11,4 +11,6 @@
 
 <h3 style="margin-left:20px;font-weight: bolder ">Products: </h3>
 <br>
+<div *ngIf="categories!=null">
 <app-product-list [idCat]=catId></app-product-list>
+</div>
