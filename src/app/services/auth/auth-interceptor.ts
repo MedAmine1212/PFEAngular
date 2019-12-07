@@ -18,7 +18,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
     if (req.url === 'http://localhost:81/login' ||
       req.url === 'http://localhost:81/rest/register' ||
-      req.url === 'http://127.0.0.1:81/rest/products' ||
+      req.url.substring(0, 33) === 'http://127.0.0.1:81/rest/products' ||
       req.url === 'http://127.0.0.1:81/rest/categories'  ) {return next.handle(req); } else {
     const token = this.auth.getToken() ;
 
