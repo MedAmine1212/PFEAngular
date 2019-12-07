@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {User} from '../../entities/user';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {UserService} from "../user/user.service";
+import {UserService} from '../user/user.service';
 import {Observable} from "rxjs";
 
 
@@ -16,8 +16,8 @@ export class AuthenticationService {
   jwt: string;
   email: string;
   roles: Array<string>;
-user: User;
-  private id: Observable<any>;
+idUser: number ;
+
   constructor(private http: HttpClient, private userService: UserService) {
   }
 
@@ -38,24 +38,25 @@ user: User;
   private parseJWT() {
     const jwtHelper = new JwtHelperService();
     const jwtObject = jwtHelper.decodeToken(this.jwt);
-    this.email = jwtObject.obj;
+    this.email = jwtObject.sub;
     this.roles = jwtObject.roles;
+    console.log('after jwt email = ', this.email);
   }
 
   isAdmin() {
-    this.jwt = localStorage.getItem('token')
+    this.jwt = localStorage.getItem('token');
     this.parseJWT();
     return this.roles.indexOf('ADMIN') >= 0;
   }
 
   isUser() {
-    this.jwt = localStorage.getItem('token')
+    this.jwt = localStorage.getItem('token');
     this.parseJWT();
     return this.roles.indexOf('USER') >= 0;
   }
 
   isAuthentified() {
-    this.jwt = localStorage.getItem('token')
+    this.jwt = localStorage.getItem('token');
     this.parseJWT();
     return this.roles && (this.isAdmin() || this.isUser());
   }
@@ -70,10 +71,13 @@ user: User;
     this.roles = [];
   }
 
-  getUser(): Observable<any> {
-    this.jwt = localStorage.getItem('token')
+  getUser(): Promise<User> {
+    this.jwt = localStorage.getItem('token');
     this.parseJWT();
-    return this.userService.findByEmail(this.email);
+
+    return  this.userService.findByEmail(this.email).toPromise();
+
+
   }
 
 }

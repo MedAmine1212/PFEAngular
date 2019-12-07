@@ -23,6 +23,7 @@ interface CartProdcut {
   providers: [DatePipe]
 })
 export class PanierComponent implements OnInit {
+  private user1: User ;
   private logged: boolean;
   private isMobile: boolean;
   private showHideImg: boolean;
@@ -41,10 +42,9 @@ export class PanierComponent implements OnInit {
 
   constructor(private auth: AuthenticationService, private orderS: OrderService) {
     this.orderDto = new OrderDto();
-    //this.user = auth.getUser();
   }
 
-  ngOnInit() {
+ async ngOnInit() {
     this.i = 0;
     this.showValidateCom = false;
     this.showLogIns = false;
@@ -63,6 +63,8 @@ export class PanierComponent implements OnInit {
     } else {
       this.emptyTab = true;
     }
+    this.user1 = await this.auth.getUser() ;
+    console.log('thiss is the user ', this.user1);
   }
 
   showImg(x, src) {

@@ -6,6 +6,9 @@ import {Category} from '../../entities/category';
 import {ProductService} from '../../services/product/product.service';
 import {MiniPanierComponent} from '../mini-panier/mini-panier.component';
 import * as SecureLS from 'secure-ls';
+import {UserService} from "../../services/user/user.service";
+import {AuthenticationService} from "../../services/auth/authentication.service";
+import {User} from "../../entities/user";
 interface CartProdcut {
   productToAdd: Product;
   qte: number;
@@ -26,15 +29,17 @@ export class ProductListComponent implements OnInit, OnChanges {
   private pan: MiniPanierComponent;
   private ls: SecureLS;
 
+
   ngOnChanges(changes: SimpleChanges): void {
     this.reloadData();
   }
-  constructor(private productService: ProductService, private router: Router) {
+  constructor(private productService: ProductService, private router: Router ) {
     console.log(this.idCat);
-    if (this.idCat !== this.nb) {this.ngOnInit(); }
+    if (this.idCat !== this.nb) {this.ngOnInit();
+    }
   }
 
-  ngOnInit() {
+ async ngOnInit() {
     this.ls = new SecureLS({encodingType: 'aes'});
     this.reloadData();
   }
