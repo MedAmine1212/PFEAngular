@@ -11,7 +11,7 @@
     <button (click)="addCategory()" class="btn btn-success" style="margin-left: 10px; float: right; margin-top: -45px"><span class="glyphicon glyphicon-plus"></span></button>
   </div>
   <div class="panel-body" >
-
+  <div *ngIf="categories!=null">
     <table class="table table-striped">
       <thead>
       <tr>
@@ -36,6 +36,7 @@
       </tr>
       </tbody>
     </table>
+  </div>
   </div>
   <div *ngIf="showAddCategory" class="formStyleContainer">
     <div style="margin-top: 8%;width: 30%;height: 40%" class="formStyle" >
