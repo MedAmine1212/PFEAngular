@@ -1,22 +1,13 @@
 
 <app-nav [actif]="thisPage"></app-nav>
+<body class="bodyS" >
+<div class="containerDiv">
+  <form (ngSubmit)="null" style="width: 50%" >
 
-<p>contact works !</p>
-<p>contact works !</p>
-<p>contact works !</p>
-<p>contact works !</p>
-<p>contact works !</p>
-<p>contact works !</p>
-<p>contact works !</p>
-<p>contact works !</p>
-<p>contact works !</p>
-<p>contact works !</p>
-<p>contact works !</p>
-<p>contact works !</p>
-<p>contact works !</p>
-<p>contact works !</p>
-<p>contact works !</p>
-<p>contact works !</p>
-<p>contact works !</p>
-
-<app-footer>s</app-footer>
+    <input class="form-control" type="email" name="EmailCon" value="" placeholder="Your Email Adress" required /><br><br>
+    <textarea class="form-control" rows = "3" cols = "50" name="msgCon" value="" placeholder="What's on your mind ?" required></textarea><br><br>
+    <input type="submit" name="subCon" class="btn btn-primary" value="Send !"/>
+  </form>
+</div>
+</body>
+<app-footer></app-footer>

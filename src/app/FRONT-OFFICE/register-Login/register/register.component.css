@@ -36,12 +36,13 @@ button{
 }
 
 .list-viewer-wrapper{
-  margin-top: 40px;
+  margin-top: 60px;
   border: 3px solid rgb(255,202,99)  ! important;
   border-radius: 15px ! important;
   border-bottom-left-radius: 50px ! important;
   border-bottom-right-radius: 50px ! important;
   padding: 20px;
+;background-color: white
 }
 mat-button-toggle-group{
   margin-top: 13px;

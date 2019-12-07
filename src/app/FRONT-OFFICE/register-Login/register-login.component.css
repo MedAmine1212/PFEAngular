@@ -26,15 +26,25 @@ table{
   height: 520px;
 }
 
-button{
-  background-color:rgb(255,202,99);
-}
 .list-header-title{
   color: rgb(255,202,99);
   border-radius: 13px;
 
 }
-
+.btn-link{
+  background-color: transparent;
+  color:rgb(255,202,99);
+}
+.btn-outline-light{
+  border: none;
+  padding-top: 7px;
+  color:rgb(255,202,99);
+  font-size: 20px
+}
+.btn-outline-light:hover{
+  color: white;
+  background-color: transparent;
+}
 .list-viewer-wrapper{
   border-color: rgb(255,202,99);
   border-radius: 15px;
@@ -47,3 +57,6 @@ mat-button-toggle-group{
 
 
 
+.bodyS{
+  background:url(../../../assets/Images/emailVape.jpg) no-repeat;
+}

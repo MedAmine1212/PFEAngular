@@ -1,17 +1,37 @@
 
 <app-nav [actif]='thisPage'></app-nav>
-
+<body class="bodyS">
 <div>
-<mat-grid-list cols="2">
+<mat-grid-list cols="1" rowHeight="800px">
   <mat-grid-tile>
+    <table *ngIf="logTrue">
+      <tr>
+        <td>
     <app-login></app-login>
-  </mat-grid-tile>
+        </td>
+      </tr>
+      <tr >
+        <td style="Color:white;padding-left: 50px">
+    New to our website ?<button class="btn btn-link" (click)="change()">Sign up</button>
+        </td>
+      </tr>
+    </table>
+    <table *ngIf="signTrue">
+      <tr>
+        <td style="color:white;padding-top: 130px;padding-left:20px">
+          <button  class="btn btn-outline-light" *ngIf="signTrue" (click)="change()"><span class="glyphicon glyphicon-circle-arrow-left"></span></button> Back to Sign in
+        </td>
+      </tr>
+      <tr>
+      <td>
+        <app-register ></app-register>
+      </td>
+      </tr>
+    </table>
 
-
-  <mat-grid-tile>
-    <app-register></app-register>
   </mat-grid-tile>
 </mat-grid-list>
-
-<app-footer></app-footer>
 </div>
+
+</body>
+<app-footer></app-footer>
