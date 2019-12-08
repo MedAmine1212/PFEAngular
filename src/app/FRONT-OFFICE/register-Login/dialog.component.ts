@@ -4,7 +4,7 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @Component({
   template: `
-      <h3 mat-dialog-title>Merci pour votre Inscription </h3>
+      <h3 mat-dialog-title>Submitted successfully</h3>
       <div style="text-align: center;">
           <p>
               <button mat-button [mat-dialog-close]="" cdkFocusInitial>Ok</button>

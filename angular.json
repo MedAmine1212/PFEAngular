@@ -20,7 +20,7 @@
             "tsConfig": "tsconfig.app.json",
             "aot": false,
             "assets": [
-              "src/assets/Images/Logo2.png",
+              "src/assets/Images/Logo2",
               "src/assets"
             ],
             "styles": [

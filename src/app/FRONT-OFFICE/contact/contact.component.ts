@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ContactService} from '../../services/Contact/contact.service';
+import {DialogComponent} from '../register-Login/dialog.component';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 export class Data {
   email: string;
   message: string;
@@ -14,7 +16,8 @@ export class ContactComponent implements OnInit {
   thisPage: string;
   email: string;
   message: string;
-  constructor(private contactService: ContactService) { }
+  dialogComponent: MatDialogRef<DialogComponent>;
+    constructor(private contactService: ContactService, private dialog: MatDialog) { }
 
   ngOnInit() {
     this.message = '';
@@ -23,6 +26,9 @@ export class ContactComponent implements OnInit {
   }
 
   sendEmail() {
-      this.contactService.sendEmail(this.data).subscribe(data => console.log(data), error1 => console.log(error1));;
+      this.contactService.sendEmail(this.data).subscribe(data => console.log(data), error1 => console.log(error1));
+      this.dialogComponent = this.dialog.open(DialogComponent, {
+      width: '350px'
+    });
     }
 }
