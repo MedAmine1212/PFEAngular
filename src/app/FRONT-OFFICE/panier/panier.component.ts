@@ -39,12 +39,16 @@ export class PanierComponent implements OnInit {
   private idProductToAdd: number;
   private qteProductToAdd: number;
   private user: Observable<any>;
+  logTrue: boolean;
+  signTrue: boolean;
 
   constructor(private auth: AuthenticationService, private orderS: OrderService) {
     this.orderDto = new OrderDto();
   }
 
  async ngOnInit() {
+    this.logTrue = true;
+    this.signTrue = false;
     this.i = 0;
     this.showValidateCom = false;
     this.showLogIns = false;
@@ -146,6 +150,11 @@ export class PanierComponent implements OnInit {
 
   closeAddFromAdd($event: boolean) {
     this.closeLogIns();
+  }
+
+  change(){
+    this.logTrue = !this.logTrue;
+    this.signTrue = !this.signTrue;
   }
 }
 
