@@ -16,7 +16,7 @@ export class AuthenticationService {
   jwt: string;
   email: string;
   roles: Array<string>;
-idUser: number ;
+  user: User;
 
   constructor(private http: HttpClient, private userService: UserService) {
   }
@@ -36,8 +36,7 @@ idUser: number ;
   }
 
 
-
-   parseJWT() {
+  parseJWT() {
     const jwtHelper = new JwtHelperService();
     const jwtObject = jwtHelper.decodeToken(this.jwt);
     this.email = jwtObject.sub;
@@ -76,9 +75,7 @@ idUser: number ;
   getUser(): Promise<User> {
     this.jwt = localStorage.getItem('token');
     this.parseJWT();
-    return  this.userService.findByEmail(this.email).toPromise();
-
-
+    return this.userService.findByEmail(this.email).toPromise();
   }
 
 }

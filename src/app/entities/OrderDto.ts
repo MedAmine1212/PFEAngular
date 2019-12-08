@@ -4,8 +4,7 @@ export class OrderDto {
   userId: number;
   status: string;
   date: Date;
-  productDto: ProductQteDto[];
+  products: ProductQteDto[] = [];
   constructor() {
-    this.productDto = [];
   }
 }
