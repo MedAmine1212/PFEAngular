@@ -28,12 +28,12 @@
       <tr *ngFor="let product of products | async">
         <td>{{product.idProduct}}</td>
         <td>{{product.name}}</td>
-        <td>{{product.description}}</td>
-        <td style="text-align: center"><img style="cursor: pointer" title="Show image" (click)="showImg(1,product.image)" src="{{product.image}}" width="20%" height="100"/> </td>
+        <td >{{product.description}}</td>
+        <td style="text-align: center"><img style="cursor: pointer" title="Show image" (click)="showImg(1,product.image)" src="{{product.image}}" height="20%"/> </td>
         <td>{{product.quantity}}</td>
         <td>{{product.price}}</td>
         <td>{{product.category.name}}</td>
-        <td>
+        <td style="width: 180px">
           <button (click)="deleteProduct(product.idProduct)" class="btn btn-danger" style="margin-left: 10px"><span class="glyphicon glyphicon-trash"></span> </button>
           <button (click)="productDetails(product.idProduct)" class="btn btn-dark" style="margin-left: 10px"><span class="glyphicon glyphicon-th-list"></span></button>
           <button (click)="updateProduct(product.idProduct)" class="btn btn-info" style="margin-left: 10px"><span class="glyphicon glyphicon-pencil"></span></button>
