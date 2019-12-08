@@ -55,7 +55,7 @@ export class RegisterComponent implements OnInit {
 
 
 
-  constructor(private rout: Router , private formBuilder: FormBuilder, private userService: UserService, public dialog: MatDialog) {
+  constructor(private formBuilder: FormBuilder, private route: Router, private userService: UserService, public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -97,6 +97,6 @@ export class RegisterComponent implements OnInit {
     this.registerForm.reset();
     if (this.panParent) {
     this.closeAll.emit(true);
-    }
+}
   }
 }

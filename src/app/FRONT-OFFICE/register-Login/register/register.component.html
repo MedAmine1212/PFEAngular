@@ -39,7 +39,7 @@
                 >
 
                 <mat-error *ngIf="registerForm.get('password').hasError('required')">Password required</mat-error>
-                <!--        <mat-error *ngIf="f.c">Taille minimum 8 caractéres ! </mat-error>-->
+<!--                        <mat-error *ngIf="registerForm.get('password').hasError('length')">Taille minimum 8 caractéres ! </mat-error>-->
 
               </mat-form-field>
             </td>
@@ -168,7 +168,7 @@
           </tr>
           <tr>
             <td colspan="2" align="center">
-              <button [disabled]="registerForm.invalid || reactiveForm.invalid" mat-raised-button  type="submit" (click)="add()">SIGN UP</button>
+              <button [disabled]="registerForm.invalid || reactiveForm.invalid" mat-raised-button  type="submit" (click)="add()" >SIGN UP</button>
             </td>
           </tr>
 
