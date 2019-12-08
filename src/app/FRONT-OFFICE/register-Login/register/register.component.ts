@@ -6,6 +6,7 @@ import {MatDatepickerInputEvent, MatDialog, MatDialogRef} from '@angular/materia
 import {error} from 'util';
 import {UserService} from '../../../services/user/user.service';
 import {DialogComponent} from '../dialog.component';
+import {Router} from "@angular/router";
 
 
 type Type = 'text' | 'password' ;
@@ -54,7 +55,7 @@ export class RegisterComponent implements OnInit {
 
 
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService, public dialog: MatDialog) {
+  constructor(private formBuilder: FormBuilder, private route: Router, private userService: UserService, public dialog: MatDialog) {
   }
 
   ngOnInit() {
