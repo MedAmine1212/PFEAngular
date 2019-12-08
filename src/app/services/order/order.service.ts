@@ -28,4 +28,7 @@ export class OrderService {
   getOrderById(id: number): Observable<any> {
     return  this.http.get(`${this.baseUrl}/${id}`);
   }
+  getOrderByIdUser(id: number): Observable<any> {
+    return  this.http.get(`http://localhost:81/rest/ordersByUser/${id}`);
+  }
 }

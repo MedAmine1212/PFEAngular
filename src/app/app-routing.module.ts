@@ -17,6 +17,7 @@ import {PanierComponent} from './FRONT-OFFICE/panier/panier.component';
 import {SupprimeUserComponent} from './BACK-OFFICE/supprime-user/supprime-user.component';
 import {OrderListBACKComponent} from './BACK-OFFICE/order-list-back/order-list-back.component';
 import {ProfileComponent} from './FRONT-OFFICE/profile/profile.component';
+import {OrdersFrontComponent} from './FRONT-OFFICE/profile/orders-front/orders-front.component';
 
 
 const routes: Routes = [
@@ -35,6 +36,7 @@ const routes: Routes = [
   {path: 'admin/addProduct', component: CreateProductComponent},
   {path: 'admin/detailProduct/:id', component: ProductDetailsComponent},
   {path: 'admin/updateProduct/:id', component: UpdateProductComponent},
+  {path: 'client/orders', component: OrdersFrontComponent},
   {path : 'client/profile', component: ProfileComponent}
 ];
 

@@ -3,7 +3,7 @@
 <h1 style="font-weight: bolder;margin-bottom: 40px">My profile</h1>
 <br><br><br>
 <button class="btn btn-primary" (click)="showDetailsCom()" ROLE="button" style="margin-right: 40px">Edit my details</button>
-<button class="btn btn-primary">View my Orders</button><br><br>
+<button class="btn btn-primary"  (click)="showOrdersCom()">View my Orders</button><br><br>
 <button style="margin-top: 60px" class="btn btn-secondary">Sign out</button><br>
 </div>
 
@@ -11,8 +11,12 @@
   <div class="formStyle" >
     <app-edit-profile (closeAll)="closeDetailsComEv($event)"></app-edit-profile>
     <button style="margin-right: 30%;margin-top:30%;float:right" class="btn btn-dribbble" (click)="closeDetailsCom()">Cancel</button>
-
-
+  </div>
+</div>
+  <div  *ngIf="showOrder" class="formStyleContainer">
+  <div class="formStyle" >
+    <app-orders-front (closeAll)="closeOrderComEv($event)"></app-orders-front>
+    <button style="margin-right: 30%;margin-top:30%;float:right" class="btn btn-dribbble" (click)="closeOrderCom()">Cancel</button>
   </div>
 </div>
 

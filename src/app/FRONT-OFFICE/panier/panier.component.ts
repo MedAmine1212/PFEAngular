@@ -6,10 +6,10 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog
 import {AuthenticationService} from '../../services/auth/authentication.service';
 import {OrderService} from '../../services/order/order.service';
 import {OrderDto} from '../../entities/OrderDto';
-import {User} from "../../entities/user";
-import {DatePipe} from "@angular/common";
-import {Observable} from "rxjs";
-import {ProductQteDto} from "../../entities/ProductQteDto";
+import {User} from '../../entities/user';
+import {DatePipe} from '@angular/common';
+import {Observable} from 'rxjs';
+import {ProductQteDto} from '../../entities/ProductQteDto';
 
 interface CartProdcut {
   productToAdd: Product;
@@ -23,7 +23,6 @@ interface CartProdcut {
   providers: [DatePipe]
 })
 export class PanierComponent implements OnInit {
-  private user1: User ;
   private logged: boolean;
   private isMobile: boolean;
   private showHideImg: boolean;
@@ -35,21 +34,14 @@ export class PanierComponent implements OnInit {
   private showLogIns: boolean;
   private showValidateCom: boolean;
   private orderDto: OrderDto;
-  private i: number;
-  private idProductToAdd: number;
-  private qteProductToAdd: number;
-  private user: Observable<any>;
-  logTrue: boolean;
-  signTrue: boolean;
+  private user1: User;
 
-  constructor(private auth: AuthenticationService, private orderS: OrderService) {
-    this.orderDto = new OrderDto();
+  constructor(private auth: AuthenticationService, private orderService: OrderService) {
+
   }
 
- async ngOnInit() {
-    this.logTrue = true;
-    this.signTrue = false;
-    this.i = 0;
+  async ngOnInit() {
+    this.orderDto = new OrderDto();
     this.showValidateCom = false;
     this.showLogIns = false;
     this.logged = false;
@@ -67,8 +59,8 @@ export class PanierComponent implements OnInit {
     } else {
       this.emptyTab = true;
     }
-    this.user1 = await this.auth.getUser() ;
-    console.log('thiss is the user ', this.user1);
+    this.user1 = await this.auth.getUser();
+    console.log(this.user1);
   }
 
   showImg(x, src) {
@@ -133,13 +125,9 @@ export class PanierComponent implements OnInit {
     } else {
       this.showValidateCom = true;
       for (const pr of this.tabRes) {
-        this.orderDto.userId = 1;
-        this.idProductToAdd = pr.productToAdd.idProduct;
-        this.qteProductToAdd = pr.qte;
-        /*this.orderDto.productDto[this.i].id = this.idProductToAdd;
-        this.orderDto.productDto[this.i].qte = this.qteProductToAdd;*/
-        this.i += 1;
-        console.log(this.orderDto);
+        this.orderDto.userId = this.user1.idUser;
+        this.orderDto.products.push(new ProductQteDto(pr.productToAdd.idProduct, pr.qte));
+        this.orderService.createOrder(this.orderDto).subscribe(data => console.log(data), error => console.log(error));
       }
     }
   }
@@ -150,11 +138,6 @@ export class PanierComponent implements OnInit {
 
   closeAddFromAdd($event: boolean) {
     this.closeLogIns();
-  }
-
-  change(){
-    this.logTrue = !this.logTrue;
-    this.signTrue = !this.signTrue;
   }
 }
 

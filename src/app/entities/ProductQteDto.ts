@@ -1,6 +1,7 @@
 export class ProductQteDto {
-  public id: number;
-  public qte: number;
-  constructor() {
+  public idP: number;
+  public qteP: number;
+
+  constructor(private id: number, private qte: number) {
   }
 }
