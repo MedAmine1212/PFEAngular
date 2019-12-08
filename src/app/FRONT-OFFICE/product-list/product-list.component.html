@@ -1,5 +1,5 @@
 <div   class="container-fluid padding">
-  <div style="font-weight:bolder;color:grey;width: 100%;font-size: 15px;text-align: center" *ngIf="products != null"> No products to show</div>
+  <div style="font-weight:bolder;color:grey;width: 100%;font-size: 15px;text-align: center" *ngIf="products.length == 0 || products == null"> No products to show</div>
   <div  class="col-xs-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let product of products">
     <div class="card">
       <div style="height: 300px" >

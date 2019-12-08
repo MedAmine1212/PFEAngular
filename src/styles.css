@@ -1,1 +1,12 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+* {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select:none;
+  user-select:none;
+  -o-user-select:none;
+}
+
+input:focus, textarea , button{
+  outline: none !important;
+}
