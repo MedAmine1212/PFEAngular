@@ -26,7 +26,7 @@ export class UserService {
   }
 
   modify(idUser: number, user: User): Observable<any> {
-    return this.http.put( '${this.baseUrl}/update/' + idUser, user);
+    return this.http.put( this.baseUrl + '/update/' + idUser, user);
   }
 
   findById(id): Observable<any> {
