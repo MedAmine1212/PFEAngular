@@ -7,5 +7,6 @@ export class OrderDto {
   products: ProductQteDto[] = [];
 
   constructor() {
+    this.productDto = [];
   }
 }

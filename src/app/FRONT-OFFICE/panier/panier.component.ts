@@ -35,7 +35,8 @@ export class PanierComponent implements OnInit {
   private showValidateCom: boolean;
   private orderDto: OrderDto;
   private user1: User;
-
+  logTrue: boolean;
+  signTrue: boolean;
   constructor(private auth: AuthenticationService, private orderService: OrderService) {
 
   }
@@ -138,6 +139,11 @@ export class PanierComponent implements OnInit {
 
   closeAddFromAdd($event: boolean) {
     this.closeLogIns();
+  }
+
+  change() {
+    this.logTrue = !this.logTrue;
+    this.signTrue = !this.signTrue;
   }
 }
 

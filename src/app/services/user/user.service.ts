@@ -26,14 +26,14 @@ export class UserService {
   }
 
   modify(idUser: number, user: User): Observable<any> {
-    return this.http.put( '${this.baseUrl}/update/' + idUser, user);
+    return this.http.put( this.baseUrl + '/update/' + idUser, user);
   }
 
   findById(id): Observable<any> {
     return this.http.get(this.baseUrl + '/user/' + id);
   }
   findByEmail(email): Observable<any> {
-    return this.http.get(this.baseUrl + '/usermail/' + email);
+    return this.http.get(this.baseUrl + '/user/' + email);
   }
 
 }
