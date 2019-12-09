@@ -87,7 +87,7 @@ export class PanierComponent implements OnInit, OnChanges {
 
   incr(idProd: number) {
     for (const f of this.tabRes) {
-      if (f.productToAdd.idProduct === idProd) {
+      if (f.productToAdd.idProduct === idProd && f.qte < f.productToAdd.quantity) {
         f.qte++;
         this.totalPrice += (f.productToAdd.price);
         break;
@@ -138,7 +138,7 @@ export class PanierComponent implements OnInit, OnChanges {
         this.orderDto.userId = this.user1.idUser;
         this.orderDto.products.push(new ProductQteDto(pr.productToAdd.idProduct, pr.qte));
         this.orderS.createOrder(this.orderDto).subscribe(data => {this.resultat = data; if (this.resultat === 'ACCEPTED') {
-          this.showMessage = true;} }, error => console.log(error));
+          this.showMessage = true; }}, error => console.log(error));
       }
     }
   }
@@ -166,4 +166,5 @@ export class PanierComponent implements OnInit, OnChanges {
       this.showMessage = true;
     }
   }
+
 }

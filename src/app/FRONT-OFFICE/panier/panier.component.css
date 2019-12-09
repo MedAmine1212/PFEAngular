@@ -154,9 +154,9 @@ Let’s add some basic style to  product name and description.
 }
 
 .t{
-  padding-left: 30%;
+  padding-left: 8%;
   padding-top: 12%;
   color: red;
-  font-size: 36px;
+  font-size: 15px;
   align-content: center;
 }

@@ -18,6 +18,7 @@ import {SupprimeUserComponent} from './BACK-OFFICE/supprime-user/supprime-user.c
 import {OrderListBACKComponent} from './BACK-OFFICE/order-list-back/order-list-back.component';
 import {ProfileComponent} from './FRONT-OFFICE/profile/profile.component';
 import {OrdersFrontComponent} from './FRONT-OFFICE/profile/orders-front/orders-front.component';
+import {AuthGuard} from "./auth.guard";
 
 
 const routes: Routes = [
@@ -26,16 +27,26 @@ const routes: Routes = [
   {path : 'Login', component: RegisterLoginComponent},
   {path : 'panier', component: PanierComponent},
   {path : 'client/product/:id', component: CategoryDetailsComponent},
-  {path : 'admin/orders', component: OrderListBACKComponent},
-  {path: 'admin/categories', component: CategoryListBACKComponent},
-  {path: 'admin/users', component: SupprimeUserComponent},
-  {path: 'admin/addCategory', component: CreateCategoryComponent},
-  {path: 'admin/updateCategory/:id', component: UpdateCategoryComponent},
-  {path: 'admin/detailCategory/:id', component: CategoryDetailsBACKComponent},
-  {path: 'admin/products', component: ProductListBACKComponent},
-  {path: 'admin/addProduct', component: CreateProductComponent},
-  {path: 'admin/detailProduct/:id', component: ProductDetailsComponent},
-  {path: 'admin/updateProduct/:id', component: UpdateProductComponent},
+  {path : 'admin/orders', component: OrderListBACKComponent, canActivate: [AuthGuard],
+    data: {role: 'ADMIN'}},
+  {path: 'admin/categories', component: CategoryListBACKComponent, canActivate: [AuthGuard],
+    data: {role: 'ADMIN'}},
+  {path: 'admin/users', component: SupprimeUserComponent, canActivate: [AuthGuard],
+    data: {role: 'ADMIN'}},
+  {path: 'admin/addCategory', component: CreateCategoryComponent, canActivate: [AuthGuard],
+    data: {role: 'ADMIN'}},
+  {path: 'admin/updateCategory/:id', component: UpdateCategoryComponent, canActivate: [AuthGuard],
+    data: {role: 'ADMIN'}},
+  {path: 'admin/detailCategory/:id', component: CategoryDetailsBACKComponent, canActivate: [AuthGuard],
+    data: {role: 'ADMIN'}},
+  {path: 'admin/products', component: ProductListBACKComponent, canActivate: [AuthGuard],
+    data: {role: 'ADMIN'}},
+  {path: 'admin/addProduct', component: CreateProductComponent, canActivate: [AuthGuard],
+    data: {role: 'ADMIN'}},
+  {path: 'admin/detailProduct/:id', component: ProductDetailsComponent, canActivate: [AuthGuard],
+    data: {role: 'ADMIN'}},
+  {path: 'admin/updateProduct/:id', component: UpdateProductComponent, canActivate: [AuthGuard],
+    data: {role: 'ADMIN'}},
   {path: 'client/orders', component: OrdersFrontComponent},
   {path : 'client/profile', component: ProfileComponent}
 ];

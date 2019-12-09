@@ -47,7 +47,7 @@ export class MiniPanierComponent implements OnInit {
 
   incr(idProd: number) {
     for (const f of this.tabRes) {
-      if (f.productToAdd.idProduct === idProd) {
+      if (f.productToAdd.idProduct === idProd && f.qte < f.productToAdd.quantity) {
         f.qte++;
         this.totalPrice += (f.productToAdd.price);
         break; }}

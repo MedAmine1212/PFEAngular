@@ -48,6 +48,7 @@ import {OrderListBACKComponent} from './BACK-OFFICE/order-list-back/order-list-b
 import {ProfileComponent} from './FRONT-OFFICE/profile/profile.component';
 import {EditProfileComponent} from './FRONT-OFFICE/profile/edit-profile/edit-profile.component';
 import { OrdersFrontComponent } from './FRONT-OFFICE/profile/orders-front/orders-front.component';
+import {AuthGuard} from "./auth.guard";
 
 @NgModule({
   declarations: [
@@ -114,7 +115,7 @@ import { OrdersFrontComponent } from './FRONT-OFFICE/profile/orders-front/orders
     useValue: {
       siteKey: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI',
     } as RecaptchaSettings,
-  }, httpInterceptorProviders],
+  }, httpInterceptorProviders, [AuthGuard]],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

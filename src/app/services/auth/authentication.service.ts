@@ -78,4 +78,11 @@ export class AuthenticationService {
     return this.userService.findByEmail(this.email).toPromise();
   }
 
+  getRole()
+  {
+    this.jwt = localStorage.getItem('token');
+    this.parseJWT();
+    return this.roles[0];
+  }
+
 }

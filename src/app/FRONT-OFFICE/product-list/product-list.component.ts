@@ -58,16 +58,17 @@ export class ProductListComponent implements OnInit, OnChanges {
   }
 
   addToCarta(newProduct: Product) {
+    if (newProduct.quantity > 0) {
     this.tabRes = this.ls.get('_temp_user_p_key');
-    // this.tabRes = JSON.parse(this.allProductStringRes);
-    // tslint:disable-next-line:triple-equals
-    if (this.tabRes == null || this.tabRes == undefined || this.tabRes.length == 0) {
+    if (this.tabRes == null || this.tabRes == undefined || this.tabRes.length === 0) {
       this.tabRes = [] ;
       this.tabRes.push(this.cart = {productToAdd: newProduct, qte: 1}); console.log('tab jdida ');
     } else if (this.tabRes.length > 0) {
       for (const f of this.tabRes) {
         if (f.productToAdd.idProduct === newProduct.idProduct) {
+          if (f.qte < f.productToAdd.quantity) {
           f.qte = f.qte + 1;
+          }
           this.test = false;
           break;
         } else { this.test = true ; }}
@@ -79,5 +80,6 @@ export class ProductListComponent implements OnInit, OnChanges {
     // this.allProductStringRes = JSON.stringify(this.tabRes);
     this.ls.set('_temp_user_p_key', this.tabRes);
     // tslint:disable-next-line:no-unused-expression label-position
+  }
   }
 }

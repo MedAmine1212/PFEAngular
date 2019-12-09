@@ -6,7 +6,8 @@
         <img style="float:left;width:70px;margin:20px " class="card-img-top" src="{{product.image}}">
         <div class="card-body" style="min-height: 250px;max-height: 250px;overflow-y: auto">
           <h4 class="card-title">{{product.name}}</h4>
-          <p><span style="max-height: 50px;overflow-y: scroll">{{product.description}}</span><br><br>PRICE: {{product.price}}DT<br><br> Quantity: {{product.quantity}}</p>
+          <p><span style="max-height: 50px;overflow-y: scroll">{{product.description}}</span><br><br>PRICE: {{product.price}}DT <br><br>
+            <span *ngIf="product.quantity == 0" style="color:red">OUT OF STOCK</span><span *ngIf="product.quantity != 0" style="color: green">Quantity: {{product.quantity}}</span></p>
         </div>
         <a style="float:right;margin-right: 10px;margin-top: -2px"  class="btn btn-outline-secondary" (click)="addToCarta(product)">Add to cart</a>
 

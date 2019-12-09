@@ -42,9 +42,6 @@
       </tr>
     </table>
   </div>
-  <div (click)="showImg(2,'')"  class="bg-img" [ngStyle]="{'display':showHideImg ? 'inherit' : 'none' }">
-    <img src="{{imgSrc}}"/>
-  </div>
 
     <div *ngIf="showAddProduct" class="formStyleContainer">
     <div class="formStyle" >
@@ -66,4 +63,7 @@
       <app-product-details [id]="id" (closeAll)="closeAddFromAdd($event)"></app-product-details>
     </div>
   </div>
+</div>
+<div (click)="showImg(2,'')"  class="bg-img" [ngStyle]="{'display':showHideImg ? 'inherit' : 'none' }">
+  <img src="{{imgSrc}}"/>
 </div>

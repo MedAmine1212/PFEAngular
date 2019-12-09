@@ -11,7 +11,10 @@
         <th>Id</th>
         <th>date</th>
         <th>status</th>
-        <th>Products</th>
+        <!--<th>Products</th>-->
+        <th>Phone number</th>
+        <th>Name</th>
+        <th>Action</th>
       </tr>
       </thead>
       <tbody>
@@ -19,7 +22,8 @@
         <td>{{order.idOrder}}</td>
         <td>05/12/2019</td>
         <td>{{order.status}}</td>
-        <td>{{order.products}}</td>
+        <td>{{order.user.phoneNumber}}</td>
+        <td>{{order.user.firstName}} {{order.user.lastName}}</td>
         <td>
           <div style="display: flex">
             <button (click)="updateOrder(order.idOrder)" class="btn btn-info" style="margin-left: 10px"><span class="glyphicon glyphicon-pencil"></span></button>
