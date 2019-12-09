@@ -14,9 +14,9 @@
   </div>
 </div>
   <div  *ngIf="showOrder" class="formStyleContainer">
-  <div class="formStyle" >
+  <div class="formStyle1" >
+    <button style="float:right" class="btn btn-dribbble" (click)="closeOrderCom()">Close</button>
     <app-orders-front (closeAll)="closeOrderComEv($event)"></app-orders-front>
-    <button style="margin-right: 30%;margin-top:30%;float:right" class="btn btn-dribbble" (click)="closeOrderCom()">Cancel</button>
   </div>
 </div>
 

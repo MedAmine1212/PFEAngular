@@ -8,7 +8,6 @@
   </div>
 </div>
 
-
 <div *ngIf="!emptyTab">
   <div [ngStyle]="{'filter':showHideImg ? 'blur(4px)' : 'none' }">
     <div [ngStyle]="{'filter':showLogIns ? 'blur(4px)' : 'none' }">
@@ -104,12 +103,13 @@
 
     </div>
   </div>
-  <div  *ngIf="showMessage" class="formStyleC">
-    <div class="formS" >
-      <p class="t">Sussces</p>
-      <button style="margin-left: 40%;margin-top: 20px" class="t" class="btn btn-dribbble" (click)="closeOrderCom()">Cancel</button>
-    </div>
+
 </div>
 <div [ngStyle]="{'filter':showHideImg ? 'blur(4px)' : 'none' }">
   <app-footer></app-footer>
 </div>
+<div  *ngIf="showMessage" class="formStyleC">
+  <div class="formS" >
+    <p class="t">Sussces</p>
+    <button style="margin-left: 40%;margin-top: 20px" class="t" class="btn btn-dribbble" (click)="closeOrderCom()">Cancel</button>
+  </div>

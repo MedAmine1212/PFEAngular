@@ -16,4 +16,21 @@
   width: 30%;
   height: 85%;
 }
-
+.formStyle1{
+  box-shadow: 2px 1px 15px #333;
+  background-color:white;
+  padding:20px;
+  margin: 0 auto;
+  border-radius:15px;
+  width: 85%;
+  max-height: 80%;
+  overflow-y: auto;
+}
+.formStyleContainer1{
+  position: fixed;
+  z-index: 6666;
+  align-content: center;
+  width: 100%;
+  height: 100%;
+  top:10px;
+}

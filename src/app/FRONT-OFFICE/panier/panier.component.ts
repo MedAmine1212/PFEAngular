@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import * as SecureLS from 'secure-ls';
 import {Product} from '../../entities/product';
 import {NavComponent} from '../nav/nav.component';
@@ -22,11 +22,12 @@ interface CartProdcut {
   styleUrls: ['./panier.component.css'],
   providers: [DatePipe]
 })
-export class PanierComponent implements OnInit {
+export class PanierComponent implements OnInit, OnChanges {
   private user1: User ;
   private logged: boolean;
   private isMobile: boolean;
   private showHideImg: boolean;
+  private resultat: any;
   imgSrc: string;
   private tabRes: CartProdcut[];
   private ls: SecureLS;
@@ -136,9 +137,9 @@ export class PanierComponent implements OnInit {
       for (const pr of this.tabRes) {
         this.orderDto.userId = this.user1.idUser;
         this.orderDto.products.push(new ProductQteDto(pr.productToAdd.idProduct, pr.qte));
-        this.orderS.createOrder(this.orderDto).subscribe(data => console.log(data), error => console.log(error));
+        this.orderS.createOrder(this.orderDto).subscribe(data => {this.resultat = data; if (this.resultat === 'ACCEPTED') {
+          this.showMessage = true;} }, error => console.log(error));
       }
-      this.showMessage = true;
     }
   }
 
@@ -155,6 +156,14 @@ export class PanierComponent implements OnInit {
   }
 
   closeOrderCom() {
+    this.ls.remove('_temp_user_p_key');
+    this.tabRes = null;
+    this.emptyTab = true;
     this.showMessage = false;
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.resultat === 'ACCEPTED') {
+      this.showMessage = true;
+    }
   }
 }
