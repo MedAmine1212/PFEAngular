@@ -41,12 +41,14 @@ export class PanierComponent implements OnInit {
   private user: Observable<any>;
   logTrue: boolean;
   signTrue: boolean;
+  showMessage: boolean;
 
   constructor(private auth: AuthenticationService, private orderS: OrderService) {
     this.orderDto = new OrderDto();
   }
 
   async ngOnInit() {
+    this.showMessage = false;
     this.logTrue = true;
     this.signTrue = false;
     this.i = 0;
@@ -136,6 +138,7 @@ export class PanierComponent implements OnInit {
         this.orderDto.products.push(new ProductQteDto(pr.productToAdd.idProduct, pr.qte));
         this.orderS.createOrder(this.orderDto).subscribe(data => console.log(data), error => console.log(error));
       }
+      this.showMessage = true;
     }
   }
 
@@ -146,9 +149,12 @@ export class PanierComponent implements OnInit {
   closeAddFromAdd($event: boolean) {
     this.closeLogIns();
   }
-
-  change(){
+  change() {
     this.logTrue = !this.logTrue;
     this.signTrue = !this.signTrue;
+  }
+
+  closeOrderCom() {
+    this.showMessage = false;
   }
 }
