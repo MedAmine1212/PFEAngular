@@ -23,6 +23,7 @@ interface CartProdcut {
   providers: [DatePipe]
 })
 export class PanierComponent implements OnInit {
+  private user1: User ;
   private logged: boolean;
   private isMobile: boolean;
   private showHideImg: boolean;
@@ -34,15 +35,21 @@ export class PanierComponent implements OnInit {
   private showLogIns: boolean;
   private showValidateCom: boolean;
   private orderDto: OrderDto;
-  private user1: User;
+  private i: number;
+  private idProductToAdd: number;
+  private qteProductToAdd: number;
+  private user: Observable<any>;
   logTrue: boolean;
   signTrue: boolean;
-  constructor(private auth: AuthenticationService, private orderService: OrderService) {
 
+  constructor(private auth: AuthenticationService, private orderS: OrderService) {
+    this.orderDto = new OrderDto();
   }
 
   async ngOnInit() {
-    this.orderDto = new OrderDto();
+    this.logTrue = true;
+    this.signTrue = false;
+    this.i = 0;
     this.showValidateCom = false;
     this.showLogIns = false;
     this.logged = false;
@@ -60,8 +67,8 @@ export class PanierComponent implements OnInit {
     } else {
       this.emptyTab = true;
     }
-    this.user1 = await this.auth.getUser();
-    console.log(this.user1);
+    this.user1 = await this.auth.getUser() ;
+    console.log('thiss is the user ', this.user1);
   }
 
   showImg(x, src) {
@@ -119,8 +126,7 @@ export class PanierComponent implements OnInit {
 
 
   checkIfLoggedIn() {
-
-    // test ken logged in or not
+// test ken logged in or not
     if (!localStorage.getItem('token')) {
       this.showLogIns = true;
     } else {
@@ -128,7 +134,7 @@ export class PanierComponent implements OnInit {
       for (const pr of this.tabRes) {
         this.orderDto.userId = this.user1.idUser;
         this.orderDto.products.push(new ProductQteDto(pr.productToAdd.idProduct, pr.qte));
-        this.orderService.createOrder(this.orderDto).subscribe(data => console.log(data), error => console.log(error));
+        this.orderS.createOrder(this.orderDto).subscribe(data => console.log(data), error => console.log(error));
       }
     }
   }
@@ -141,9 +147,8 @@ export class PanierComponent implements OnInit {
     this.closeLogIns();
   }
 
-  change() {
+  change(){
     this.logTrue = !this.logTrue;
     this.signTrue = !this.signTrue;
   }
 }
-
