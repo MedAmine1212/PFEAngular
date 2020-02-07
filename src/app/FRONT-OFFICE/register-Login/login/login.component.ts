@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
      if (this.auth.isUser()) {this.router.navigate(['/']); }
      if (this.auth.isAdmin()) {this.router.navigate(['/admin/categories']); }} else {
       this.closeAll.emit(true);
-    }
+      }
     }, error => {
 
     });

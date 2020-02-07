@@ -18,7 +18,7 @@ import {SupprimeUserComponent} from './BACK-OFFICE/supprime-user/supprime-user.c
 import {OrderListBACKComponent} from './BACK-OFFICE/order-list-back/order-list-back.component';
 import {ProfileComponent} from './FRONT-OFFICE/profile/profile.component';
 import {OrdersFrontComponent} from './FRONT-OFFICE/profile/orders-front/orders-front.component';
-import {AuthGuard} from "./auth.guard";
+import {AuthGuard} from './auth.guard';
 
 
 const routes: Routes = [

@@ -10,6 +10,7 @@ import {User} from '../../entities/user';
 import {DatePipe} from '@angular/common';
 import {Observable} from 'rxjs';
 import {ProductQteDto} from '../../entities/ProductQteDto';
+import {Router} from "@angular/router";
 
 interface CartProdcut {
   productToAdd: Product;
@@ -44,7 +45,7 @@ export class PanierComponent implements OnInit, OnChanges {
   signTrue: boolean;
   showMessage: boolean;
 
-  constructor(private auth: AuthenticationService, private orderS: OrderService) {
+  constructor(private auth: AuthenticationService, private orderS: OrderService, private router: Router) {
     this.orderDto = new OrderDto();
   }
 
@@ -149,6 +150,7 @@ export class PanierComponent implements OnInit, OnChanges {
 
   closeAddFromAdd($event: boolean) {
     this.closeLogIns();
+    this.router.navigate(['/']);
   }
   change() {
     this.logTrue = !this.logTrue;

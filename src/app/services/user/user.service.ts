@@ -18,11 +18,11 @@ export class UserService {
   }
 
   list(): Observable<any> {
-    return this.http.get(this.baseUrl + '/list', );
+    return this.http.get(this.baseUrl + '/user/listUsers', );
   }
 
   remove(id) {
-    return this.http.delete(this.baseUrl + 'Users/' + id, );
+    return this.http.delete(this.baseUrl + '/delete/' + id );
   }
 
   modify(idUser: number, user: User): Observable<any> {
