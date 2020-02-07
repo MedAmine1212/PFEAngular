@@ -8,7 +8,11 @@ import {ReactiveFormsModule} from '@angular/forms';
 import { RemoteMonotoringComponent } from './remote-monotoring/remote-monotoring.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './nav/nav.component';
-import { MainContainerComponent } from './main-container/main-container.component';
+import { AbsencesComponent } from './absences/absences.component';
+import { DepartementsComponent } from './departements/departements.component';
+import { AdministratorsComponent } from './administrators/administrators.component';
+import { TimetablesComponent } from './timetables/timetables.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +20,11 @@ import { MainContainerComponent } from './main-container/main-container.componen
     LoginComponent,
     RemoteMonotoringComponent,
     NavComponent,
-    MainContainerComponent
+    AbsencesComponent,
+    DepartementsComponent,
+    AdministratorsComponent,
+    TimetablesComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

@@ -11,30 +11,24 @@
 
         <ul class="navbar-nav ml-auto">
 
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home
-              <span class="sr-only">(current)</span>
-            </a>
+          <li class="nav-item">
+            <a [routerLink]="[{ outlets: {mainCon: ['Absences'] } }]" class="nav-link" href="#">Absences</a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="#">Absences</a>
+            <a [routerLink]="[{ outlets: {mainCon: ['Departements'] } }]" class="nav-link" href="">Departements</a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="#">Departements</a>
+            <a [routerLink]="[{ outlets: {mainCon: ['Administrators'] } }]" class="nav-link" href="">Administrators</a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="#">Administrators</a>
+            <a [routerLink]="[{ outlets: {mainCon: ['TimeTables'] } }]" class="nav-link" href="">Time Tables</a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="#">Time Tables</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="#">Profile</a>
+            <a class="nav-link" [routerLink]="[{ outlets: {mainCon: ['Profile'] } }]" href="">Profile</a>
           </li>
 
           <li class="nav-item">

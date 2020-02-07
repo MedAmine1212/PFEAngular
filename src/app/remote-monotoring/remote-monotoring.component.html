@@ -1,9 +1,9 @@
 <app-nav></app-nav>
 <div class="bigContainer">
-  <br>
+  <br><br>
   <div class="container-fluid h-100">
-
-    <table class="cardContainer"><tr><td class="contTD">
+    <table class="cardContainer">
+      <tr><td  [@enterAnimation] *ngIf="router.url === '/RemoteMonotoring' || router.url === '/RemoteMonotoring/(mainCon:Absences)'" class="contTD">
       <div class="card mb-sm-3 mb-md-0 contacts_card">
         <div class="card-header">
           <h2 class="empTitle">Employers</h2>
@@ -42,13 +42,21 @@
             </li>
           </ul>
         </div>
-        <div class="card-footer">07 February 2019 <span class="time">{{ time | date: 'hh:mm:ss a' }}</span></div>
+       </div>
+
+    </td><td [@enterSecondAnimation] class="mainTD">
+      <div class="card mainCard">
+        <div class="card-body">
+        <router-outlet name="mainCon"></router-outlet>
+      </div>
+        <div class="card-footer">{{time | date: 'dd MMMM yyyy '}} <span class="time">{{ time | date: 'hh:mm:ss a' }}</span></div>
+
       </div>
 
-    </td><td class="mainTD">
-    <app-main-container></app-main-container>
     </td>
     </tr></table>
 
+
   </div>
+
 </div>

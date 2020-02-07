@@ -239,7 +239,6 @@
 .mainTD{
   padding-left: 30px;
 }
-
 .empTitle{
   color:white;
   font-weight: bolder;
@@ -259,3 +258,8 @@ h3{
   text-align: right;
   color: lightgrey;
 }
+
+.mainCard{
+  height: 90%;
+}
+
