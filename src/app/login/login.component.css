@@ -34,6 +34,7 @@
 .titleContainer{
   position: fixed;
   left:60px;
+  padding: 15px 10px ;
   width: 400px;
   color: white;
   top:35%;
