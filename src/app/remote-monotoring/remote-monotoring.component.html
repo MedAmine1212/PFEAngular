@@ -7,7 +7,9 @@
       <tr>
         <td [@enterAnimation] *ngIf="router.url !== '/RemoteMonotoring' && router.url !== '/RemoteMonotoring/(mainCon:Absences)'">
         <div  class="card mainCard" [ngStyle]="{'background-color':router.url === '/RemoteMonotoring/(mainCon:Employees)' ? 'transparent' : '' }" >
+          <div class="card-header">
 
+          </div>
           <div class="card-body">
             <router-outlet name="mainCon"></router-outlet>
           </div>
@@ -20,10 +22,14 @@
           <app-employees></app-employees>
     </td><td [@enterSecondAnimation]  *ngIf="router.url === '/RemoteMonotoring' || router.url === '/RemoteMonotoring/(mainCon:Absences)'" class="mainTD">
       <div class="card mainCard">
+        <div class="card-header">
+
+        </div>
         <div class="card-body">
         <router-outlet name="secCon"></router-outlet>
       </div>
-        <div class="card-footer">{{time | date: 'dd MMMM yyyy '}} <span class="time">{{ time | date: 'hh:mm:ss a' }}</span></div>
+        <div class="card-footer">
+          {{time | date: 'dd MMMM yyyy '}} <span class="time">{{ time | date: 'hh:mm:ss a' }}</span></div>
 
       </div>
 

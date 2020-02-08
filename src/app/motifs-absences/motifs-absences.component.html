@@ -1,0 +1,57 @@
+<div class="card" style="background: none;color:white">
+  <h3 class="card-header text-center font-weight-bold text-uppercase py-4" style="width: 100%">
+
+    <span *ngIf="!show" (click)="show=true;" class="fa fa-arrow-circle-down" style="float:left;cursor:pointer;font-size: 40px" aria-hidden="true"></span>
+    <span *ngIf="show" (click)="show=false;" class="fa fa-arrow-circle-up" style="float:left;cursor:pointer;font-size: 40px" aria-hidden="true"></span>
+    Registered Reasons
+
+    <span style="float: right;cursor:pointer;margin-left: -40px" aria-hidden="true" class="text-success fas fa-plus fa-2x" *ngIf="show"></span>
+  </h3>
+  <div *ngIf="show" class="card-body" style="color: white">
+    <div id="table" class="table-editable">
+      <table border="0"  style="color: white" class="table table-striped text-center">
+        <thead class="thead-dark">
+        <tr>
+          <th class="text-center">Reason</th>
+          <th class="text-center">Minimum</th>
+          <th class="text-center">Unit</th>
+          <th class="text-center">Symbol</th>
+          <th class="text-center">Required Justification</th>
+          <th class="text-center" colspan="2">Tools</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td  contenteditable="true">Maladie P</td>
+          <td >
+            <div class="number-input md-number-input">
+              <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
+              <input class="quantity" min="0" name="quantity" value="1" type="number">
+              <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+            </div>
+          </td>
+          <td >
+            <select class="custom-select" id="inputGroupSelect02" style="margin-top: -7px">
+              <option value="true">Day</option>
+              <option value="true">Hour</option>
+              <option value="false">Minute</option>
+            </select>
+          </td>
+          <td contenteditable="true">MP</td>
+          <td >
+            <select class="custom-select" id="inputGroupSelect01" style="margin-top: -7px">
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </select>
+          </td>
+          <td colspan="2">
+            <span class="fa fa-edit" style="font-size:25px;cursor: pointer "></span>
+            <span class="fa fa-trash-alt" style="font-size:25px;color:red;float: right;cursor: pointer "></span>
+          </td>
+        </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

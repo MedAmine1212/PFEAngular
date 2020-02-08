@@ -15,6 +15,9 @@ import { TimetablesComponent } from './timetables/timetables.component';
 import { ProfileComponent } from './profile/profile.component';
 import { EmployeesComponent } from './employees/employees.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import {NgbDatepickerModule} from '@ng-bootstrap/ng-bootstrap';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MotifsAbsencesComponent } from './motifs-absences/motifs-absences.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,8 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     AdministratorsComponent,
     TimetablesComponent,
     ProfileComponent,
-    EmployeesComponent
+    EmployeesComponent,
+    MotifsAbsencesComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,7 +39,9 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     FormsModule,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
+    NgbDatepickerModule,
+    MatDatepickerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

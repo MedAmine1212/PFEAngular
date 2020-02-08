@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import {NgbDateStruct, NgbCalendar} from '@ng-bootstrap/ng-bootstrap/';
 @Component({
   selector: 'app-absences',
   templateUrl: './absences.component.html',
@@ -7,9 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AbsencesComponent implements OnInit {
 
-  constructor() { }
+  constructor(private calendar: NgbCalendar) {
+  }
 
   ngOnInit(): void {
+
   }
 
 }
