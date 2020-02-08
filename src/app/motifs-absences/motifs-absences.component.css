@@ -57,9 +57,10 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .md-number-input.number-input input[type=number] {
   width: 120px;
-  height: 15px;
+  height: 35px;
   padding: 15px;
   border: solid #ddd;
+  border-radius: 3px;
   border-width: 0 2px;
   font-size: 20px;
   font-weight: bold;
