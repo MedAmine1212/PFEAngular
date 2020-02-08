@@ -16,7 +16,8 @@
         </div>
       </td>
         <td class="contTD" [@enterAnimation] *ngIf="router.url === '/RemoteMonotoring' || router.url === '/RemoteMonotoring/(mainCon:Absences)'">
-        <app-employees></app-employees>
+
+          <app-employees></app-employees>
     </td><td [@enterSecondAnimation]  *ngIf="router.url === '/RemoteMonotoring' || router.url === '/RemoteMonotoring/(mainCon:Absences)'" class="mainTD">
       <div class="card mainCard">
         <div class="card-body">

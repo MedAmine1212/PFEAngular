@@ -1,39 +1,41 @@
-<div class="card mb-sm-3 mb-md-0 contacts_card">
+<div [ngStyle]="{'height':router.url === '/RemoteMonotoring/(mainCon:Employees)' ? '100%' : '85%' }" class="card mb-sm-3 mb-md-0 contacts_card">
   <div class="card-header">
     <h2 class="empTitle">Employees <span style="float:right"> <span style="cursor:pointer" title="add" class="fa fa-user-plus"></span><span title="open" [routerLink]="[{ outlets: {mainCon: ['Employees'] } }]" *ngIf="router.url != '/RemoteMonotoring/(mainCon:Employees)'" style="cursor:pointer;margin-left:15px" class="fa fa-external-link-alt"></span></span></h2>
     <div class="input-group">
-      <input type="text" placeholder="Search..." name="" class="form-control search">
+      <input type="text" placeholder="Search... (name, Email, Phone,...)" [(ngModel)]="searchText" autocomplete="off" name="" class="form-control search">
       <div class="input-group-prepend">
-        <span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
+        <span  style="cursor: default" class="input-group-text search_btn"><i style="color: lightgray" class="fas fa-search"></i></span>
       </div>
     </div>
   </div>
   <div class="card-body contacts_body">
+    <div style="width: 100%;height:100%;text-align:center;margin:0;color: white;font-weight: bolder;font-size: 20px" *ngIf="employes.length==0"> No Employees to show</div>
     <ul class="contacts">
-      <li class="active">
+
+      <li class="emp" *ngFor="let emp of employes | filter:searchText">
         <div class="d-flex bd-highlight">
           <div class="img_cont">
             <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
-            <span class="online_icon"></span>
+            <span *ngIf='emp.getChecked()' class="online_icon"></span>
+            <span *ngIf='!emp.getChecked()' class="online_icon offline"></span>
           </div>
-          <div class="user_info">
-            <span>Khaili Med Amine</span>
-            <h3>checked in at : 7:50</h3>
+
+          <div class="user_info" style="width: 100%">
+            <div style="float:left">
+              <span>{{emp.getName}}</span>
+              <h3><span *ngIf='emp.getChecked()'>checked in at : 7:50</span> <span *ngIf='!emp.getChecked()'>Didn't check in yet</span></h3></div>
+            <div *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)'" style="margin-left: 60%;color: white;font-size: 15px" class="info">
+              <ul class="list-inline">
+                <li>Phone number: {{emp.getPhone()}} </li>
+                <li> Email: {{emp.getEmail()}} </li>
+                <li>Adress: {{emp.getAdress()}} </li>
+                <li>{{emp.getProfession()}} </li>
+              </ul>
+            </div>
           </div>
         </div>
       </li>
-      <li>
-        <div class="d-flex bd-highlight">
-          <div class="img_cont">
-            <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
-            <span class="online_icon offline"></span>
-          </div>
-          <div class="user_info">
-            <span>Bassem Jadoui</span>
-            <h3>Didn't check in yet</h3>
-          </div>
-        </div>
-      </li>
+
     </ul>
   </div>
 </div>
