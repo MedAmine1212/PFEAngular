@@ -12,7 +12,7 @@ import {animate, style, transition, trigger} from '@angular/animations';
         ]),
         transition(':leave', [
           style({transform: 'translateX(0)', opacity: 1}),
-          animate('500ms', style({transform: 'translateX(-100%)', opacity: 0}))
+          animate('0ms', style({transform: 'translateX(-100%)', opacity: 0}))
         ])
       ]
     ),
@@ -24,19 +24,7 @@ import {animate, style, transition, trigger} from '@angular/animations';
         ]),
         transition(':leave', [
           style({transform: 'translateX(0)', opacity: 1}),
-          animate('500ms', style({transform: 'translateX(100%)', opacity: 0}))
-        ])
-      ]
-    ),
-    trigger(
-      'enterThirdAnimation', [
-        transition(':enter', [
-          style({transform: 'translateY(100%)', opacity: 0}),
-          animate('500ms', style({transform: 'translateX(0)', opacity: 1}))
-        ]),
-        transition(':leave', [
-          style({transform: 'translateY(0)', opacity: 1}),
-          animate('500ms', style({transform: 'translateX(100%)', opacity: 0}))
+          animate('0ms', style({transform: 'translateX(100%)', opacity: 0}))
         ])
       ]
     )

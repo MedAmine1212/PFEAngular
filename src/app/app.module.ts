@@ -13,6 +13,7 @@ import { DepartementsComponent } from './departements/departements.component';
 import { AdministratorsComponent } from './administrators/administrators.component';
 import { TimetablesComponent } from './timetables/timetables.component';
 import { ProfileComponent } from './profile/profile.component';
+import { EmployeesComponent } from './employees/employees.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ProfileComponent } from './profile/profile.component';
     DepartementsComponent,
     AdministratorsComponent,
     TimetablesComponent,
-    ProfileComponent
+    ProfileComponent,
+    EmployeesComponent
   ],
   imports: [
     BrowserModule,

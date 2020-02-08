@@ -1,53 +1,26 @@
 <app-nav></app-nav>
 <div class="bigContainer">
   <br><br>
-  <div class="container-fluid h-100">
-    <table class="cardContainer">
-      <tr><td  [@enterAnimation] *ngIf="router.url === '/RemoteMonotoring' || router.url === '/RemoteMonotoring/(mainCon:Absences)'" class="contTD">
-      <div class="card mb-sm-3 mb-md-0 contacts_card">
-        <div class="card-header">
-          <h2 class="empTitle">Employers</h2>
-          <div class="input-group">
-            <input type="text" placeholder="Search..." name="" class="form-control search">
-            <div class="input-group-prepend">
-              <span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
-            </div>
-          </div>
-        </div>
-        <div class="card-body contacts_body">
-          <ul class="contacts">
-            <li class="active">
-              <div class="d-flex bd-highlight">
-                <div class="img_cont">
-                  <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
-                  <span class="online_icon"></span>
-                </div>
-                <div class="user_info">
-                  <span>Khaili Med Amine</span>
-                  <h3>checked in at : 7:50</h3>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="d-flex bd-highlight">
-                <div class="img_cont">
-                  <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
-                  <span class="online_icon offline"></span>
-                </div>
-                <div class="user_info">
-                  <span>Bassem Jadoui</span>
-                  <h3>Didn't check in yet</h3>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-       </div>
 
-    </td><td [@enterSecondAnimation] class="mainTD">
+  <div  class="container-fluid h-100">
+    <table class="cardContainer">
+      <tr>
+        <td [@enterAnimation] *ngIf="router.url !== '/RemoteMonotoring' && router.url !== '/RemoteMonotoring/(mainCon:Absences)'">
+        <div  class="card mainCard" [ngStyle]="{'background-color':router.url === '/RemoteMonotoring/(mainCon:Employees)' ? 'transparent' : '' }" >
+
+          <div class="card-body">
+            <router-outlet name="mainCon"></router-outlet>
+          </div>
+          <div class="card-footer">{{time | date: 'dd MMMM yyyy '}} <span class="time">{{ time | date: 'hh:mm:ss a' }}</span></div>
+
+        </div>
+      </td>
+        <td class="contTD" [@enterAnimation] *ngIf="router.url === '/RemoteMonotoring' || router.url === '/RemoteMonotoring/(mainCon:Absences)'">
+        <app-employees></app-employees>
+    </td><td [@enterSecondAnimation]  *ngIf="router.url === '/RemoteMonotoring' || router.url === '/RemoteMonotoring/(mainCon:Absences)'" class="mainTD">
       <div class="card mainCard">
         <div class="card-body">
-        <router-outlet name="mainCon"></router-outlet>
+        <router-outlet name="secCon"></router-outlet>
       </div>
         <div class="card-footer">{{time | date: 'dd MMMM yyyy '}} <span class="time">{{ time | date: 'hh:mm:ss a' }}</span></div>
 

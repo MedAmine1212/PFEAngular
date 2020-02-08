@@ -1,23 +1,13 @@
 
-.bigContainer{
-  z-index: 2;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  position: fixed;	margin: 0;
-  background: #7F7FD5;
-  background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
-  background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
-}
 .card{
   height: 500px;
   border-radius: 15px !important;
-  background-color: rgba(0,0,0,0.4);
-  border: none;
+  background-color: rgba(0,0,0,0.4) !important;
 }
-.msg_card_body{
+.contacts_body{
+  padding:  0.75rem 0 !important;
   overflow-y: auto;
+  white-space: nowrap;
 }
 .card-header{
   border-radius: 15px 15px 0 0 !important;
@@ -30,8 +20,31 @@
   font-weight: bolder;
   font-size: 17px;
 }
-.container{
-  align-content: center;
+.search{
+  border-radius: 15px 0 0 15px !important;
+  background-color: rgba(0,0,0,0.3) !important;
+  border:0 !important;
+  color:white !important;
+}
+.search:focus{
+  box-shadow:none !important;
+  outline:0px !important;
+}
+.search_btn{
+  border-radius: 0 15px 15px 0 !important;
+  background-color: rgba(0,0,0,0.3) !important;
+  border:0 !important;
+  color: white !important;
+  cursor: pointer;
+}
+.contacts{
+  list-style: none;
+  padding: 0;
+}
+.contacts li{
+  width: 100% !important;
+  padding: 5px 10px;
+  margin-bottom: 15px !important;
 }
 .active{
   background-color: rgba(0,0,0,0.3);
@@ -79,22 +92,19 @@
   font-size: 10px;
   color: rgba(255,255,255,0.6);
 }
-.contTD{
-  width:350px;
-}
-.mainTD{
-  padding-left: 30px;
-}
-.time{
-  color: white;
-  float: right;
-}
-.cardContainer{
-  width:100% ;
-  height: 100%;
-}
-
-.mainCard{
+.contacts_card{
+  width: 100%;
   height: 85%;
+}
+.empTitle{
+  color:white;
+  font-weight: bolder;
+}
+h3{
+  margin-top: 10px;
+  float: right;
+  width: 100%;
+  text-align: right;
+  color: lightgrey;
 }
 

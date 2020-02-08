@@ -7,6 +7,7 @@ import {DepartementsComponent} from './departements/departements.component';
 import {AdministratorsComponent} from './administrators/administrators.component';
 import {TimetablesComponent} from './timetables/timetables.component';
 import {ProfileComponent} from './profile/profile.component';
+import {EmployeesComponent} from './employees/employees.component';
 
 const routes: Routes = [
   {path : '' , component: LoginComponent},
@@ -15,11 +16,16 @@ const routes: Routes = [
       {
         path: '',
         component: AbsencesComponent,
-        outlet: 'mainCon'
+        outlet: 'secCon'
       },
       {
         path: 'Absences',
         component: AbsencesComponent,
+        outlet: 'mainCon'
+      },
+      {
+        path: 'Employees',
+        component: EmployeesComponent,
         outlet: 'mainCon'
       },
       {
