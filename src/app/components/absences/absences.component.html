@@ -1,0 +1,15 @@
+<h1>Absences
+  <span class="reasons" [ngStyle]="{'opacity':showMotifs ? '1' : '0.7' }" (click)="showHide(1)">Regitered Reasons</span>
+  <span class="reasons" [ngStyle]="{'opacity':showPoint ? '1' : '0.7' }" (click)="showHide(2)">Check-in</span>
+  <span class="reasons" [ngStyle]="{'opacity':showAbsences ? '1' : '0.7' }" (click)="showHide(3)">Absences</span>
+</h1>
+<div [@enterAnimation] *ngIf="showMotifs">
+<app-motifs-absences></app-motifs-absences>
+</div>
+<div *ngIf="showPoint" [@enterSecondAnimation]>
+<h1 style="margin-top:20%;margin-left: 28%">Select an employee to show his check-in here</h1>
+</div>
+
+<div *ngIf="showAbsences" [@enterSecondAnimation]>
+  <h1 style="margin-top:20%;margin-left: 28%">Select an employee to show his absences here</h1>
+</div>

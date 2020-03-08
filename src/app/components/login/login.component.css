@@ -1,6 +1,6 @@
 .bg{
   background-color: black;
-  opacity: 0.4;
+  opacity: 0.3  ;
   height: 100%;
   width: 100%;
   top: 0;
@@ -9,7 +9,7 @@
   z-index: 1;
 }
 .bgImg{
-  background-image: url('../../assets/loginBG.png');
+  background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   height: 100%;
@@ -38,6 +38,7 @@
   width: 400px;
   color: white;
   top:35%;
+  opacity:0.7;
   border-radius: 15px;
   text-align:center;
   -webkit-box-shadow: 0px 0px 40px 23px rgba(0,0,0,1);
@@ -50,7 +51,9 @@ h1{
   font-size: 270%;
 }
 .card{
-
+  -webkit-box-shadow: 3px 3px 4px 1px rgba(0,0,0,1);
+  -moz-box-shadow: 3px 3px 4px 1px rgba(0,0,0,1);
+  box-shadow: 3px 3px 4px 1px rgba(0,0,0,1);
   border-radius: 15px;
   height: 370px;
   margin-top: auto;

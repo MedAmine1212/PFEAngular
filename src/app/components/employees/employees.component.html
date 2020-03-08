@@ -1,6 +1,10 @@
 <div [ngStyle]="{'height':router.url === '/RemoteMonotoring/(mainCon:Employees)' ? '100%' : '85%' }" class="card mb-sm-3 mb-md-0 contacts_card">
   <div class="card-header">
-    <h2 class="empTitle">Employees <span style="float:right"> <span style="cursor:pointer" title="add" class="fa fa-user-plus"></span><span title="open" [routerLink]="[{ outlets: {mainCon: ['Employees'] } }]" *ngIf="router.url != '/RemoteMonotoring/(mainCon:Employees)'" style="cursor:pointer;margin-left:15px" class="fa fa-external-link-alt"></span></span></h2>
+    <h2 class="empTitle">Employees <span style="float:right"> <span style="cursor:pointer" title="add" class="fa fa-user-plus"></span>
+      <span title="open" [routerLink]="[{ outlets: {mainCon: ['Employees'] } }]" *ngIf="router.url != '/RemoteMonotoring/(mainCon:Employees)'" style="cursor:pointer;margin-left:15px" class="fa fa-expand-alt"></span>
+      <span title="open" routerLink="/RemoteMonotoring" *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)'" style="cursor:pointer;margin-left:15px" class="fa fa-compress-alt"></span>
+    </span></h2>
+
     <div class="input-group">
       <input type="text" placeholder="Search... (name, Email, Phone,...)" [(ngModel)]="searchText" autocomplete="off" name="" class="form-control search">
       <div class="input-group-prepend">

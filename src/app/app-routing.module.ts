@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {LoginComponent} from './login/login.component';
-import { RemoteMonotoringComponent} from './remote-monotoring/remote-monotoring.component';
-import {AbsencesComponent} from './absences/absences.component';
-import {DepartementsComponent} from './departements/departements.component';
-import {AdministratorsComponent} from './administrators/administrators.component';
-import {TimetablesComponent} from './timetables/timetables.component';
-import {ProfileComponent} from './profile/profile.component';
-import {EmployeesComponent} from './employees/employees.component';
+import {LoginComponent} from './components/login/login.component';
+import { RemoteMonotoringComponent} from './components/remote-monotoring/remote-monotoring.component';
+import {AbsencesComponent} from './components/absences/absences.component';
+import {DepartementsComponent} from './components/departements/departements.component';
+import {AdministratorsComponent} from './components/administrators/administrators.component';
+import {TimetablesComponent} from './components/timetables/timetables.component';
+import {ProfileComponent} from './components/profile/profile.component';
+import {EmployeesComponent} from './components/employees/employees.component';
 
 const routes: Routes = [
   {path : '' , component: LoginComponent},
