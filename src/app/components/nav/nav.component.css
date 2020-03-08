@@ -29,3 +29,9 @@ font-size: 23px;
   margin-right: -80px;
 
 }
+a{
+  color:white !important;
+}
+a:hover{
+  opacity: 0.7;
+}

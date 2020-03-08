@@ -1,13 +1,11 @@
 <div class="card" style="background: none;color:white">
   <h3 class="card-header text-center font-weight-bold text-uppercase py-4" style="width: 100%">
 
-    <span *ngIf="!show" (click)="show=true;" class="fa fa-arrow-circle-down" style="float:left;cursor:pointer;font-size: 40px" aria-hidden="true"></span>
-    <span *ngIf="show" (click)="show=false;" class="fa fa-arrow-circle-up" style="float:left;cursor:pointer;font-size: 40px" aria-hidden="true"></span>
-    Registered Reasons
+      Registered Reasons
 
     <span style="float: right;cursor:pointer;margin-left: -40px" aria-hidden="true" class="text-success fas fa-plus fa-2x" *ngIf="show"></span>
   </h3>
-  <div *ngIf="show" class="card-body" style="color: white">
+  <div class="card-body" style="color: white">
     <div id="table" class="table-editable">
       <table border="0"  style="color: white" class="table table-striped text-center">
         <thead class="thead-dark">
