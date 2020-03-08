@@ -1,4 +1,4 @@
-import {Departement} from './Departement';
+import {Department} from './Department';
 import {Address} from './Address';
 export class User {
   userId: number;
@@ -8,7 +8,7 @@ export class User {
   hireDay: Date;
   phone: number;
   email: string;
-  departement: Departement;
+  departement: Department;
   adresses: Address[];
 
 

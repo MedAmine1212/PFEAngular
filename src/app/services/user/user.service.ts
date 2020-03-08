@@ -7,7 +7,7 @@ import {Observable} from 'rxjs';
   providedIn: 'root'
 })
 export class UserService {
-  private baseurl = 'http://localhost:81/users/';
+  private baseurl = 'http://localhost:81/user/';
   private headers: HttpHeaders;
 
   constructor(private http: HttpClient) {
@@ -21,13 +21,13 @@ export class UserService {
 
   add(user: User) {
     this.headers = new HttpHeaders({Authorization: 'Bearer ' + localStorage.token});
-    return this.http.post(this.baseurl + 'users', user, {
+    return this.http.post(this.baseurl + 'findAll', user, {
       headers: this.headers
     });
   }
 
   list(): Observable<any> {
-    return this.http.get(this.baseurl + 'list',);
+    return this.http.get(this.baseurl + 'list');
   }
 
   remove(id) {

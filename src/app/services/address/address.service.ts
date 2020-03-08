@@ -8,7 +8,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 })
 export class AddressService {
 
-  private baseUrl = 'http://localhost:81/adresses/';
+  private baseUrl = 'http://localhost:81/address/';
   private headers: HttpHeaders;
   constructor(private http: HttpClient) { }
 
@@ -23,7 +23,7 @@ export class AddressService {
 
   remove(id) {
     this.headers = new HttpHeaders({Authorization: 'Bearer ' + localStorage.token});
-    return this.http.delete(this.baseUrl + 'delete/' + id ,{ headers : this.headers });
+    return this.http.delete(this.baseUrl + 'delete/' + id , {headers: this.headers });
   }
 
   modify(addressId: number, address: Address): Observable<any> {
