@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit, Output} from '@angular/core';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {newArray} from '@angular/compiler/src/util';
 class Employee {
+  private departement: boolean;
   private name: string;
   private checked: boolean;
   private phone: number;
@@ -63,6 +64,8 @@ class Employee {
   styleUrls: ['./employees.component.css']
 })
 export class EmployeesComponent implements OnInit {
+
+  @Input() dep: boolean;
   searchText;
   employes: Employee[] =  [];
   employee: Employee;
@@ -70,6 +73,7 @@ export class EmployeesComponent implements OnInit {
   employee3: Employee;
   constructor(public router: Router) { }
   ngOnInit(): void {
+    console.log(this.dep);
     this.employee = new Employee();
     this.employee.setName('Khaili Med Amine');
     this.employee.setChecked(true);

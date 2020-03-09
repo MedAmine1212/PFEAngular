@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Output} from '@angular/core';
 import {Router} from '@angular/router';
 import {animate, style, transition, trigger} from '@angular/animations';
 @Component({
@@ -32,6 +32,7 @@ import {animate, style, transition, trigger} from '@angular/animations';
   templateUrl: './remote-monotoring.component.html',
   styleUrls: ['./remote-monotoring.component.css']
 })
+
 export class RemoteMonotoringComponent implements OnInit {
 
   constructor(public router: Router) { }

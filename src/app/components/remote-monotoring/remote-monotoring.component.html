@@ -5,9 +5,9 @@
   <div  class="container-fluid h-100">
     <table class="cardContainer">
       <tr>
-        <td [@enterAnimation] *ngIf="router.url !== '/RemoteMonotoring' && router.url !== '/RemoteMonotoring/(mainCon:Absences)'">
+        <td style="width: 70%" [@enterAnimation] *ngIf="router.url !== '/RemoteMonotoring' && router.url !== '/RemoteMonotoring/(mainCon:Absences)'">
         <div  class="card mainCard" [ngStyle]="{'background-color':router.url === '/RemoteMonotoring/(mainCon:Employees)' ? 'transparent' : '' }" >
-          <div class="card-body">
+          <div class="card-body"  style="margin-top: 30px;margin-right: 50px">
             <router-outlet name="mainCon"></router-outlet>
           </div>
           <div class="card-footer">{{time | date: 'dd MMMM yyyy '}} <span class="time">{{ time | date: 'hh:mm:ss a' }}</span></div>
@@ -17,11 +17,18 @@
         <td class="contTD" [@enterAnimation] *ngIf="router.url === '/RemoteMonotoring' || router.url === '/RemoteMonotoring/(mainCon:Absences)'">
 
           <app-employees></app-employees>
-    </td><td [@enterSecondAnimation]  *ngIf="router.url === '/RemoteMonotoring' || router.url === '/RemoteMonotoring/(mainCon:Absences)'" class="mainTD">
+    </td>
+        <td class="contTD" [@enterAnimation] *ngIf="router.url === '/RemoteMonotoring/(mainCon:Departements)'">
+
+          <app-employees [dep]=true></app-employees>
+
+        </td>
+
+        <td [@enterSecondAnimation]  *ngIf="router.url === '/RemoteMonotoring' || router.url === '/RemoteMonotoring/(mainCon:Absences)'" class="mainTD">
       <div class="card mainCard">
 
         <div class="card-body">
-        <router-outlet name="secCon"></router-outlet>
+        <router-outlet  name="secCon"></router-outlet>
       </div>
         <div class="card-footer">
           {{time | date: 'dd MMMM yyyy '}} <span class="time">{{ time | date: 'hh:mm:ss a' }}</span></div>

@@ -4,7 +4,7 @@ export class Department {
   depName: string;
   supDep: Department;
   chefDep: User;
-  departements: Department[];
+  departments: Department[];
   users: Department[];
 
 

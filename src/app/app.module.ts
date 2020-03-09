@@ -9,7 +9,7 @@ import { RemoteMonotoringComponent } from './components/remote-monotoring/remote
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './components/nav/nav.component';
 import { AbsencesComponent } from './components/absences/absences.component';
-import { DepartementsComponent } from './components/departements/departements.component';
+import { DepartmentsComponent } from './components/departments/departments.component';
 import { AdministratorsComponent } from './components/administrators/administrators.component';
 import { TimetablesComponent } from './components/timetables/timetables.component';
 import { ProfileComponent } from './components/profile/profile.component';
@@ -18,6 +18,10 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import {NgbDatepickerModule} from '@ng-bootstrap/ng-bootstrap';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MotifsAbsencesComponent } from './components/motifs-absences/motifs-absences.component';
+import {HttpClientModule} from '@angular/common/http';
+import {MatTreeModule} from '@angular/material/tree';
+import {MatIconModule} from '@angular/material/icon';
+import {MatProgressBar, MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [
@@ -26,7 +30,7 @@ import { MotifsAbsencesComponent } from './components/motifs-absences/motifs-abs
     RemoteMonotoringComponent,
     NavComponent,
     AbsencesComponent,
-    DepartementsComponent,
+    DepartmentsComponent,
     AdministratorsComponent,
     TimetablesComponent,
     ProfileComponent,
@@ -42,6 +46,10 @@ import { MotifsAbsencesComponent } from './components/motifs-absences/motifs-abs
     Ng2SearchPipeModule,
     NgbDatepickerModule,
     MatDatepickerModule,
+    HttpClientModule,
+    MatTreeModule,
+    MatIconModule,
+    MatProgressBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

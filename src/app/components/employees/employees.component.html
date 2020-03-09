@@ -1,6 +1,11 @@
 <div [ngStyle]="{'height':router.url === '/RemoteMonotoring/(mainCon:Employees)' ? '100%' : '85%' }" class="card mb-sm-3 mb-md-0 contacts_card">
   <div class="card-header">
-    <h2 class="empTitle">Employees <span style="float:right"> <span style="cursor:pointer" title="add" class="fa fa-user-plus"></span>
+    <h2 style="color:white" *ngIf=dep>
+      <span style="cursor:pointer" title="add" style="cursor:pointer;margin-right: 20px" class="fa fa-user-plus"></span>Department Employees
+      <span style="float:right">Chef dep</span>
+
+    </h2>
+    <h2 *ngIf=!dep class="empTitle">Employees <span style="float:right"> <span style="cursor:pointer" title="add" class="fa fa-user-plus"></span>
       <span title="open" [routerLink]="[{ outlets: {mainCon: ['Employees'] } }]" *ngIf="router.url != '/RemoteMonotoring/(mainCon:Employees)'" style="cursor:pointer;margin-left:15px" class="fa fa-expand-alt"></span>
       <span title="open" routerLink="/RemoteMonotoring" *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)'" style="cursor:pointer;margin-left:15px" class="fa fa-compress-alt"></span>
     </span></h2>

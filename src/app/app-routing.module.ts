@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import {LoginComponent} from './components/login/login.component';
 import { RemoteMonotoringComponent} from './components/remote-monotoring/remote-monotoring.component';
 import {AbsencesComponent} from './components/absences/absences.component';
-import {DepartementsComponent} from './components/departements/departements.component';
+import {DepartmentsComponent} from './components/departments/departments.component';
 import {AdministratorsComponent} from './components/administrators/administrators.component';
 import {TimetablesComponent} from './components/timetables/timetables.component';
 import {ProfileComponent} from './components/profile/profile.component';
@@ -30,7 +30,7 @@ const routes: Routes = [
       },
       {
         path: 'Departements',
-        component: DepartementsComponent,
+        component: DepartmentsComponent,
         outlet: 'mainCon'
       },
       {

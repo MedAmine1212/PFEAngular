@@ -1,0 +1,34 @@
+<h1>Departments</h1>
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+  <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+    <span class="dis" style="width:20px" disabled></span>
+    <span class="item">
+     {{node.item}}
+      <span class="buttons">
+        <button class="btn btn-success"><span class="fas fa-plus"></span></button>
+        <button class="btn btn-danger"><span class="fas fa-trash-alt"></span></button>
+      </span>
+    </span>
+  </mat-tree-node>
+  <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+    <span class="expandCollapse"
+          [attr.aria-label]="'toggle ' + node.filename" matTreeNodeToggle>
+      <mat-icon class="mat-icon-rtl-mirror">
+        {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+      </mat-icon>
+    </span>
+
+    <span class="item">{{node.item}}
+      <span class="buttons">
+          <mat-progress-bar *ngIf="node.isLoading"
+                            mode="indeterminate"
+                            class="example-tree-progress-bar"></mat-progress-bar>
+        <button class="btn btn-success"><span class="fas fa-plus"></span></button>
+        <button class="btn btn-danger"><span class="fas fa-trash-alt"></span></button>
+      </span>
+    </span>
+  </mat-tree-node>
+
+</mat-tree>
+
+

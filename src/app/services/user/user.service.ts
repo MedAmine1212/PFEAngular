@@ -20,10 +20,7 @@ export class UserService {
   }
 
   add(user: User) {
-    this.headers = new HttpHeaders({Authorization: 'Bearer ' + localStorage.token});
-    return this.http.post(this.baseurl + 'findAll', user, {
-      headers: this.headers
-    });
+    return this.http.post(this.baseurl + 'findAll', user, );
   }
 
   list(): Observable<any> {
