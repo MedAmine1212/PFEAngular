@@ -6,9 +6,9 @@ import {Category} from '../../entities/category';
 import {ProductService} from '../../services/product/product.service';
 import {MiniPanierComponent} from '../mini-panier/mini-panier.component';
 import * as SecureLS from 'secure-ls';
-import {UserService} from "../../services/user/user.service";
-import {AuthenticationService} from "../../services/auth/authentication.service";
-import {User} from "../../entities/user";
+import {UserService} from '../../services/user/user.service';
+import {AuthenticationService} from '../../services/auth/authentication.service';
+import {User} from '../../entities/user';
 interface CartProdcut {
   productToAdd: Product;
   qte: number;

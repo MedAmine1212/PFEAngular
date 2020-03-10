@@ -25,9 +25,9 @@ export class CategoryListBACKComponent implements OnInit {
     this.showDetails = false;
     this.reloadData();
   }
-  reloadData() {
-    this.categories = this.categoryService.getCategoriesList();
-  }
+    reloadData() {
+      this.categories = this.categoryService.getCategoriesList();
+    }
   deleteCategory(id: number) {
     this.categoryService.deleteCategory(id).subscribe(data => {
       console.log(data);
