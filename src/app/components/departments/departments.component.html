@@ -3,7 +3,7 @@
   <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
     <span class="dis" style="width:20px" disabled></span>
     <span class="item">
-     {{node.item}}
+     {{node.item.depName}}
       <span class="buttons">
         <button class="btn btn-success"><span class="fas fa-plus"></span></button>
         <button class="btn btn-danger"><span class="fas fa-trash-alt"></span></button>
@@ -18,7 +18,7 @@
       </mat-icon>
     </span>
 
-    <span class="item">{{node.item}}
+    <span class="item">{{node.item.depName}}
       <span class="buttons">
           <mat-progress-bar *ngIf="node.isLoading"
                             mode="indeterminate"

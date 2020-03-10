@@ -1,50 +1,47 @@
 /** Flat node with expandable and level information */
-import {Component, Injectable} from '@angular/core';
+import {Component, Injectable, OnInit} from '@angular/core';
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {CollectionViewer, DataSource, SelectionChange} from '@angular/cdk/collections';
 import {BehaviorSubject, merge, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {Department} from '../../models/Department';
+import {DepartmentService} from '../../services/departement/department.service';
 
 export class DynamicFlatNode {
-  constructor(public item: string, public level = 1, public expandable = false,
+  constructor(public item: Department, public level = 1, public expandable = false,
               public isLoading = false) {}
 }
-
 /**
  * Database for dynamic data. When expanding a node in the tree, the data source will need to fetch
  * the descendants data from the database.
  */
 @Injectable({providedIn: 'root'})
 export class DynamicDatabase {
-  dataMap = new Map<string, string[]>([
-    ['Fruits', ['Apple', 'Orange', 'Banana']],
-    ['Vegetables', ['Tomato', 'Potato', 'Onion']],
-    ['Apple', ['Fuji', 'Macintosh']],
-    ['Onion', ['Yellow', 'White', 'Purple']]
-  ]);
+  departments: Department[] = [];
+  dataMap = new Map<number, Department[]>([]);
+  rootLevelNodes: Department[] = [];
 
-  rootLevelNodes: string[] = ['Fruits', 'Vegetables'];
-
-  /** Initial data from database */
-  initialData(): DynamicFlatNode[] {
-    return this.rootLevelNodes.map(name => new DynamicFlatNode(name, 0, true));
+  initialData(data: Department[]): DynamicFlatNode[] {
+    this.departments = data;
+    console.table(data);
+    for (const dep of this.departments) {
+      if (dep.supDep == null) {
+        this.rootLevelNodes.push(dep);
+      } else {
+        this.dataMap.set(dep.depId, dep.departments);
+      }
+    }
+    return this.rootLevelNodes.map(name => new DynamicFlatNode(name, 0, this.isExpandable(name)));
   }
 
-  getChildren(node: string): string[] | undefined {
-    return this.dataMap.get(node);
+  getChildren(node: Department): Department[] | undefined {
+    return node.departments;
   }
 
-  isExpandable(node: string): boolean {
-    return this.dataMap.has(node);
+  isExpandable(node: Department): boolean {
+    return node.departments.length !== 0;
   }
 }
-/**
- * File database, it can build a tree structured Json object from string.
- * Each node in Json object represents a file or a directory. For a file, it has filename and type.
- * For a directory, it has filename and children (a list of files or directories).
- * The input will be a json object string, and the output is a list of `FileNode` with nested
- * structure.
- */
 export class DynamicDataSource implements DataSource<DynamicFlatNode> {
 
   dataChange = new BehaviorSubject<DynamicFlatNode[]>([]);
@@ -120,23 +117,37 @@ export class DynamicDataSource implements DataSource<DynamicFlatNode> {
   templateUrl: './departments.component.html',
   styleUrls: ['./departments.component.css']
 })
-export class DepartmentsComponent {
-  constructor(database: DynamicDatabase) {
-    this.treeControl = new FlatTreeControl<DynamicFlatNode>(this.getLevel, this.isExpandable);
-    this.dataSource = new DynamicDataSource(this.treeControl, database);
 
-    this.dataSource.data = database.initialData();
+export class DepartmentsComponent implements  OnInit {
+
+  data: Department[];
+  constructor(private database: DynamicDatabase, private departmentService: DepartmentService) {
+
+
   }
-
   treeControl: FlatTreeControl<DynamicFlatNode>;
 
   dataSource: DynamicDataSource;
+
 
   getLevel = (node: DynamicFlatNode) => node.level;
 
   isExpandable = (node: DynamicFlatNode) => node.expandable;
 
   hasChild = (_: number, nodeData: DynamicFlatNode) => nodeData.expandable;
+
+  ngOnInit(): void {
+    this.treeControl = new FlatTreeControl<DynamicFlatNode>(this.getLevel, this.isExpandable);
+    this.dataSource = new DynamicDataSource(this.treeControl, this.database);
+    this.departmentService.list().subscribe(r => {
+      this.data = r;
+      this.dataSource.data = this.database.initialData(this.data);
+    });
+
+
+  }
+
+
 }
 
 
