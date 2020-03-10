@@ -5,7 +5,7 @@
   <div  class="container-fluid h-100">
     <table class="cardContainer">
       <tr>
-        <td style="width: 70%" [@enterAnimation] *ngIf="router.url !== '/RemoteMonotoring' && router.url !== '/RemoteMonotoring/(mainCon:Absences)'">
+        <td style="width: 27%" [@enterAnimation] *ngIf="router.url !== '/RemoteMonotoring' && router.url !== '/RemoteMonotoring/(mainCon:Absences)'">
         <div  class="card mainCard" [ngStyle]="{'background-color':router.url === '/RemoteMonotoring/(mainCon:Employees)' ? 'transparent' : '' }" >
           <div class="card-body"  style="margin-top: 30px;margin-right: 50px">
             <router-outlet name="mainCon"></router-outlet>

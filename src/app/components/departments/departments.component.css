@@ -38,7 +38,7 @@ mat-tree{
   color:white;
   cursor:pointer;
   font-size: 50px;
-  margin-top: -35px;
+  margin-top: -5px;
   margin-right: 15px;
   font-weight: bolder;
 }
@@ -46,8 +46,7 @@ mat-tree{
   margin-left: -2px;
 }
 .example-tree-progress-bar{
-  width: 300px;
-  float:left;
+  width: 120px;
   margin-top: 10px;
-  margin-right:140px;
+  float: right;
 }

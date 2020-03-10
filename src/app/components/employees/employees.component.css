@@ -114,3 +114,19 @@ h3{
   opacity: 0.7;
   cursor:pointer;
 }
+.card-body{
+  padding: 0 !important;
+  margin-bottom: 50px;
+}
+.card-footer{
+
+  padding:0 !important;
+}
+.buttons{
+  padding-bottom: 20px;
+  padding-right: 20px;
+  float:right;
+}
+.btn{
+  margin-left:10px;
+}

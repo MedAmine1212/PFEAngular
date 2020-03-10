@@ -101,5 +101,11 @@ export class EmployeesComponent implements OnInit {
     this.employes.push(this.employee);
     this.employes.push(this.employee2);
     this.employes.push(this.employee3);
+    this.employes.push(this.employee3);
+    this.employes.push(this.employee3);
+    this.employes.push(this.employee3);
+    this.employes.push(this.employee3);
+    this.employes.push(this.employee3);
+    this.employes.push(this.employee3);
   }
 }

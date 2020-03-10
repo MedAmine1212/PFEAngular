@@ -1,7 +1,7 @@
 <div [ngStyle]="{'height':router.url === '/RemoteMonotoring/(mainCon:Employees)' ? '100%' : '85%' }" class="card mb-sm-3 mb-md-0 contacts_card">
   <div class="card-header">
-    <h2 style="color:white" *ngIf=dep>
-      <span style="cursor:pointer" title="add" style="cursor:pointer;margin-right: 20px" class="fa fa-user-plus"></span>Department Employees
+    <h2 style="color:white;padding-bottom: 10px" *ngIf=dep>
+      <span> Department ...</span>
       <span style="float:right">Chef dep</span>
 
     </h2>
@@ -17,9 +17,9 @@
       </div>
     </div>
   </div>
-  <div class="card-body contacts_body">
+  <div class="card-body contacts_body" >
     <div style="width: 100%;height:100%;text-align:center;margin:0;color: white;font-weight: bolder;font-size: 20px" *ngIf="employes.length==0"> No Employees to show</div>
-    <ul class="contacts">
+    <ul style="height: 100%" class="contacts">
 
       <li class="emp" *ngFor="let emp of employes | filter:searchText">
         <div class="d-flex bd-highlight">
@@ -46,5 +46,16 @@
       </li>
 
     </ul>
+  </div>
+
+  <div class="card-footer">
+
+    <div class="buttons">
+      <button mat-raised-button class="btn btn-info" matTooltip="Add Employee">
+        <span style="cursor:pointer;color:white" title="add" class="fa fa-user-plus"></span>
+      </button>
+      <button mat-raised-button class="btn btn-success" matTooltip="Add departement"><span class="fas fa-plus"></span></button>
+      <button mat-raised-button class="btn btn-danger" matTooltip="Delete departement"><span class="fas fa-trash-alt"></span></button>
+    </div>
   </div>
 </div>
