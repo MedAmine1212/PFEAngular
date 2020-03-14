@@ -1,9 +1,14 @@
-<h1>Departments</h1>
+
+<h1>Departments
+ <span (click)="unselectDep()" *ngIf="clickedDep.depId!=-1" mat-raised-button  matTooltip="Unselect departement" class="fas fa-check-square"></span>
+</h1>
+
 <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
   <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
     <span class="dis" style="width:20px" disabled></span>
-    <span class="item">
+    <span (click)="sendData(node.item)" class="item" style="margin-left: 22px">
      {{node.item.depName}}
+
     </span>
   </mat-tree-node>
   <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
@@ -14,7 +19,7 @@
       </mat-icon>
     </span>
 
-    <span class="item">{{node.item.depName}}
+    <span (click)="sendData(node.item)" class="item">{{node.item.depName}}
           <mat-progress-bar *ngIf="node.isLoading"
                             mode="indeterminate"
                             class="example-tree-progress-bar"></mat-progress-bar>
@@ -22,5 +27,3 @@
   </mat-tree-node>
 
 </mat-tree>
-
-

@@ -1,44 +1,65 @@
 <div [ngStyle]="{'height':router.url === '/RemoteMonotoring/(mainCon:Employees)' ? '100%' : '85%' }" class="card mb-sm-3 mb-md-0 contacts_card">
   <div class="card-header">
-    <h2 style="color:white;padding-bottom: 10px" *ngIf=dep>
-      <span> Department ...</span>
-      <span style="float:right">Chef dep</span>
+    <h2 style="color:white;padding-bottom: 10px" *ngIf="!thisIsEmp && clickedDep!=null">
+      <span> Department: {{clickedDep.depName}}</span>
+      <span style="float:right">Chef dep: {{clickedDep.chefDep}}</span>
 
     </h2>
-    <h2 *ngIf=!dep class="empTitle">Employees <span style="float:right"> <span style="cursor:pointer" title="add" class="fa fa-user-plus"></span>
+    <h2 *ngIf="thisIsEmp" class="empTitle">Employees <span style="float:right"> <span style="cursor:pointer" title="add" class="fa fa-user-plus"></span>
       <span title="open" [routerLink]="[{ outlets: {mainCon: ['Employees'] } }]" *ngIf="router.url != '/RemoteMonotoring/(mainCon:Employees)'" style="cursor:pointer;margin-left:15px" class="fa fa-expand-alt"></span>
       <span title="open" routerLink="/RemoteMonotoring" *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)'" style="cursor:pointer;margin-left:15px" class="fa fa-compress-alt"></span>
     </span></h2>
-
-    <div class="input-group">
+    <div *ngIf="thisIsEmp || clickedDep!= null" class="input-group">
       <input type="text" placeholder="Search... (name, Email, Phone,...)" [(ngModel)]="searchText" autocomplete="off" name="" class="form-control search">
       <div class="input-group-prepend">
         <span  style="cursor: default" class="input-group-text search_btn"><i style="color: lightgray" class="fas fa-search"></i></span>
       </div>
     </div>
-  </div>
+    </div>
   <div class="card-body contacts_body" >
-    <div style="width: 100%;height:100%;text-align:center;margin:0;color: white;font-weight: bolder;font-size: 20px" *ngIf="employes.length==0"> No Employees to show</div>
-    <ul style="height: 100%" class="contacts">
+    <div style="padding-top: 15%;text-align: center;color:white;font-weight:bolder;margin:0 auto;font-size:25px;width: 100%" *ngIf="!thisIsEmp && clickedDep.depId === -1">
+      <span style="font-size:30px;color:rgb(52,248,61)">Click a department to show details here</span><br><br><br><br>No Department Selected
+    </div>
+    <div style="width: 100%;text-align:center;margin:0;color: white;padding-top: 10%;font-weight: bolder;font-size: 20px" *ngIf="(thisIsEmp && users.length === 0) || (!thisIsEmp && clickedDep.depId!==-1 && users==null)"> No Employees to show</div>
+    <ul class="contacts">
 
-      <li class="emp" *ngFor="let emp of employes | filter:searchText">
+      <li class="emp" *ngFor="let emp of users | filter:searchText">
         <div class="d-flex bd-highlight">
-          <div class="img_cont">
+          <div *ngIf="thisIsEmp" class="img_cont">
             <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
             <span *ngIf='emp.getChecked()' class="online_icon"></span>
             <span *ngIf='!emp.getChecked()' class="online_icon offline"></span>
           </div>
 
-          <div class="user_info" style="width: 100%">
+          <div class="user_info" style="width: 100%;padding-bottom: 20px">
             <div style="float:left">
-              <span>{{emp.getName}}</span>
-              <h3><span *ngIf='emp.getChecked()'>checked in at : 7:50</span> <span *ngIf='!emp.getChecked()'>Didn't check in yet</span></h3></div>
-            <div *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)'" style="margin-left: 60%;color: white;font-size: 15px" class="info">
+              <span>{{emp.name}}</span>
+              <!--<h3 ><span *ngIf='emp.getChecked()'>checked in at : 7:50</span> <span *ngIf='!emp.getChecked()'>Didn't check in yet</span></h3>-->
+            </div>
+            <div *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)' || !thisIsEmp" style="margin-left: 60%;color: white;font-size: 15px" class="info">
               <ul class="list-inline">
-                <li>Phone number: {{emp.getPhone()}} </li>
-                <li> Email: {{emp.getEmail()}} </li>
-                <li>Adress: {{emp.getAdress()}} </li>
-                <li>{{emp.getProfession()}} </li>
+                <li>Phone number: {{emp.phone}} </li>
+                <li> Email: {{emp.email}} </li>
+                <li>Adresses:<br>
+                  <ul *ngfor="let adr of emp.adresses" class="list-inline">
+                      <li>
+                        Street: {{adr.streetName}}
+                      </li>
+                    <li>
+                      Street number:{{adr.streetNum}}
+                    </li>
+                    <li>
+                      State: {{adr.state}}
+                    </li>
+                    <li>
+                      Gouvernorat: {{adr.gouvernorat}}
+                    </li>
+                    <li>
+                      Zip code: {{adr.zipCode}}
+                    </li>
+                  </ul>
+                </li>
+                <!--<li>{{emp.getProfession()}} </li>-->
               </ul>
             </div>
           </div>
@@ -47,8 +68,7 @@
 
     </ul>
   </div>
-
-  <div class="card-footer">
+  <div class="card-footer" *ngIf="!thisIsEmp && clickedDep.depId!==-1">
 
     <div class="buttons">
       <button mat-raised-button class="btn btn-info" matTooltip="Add Employee">

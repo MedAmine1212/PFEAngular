@@ -5,22 +5,32 @@
   <div  class="container-fluid h-100">
     <table class="cardContainer">
       <tr>
-        <td style="width: 27%" [@enterAnimation] *ngIf="router.url !== '/RemoteMonotoring' && router.url !== '/RemoteMonotoring/(mainCon:Absences)'">
+        <td  [@enterAnimation] *ngIf="router.url !== '/RemoteMonotoring' && router.url !== '/RemoteMonotoring/(mainCon:Absences)' && router.url !== '/RemoteMonotoring/(mainCon:Departements)'">
         <div  class="card mainCard" [ngStyle]="{'background-color':router.url === '/RemoteMonotoring/(mainCon:Employees)' ? 'transparent' : '' }" >
-          <div class="card-body"  style="margin-top: 30px;margin-right: 50px">
+          <div class="card-body" [ngStyle]="{'overflow':router.url === '/RemoteMonotoring/(mainCon:Employees)' ? 'hidden' : 'auto' }" >
             <router-outlet name="mainCon"></router-outlet>
           </div>
-          <div class="card-footer">{{time | date: 'dd MMMM yyyy '}} <span class="time">{{ time | date: 'hh:mm:ss a' }}</span></div>
+          <div *ngIf="router.url != '/RemoteMonotoring/(mainCon:Employees)'" class="card-footer">{{time | date: 'dd MMMM yyyy '}} <span class="time">{{ time | date: 'hh:mm:ss a' }}</span></div>
 
         </div>
       </td>
+        <td style="width: 27%" [@enterAnimation] *ngIf="router.url === '/RemoteMonotoring/(mainCon:Departements)'">
+          <div  class="card mainCard" >
+            <div class="card-body"  style="margin-top: 30px;margin-right: 50px">
+
+            <app-departements (outPutData)="setClickedDep($event)"></app-departements>
+            </div>
+            <div class="card-footer">{{time | date: 'dd MMMM yyyy '}} <span class="time">{{ time | date: 'hh:mm:ss a' }}</span></div>
+
+          </div>
+        </td>
         <td class="contTD" [@enterAnimation] *ngIf="router.url === '/RemoteMonotoring' || router.url === '/RemoteMonotoring/(mainCon:Absences)'">
 
           <app-employees></app-employees>
     </td>
-        <td class="contTD" [@enterAnimation] *ngIf="router.url === '/RemoteMonotoring/(mainCon:Departements)'">
+        <td class="contTD" [@enterSecondAnimation] *ngIf="router.url === '/RemoteMonotoring/(mainCon:Departements)'">
 
-          <app-employees [dep]=true></app-employees>
+          <app-employees></app-employees>
 
         </td>
 

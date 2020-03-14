@@ -1,6 +1,8 @@
-import {Component, OnInit, Output} from '@angular/core';
+import {Component, OnInit, Output, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {animate, style, transition, trigger} from '@angular/animations';
+import {Department} from '../../models/Department';
+import {EmployeesComponent} from '../employees/employees.component';
 @Component({
   selector: 'app-remmote-monotoring',
   animations: [
@@ -34,13 +36,20 @@ import {animate, style, transition, trigger} from '@angular/animations';
 })
 
 export class RemoteMonotoringComponent implements OnInit {
+  clickedDeparment: Department;
 
   constructor(public router: Router) { }
   time = new Date();
-
+  @ViewChild(EmployeesComponent) employeesComponent: EmployeesComponent;
   ngOnInit() {
     setInterval(() => {
       this.time = new Date();
     }, 1000);
+  }
+  setClickedDep(dep: Department) {
+    if (dep) {
+      this.clickedDeparment = dep;
+      this.employeesComponent.setDepartment(dep);
+    }
   }
 }

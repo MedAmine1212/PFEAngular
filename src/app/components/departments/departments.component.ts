@@ -1,5 +1,5 @@
 /** Flat node with expandable and level information */
-import {Component, Injectable, OnInit} from '@angular/core';
+import {Component, EventEmitter, Injectable, Input, OnInit, Output} from '@angular/core';
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {CollectionViewer, DataSource, SelectionChange} from '@angular/cdk/collections';
 import {BehaviorSubject, merge, Observable} from 'rxjs';
@@ -22,8 +22,9 @@ export class DynamicDatabase {
   rootLevelNodes: Department[] = [];
 
   initialData(data: Department[]): DynamicFlatNode[] {
+    this.rootLevelNodes = [];
+    this.dataMap.clear();
     this.departments = data;
-    console.table(data);
     for (const dep of this.departments) {
       if (dep.supDep == null) {
         this.rootLevelNodes.push(dep);
@@ -118,18 +119,22 @@ export class DynamicDataSource implements DataSource<DynamicFlatNode> {
   styleUrls: ['./departments.component.css']
 })
 
+
 export class DepartmentsComponent implements  OnInit {
-
+  @Output() outPutData = new EventEmitter<Department>();
   data: Department[];
-  constructor(private database: DynamicDatabase, private departmentService: DepartmentService) {
-
-
-  }
+  fakedep: Department;
+  clickedDep: Department;
   treeControl: FlatTreeControl<DynamicFlatNode>;
 
   dataSource: DynamicDataSource;
+  constructor(private database: DynamicDatabase, private departmentService: DepartmentService) {
+  }
 
-
+  sendData(dep: Department) {
+    this.clickedDep = dep;
+    this.outPutData.emit(dep);
+  }
   getLevel = (node: DynamicFlatNode) => node.level;
 
   isExpandable = (node: DynamicFlatNode) => node.expandable;
@@ -137,17 +142,23 @@ export class DepartmentsComponent implements  OnInit {
   hasChild = (_: number, nodeData: DynamicFlatNode) => nodeData.expandable;
 
   ngOnInit(): void {
+    this.clickedDep = new Department(null, null, null);
+    this.clickedDep.depId = -1;
+    this.fakedep = this.clickedDep;
     this.treeControl = new FlatTreeControl<DynamicFlatNode>(this.getLevel, this.isExpandable);
     this.dataSource = new DynamicDataSource(this.treeControl, this.database);
     this.departmentService.list().subscribe(r => {
-      this.data = r;
-      this.dataSource.data = this.database.initialData(this.data);
+    this.data = r;
+    this.dataSource.data = this.database.initialData(this.data);
+    this.unselectDep();
     });
-
 
   }
 
 
+  unselectDep() {
+    this.sendData(this.fakedep);
+  }
 }
 
 

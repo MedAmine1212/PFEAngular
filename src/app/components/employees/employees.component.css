@@ -1,12 +1,15 @@
 
 .card{
+  z-index: 99999;
   height: 500px;
   border-radius: 15px !important;
   background-color: rgba(0,0,0,0.7) !important;
 }
 .contacts_body{
   padding:  0.75rem 0 !important;
+  margin-bottom: 20px !important;
   overflow-y: auto;
+  min-height:100px;
   max-height: 400px;
   white-space: nowrap;
 }
@@ -115,11 +118,10 @@ h3{
   cursor:pointer;
 }
 .card-body{
-  padding: 0 !important;
   margin-bottom: 50px;
+
 }
 .card-footer{
-
   padding:0 !important;
 }
 .buttons{

@@ -5,7 +5,7 @@ export class Department {
   supDep: Department;
   chefDep: User;
   departments: Department[];
-  users: Department[];
+  users: User[];
 
 
   constructor(depName: string, supDep: Department, chefDep: User) {
