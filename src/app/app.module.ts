@@ -58,7 +58,7 @@ import {NgxIntlTelInputModule} from 'ngx-intl-tel-input';
     MatProgressBarModule,
     MatTooltipModule,
     MatButtonModule,
-    BsDropdownModule.forRoot(),
+    BsDropdownModule,
     NgxIntlTelInputModule
   ],
   providers: [],
