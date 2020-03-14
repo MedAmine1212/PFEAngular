@@ -9,7 +9,7 @@ export class User {
   phone: number;
   email: string;
   departement: Department;
-  adresses: Address[];
+  addresses: Address[];
 
 
   constructor(name: string, gender: string, birthDay: Date, hireDay: Date, phone: number, email: string) {

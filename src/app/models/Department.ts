@@ -3,12 +3,12 @@ export class Department {
   depId: number;
   depName: string;
   supDep: Department;
-  chefDep: User;
+  chefDep: number;
   departments: Department[];
   users: User[];
 
 
-  constructor(depName: string, supDep: Department, chefDep: User) {
+  constructor(depName: string, supDep: Department, chefDep: number) {
     this.depName = depName;
     this.supDep = supDep;
     this.chefDep = chefDep;

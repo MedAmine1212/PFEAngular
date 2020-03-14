@@ -24,6 +24,9 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatProgressBar, MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatButtonModule} from '@angular/material/button';
+import { AddUserComponent } from './Forms/add-user/add-user.component';
+import {BsDropdownModule} from 'ngx-bootstrap';
+import {NgxIntlTelInputModule} from 'ngx-intl-tel-input';
 
 @NgModule({
   declarations: [
@@ -38,6 +41,7 @@ import {MatButtonModule} from '@angular/material/button';
     ProfileComponent,
     EmployeesComponent,
     MotifsAbsencesComponent,
+    AddUserComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,7 +57,9 @@ import {MatButtonModule} from '@angular/material/button';
     MatIconModule,
     MatProgressBarModule,
     MatTooltipModule,
-    MatButtonModule
+    MatButtonModule,
+    BsDropdownModule.forRoot(),
+    NgxIntlTelInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]

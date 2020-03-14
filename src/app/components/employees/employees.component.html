@@ -1,21 +1,28 @@
-<div [ngStyle]="{'height':router.url === '/RemoteMonotoring/(mainCon:Employees)' ? '100%' : '85%' }" class="card mb-sm-3 mb-md-0 contacts_card">
+<div *ngIf="showForm" class="formsBigContainer">
+
+  <div class="formsContainer" >
+    <app-add-user [dep]="clickedDep" (outPutData)="closeForm($event)"></app-add-user>
+  </div>
+</div>
+
+<div  [ngStyle]="{'height':router.url === '/RemoteMonotoring/(mainCon:Employees)' ? '100%' : '85%' }" class="card mb-sm-3 mb-md-0 contacts_card">
   <div class="card-header">
-    <h2 style="color:white;padding-bottom: 10px" *ngIf="!thisIsEmp && clickedDep!=null">
+    <h2 style="color:white;padding-bottom: 10px" *ngIf="!thisIsEmp && clickedDep.depId!=-1">
       <span> Department: {{clickedDep.depName}}</span>
-      <span style="float:right">Chef dep: {{clickedDep.chefDep}}</span>
+      <span *ngIf="chefDep!=null" style="float:right">Chef dep: {{chefDep.name}}</span>
 
     </h2>
     <h2 *ngIf="thisIsEmp" class="empTitle">Employees <span style="float:right"> <span style="cursor:pointer" title="add" class="fa fa-user-plus"></span>
       <span title="open" [routerLink]="[{ outlets: {mainCon: ['Employees'] } }]" *ngIf="router.url != '/RemoteMonotoring/(mainCon:Employees)'" style="cursor:pointer;margin-left:15px" class="fa fa-expand-alt"></span>
       <span title="open" routerLink="/RemoteMonotoring" *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)'" style="cursor:pointer;margin-left:15px" class="fa fa-compress-alt"></span>
     </span></h2>
-    <div *ngIf="thisIsEmp || clickedDep!= null" class="input-group">
+    <div *ngIf="thisIsEmp || clickedDep.depId!=-1" class="input-group">
       <input type="text" placeholder="Search... (name, Email, Phone,...)" [(ngModel)]="searchText" autocomplete="off" name="" class="form-control search">
       <div class="input-group-prepend">
         <span  style="cursor: default" class="input-group-text search_btn"><i style="color: lightgray" class="fas fa-search"></i></span>
       </div>
     </div>
-    </div>
+  </div>
   <div class="card-body contacts_body" >
     <div style="padding-top: 15%;text-align: center;color:white;font-weight:bolder;margin:0 auto;font-size:25px;width: 100%" *ngIf="!thisIsEmp && clickedDep.depId === -1">
       <span style="font-size:30px;color:rgb(52,248,61)">Click a department to show details here</span><br><br><br><br>No Department Selected
@@ -36,46 +43,46 @@
               <span>{{emp.name}}</span>
               <!--<h3 ><span *ngIf='emp.getChecked()'>checked in at : 7:50</span> <span *ngIf='!emp.getChecked()'>Didn't check in yet</span></h3>-->
             </div>
-            <div *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)' || !thisIsEmp" style="margin-left: 60%;color: white;font-size: 15px" class="info">
+            <div *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)' || !thisIsEmp" [ngStyle]="{'margin-left':router.url === '/RemoteMonotoring/(mainCon:Employees)' ? '60%' : '40%' }" style="color: white;font-size: 15px" class="info">
               <ul class="list-inline">
                 <li>Phone number: {{emp.phone}} </li>
                 <li> Email: {{emp.email}} </li>
-                <li>Adresses:<br>
-                  <ul *ngfor="let adr of emp.adresses" class="list-inline">
-                      <li>
-                        Street: {{adr.streetName}}
-                      </li>
-                    <li>
-                      Street number:{{adr.streetNum}}
-                    </li>
-                    <li>
+                <li>Addresses:<br>
+                  <table>
+                  <tr *ngFor="let adr of emp.addresses" class="list-inline">
+                    <td>
+                      Street: {{adr.streetName}}
+                    </td>
+                    <td>
+                      Street number: {{adr.streetNum}}
+                    </td>
+                    <td>
                       State: {{adr.state}}
-                    </li>
-                    <li>
+                    </td>
+                    <td>
                       Gouvernorat: {{adr.gouvernorat}}
-                    </li>
-                    <li>
+                    </td>
+                    <td>
                       Zip code: {{adr.zipCode}}
-                    </li>
-                  </ul>
-                </li>
+                    </td>
+                  </tr>
+                  </table>
                 <!--<li>{{emp.getProfession()}} </li>-->
               </ul>
             </div>
           </div>
         </div>
       </li>
-
     </ul>
   </div>
   <div class="card-footer" *ngIf="!thisIsEmp && clickedDep.depId!==-1">
 
     <div class="buttons">
-      <button mat-raised-button class="btn btn-info" matTooltip="Add Employee">
+      <button mat-raised-button class="btn btn-info" (click)="showAddUser = true ;showForm = true" matTooltip="Add Employee">
         <span style="cursor:pointer;color:white" title="add" class="fa fa-user-plus"></span>
       </button>
-      <button mat-raised-button class="btn btn-success" matTooltip="Add departement"><span class="fas fa-plus"></span></button>
-      <button mat-raised-button class="btn btn-danger" matTooltip="Delete departement"><span class="fas fa-trash-alt"></span></button>
+      <button mat-raised-button class="btn btn-success" (click)="showAddDep = true;showForm = true" matTooltip="Add departement"><span class="fas fa-plus"></span></button>
+      <button mat-raised-button class="btn btn-danger" (click)="showDelDep = true ;showForm = true" matTooltip="Delete departement"><span class="fas fa-trash-alt"></span></button>
     </div>
   </div>
 </div>

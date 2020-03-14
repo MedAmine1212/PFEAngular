@@ -148,9 +148,9 @@ export class DepartmentsComponent implements  OnInit {
     this.treeControl = new FlatTreeControl<DynamicFlatNode>(this.getLevel, this.isExpandable);
     this.dataSource = new DynamicDataSource(this.treeControl, this.database);
     this.departmentService.list().subscribe(r => {
-    this.data = r;
-    this.dataSource.data = this.database.initialData(this.data);
-    this.unselectDep();
+      this.data = r;
+      this.dataSource.data = this.database.initialData(this.data);
+      this.unselectDep();
     });
 
   }
@@ -160,5 +160,3 @@ export class DepartmentsComponent implements  OnInit {
     this.sendData(this.fakedep);
   }
 }
-
-

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Department} from '../../models/Department';
 import {Observable} from 'rxjs';
+import {User} from '../../models/User';
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +30,9 @@ export class DepartmentService {
 
   findById(id): Observable<any> {
     return this.http.get(this.baseUrl + 'findById/'  + id);
+  }
+
+  getChefDep(depId): Observable<any> {
+    return this.http.get(this.baseUrl + 'getChefDep/' + depId);
   }
 }

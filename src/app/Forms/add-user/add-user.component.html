@@ -1,0 +1,92 @@
+<h1>Add a user to <b>{{dep.depName}}</b> department</h1>
+<hr>
+<form style="color:black">
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputEmail">Email</label>
+      <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputName">Name</label>
+      <input type="password" class="form-control" id="inputName" placeholder="Name">
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputBirthDate">Birth Date</label><br>
+      <div class="input-group">
+        <input id="inputBirthDate" class="form-control" placeholder="yyyy-mm-dd"
+               name="dp" ngbDatepicker #d="ngbDatepicker">
+        <div class="input-group-append">
+          <button class="btn btn-outline-info" (click)="d.toggle()" type="button">
+            <span class="fas fa-calendar-alt"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputName">Sexe </label><br>
+      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <label style="width: 170px" class="btn btn-info active">
+          <input type="radio"  name="options" id="Male" autocomplete="off" checked> Male
+        </label>
+        <label style="width: 170px" class="btn btn-info">
+          <input type="radio"  name="options" id="Female" autocomplete="off"> Female
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputHireDate">Hire Date</label><br>
+      <div class="input-group">
+        <input id="inputHireDate" class="form-control" placeholder="yyyy-mm-dd"
+               name="dp2" ngbDatepicker #d="ngbDatepicker">
+        <div class="input-group-append">
+          <button class="btn btn-outline-info" (click)="d.toggle()" type="button">
+            <span class="fas fa-calendar-alt"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-md-6">
+      <label >Phone</label>
+        <ngx-mat-intl-tel-input
+          placeholder="Phone number"
+          [preferredCountries]="['tn']"
+          [enablePlaceholder]="true"
+          [enableSearch]="true"
+          name="phone"
+          formControlName="phone"></ngx-mat-intl-tel-input>
+    </div>
+  </div>
+  <!--<div class="form-group">
+    <label for="inputAddress">Address</label>
+    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+  </div>
+  <div class="form-group">
+    <label for="inputAddress2">Address 2</label>
+    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputCity">City</label>
+      <input type="text" class="form-control" id="inputCity">
+    </div>
+    <div class="form-group col-md-4">
+      <label for="inputState">State</label>
+      <select id="inputState" class="form-control">
+        <option selected>Choose...</option>
+        <option>...</option>
+      </select>
+    </div>
+    <div class="form-group col-md-2">
+      <label for="inputZip">Zip</label>
+      <input type="text" class="form-control" id="inputZip">
+    </div>
+  </div>-->
+  <div class="buttons">
+    <button type="submit" class="btn btn-primary">Sign in</button>
+    <button type="button" (click)="closeThis()" class="btn btn-light" style="margin-left: 20px;">Cancel</button>
+  </div>
+</form>
