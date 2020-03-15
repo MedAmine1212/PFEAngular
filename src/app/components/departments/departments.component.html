@@ -1,5 +1,8 @@
 <h1>Departments
-  <span (click)="unselectDep()" *ngIf="clickedDep.depId!=-1" mat-raised-button  matTooltip="Unselect departement" class="fas fa-check-square"></span>
+  <span class="buttons">
+      <button (click)="addDepartment()" mat-raised-button class="btn btn-outline-dark" matTooltip="Add departement"><span class="fas fa-plus"></span></button>
+    <span (click)="unselectDep()" *ngIf="clickedDep.depId!=-1" mat-raised-button  matTooltip="Unselect departement" class="fas fa-check-square"></span>
+  </span>
 </h1>
 
 <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
@@ -26,3 +29,4 @@
   </mat-tree-node>
 
 </mat-tree>
+

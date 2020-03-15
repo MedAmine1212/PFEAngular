@@ -6,6 +6,8 @@ import {BehaviorSubject, merge, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {Department} from '../../models/Department';
 import {DepartmentService} from '../../services/departement/department.service';
+import {AddDepartmentComponent} from '../../dialogs/dialog-forms/add-department/add-department.component';
+import {MatDialog} from '@angular/material/dialog';
 
 export class DynamicFlatNode {
   constructor(public item: Department, public level = 1, public expandable = false,
@@ -128,7 +130,7 @@ export class DepartmentsComponent implements  OnInit {
   treeControl: FlatTreeControl<DynamicFlatNode>;
 
   dataSource: DynamicDataSource;
-  constructor(private database: DynamicDatabase, private departmentService: DepartmentService) {
+  constructor(public dialog: MatDialog, private database: DynamicDatabase, private departmentService: DepartmentService) {
   }
 
   sendData(dep: Department) {
@@ -158,5 +160,16 @@ export class DepartmentsComponent implements  OnInit {
 
   unselectDep() {
     this.sendData(this.fakedep);
+  }
+
+  addDepartment() {
+    const dialogRef = this.dialog.open(AddDepartmentComponent, {
+      width: '800px',
+      height: '600px',
+      data: null
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.ngOnInit();
+    });
   }
 }

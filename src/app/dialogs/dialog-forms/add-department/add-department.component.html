@@ -1,0 +1,27 @@
+<form [formGroup]="registerForm"  (ngSubmit)="registerForm.valid" novalidate  style="color:black">
+  <h1 *ngIf="dep!=null" style="padding:30px;">Add department to <b>{{dep.depName}}</b> department</h1>
+  <h1 *ngIf="dep==null" style="padding:30px;">Add a new department</h1>
+  <hr>
+  <div style="padding:40px;">
+    <div *ngIf="dep!=null" class="form-row">
+      <div class="form-group col-md-6">
+        <label for="supDep">Sup. Department</label>
+        <input disabled type="text" class="form-control" id="supDep" value="{{dep.depName}}">
+      </div>
+    </div>
+  <div style="height:100px" class="form-row">
+      <div class="form-group col-md-6">
+        <label for="depName">Department Name*</label>
+        <input matInput required [(ngModel)]="department.depName" formControlName="depName" type="text" class="form-control" id="depName" placeholder="Department name">
+        <mat-error style="margin-left: 5px;margin-bottom: -20px" *ngIf="registerForm.get('depName').hasError('required')">Department name required</mat-error>
+      </div>
+    </div>
+  <div class="note">
+    <span> Note: this department will be submitted with no department supervisor, the supervisor can be set after adding employees to this department.</span>
+  </div>
+  <div class="buttons">
+    <button class="btn btn-primary"  [disabled]="registerForm.invalid" mat-raised-button  type="submit" (click)="addDep()">Add department</button>
+    <button type="button" (click)="closeThis()" class="btn btn-light" style="margin-left: 20px;">Cancel</button>
+  </div>
+  </div>
+</form>

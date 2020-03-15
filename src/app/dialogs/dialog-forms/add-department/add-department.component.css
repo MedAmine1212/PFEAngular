@@ -1,0 +1,12 @@
+
+.note{
+  margin-top: 20px;
+  font-size: 15px;
+  color: grey;
+}
+.buttons{
+  position: absolute;
+  bottom: 100px;
+  left:55%;
+  margin-top: 30px;
+}
