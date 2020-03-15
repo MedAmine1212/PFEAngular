@@ -94,7 +94,7 @@
 
   <mat-step [stepControl]="thirdFormGroup">
     <div id="firstAdress">
-      <h3>Address</h3>
+      <h2>Address</h2>
       <hr>
     <div class="form-row">
       <div class="form-group col-md-6">
@@ -127,11 +127,11 @@
         <span mat-raised-button matTooltip="Add second Address now" *ngIf="!showOtherAddress" class="fas fa-plus-circle"></span>
         <span mat-raised-button matTooltip="Hide form" *ngIf="showOtherAddress" class="fas fa-minus-circle"></span>
       </button>
-   <span *ngIf="!showOtherAddress"> Note: Each user can have 2 addresses,you can add another address now, or this user or the employer can add another address later.</span>
+   <span *ngIf="!showOtherAddress"> Note: Each user can have 2 addresses, you can add another address now, otherwise this user or the employer can add another address later.</span>
       </div>
 
     <div style="margin-top: 10px" [@enterAnimation] *ngIf="showOtherAddress" id="secondAddress">
-      <h3>Address 2</h3>
+      <h2>Address 2</h2>
       <hr>
       <div class="form-row">
         <div class="form-group col-md-6">

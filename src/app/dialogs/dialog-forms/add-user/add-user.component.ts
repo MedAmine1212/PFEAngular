@@ -1,9 +1,11 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {Department} from '../../models/Department';
+import {AfterViewInit, Component, Inject, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Department} from '../../../models/Department';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {DepartmentService} from '../../services/departement/department.service';
+import {DepartmentService} from '../../../services/departement/department.service';
 import {MatStepper} from '@angular/material/stepper';
 import {animate, style, transition, trigger} from '@angular/animations';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {DeleteDepDialogComponent} from '../../delete-dep-dialog/delete-dep-dialog.component';
 
 @Component({
   selector: 'app-add-user',
@@ -33,10 +35,15 @@ export class AddUserComponent implements AfterViewInit  {
   departments: Department[];
   firstPanelOpenState: boolean;
   secondPanelOpenState: boolean;
-  @Output() outPutData = new EventEmitter<boolean>();
-  @Input() dep: Department;
+  dep: Department;
   showOtherAddress: boolean;
-  constructor(private formBuilder: FormBuilder, private departmentService: DepartmentService) { }
+  constructor(public dialogRef: MatDialogRef<AddUserComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: Department,
+              private formBuilder: FormBuilder, private departmentService: DepartmentService) {
+  if (this.data != null ) {
+      this.dep = this.data;
+  }
+  }
 
   ngAfterViewInit(): void {
     this.showOtherAddress = false;
@@ -62,7 +69,7 @@ export class AddUserComponent implements AfterViewInit  {
     });
   }
   closeThis() {
-    this.outPutData.emit(true);
+    this.dialogRef.close();
   }
 
   addUser() {

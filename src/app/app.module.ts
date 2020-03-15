@@ -24,13 +24,16 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatProgressBar, MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatButtonModule} from '@angular/material/button';
-import { AddUserComponent } from './Forms/add-user/add-user.component';
+import { AddUserComponent } from './dialogs/dialog-forms/add-user/add-user.component';
 import {BsDropdownModule} from 'ngx-bootstrap';
 import {NgxIntlTelInputModule} from 'ngx-intl-tel-input';
 import {NgxMatIntlTelInputModule} from 'ngx-mat-intl-tel-input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { AddDepartmentComponent } from './dialogs/dialog-forms/add-department/add-department.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { DeleteDepDialogComponent } from './dialogs/delete-dep-dialog/delete-dep-dialog.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +49,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     EmployeesComponent,
     MotifsAbsencesComponent,
     AddUserComponent,
+    AddDepartmentComponent,
+    DeleteDepDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,7 +73,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatFormFieldModule,
     MatStepperModule,
     MatExpansionModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

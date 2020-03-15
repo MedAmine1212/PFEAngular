@@ -142,7 +142,7 @@ export class DepartmentsComponent implements  OnInit {
   hasChild = (_: number, nodeData: DynamicFlatNode) => nodeData.expandable;
 
   ngOnInit(): void {
-    this.clickedDep = new Department(null, null, null);
+    this.clickedDep = new Department();
     this.clickedDep.depId = -1;
     this.fakedep = this.clickedDep;
     this.treeControl = new FlatTreeControl<DynamicFlatNode>(this.getLevel, this.isExpandable);

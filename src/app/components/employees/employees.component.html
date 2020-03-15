@@ -1,10 +1,3 @@
-<div *ngIf="showForm" class="formsBigContainer">
-
-  <div class="formsContainer" >
-    <app-add-user [dep]="clickedDep" (outPutData)="closeForm($event)"></app-add-user>
-  </div>
-</div>
-
 <div  [ngStyle]="{'height':router.url === '/RemoteMonotoring/(mainCon:Employees)' ? '100%' : '85%' }" class="card mb-sm-3 mb-md-0 contacts_card">
   <div class="card-header">
     <h2 style="color:white;padding-bottom: 10px" *ngIf="!thisIsEmp && clickedDep.depId!=-1">
@@ -22,13 +15,17 @@
         <span  style="cursor: default" class="input-group-text search_btn"><i style="color: lightgray" class="fas fa-search"></i></span>
       </div>
     </div>
+
+    <h1 *ngIf="!thisIsEmp && clickedDep.depId != -1" style="margin-top: 20px" class="empTitle">Department Employees</h1>
+
   </div>
   <div class="card-body contacts_body" >
     <div style="padding-top: 15%;text-align: center;color:white;font-weight:bolder;margin:0 auto;font-size:25px;width: 100%" *ngIf="!thisIsEmp && clickedDep.depId === -1">
       <span style="font-size:30px;color:rgb(52,248,61)">Click a department to show details here</span><br><br><br><br>No Department Selected
     </div>
     <div style="width: 100%;text-align:center;margin:0;color: white;padding-top: 10%;font-weight: bolder;font-size: 20px" *ngIf="(thisIsEmp && users.length === 0) || (!thisIsEmp && clickedDep.depId!==-1 && users==null)"> No Employees to show</div>
-    <ul class="contacts">
+<div *ngIf="users!=null">
+  <ul *ngIf="users.length !=0"  class="contacts">
 
       <li class="emp" *ngFor="let emp of users | filter:searchText">
         <div class="d-flex bd-highlight">
@@ -37,7 +34,6 @@
             <span *ngIf='emp.getChecked()' class="online_icon"></span>
             <span *ngIf='!emp.getChecked()' class="online_icon offline"></span>
           </div>
-
           <div class="user_info" style="width: 100%;padding-bottom: 20px">
             <div style="float:left">
               <span>{{emp.name}}</span>
@@ -74,15 +70,17 @@
         </div>
       </li>
     </ul>
+</div>
   </div>
   <div class="card-footer" *ngIf="!thisIsEmp && clickedDep.depId!==-1">
 
     <div class="buttons">
-      <button mat-raised-button class="btn btn-info" (click)="showAddUser = true ;showForm = true" matTooltip="Add Employee">
+      <button mat-raised-button class="btn btn-info" (click)="showAddUserDialog()" matTooltip="Add Employee">
         <span style="cursor:pointer;color:white" title="add" class="fa fa-user-plus"></span>
       </button>
-      <button mat-raised-button class="btn btn-success" (click)="showAddDep = true;showForm = true" matTooltip="Add departement"><span class="fas fa-plus"></span></button>
-      <button mat-raised-button class="btn btn-danger" (click)="showDelDep = true ;showForm = true" matTooltip="Delete departement"><span class="fas fa-trash-alt"></span></button>
+      <button mat-raised-button class="btn btn-success" (click)="showAddDepDialog()" matTooltip="Add departement"><span class="fas fa-plus"></span></button>
+      <button mat-raised-button class="btn btn-secondary" (click)="showUpdateDepDialog()" matTooltip="Update departement"><span class="fas fa-pencil-alt"></span></button>
+      <button mat-raised-button class="btn btn-danger" (click)="showDeleteDialog()" matTooltip="Delete departement"><span class="fas fa-trash-alt"></span></button>
     </div>
   </div>
 </div>
