@@ -1,21 +1,42 @@
+<form style="color:black">
+<mat-horizontal-stepper [linear]="isLinear" #stepper>
+
+  <mat-step [stepControl]="firstFormGroup">
+      <div class="form-row">
+        <div *ngIf="dep==null" class="form-group col-md-6">
+          <h1>Department</h1>
+          <hr>
+          <select required class="custom-select" id="inputGroupSelect01">
+            <option selected *ngFor="let depp of departments" value="{{depp.depId}}">{{depp.depName}}</option>
+          </select>
+        </div>
+
+        <div *ngIf="dep!=null" class="form-group col-md-6">
+          <h1>Department</h1>
+          <hr>
+          <input type="text" class="form-control" id="inputDep" value="{{dep.depName}}" disabled="true">
+      </div>
+      </div>
+  </mat-step>
+
+<mat-step [stepControl]="secondFormGroup">
 <h1>Add a user to <b>{{dep.depName}}</b> department</h1>
 <hr>
-<form style="color:black">
   <div class="form-row">
     <div class="form-group col-md-6">
-      <label for="inputEmail">Email</label>
-      <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+      <label for="inputEmail">Email*</label>
+      <input matInput required type="email" class="form-control" id="inputEmail" placeholder="Email">
     </div>
     <div class="form-group col-md-6">
-      <label for="inputName">Name</label>
-      <input type="password" class="form-control" id="inputName" placeholder="Name">
+      <label for="inputName">Name*</label>
+      <input matInput required type="text" class="form-control" id="inputName" placeholder="Name">
     </div>
   </div>
   <div class="form-row">
     <div class="form-group col-md-6">
-      <label for="inputBirthDate">Birth Date</label><br>
+      <label for="inputBirthDate">Birth Date*</label><br>
       <div class="input-group">
-        <input id="inputBirthDate" class="form-control" placeholder="yyyy-mm-dd"
+        <input matInput required id="inputBirthDate" class="form-control" placeholder="yyyy-mm-dd"
                name="dp" ngbDatepicker #d="ngbDatepicker">
         <div class="input-group-append">
           <button class="btn btn-outline-info" (click)="d.toggle()" type="button">
@@ -27,66 +48,123 @@
     <div class="form-group col-md-6">
       <label for="inputName">Sexe </label><br>
       <div class="btn-group btn-group-toggle" data-toggle="buttons">
-        <label style="width: 170px" class="btn btn-info active">
+        <label style="width: 157px" class="btn btn-info active">
           <input type="radio"  name="options" id="Male" autocomplete="off" checked> Male
         </label>
-        <label style="width: 170px" class="btn btn-info">
+        <label style="width: 157px" class="btn btn-info">
           <input type="radio"  name="options" id="Female" autocomplete="off"> Female
         </label>
       </div>
     </div>
   </div>
   <div class="form-row">
-    <div class="form-group col-md-6">
+
+    <div class="form-group col-md-6" matTooltip="Hire date is set automatically" >
       <label for="inputHireDate">Hire Date</label><br>
       <div class="input-group">
-        <input id="inputHireDate" class="form-control" placeholder="yyyy-mm-dd"
+        <input matInput id="inputHireDate" disabled="true" class="form-control" placeholder="yyyy-mm-dd"
                name="dp2" ngbDatepicker #d="ngbDatepicker">
         <div class="input-group-append">
-          <button class="btn btn-outline-info" (click)="d.toggle()" type="button">
+          <button disabled="true" style="cursor: default" class="btn btn-outline-info" (click)="d.toggle()" type="button">
             <span class="fas fa-calendar-alt"></span>
           </button>
         </div>
       </div>
     </div>
     <div class="form-group col-md-6">
-      <label >Phone</label>
-        <ngx-mat-intl-tel-input
+      <label for="inputCIN">CIN*</label>
+      <input matInput required type="number" class="form-control" id="inputCIN" placeholder="CIN">
+    </div>
+
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <mat-form-field class="phoneInput"><br><br>
+        <ngx-mat-intl-tel-input required
           placeholder="Phone number"
           [preferredCountries]="['tn']"
           [enablePlaceholder]="true"
           [enableSearch]="true"
           name="phone"
           formControlName="phone"></ngx-mat-intl-tel-input>
+      </mat-form-field>
     </div>
   </div>
-  <!--<div class="form-group">
-    <label for="inputAddress">Address</label>
-    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-  </div>
-  <div class="form-group">
-    <label for="inputAddress2">Address 2</label>
-    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-  </div>
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="inputCity">City</label>
-      <input type="text" class="form-control" id="inputCity">
+</mat-step>
+
+  <mat-step [stepControl]="thirdFormGroup">
+    <div id="firstAdress">
+      <h3>Address</h3>
+      <hr>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputStreetName1">Street Name</label>
+        <input type="text" class="form-control" id="inputStreetName1" placeholder="Street Name">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="inputStreetNumber1">Street number</label>
+        <input matInput required type="number" class="form-control" id="inputStreetNumber1" placeholder="Street Number">
+      </div>
     </div>
-    <div class="form-group col-md-4">
-      <label for="inputState">State</label>
-      <select id="inputState" class="form-control">
-        <option selected>Choose...</option>
-        <option>...</option>
-      </select>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="inputState1">State</label>
+            <input type="text" class="form-control" placeholder="State (ex: Tunis)" id="inputState1">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputGov1">Governorate</label>
+            <input type="text" id="inputGov1" class="form-control" placeholder="Governorate"/>
+          </div>
+          <div class="form-group col-md-2">
+            <label for="inputZip1">Zip</label>
+
+            <input matInput required type="number" class="form-control" id="inputZip1" placeholder="Zip code">
+          </div>
+        </div>
     </div>
-    <div class="form-group col-md-2">
-      <label for="inputZip">Zip</label>
-      <input type="text" class="form-control" id="inputZip">
+    <div class="note">
+      <button (click)="showOtherAddress=!showOtherAddress"  class="btn btn-info addAddressButton">
+        <span mat-raised-button matTooltip="Add second Address now" *ngIf="!showOtherAddress" class="fas fa-plus-circle"></span>
+        <span mat-raised-button matTooltip="Hide form" *ngIf="showOtherAddress" class="fas fa-minus-circle"></span>
+      </button>
+   <span *ngIf="!showOtherAddress"> Note: Each user can have 2 addresses,you can add another address now, or this user or the employer can add another address later.</span>
+      </div>
+
+    <div style="margin-top: 10px" [@enterAnimation] *ngIf="showOtherAddress" id="secondAddress">
+      <h3>Address 2</h3>
+      <hr>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputStreetName2">Street Name</label>
+          <input type="text" class="form-control" id="inputStreetName2" placeholder="Street Name">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputStreetNumber2">Street number</label>
+          <input matInput required type="number" class="form-control" id="inputStreetNumber2" placeholder="Street Number">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputState2">State</label>
+          <input type="text" class="form-control" placeholder="State (ex: Tunis)" id="inputState2">
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputGov2">Governorate</label>
+          <input type="text" id="inputGov2" class="form-control" placeholder="Governorate"/>
+        </div>
+        <div class="form-group col-md-2">
+          <label for="inputZip2">Zip</label>
+
+          <input matInput required type="number" class="form-control" id="inputZip2" placeholder="Zip code">
+        </div>
+      </div>
+
     </div>
-  </div>-->
+  </mat-step>
+
+</mat-horizontal-stepper>
   <div class="buttons">
-    <button type="submit" class="btn btn-primary">Sign in</button>
+    <button type="submit" disabled class="btn btn-primary"  (click)="addUser()">Add user</button>
     <button type="button" (click)="closeThis()" class="btn btn-light" style="margin-left: 20px;">Cancel</button>
   </div>
 </form>

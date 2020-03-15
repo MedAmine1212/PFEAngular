@@ -27,6 +27,10 @@ import {MatButtonModule} from '@angular/material/button';
 import { AddUserComponent } from './Forms/add-user/add-user.component';
 import {BsDropdownModule} from 'ngx-bootstrap';
 import {NgxIntlTelInputModule} from 'ngx-intl-tel-input';
+import {NgxMatIntlTelInputModule} from 'ngx-mat-intl-tel-input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -59,7 +63,12 @@ import {NgxIntlTelInputModule} from 'ngx-intl-tel-input';
     MatTooltipModule,
     MatButtonModule,
     BsDropdownModule,
-    NgxIntlTelInputModule
+    NgxMatIntlTelInputModule,
+    NgxIntlTelInputModule,
+    MatFormFieldModule,
+    MatStepperModule,
+    MatExpansionModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

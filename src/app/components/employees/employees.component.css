@@ -137,7 +137,9 @@ h3{
   margin: auto;
   width:800px;
   height:600px;
-  padding: 60px;
+  padding-right: 30px;
+  padding-left: 30px;
+  padding-top: 10px;
   border-radius: 20px;
 }
 .emp:hover{
