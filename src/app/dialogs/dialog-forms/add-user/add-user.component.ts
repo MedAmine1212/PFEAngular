@@ -29,6 +29,7 @@ import {DeleteDepDialogComponent} from '../../delete-dep-dialog/delete-dep-dialo
 export class AddUserComponent implements AfterViewInit  {
   @ViewChild('stepper') stepper: MatStepper;
   isLinear = false;
+  cin: string;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
@@ -74,4 +75,13 @@ export class AddUserComponent implements AfterViewInit  {
 
   addUser() {
   }
+
+  checkCin(input: any) {
+    // tslint:disable-next-line:radix
+      if (input.target.value.length > 8 || (input.data != null && isNaN(Number.parseInt(input.data)))) {
+        input.target.value = this.cin;
+      } else {
+        this.cin = input.target.value;
+      }
+    }
 }

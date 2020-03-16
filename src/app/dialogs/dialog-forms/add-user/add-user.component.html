@@ -73,7 +73,7 @@
     </div>
     <div class="form-group col-md-6">
       <label for="inputCIN">CIN*</label>
-      <input matInput required type="number" class="form-control" id="inputCIN" placeholder="CIN">
+      <input matInput (input)="checkCin($event)" required type="number" class="form-control" id="inputCIN" placeholder="CIN">
     </div>
 
   </div>

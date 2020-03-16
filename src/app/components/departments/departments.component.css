@@ -46,7 +46,8 @@ mat-tree{
 }
 .example-tree-progress-bar{
   width: 120px;
-  margin-top: -6px;
+  margin-top: 10px;
+  float:right;
 }
 .btn-outline-dark{
   margin-top: 3px;

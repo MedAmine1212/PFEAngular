@@ -12,6 +12,8 @@ import {DeleteDepDialogComponent} from '../../delete-dep-dialog/delete-dep-dialo
 export class AddDepartmentComponent implements OnInit {
   registerForm: FormGroup;
   dep: Department;
+  depId: number;
+  departments: Department[];
   department: Department = new Department();
   constructor(public dialogRef: MatDialogRef<AddDepartmentComponent>,
               @Inject(MAT_DIALOG_DATA) public data: Department,
@@ -30,11 +32,21 @@ export class AddDepartmentComponent implements OnInit {
   }
 
   addDep() {
+    /*this.depId = 0;
+    this.departmentService.list().subscribe(r => {
+      this.departments = r;
+      for (const dep of this.departments) {
+          this.depId++;
+      }
+    });
+    this.depId++;
+    this.department.depId = this.depId;*/
     if (this.dep != null) {
       this.department.supDep = this.dep;
     }
     console.log(this.department);
     this.departmentService.add(this.department).subscribe(data => console.log(data), error1 => console.log(error1));
+    console.log(this.dep);
     this.dialogRef.close();
   }
 
