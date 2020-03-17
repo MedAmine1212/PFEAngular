@@ -3,6 +3,7 @@ import {Address} from './Address';
 export class User {
   userId: number;
   name: string;
+  firstName: string;
   gender: string;
   birthDay: Date;
   hireDay: Date;

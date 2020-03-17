@@ -1,4 +1,4 @@
-<div  [ngStyle]="{'height':router.url === '/RemoteMonotoring/(mainCon:Employees)' ? '100%' : '85%' }" class="card mb-sm-3 mb-md-0 contacts_card">
+<div [ngStyle]="{'height':router.url === '/RemoteMonotoring/(mainCon:Employees)' ? '100%' : '' }" class="card mb-sm-3 mb-md-0 contacts_card">
   <div class="card-header">
     <h2 style="color:white;padding-bottom: 10px" *ngIf="!thisIsEmp && clickedDep.depId!=-1">
       <span> Department: {{clickedDep.depName}}</span>
@@ -36,7 +36,7 @@
           </div>
           <div class="user_info" style="width: 100%;padding-bottom: 20px">
             <div style="float:left">
-              <span>{{emp.name}}</span>
+              <span>{{emp.name}} {{emp.firstName}}</span>
               <!--<h3 ><span *ngIf='emp.getChecked()'>checked in at : 7:50</span> <span *ngIf='!emp.getChecked()'>Didn't check in yet</span></h3>-->
             </div>
             <div *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)' || !thisIsEmp" [ngStyle]="{'margin-left':router.url === '/RemoteMonotoring/(mainCon:Employees)' ? '60%' : '40%' }" style="color: white;font-size: 15px" class="info">

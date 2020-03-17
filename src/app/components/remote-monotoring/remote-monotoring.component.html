@@ -14,8 +14,8 @@
 
           </div>
         </td>
-        <td style="width: 27%" [@enterAnimation] *ngIf="router.url === '/RemoteMonotoring/(mainCon:Departements)'">
-          <div  class="card mainCard" >
+        <td style="width: 27%;padding-right: 30px" [@enterAnimation] *ngIf="router.url === '/RemoteMonotoring/(mainCon:Departements)'">
+          <div  class="card mainCard">
             <div class="card-body"  style="margin-top: 30px;margin-right: 50px">
 
               <app-departements (outPutData)="setClickedDep($event)"></app-departements>

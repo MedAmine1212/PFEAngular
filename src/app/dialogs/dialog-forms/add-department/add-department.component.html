@@ -13,7 +13,7 @@
       <div class="form-group col-md-6">
         <label for="depName">Department Name*</label>
         <input matInput required [(ngModel)]="department.depName" formControlName="depName" type="text" class="form-control" id="depName" placeholder="Department name">
-        <mat-error style="margin-left: 5px;margin-bottom: -20px" *ngIf="registerForm.get('depName').hasError('required')">Department name required</mat-error>
+        <mat-error style="margin-left: 5px;margin-bottom: -20px" *ngIf="registerForm.get('depName').hasError('required') && registerForm.get('depName').touched">Department name required</mat-error>
       </div>
     </div>
   <div class="note">
