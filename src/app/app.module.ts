@@ -34,6 +34,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { AddDepartmentComponent } from './dialogs/dialog-forms/add-department/add-department.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { DeleteDepDialogComponent } from './dialogs/delete-dep-dialog/delete-dep-dialog.component';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { DeleteDepDialogComponent } from './dialogs/delete-dep-dialog/delete-dep
     AddUserComponent,
     AddDepartmentComponent,
     DeleteDepDialogComponent,
+    SidenavComponent,
   ],
   imports: [
     BrowserModule,
