@@ -2154,7 +2154,7 @@ a,button,.btn{outline:none !important }
 .app-container{display:flex;min-height:100vh;flex-direction:column;margin:0 }
 .table th,.table td{vertical-align:middle }
 .app-header{height:60px;display:flex;align-items:center;align-content:center;position:relative;z-index:10;transition:all .2s }
-.app-header.header-shadow{box-shadow:0 0.46875rem 2.1875rem rgba(4,9,20,0.03),0 0.9375rem 1.40625rem rgba(4,9,20,0.03),0 0.25rem 0.53125rem rgba(4,9,20,0.05),0 0.125rem 0.1875rem rgba(4,9,20,0.03) }
+.app-header.header-shadow{z-index:999999999999;box-shadow:0 0.46875rem 2.1875rem rgba(4,9,20,0.03),0 0.9375rem 1.40625rem rgba(4,9,20,0.03),0 0.25rem 0.53125rem rgba(4,9,20,0.05),0 0.125rem 0.1875rem rgba(4,9,20,0.03) }
 .app-header .app-header__content{display:flex;align-items:center;align-content:center;flex:1;padding:0 1.5rem;height:60px }
 .app-header .app-header__content .app-header-left{display:flex;align-items:center }
 .app-header .app-header__content .header-menu .nav-link{color:#6c757d }
@@ -2189,7 +2189,7 @@ a,button,.btn{outline:none !important }
 .app-header.header-text-light .header-btn-lg .hamburger-inner,.app-header.header-text-light .header-btn-lg .hamburger.is-active .hamburger-inner,.app-header.header-text-light .header-btn-lg .hamburger-inner::before,.app-header.header-text-light .header-btn-lg .hamburger-inner::after,.app-header.header-text-light .header__pane .hamburger-inner,.app-header.header-text-light .header__pane .hamburger.is-active .hamburger-inner,.app-header.header-text-light .header__pane .hamburger-inner::before,.app-header.header-text-light .header__pane .hamburger-inner::after{background-color:rgba(255,255,255,0.8) !important }
 .app-header.header-text-light .search-wrapper .input-holder .search-icon span::after{border-color:rgba(255,255,255,0.8) }
 .app-header.header-text-light .search-wrapper .close::before,.app-header.header-text-light .search-wrapper .close::after,.app-header.header-text-light .search-wrapper .input-holder .search-icon span::before{background:rgba(255,255,255,0.8) }
-.app-header.header-text-light .app-header__logo .logo-src{background:url(assets/images/logo.png) }
+/*.app-header.header-text-light .app-header__logo .logo-src{background:url(assets/images/logo.png) }*/
 .app-header.header-text-light .app-header__mobile-menu .hamburger-inner,.app-header.header-text-light .app-header__mobile-menu .hamburger-inner::before,.app-header.header-text-light .app-header__mobile-menu .hamburger-inner::after{background:rgba(255,255,255,0.9) }
 .app-header.header-text-dark .app-header-left>.nav>li>.nav-link{color:rgba(0,0,0,0.7) }
 .app-header.header-text-dark .app-header-left>.nav>li>.nav-link .nav-link-icon{color:rgba(0,0,0,0.8) }
@@ -2209,7 +2209,7 @@ a,button,.btn{outline:none !important }
 .app-header.header-text-dark .header-btn-lg .hamburger-inner,.app-header.header-text-dark .header-btn-lg .hamburger.is-active .hamburger-inner,.app-header.header-text-dark .header-btn-lg .hamburger-inner::before,.app-header.header-text-dark .header-btn-lg .hamburger-inner::after,.app-header.header-text-dark .header__pane .hamburger-inner,.app-header.header-text-dark .header__pane .hamburger.is-active .hamburger-inner,.app-header.header-text-dark .header__pane .hamburger-inner::before,.app-header.header-text-dark .header__pane .hamburger-inner::after{background-color:rgba(0,0,0,0.8) !important }
 .app-header.header-text-dark .search-wrapper .input-holder .search-icon span::after{border-color:rgba(0,0,0,0.8) }
 .app-header.header-text-dark .search-wrapper .close::before,.app-header.header-text-dark .search-wrapper .close::after,.app-header.header-text-dark .search-wrapper .input-holder .search-icon span::before{background:rgba(0,0,0,0.8) }
-.app-header.header-text-dark .app-header__logo .logo-src{background:url(assets/images/logo-inverse.png) }
+/*.app-header.header-text-dark .app-header__logo .logo-src{background:url(assets/images/logo-inverse.png) }*/
 .app-sidebar{width:280px;display:flex;z-index:11;overflow:hidden;min-width:280px;position:relative;flex:0 0 280px;margin-top:-60px;padding-top:-60px;transition:all .2s }
 .app-sidebar .app-sidebar__inner{padding:2px 1.5rem 1.5rem }
 .app-sidebar .scrollbar-sidebar{z-index:15;width:100% }
@@ -2255,7 +2255,7 @@ a,button,.btn{outline:none !important }
 .app-sidebar.sidebar-text-light .vertical-nav-menu ul>li>a.mm-active{color:#fff;background:rgba(255,255,255,0.15) }
 .app-sidebar.sidebar-text-light .ps__thumb-y{background:rgba(255,255,255,0.3) }
 .app-sidebar.sidebar-text-light .ps__rail-y:hover .ps__thumb-y{background:rgba(255,255,255,0.2) }
-.app-sidebar.sidebar-text-light .app-header__logo .logo-src{background:url(assets/images/logo.png) }
+/*.app-sidebar.sidebar-text-light .app-header__logo .logo-src{background:url(assets/images/logo.png) }*/
 .app-sidebar.sidebar-text-light .app-header__logo .hamburger-inner,.app-sidebar.sidebar-text-light .app-header__logo .hamburger-inner::before,.app-sidebar.sidebar-text-light .app-header__logo .hamburger-inner::after{background-color:rgba(255,255,255,0.8) }
 .app-sidebar.sidebar-text-dark{border-right:0 !important }
 .app-sidebar.sidebar-text-dark .app-sidebar__heading{color:rgba(0,0,0,0.6) }
@@ -2326,7 +2326,7 @@ a,button,.btn{outline:none !important }
 .app-theme-white .app-sidebar{background:#fff }
 .app-theme-white .app-page-title{background:rgba(255,255,255,0.45) }
 .app-theme-white .app-footer .app-footer__inner,.app-theme-white .app-header{background:#fafbfc }
-.app-theme-white.fixed-header .app-header__logo{background:rgba(250,251,252,0.1) }
+/*.app-theme-white.fixed-header .app-header__logo{background:rgba(250,251,252,0.1) }*/
 .app-footer{height:60px }
 .app-footer .app-footer__inner{padding:0 1.5rem 0 .75rem;height:60px;display:flex;align-content:center;align-items:center }
 .app-footer .app-footer__inner .app-footer-left{display:flex;align-items:center }
