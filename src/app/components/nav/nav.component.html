@@ -60,9 +60,14 @@
           <div class="widget-content-wrapper">
             <div class="widget-content-left">
               <div class="btn-group">
-               <!-- <button [@enterAnimation] *ngIf="showLight" (click)="showLight = false;showDark = true" class="btn btn-light toggle">Light Mode</button>
-                <button [@enterSecondAnimation]  *ngIf="showDark" (click)="showDark = false;showLight = true" class="btn btn-dark toggle">Dark mode</button>
--->
+                <div class="swatch-holder bg-light switch-sidebar-cs-class switch-header-cs-class" data-class="bg-light sidebar-text-dark header-text-dark">
+<!--                  <button [@enterAnimation] *ngIf="showLight" (click)="showLight = false;showDark = true" class="btn btn-light toggle">Light Mode</button>-->
+                </div>
+                <div class="swatch-holder bg-dark switch-sidebar-cs-class switch-header-cs-class" data-class="bg-dark sidebar-text-dark header-text-light">
+<!--                  <button [@enterSecondAnimation]  *ngIf="showDark" (click)="showDark = false;showLight = true" class="btn btn-dark toggle">Dark mode</button>-->
+                </div>
+
+
                 <button mat-button [matMenuTriggerFor]="menu" class="p-0 btn">
                   <img width="42" class="rounded-circle" src="assets/images/avatars/0.png" alt="">
                   <i class="fa fa-angle-down ml-2 opacity-8"></i>
