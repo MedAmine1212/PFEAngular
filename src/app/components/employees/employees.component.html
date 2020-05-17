@@ -1,4 +1,4 @@
-<div  class="main-card mb-3 card">
+<div  class="main-card mb-3 card" style="border: none">
   <div class="card-header">
     <h2 style="color:black;padding-bottom: 10px;width: 100%" *ngIf="!thisIsEmp && clickedDep.depId!=-1">
       <span> Department: {{clickedDep.depName}}</span>
@@ -7,16 +7,21 @@
 
     <div class="buttons" *ngIf="!thisIsEmp && clickedDep.depId!=-1">
       <button mat-raised-button class="btn btn-info" (click)="showAddUserDialog()" matTooltip="Add Employee">
-        <span style="cursor:pointer;color:black" title="add" class="fa fa-user-plus"></span>
+        <span style="cursor:pointer;color:white" title="add" class="fa fa-user-plus"></span>
       </button>
       <button mat-raised-button class="btn btn-success" (click)="showAddDepDialog()" matTooltip="Add departement"><span class="fas fa-plus"></span></button>
       <button mat-raised-button class="btn btn-secondary" (click)="showUpdateDepDialog()" matTooltip="Update departement"><span class="fas fa-pencil-alt"></span></button>
       <button mat-raised-button class="btn btn-danger" (click)="showDeleteDialog()" matTooltip="Delete departement"><span class="fas fa-trash-alt"></span></button>
     </div>
-    <h2 *ngIf="thisIsEmp" class="empTitle">Employees <span style="float:right"> <span style="cursor:pointer" title="add" class="fa fa-user-plus"></span>
-      <span title="open" [routerLink]="[{ outlets: {mainCon: ['Employees'] } }]" *ngIf="router.url != '/RemoteMonotoring/(mainCon:Employees)'" style="cursor:pointer;margin-left:15px" class="fa fa-expand-alt"></span>
-      <span title="open" routerLink="/RemoteMonotoring" *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)'" style="cursor:pointer;margin-left:15px" class="fa fa-compress-alt"></span>
-    </span></h2><br>
+    <i *ngIf="thisIsEmp" style="color:grey;margin-right: 15px;margin-top: -15px" class="fa fa-user-friends"></i>
+    <h2 *ngIf="thisIsEmp" class="app-sidebar__heading" style="font-weight: bolder">Employees
+      <span style="margin-left: 30px">
+      <span style="cursor:pointer" title="add" class="fa fa-user-plus butts"></span>
+      <span title="open" [routerLink]="[{ outlets: {mainCon: ['Employees'] } }]" *ngIf="router.url != '/RemoteMonotoring/(mainCon:Employees)'" style="cursor:pointer;margin-left:15px" class="fa fa-external-link-alt butts"></span>
+      <span title="close" routerLink="/RemoteMonotoring" *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)'" style="cursor:pointer;margin-left:15px" class="fa fa-compress-alt butts"></span>
+    </span>
+
+    </h2><br>
 
   </div>
 

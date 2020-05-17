@@ -4,6 +4,24 @@
 
   <div class="app-main" style="height: 100%">
     <div class="app-main__outer">
+      <!--Absences-->
+        <div [@enterAnimation] *ngIf="router.url === '/RemoteMonotoring' || router.url === '/RemoteMonotoring/(mainCon:Absences)'" class="app-sidebar sidebar-shadow" style="max-width: 380px;margin-top: 0px;margin-left: -300px">
+
+          <app-employees></app-employees>
+
+        </div>
+
+       <div [@enterSecondAnimation]  *ngIf="router.url === '/RemoteMonotoring' || router.url === '/RemoteMonotoring/(mainCon:Absences)'" class="card mainCard">
+
+          <div class="card-body">
+            <router-outlet  name="secCon"></router-outlet>
+          </div>
+          <div class="card-footer">
+            {{time | date: 'dd MMMM yyyy '}} <span class="time">{{ time | date: 'hh:mm:ss a' }}</span></div>
+
+        </div>
+
+      <!--Departments-->
       <app-departements *ngIf="router.url === '/RemoteMonotoring/(mainCon:Departements)'" [@enterAnimation] (outPutData)="setClickedDep($event)"></app-departements>
       <app-employees *ngIf="router.url === '/RemoteMonotoring/(mainCon:Departements)'" [@enterSecondAnimation]></app-employees>
     </div>

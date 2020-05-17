@@ -99,10 +99,16 @@ input:focus{
 
 .login_btn{
   color: black;
-  background-color: #FFC312;
+  background-color: rgb(82,148,226);
   width: 100px;
 }
-
+.card-header{
+  margin:10px;
+  border-top-right-radius:20px;
+  border-bottom-left-radius:20px;
+  border-bottom-right-radius:20px;
+  background-color: rgb(82,148,226);
+}
 .login_btn:hover{
   color: black;
   background-color: white;

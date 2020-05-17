@@ -1,7 +1,7 @@
 <h1>Absences
-  <span class="reasons" [ngStyle]="{'opacity':showMotifs ? '1' : '0.7' }" (click)="showHide(1)">Regitered Reasons</span>
-  <span class="reasons" [ngStyle]="{'opacity':showPoint ? '1' : '0.7' }" (click)="showHide(2)">Check-in</span>
-  <span class="reasons" [ngStyle]="{'opacity':showAbsences ? '1' : '0.7' }" (click)="showHide(3)">Absences</span>
+  <span class="reasons" [ngStyle]="{'color':showMotifs ? ' rgb(82,148,226)' : 'grey' }" (click)="showHide(1)">Regitered Reasons</span>
+  <span class="reasons" [ngStyle]="{'color':showPoint ? ' rgb(82,148,226)' : 'grey' }" (click)="showHide(2)">Check-in</span>
+  <span class="reasons" [ngStyle]="{'color':showAbsences ? ' rgb(82,148,226)' : 'grey' }" (click)="showHide(3)">Absences</span>
 </h1>
 <div [@enterAnimation] *ngIf="showMotifs">
 <app-motifs-absences></app-motifs-absences>
