@@ -1,10 +1,22 @@
 
 .card{
   overflow-y: hidden;
-  max-height: 700px;
   border-radius: 15px !important;
-  background-color: rgba(0,0,0,0.7);
+  min-height: 600px;
+  background-color: white;
   border: none;
+}
+.closed-sidebar .app-sidebar{
+  width:0px;
+}
+.app-sidebar{
+  width:370px;
+}
+.mainCard{
+
+  margin-left: 90px;
+  margin-right: 10px;
+  margin-top: 10px;
 }
 .card-body{
   max-height: 700px;
@@ -13,7 +25,7 @@
 .card-footer{
   border-radius: 0 0 15px 15px !important;
   border-top: 0 !important;
-  color: white;
+  color:black;
   font-weight: bolder;
   font-size: 17px;
 }
@@ -48,14 +60,14 @@
   border-radius: 50%;
   bottom: 0.2em;
   right: 0.4em;
-  border:1.5px solid white;
+  border:1.5px solid black;
 }
 .offline{
   background-color: #c23616 !important;
 }
 .user_info span{
   font-size: 20px;
-  color: white;
+  color: black;
 }
 .user_info p{
   font-size: 10px;
@@ -66,8 +78,8 @@
   padding-left: 30px;
 }
 .time{
-  color: white;
-  float: right;
+  color: black;
+  margin-left: 80%;
 }
 .cardContainer{
   width:100% ;

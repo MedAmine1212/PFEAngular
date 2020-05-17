@@ -9,6 +9,13 @@
   min-height: 600px;
   border-radius: 15px !important;
 }
+.butts{
+  color:grey;
+}
+
+.butts:hover{
+  color: rgb(82,148,226);
+}
 .contacts_body{
   padding:  0.75rem 0 !important;
   margin-bottom: 20px !important;
@@ -89,10 +96,6 @@
 }
 .contacts_card{
   width: 100%;
-}
-.empTitle{
-  color:grey;
-  font-weight: bolder;
 }
 h3{
   margin-top: 10px;
