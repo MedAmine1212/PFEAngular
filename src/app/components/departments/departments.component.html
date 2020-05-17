@@ -1,5 +1,5 @@
 
-<div class="app-sidebar sidebar-shadow" style="margin-top: -340px;margin-left: -30px">
+<div class="app-sidebar sidebar-shadow" style="margin-top: 0px;margin-left: -300px">
   <div class="app-header__logo">
     <div class="logo-src"></div>
     <div class="header__pane ml-auto">
@@ -24,13 +24,25 @@
   <div class="scrollbar-sidebar">
     <div class="app-sidebar__inner">
       <ul class="vertical-nav-menu">
-        <li class="app-sidebar__heading" style="font-size: 18px;padding-top: 10px">Departements</li>
+
+
+        <li class="app-sidebar__heading" style="font-size: 15px;padding-top: 10px">
+          <i style="margin-right:7px;color:grey" class="fa fa-building"></i>
+          Departments
+          <span class="buttons">
+      <button (click)="addDepartment()" mat-raised-button class="btn btn-outline-primary" matTooltip="Add departement"><span class="fas fa-plus"></span></button>
+    <span (click)="unselectDep()" *ngIf="clickedDep.depId!=-1" mat-raised-button  matTooltip="Unselect departement" class="fas fa-check-square"></span>
+  </span>
+
+        </li>
 
         <li>
+          <div>
         <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
           <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
             <span class="dis" style="width:20px" disabled></span>
             <span (click)="sendData(node.item)" class="item" style="margin-left: 22px">
+
      {{node.item.depName}}
 
     </span>
@@ -51,6 +63,7 @@
           </mat-tree-node>
 
         </mat-tree>
+          </div>
         </li>
       </ul>
     </div>
