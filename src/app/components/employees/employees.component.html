@@ -38,16 +38,17 @@
     <div style="padding-top: 5%;text-align: center;color:black;font-weight:bolder;margin:0 auto;font-size:25px;width: 100%" *ngIf="!thisIsEmp && clickedDep.depId === -1">
       <span style="font-size:30px;color:rgb(52,248,61)">Click a department to show details here</span><br><br><br><br>No Department Selected
     </div>
+
     <div style="width: 100%;text-align:center;margin:0;color: black;padding-top: 10%;font-weight: bolder;font-size: 20px" *ngIf="(thisIsEmp && users.length === 0) || (!thisIsEmp && clickedDep.depId!==-1 && users==null)"> No Employees to show</div>
     <div *ngIf="users!=null">
-      <ul *ngIf="users.length !=0"  class="contacts">
+      <ul *ngIf="(users.length !=0 && thisIsEmp) || (users.length !=0 && clickedDep.depId != -1)"  class="contacts">
 
         <li class="emp" *ngFor="let emp of users | filter:searchText">
           <div class="d-flex bd-highlight">
             <div *ngIf="thisIsEmp" class="img_cont">
               <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
-              <span *ngIf='emp.getChecked()' class="online_icon"></span>
-              <span *ngIf='!emp.getChecked()' class="online_icon offline"></span>
+            <!--  <span *ngIf='emp.getChecked()' class="online_icon"></span>
+              <span *ngIf='!emp.getChecked()' class="online_icon offline"></span> -->
             </div>
             <div class="user_info" style="width: 100%;padding-bottom: 20px">
               <div style="float:left">

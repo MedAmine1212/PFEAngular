@@ -149,7 +149,7 @@ export class DepartmentsComponent implements  OnInit {
     this.fakedep = this.clickedDep;
     this.treeControl = new FlatTreeControl<DynamicFlatNode>(this.getLevel, this.isExpandable);
     this.dataSource = new DynamicDataSource(this.treeControl, this.database);
-    this.reloadDate();
+    this.reloadData();
     this.unselectDep();
   }
 
@@ -165,11 +165,11 @@ export class DepartmentsComponent implements  OnInit {
       data: null
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.reloadDate();
+      this.reloadData();
     });
   }
 
-  private reloadDate() {
+  private reloadData() {
     this.departmentService.list().subscribe(r => {
       this.data = r;
       this.dataSource.data = this.database.initialData(this.data);
