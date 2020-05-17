@@ -1,4 +1,7 @@
 <app-nav></app-nav>
+<div class="app-main">
+<app-sidenav></app-sidenav>
+<div class="app-main__outer">
 <div class="bigContainer">
   <br><br>
 
@@ -14,15 +17,9 @@
 
           </div>
         </td>
-        <td style="width: 27%;padding-right: 30px" [@enterAnimation] *ngIf="router.url === '/RemoteMonotoring/(mainCon:Departements)'">
-          <div  class="card mainCard">
-            <div class="card-body"  style="margin-top: 30px;margin-right: 50px">
+        <td [@enterAnimation] *ngIf="router.url === '/RemoteMonotoring/(mainCon:Departements)'">
 
-              <app-departements (outPutData)="setClickedDep($event)"></app-departements>
-            </div>
-            <div class="card-footer">{{time | date: 'dd MMMM yyyy '}} <span class="time">{{ time | date: 'hh:mm:ss a' }}</span></div>
-
-          </div>
+            <app-departements (outPutData)="setClickedDep($event)"></app-departements>
         </td>
         <td class="contTD" [@enterAnimation] *ngIf="router.url === '/RemoteMonotoring' || router.url === '/RemoteMonotoring/(mainCon:Absences)'">
 
@@ -51,4 +48,6 @@
 
   </div>
 
+</div>
+</div>
 </div>

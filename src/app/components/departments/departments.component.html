@@ -1,19 +1,41 @@
-<h1>Departments
-  <span class="buttons">
-      <button (click)="addDepartment()" mat-raised-button class="btn btn-outline-dark" matTooltip="Add departement"><span class="fas fa-plus"></span></button>
-    <span (click)="unselectDep()" *ngIf="clickedDep.depId!=-1" mat-raised-button  matTooltip="Unselect departement" class="fas fa-check-square"></span>
-  </span>
-</h1>
 
-<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-  <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
-    <span class="dis" style="width:20px" disabled></span>
-    <span (click)="sendData(node.item)" class="item" style="margin-left: 22px">
+<div class="app-sidebar sidebar-shadow" style="margin-top: -340px;margin-left: -30px">
+  <div class="app-header__logo">
+    <div class="logo-src"></div>
+    <div class="header__pane ml-auto">
+      <div>
+        <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
+                                    <span class="hamburger-box">
+                                        <span class="hamburger-inner"></span>
+                                    </span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="app-header__mobile-menu">
+    <div>
+      <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
+                                <span class="hamburger-box">
+                                    <span class="hamburger-inner"></span>
+                                </span>
+      </button>
+    </div>
+  </div>
+  <div class="scrollbar-sidebar">
+    <div class="app-sidebar__inner">
+      <ul class="vertical-nav-menu">
+        <li class="app-sidebar__heading" style="font-size: 18px;padding-top: 10px">Departements</li>
+
+        <li>
+        <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+          <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+            <span class="dis" style="width:20px" disabled></span>
+            <span (click)="sendData(node.item)" class="item" style="margin-left: 22px">
      {{node.item.depName}}
 
     </span>
-  </mat-tree-node>
-  <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+          </mat-tree-node>
+          <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
     <span class="expandCollapse"
           [attr.aria-label]="'toggle ' + node.filename" matTreeNodeToggle>
       <mat-icon class="mat-icon-rtl-mirror">
@@ -21,12 +43,16 @@
       </mat-icon>
     </span>
 
-    <span (click)="sendData(node.item)" class="item">{{node.item.depName}}
-      <mat-progress-bar *ngIf="node.isLoading"
-                        mode="indeterminate"
-                        class="example-tree-progress-bar"></mat-progress-bar>
+            <span (click)="sendData(node.item)" class="item">{{node.item.depName}}
+              <mat-progress-bar *ngIf="node.isLoading"
+                                mode="indeterminate"
+                                class="example-tree-progress-bar"></mat-progress-bar>
       </span>
-  </mat-tree-node>
+          </mat-tree-node>
 
-</mat-tree>
-
+        </mat-tree>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
