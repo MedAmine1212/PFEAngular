@@ -1,54 +1,11 @@
-<app-nav></app-nav>
-<div class="bigContainer">
-  <br><br>
+<div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
 
-  <div  class="container-fluid h-100">
-    <table class="cardContainer">
-      <tr>
-        <td  [@enterAnimation] *ngIf="router.url !== '/RemoteMonotoring' && router.url !== '/RemoteMonotoring/(mainCon:Absences)' && router.url !== '/RemoteMonotoring/(mainCon:Departements)'">
-          <div  class="card mainCard" [ngStyle]="{'background-color':router.url === '/RemoteMonotoring/(mainCon:Employees)' ? 'transparent' : '' }" >
-            <div class="card-body" [ngStyle]="{'overflow':router.url === '/RemoteMonotoring/(mainCon:Employees)' ? 'hidden' : 'auto' }" >
-              <router-outlet name="mainCon"></router-outlet>
-            </div>
-            <div *ngIf="router.url != '/RemoteMonotoring/(mainCon:Employees)'" class="card-footer">{{time | date: 'dd MMMM yyyy '}} <span class="time">{{ time | date: 'hh:mm:ss a' }}</span></div>
+  <app-nav></app-nav>
 
-          </div>
-        </td>
-        <td style="width: 27%;padding-right: 30px" [@enterAnimation] *ngIf="router.url === '/RemoteMonotoring/(mainCon:Departements)'">
-          <div  class="card mainCard">
-            <div class="card-body"  style="margin-top: 30px;margin-right: 50px">
-
-              <app-departements (outPutData)="setClickedDep($event)"></app-departements>
-            </div>
-            <div class="card-footer">{{time | date: 'dd MMMM yyyy '}} <span class="time">{{ time | date: 'hh:mm:ss a' }}</span></div>
-
-          </div>
-        </td>
-        <td class="contTD" [@enterAnimation] *ngIf="router.url === '/RemoteMonotoring' || router.url === '/RemoteMonotoring/(mainCon:Absences)'">
-
-          <app-employees></app-employees>
-        </td>
-        <td class="contTD" [@enterSecondAnimation] *ngIf="router.url === '/RemoteMonotoring/(mainCon:Departements)'">
-
-          <app-employees></app-employees>
-
-        </td>
-
-        <td [@enterSecondAnimation]  *ngIf="router.url === '/RemoteMonotoring' || router.url === '/RemoteMonotoring/(mainCon:Absences)'" class="mainTD">
-          <div class="card mainCard">
-
-            <div class="card-body">
-              <router-outlet  name="secCon"></router-outlet>
-            </div>
-            <div class="card-footer">
-              {{time | date: 'dd MMMM yyyy '}} <span class="time">{{ time | date: 'hh:mm:ss a' }}</span></div>
-
-          </div>
-
-        </td>
-      </tr></table>
-
-
+  <div class="app-main" style="height: 100%">
+    <div class="app-main__outer">
+      <app-departements *ngIf="router.url === '/RemoteMonotoring/(mainCon:Departements)'" [@enterAnimation] (outPutData)="setClickedDep($event)"></app-departements>
+      <app-employees *ngIf="router.url === '/RemoteMonotoring/(mainCon:Departements)'" [@enterSecondAnimation]></app-employees>
+    </div>
   </div>
-
 </div>

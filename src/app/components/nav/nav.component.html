@@ -1,24 +1,46 @@
-<div class="bigContainer">
-<div class="fixed-top">
-
-  <nav style="background-color:#0A0012;opacity: 0.8" class="navbar navbar-expand-md navbar-dark   sticky-top ">
-    <div class="container" >
-      <a style="cursor: pointer" routerLink="../RemoteMonotoring" class="navbar-brand"> Remote Monotoring app</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+  <div class="app-header header-shadow">
+    <div class="app-header__logo">
+      <a style="cursor: pointer" routerLink="../RemoteMonotoring" class="navbar-brand">
+        <div class="logo-src">Remote monotoring</div>
+      </a>
+      <div class="header__pane ml-auto">
+        <div>
+          <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
+            <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+            </span>
+        </button>
+        </div>
+      </div>
+    </div>
+  <div class="app-header__mobile-menu">
+    <div>
+      <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
+        <span class="hamburger-box">
+        <span class="hamburger-inner"></span>
+        </span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-
-        <ul class="navbar-nav ml-auto">
-
+    </div>
+  </div>
+  <div class="app-header__menu">
+    <span>
+      <button type="button" class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
+        <span class="btn-icon-wrapper">
+          <i class="fa fa-ellipsis-v fa-w-6"></i>
+        </span>
+      </button>
+  </span>
+  </div>
+  <div class="app-header__content">
+      <div class="app-header-left">
+        <ul class="header-menu nav">
           <li class="nav-item">
             <a [routerLink]="[{ outlets: {mainCon: ['Absences'] } }]" class="nav-link" href="#">Absences</a>
           </li>
+          <li class="btn-group nav-item">
 
-          <li class="nav-item">
             <a [routerLink]="[{ outlets: {mainCon: ['Departements'] } }]" class="nav-link" href="">Departments</a>
           </li>
-
           <li class="nav-item">
             <a [routerLink]="[{ outlets: {mainCon: ['Administrators'] } }]" class="nav-link" href="">Administrators</a>
           </li>
@@ -26,17 +48,41 @@
           <li class="nav-item">
             <a [routerLink]="[{ outlets: {mainCon: ['TimeTables'] } }]" class="nav-link" href="">Time Tables</a>
           </li>
-
-          <li class="nav-item">
-            <a class="nav-link" [routerLink]="[{ outlets: {mainCon: ['Profile'] } }]" href="">Profile</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link signOut" style="color:white" href="#">Sign out</a>
-          </li>
         </ul>
       </div>
+    <div class="app-header-right">
+      <div class="header-btn-lg pr-0">
+        <div class="widget-content p-0">
+          <div class="widget-content-wrapper">
+            <div class="widget-content-left">
+              <div class="btn-group">
+               <!-- <button [@enterAnimation] *ngIf="showLight" (click)="showLight = false;showDark = true" class="btn btn-light toggle">Light Mode</button>
+                <button [@enterSecondAnimation]  *ngIf="showDark" (click)="showDark = false;showLight = true" class="btn btn-dark toggle">Dark mode</button>
+-->
+                <button mat-button [matMenuTriggerFor]="menu" class="p-0 btn">
+                  <img width="42" class="rounded-circle" src="assets/images/avatars/0.png" alt="">
+                  <i class="fa fa-angle-down ml-2 opacity-8"></i>
+                </button>
+                <mat-menu class="menu" #menu="matMenu">
+                  <div class="menuContent">
+                    <button class="dropdown-item">User account</button>
+                    <div tabindex="-1" class="dropdown-divider"></div>
+                    <button type="button" tabindex="0" class="dropdown-item">Log out</button>
+                  </div>
+                </mat-menu>
+              </div>
+            </div>
+            <div class="widget-content-left  ml-3 header-user-info">
+              <div class="widget-heading">
+                Kamel Sassi
+              </div>
+              <div class="widget-subheading">
+                CEO
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </nav>
-</div>
-</div>
+  </div>
+  </div>

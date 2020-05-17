@@ -35,6 +35,7 @@ import { AddDepartmentComponent } from './dialogs/dialog-forms/add-department/ad
 import {MatDialogModule} from '@angular/material/dialog';
 import { DeleteDepDialogComponent } from './dialogs/delete-dep-dialog/delete-dep-dialog.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
+import {MatMenuModule} from "@angular/material/menu";
 
 @NgModule({
   declarations: [
@@ -76,7 +77,8 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
     MatStepperModule,
     MatExpansionModule,
     ReactiveFormsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatMenuModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
