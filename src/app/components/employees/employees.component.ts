@@ -39,18 +39,16 @@ constructor(public dialog: MatDialog, public router: Router, private departmentS
     this.users = [];
     this.reloadData();
   }
-
   setDepartment(dep: Department) {
+    this.users = [];
     this.chefDep = null;
     this.thisIsEmp = false;
-    this.users = [];
     this.clickedDep = dep;
     if (this.clickedDep.depId !== -1) {
       this.setChefDep(this.clickedDep.depId);
       this.users = this.clickedDep.users;
     }
   }
-
   setChefDep(cDepId: number) {
     this.departmentService.getChefDep(cDepId).subscribe(user => {
       this.chefDep = user;
