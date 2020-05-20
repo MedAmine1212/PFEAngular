@@ -1,6 +1,6 @@
 <div  class="main-card mb-3 card" style="margin-left:15px;border: none">
-  <div class="card-header">
-    <div border="1" *ngIf="!thisIsEmp && clickedDep.depId!=-1" style="color:black;padding-bottom: 10px;width: 100%" >
+  <div class="card-header" *ngIf="!thisIsEmp && clickedDep.depId!=-1">
+    <div border="1"  style="color:black;padding-bottom: 10px;width: 100%" >
       <span> Department: {{clickedDep.depName}}       </span>
       <div class="btn-actions-pane-right">
         <div role="group" class="btn-group-sm btn-group">
@@ -31,14 +31,23 @@
   </div>
 
   <div class="card-body contacts_body" >
-    <div style="background-color: transparent" class="search-wrapper">
-      <div class="input-holder">
-        <input style="" type="text" [(ngModel)]="searchText" style="width: 100%" class="search-input" placeholder="Search (name, Email, Phone,...)">
-        <button [ngStyle]="{'opacity':thisIsEmp || clickedDep.depId!=-1 ? '1' : '0' }" class="search-icon"><span></span></button>
-      </div>
-      <button class="close"></button>
-    </div>
-    <h1 *ngIf="!thisIsEmp && clickedDep.depId != -1" style="margin-top: 20px" class="empTitle">Department Employees</h1>
+
+    <table>
+      <tr>
+        <td>
+          <h1 *ngIf="!thisIsEmp && clickedDep.depId != -1" style="margin-top: 20px" class="empTitle">{{clickedDep.depName}} Employees</h1>
+        </td>
+        <td>
+          <div style="background-color: transparent" class="search-wrapper">
+            <div class="input-holder">
+              <input style="" type="text" [(ngModel)]="searchText" style="width: 100%" class="search-input" placeholder="Search (name, Email, Phone,...)">
+              <button [ngStyle]="{'opacity':thisIsEmp || clickedDep.depId!=-1 ? '1' : '0' }" class="search-icon"><span></span></button>
+            </div>
+            <button class="close"></button>
+          </div>
+        </td>
+      </tr>
+    </table>
 
     <div style="padding-top: 5%;text-align: center;color:black;font-weight:bolder;margin:0 auto;font-size:25px;width: 100%" *ngIf="!thisIsEmp && clickedDep.depId === -1">
       <span style="font-size:30px;color:rgb(52,248,61)">Click a department to show details here</span><br><br><br><br>No Department Selected
@@ -51,14 +60,17 @@
           <table class="align-middle mb-0 table table-borderless table-striped table-hover">
             <thead>
             <tr  *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)' || !thisIsEmp">
+              <th class="text-center">N°</th>
               <th class="text-center">CIN</th>
               <th>Name</th>
-              <th>Addresses</th>
+              <th>Email</th>
+              <th>Phone number</th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let emp of users | filter:searchText">
-              <td  *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)' || !thisIsEmp" class="text-center text-muted" style="padding-top: 30px">{{emp.userCIN}}</td>
+              <td  *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)' || !thisIsEmp" class="text-center text-muted" style="padding-top: 30px">{{emp.userId}}</td>
+              <td  *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)' || !thisIsEmp" class="text-center text-muted" style="padding-top: 30px">{{emp.cin}}</td>
               <td>
                 <div class="widget-content p-0">
                   <div class="widget-content-wrapper">
@@ -72,33 +84,19 @@
                       <div style="padding-left:2px" class="widget-subheading opacity-7">{{emp.post.postName}}</div>
                       <div style="padding-left:2px" *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)' || !thisIsEmp">
                         <div class="widget-subheading opacity-7">Web Developer</div>
-                        <div class="widget-subheading opacity-7">{{emp.email}}</div>
-                        <div class="widget-subheading opacity-7">{{emp.phone}}</div>
                       </div>
                     </div>
                   </div>
                 </div>
               </td>
-              <span *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)' || !thisIsEmp">
-              <td *ngIf="emp.addresses.length > 0" style="padding:20px" colspan="10">
-                <table width="100%" class="mb-0 table table-borderless table-striped table-hover">
-                  <thead>
-                    <tr>
-                      <th style="padding: 0">Address</th>
-                      <th style="padding: 0">State</th>
-                      <th style="padding: 0">Zip code</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr  *ngFor="let adr of emp.addresses">
-
-                          <td style="min-width: 250px">{{adr.streetNumber}} {{adr.streetName}} {{adr.governorate}}</td>
-                          <td style="min-width: 170px">{{adr.state}}</td>
-                          <td style="min-width: 70px">{{adr.zipCode}}</td>
-                   </tr>
-                  </tbody>
-                </table>
+              <td *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)' || !thisIsEmp">
+                <div class="widget-subheading opacity-7">{{emp.email}}</div>
               </td>
+              <td *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)' || !thisIsEmp" >
+                <div class="widget-subheading opacity-7">{{emp.phone}}</div>
+              </td>
+              <span *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)' || !thisIsEmp">
+
                 <!--              <td class="text-center">-->
                 <!--                <div class="badge badge-warning">Pending</div>-->
                 <!--           </td>-->

@@ -3,7 +3,7 @@ import {Address} from './Address';
 import {Post} from './Post';
 export class User {
   userId: number;
-  userCIN: string;
+  CIN: string;
   name: string;
   firstName: string;
   gender: string;
