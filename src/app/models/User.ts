@@ -1,7 +1,9 @@
 import {Department} from './Department';
 import {Address} from './Address';
+import {Post} from './Post';
 export class User {
   userId: number;
+  CIN: string;
   name: string;
   firstName: string;
   gender: string;
@@ -11,5 +13,6 @@ export class User {
   email: string;
   departement: Department;
   addresses: Address[];
+  post: Post;
 
   }

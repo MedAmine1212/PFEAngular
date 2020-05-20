@@ -2,7 +2,7 @@
 .card{
   margin:10px;
   padding: 20px;
-  width: 100%;
+  width: 97%;
   overflow: hidden;
   z-index: 99999;
   min-height: 600px;
@@ -151,9 +151,9 @@ td{
   padding:0 !important;
 }
 .buttons{
-  margin-top: -30px;
-  margin-left: 40px;
-  width:450px;
+  margin-left: 90%;
+  margin-right: -90%;
+  margin-top: -50px;
   float:right;
 }
 .btn{
