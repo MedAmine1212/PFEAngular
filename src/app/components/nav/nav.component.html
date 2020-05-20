@@ -1,4 +1,4 @@
-  <div class="app-header header-shadow">
+  <div class="app-header header-shadow bg-dark sidebar-text-dark header-text-light">
     <div class="app-header__logo">
       <a style="cursor: pointer" routerLink="../RemoteMonotoring" class="navbar-brand">
         <div class="logo-src">Remote monotoring</div>
@@ -60,14 +60,6 @@
           <div class="widget-content-wrapper">
             <div class="widget-content-left">
               <div class="btn-group">
-                <div class="swatch-holder bg-light switch-sidebar-cs-class switch-header-cs-class" data-class="bg-light sidebar-text-dark header-text-dark">
-<!--                  <button [@enterAnimation] *ngIf="showLight" (click)="showLight = false;showDark = true" class="btn btn-light toggle">Light Mode</button>-->
-                </div>
-                <div class="swatch-holder bg-dark switch-sidebar-cs-class switch-header-cs-class" data-class="bg-dark sidebar-text-dark header-text-light">
-<!--                  <button [@enterSecondAnimation]  *ngIf="showDark" (click)="showDark = false;showLight = true" class="btn btn-dark toggle">Dark mode</button>-->
-                </div>
-
-
                 <button mat-button [matMenuTriggerFor]="menu" class="p-0 btn">
                   <img width="42" class="rounded-circle" src="assets/images/avatars/0.png" alt="">
                   <i class="fa fa-angle-down ml-2 opacity-8"></i>
@@ -87,6 +79,12 @@
               </div>
               <div class="widget-subheading">
                 CEO
+              </div>
+            </div>
+            <div style="margin-top: 4px;margin-left: 40px">
+              <div class="swatch-holder bg-light switch-header-cs-class" mat-raised-button matTooltip="Light mode" data-class="bg-light sidebar-text-dark header-text-dark">
+              </div>
+              <div class="swatch-holder bg-dark switch-header-cs-class"  mat-raised-button matTooltip="Dark mode" data-class="bg-dark sidebar-text-dark header-text-light">
               </div>
             </div>
           </div>

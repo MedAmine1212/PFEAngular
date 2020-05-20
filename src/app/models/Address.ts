@@ -2,9 +2,9 @@ import {User} from './User';
 export class Address {
   addressId: number;
   streetName: string;
-  streetNum: number;
+  streetNumber: number;
   state: string;
-  governorat: string;
+  governorate: string;
   zipCode: number;
   user: User;
 

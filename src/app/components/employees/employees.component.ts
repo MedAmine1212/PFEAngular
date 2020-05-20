@@ -9,7 +9,7 @@ import {DeleteDepDialogComponent} from '../../dialogs/delete-dep-dialog/delete-d
 import {MatDialog} from '@angular/material/dialog';
 import {AddDepartmentComponent} from '../../dialogs/dialog-forms/add-department/add-department.component';
 import {AddUserComponent} from '../../dialogs/dialog-forms/add-user/add-user.component';
-import {UserService} from "../../services/user/user.service";
+import {UserService} from '../../services/user/user.service';
 @Component({
   selector: 'app-employees',
   templateUrl: './employees.component.html',
@@ -26,8 +26,8 @@ export class EmployeesComponent implements OnInit {
   showAddDep: boolean;
   showForm: boolean;
   showUpdateDep: boolean;
-
-  constructor(public dialog: MatDialog, public router: Router, private departmentService: DepartmentService, private userService: UserService) {
+// tslint:disable-next-line:max-line-length
+constructor(public dialog: MatDialog, public router: Router, private departmentService: DepartmentService, private userService: UserService) {
   }
 
   ngOnInit(): void {
@@ -38,20 +38,17 @@ export class EmployeesComponent implements OnInit {
     this.thisIsEmp = true;
     this.users = [];
     this.reloadData();
-    console.table(this.users);
   }
-
   setDepartment(dep: Department) {
+    this.users = [];
     this.chefDep = null;
     this.thisIsEmp = false;
-    this.users = [];
     this.clickedDep = dep;
     if (this.clickedDep.depId !== -1) {
       this.setChefDep(this.clickedDep.depId);
       this.users = this.clickedDep.users;
     }
   }
-
   setChefDep(cDepId: number) {
     this.departmentService.getChefDep(cDepId).subscribe(user => {
       this.chefDep = user;
@@ -84,7 +81,6 @@ export class EmployeesComponent implements OnInit {
       data: this.clickedDep
     });
     dialogRef.afterClosed().subscribe(result => {
-     console.log('closed');
     });
   }
 
@@ -95,7 +91,6 @@ export class EmployeesComponent implements OnInit {
         data: this.clickedDep
       });
       dialogRef.afterClosed().subscribe(result => {
-        console.log('closed');
       });*/
     }
 
@@ -106,7 +101,6 @@ export class EmployeesComponent implements OnInit {
       data: this.clickedDep
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log('closed');
     });
   }
 
