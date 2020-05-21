@@ -21,6 +21,7 @@
   white-space: nowrap;
 }
 .card-header{
+  background: transparent;
   border-radius: 15px 15px 0 0 !important;
   border-bottom: 0 !important;
 }
