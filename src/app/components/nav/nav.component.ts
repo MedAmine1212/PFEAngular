@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {animate, style, transition, trigger} from '@angular/animations';
+import {RemoteMonotoringComponent} from '../remote-monotoring/remote-monotoring.component';
 
 @Component({
   selector: 'app-nav',
@@ -16,5 +17,4 @@ export class NavComponent implements OnInit {
     this.showLight = true;
     this.showDark = false;
   }
-
 }

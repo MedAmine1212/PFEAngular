@@ -38,7 +38,7 @@
           <h1 *ngIf="!thisIsEmp && clickedDep.depId != -1" style="margin-top: 20px" class="empTitle">{{clickedDep.depName}} Employees</h1>
         </td>
         <td>
-          <div style="background-color: transparent" class="search-wrapper">
+          <div style="background-color: transparent;margin-left: -15px" class="search-wrapper">
             <div class="input-holder">
               <input style="" type="text" [(ngModel)]="searchText" style="width: 100%" class="search-input" placeholder="Search (name, Email, Phone,...)">
               <button [ngStyle]="{'opacity':thisIsEmp || clickedDep.depId!=-1 ? '1' : '0' }" class="search-icon"><span></span></button>
@@ -68,7 +68,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let emp of users | filter:searchText">
+            <tr class="emp" *ngFor="let emp of users | filter:searchText">
               <td  *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)' || !thisIsEmp" class="text-center text-muted" style="padding-top: 30px">{{emp.userId}}</td>
               <td  *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)' || !thisIsEmp" class="text-center text-muted" style="padding-top: 30px">{{emp.cin}}</td>
               <td>
@@ -114,3 +114,4 @@
   </div>
 </div>
 
+<app-jsloader></app-jsloader>

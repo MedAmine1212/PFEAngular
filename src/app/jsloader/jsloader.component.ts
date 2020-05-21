@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-timetables',
-  templateUrl: './timetables.component.html',
-  styleUrls: ['./timetables.component.css']
+  selector: 'app-jsloader',
+  templateUrl: './jsloader.component.html',
+  styleUrls: ['./jsloader.component.css']
 })
-export class TimetablesComponent implements OnInit {
+export class JsloaderComponent implements OnInit {
   private loadAPI: Promise<unknown>;
 
   constructor() { }
@@ -25,5 +25,6 @@ export class TimetablesComponent implements OnInit {
     node.charset = 'utf-8';
     document.getElementsByTagName('head')[0].appendChild(node);
   }
+
 
 }

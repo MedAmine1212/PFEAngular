@@ -26,8 +26,9 @@ export class EmployeesComponent implements OnInit {
   showAddDep: boolean;
   showForm: boolean;
   showUpdateDep: boolean;
+  private loadAPI: Promise<unknown>;
 // tslint:disable-next-line:max-line-length
-constructor(public dialog: MatDialog, public router: Router, private departmentService: DepartmentService, private userService: UserService) {
+  constructor(public dialog: MatDialog, public router: Router, private departmentService: DepartmentService, private userService: UserService) {
   }
 
   ngOnInit(): void {
@@ -84,15 +85,15 @@ constructor(public dialog: MatDialog, public router: Router, private departmentS
     });
   }
 
-    showUpdateDepDialog() {
-      /*const dialogRef = this.dialog.open(AddDepartmentComponent, {
-        width: '800px',
-        height: '600px',
-        data: this.clickedDep
-      });
-      dialogRef.afterClosed().subscribe(result => {
-      });*/
-    }
+  showUpdateDepDialog() {
+    /*const dialogRef = this.dialog.open(AddDepartmentComponent, {
+      width: '800px',
+      height: '600px',
+      data: this.clickedDep
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    });*/
+  }
 
   showAddUserDialog() {
     const dialogRef = this.dialog.open(AddUserComponent, {
@@ -110,4 +111,3 @@ constructor(public dialog: MatDialog, public router: Router, private departmentS
     });
   }
 }
-

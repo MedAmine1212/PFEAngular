@@ -104,9 +104,6 @@ h3{
   text-align: right;
   color: black;
 }
-.emp{
-  border-bottom: 1px solid black;
-}
 
 .formsBigContainer {
   align-content: center;
@@ -135,7 +132,7 @@ h3{
   border-radius: 20px;
 }
 .emp:hover{
-  opacity: 0.7;
+  opacity: 0.8;
   cursor:pointer;
 }
 td{

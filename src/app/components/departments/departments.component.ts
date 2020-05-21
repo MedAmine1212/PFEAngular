@@ -153,7 +153,6 @@ export class DepartmentsComponent implements  OnInit {
     this.unselectDep();
   }
 
-
   unselectDep() {
     this.sendData(this.fakedep);
   }
@@ -173,6 +172,7 @@ export class DepartmentsComponent implements  OnInit {
     this.departmentService.list().subscribe(r => {
       this.data = r;
       this.dataSource.data = this.database.initialData(this.data);
+      console.table(this.data);
     });
   }
 }

@@ -1,4 +1,3 @@
-
 <div class="app-sidebar sidebar-shadow" style="margin-top: 0px;margin-left: -300px">
   <div class="app-header__logo">
     <div class="logo-src"></div>
@@ -38,16 +37,16 @@
 
         <li>
           <div>
-        <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-          <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
-            <span class="dis" style="width:20px" disabled></span>
-            <span (click)="sendData(node.item)" class="item" style="margin-left: 22px">
+            <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+              <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+                <span class="dis" style="width:20px" disabled></span>
+                <span (click)="sendData(node.item)" class="item" style="margin-left: 22px">
 
      {{node.item.depName}}
 
     </span>
-          </mat-tree-node>
-          <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+              </mat-tree-node>
+              <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
     <span class="expandCollapse"
           [attr.aria-label]="'toggle ' + node.filename" matTreeNodeToggle>
       <mat-icon class="mat-icon-rtl-mirror">
@@ -55,14 +54,14 @@
       </mat-icon>
     </span>
 
-            <span (click)="sendData(node.item)" class="item">{{node.item.depName}}
-              <mat-progress-bar *ngIf="node.isLoading"
-                                mode="indeterminate"
-                                class="example-tree-progress-bar"></mat-progress-bar>
+                <span (click)="sendData(node.item)" class="item">{{node.item.depName}}
+                  <mat-progress-bar *ngIf="node.isLoading"
+                                    mode="indeterminate"
+                                    class="example-tree-progress-bar"></mat-progress-bar>
       </span>
-          </mat-tree-node>
+              </mat-tree-node>
 
-        </mat-tree>
+            </mat-tree>
           </div>
         </li>
       </ul>
