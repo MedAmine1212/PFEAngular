@@ -61,17 +61,16 @@
             <thead>
             <tr  *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)' || !thisIsEmp">
               <th class="text-center">N°</th>
-              <th  *ngIf="router.url !== '/RemoteMonotoring/(mainCon:Departements)' ">Department</th>
-              <th>Name</th>
               <th class="text-center">CIN</th>
+              <th>Name</th>
               <th>Email</th>
               <th>Phone number</th>
             </tr>
             </thead>
             <tbody>
-            <tr class="emp" *ngFor="let emp of users | filter:searchText">
-              <td  *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)' || !thisIsEmp" class="text-center text-muted" style="padding-top: 15px">{{emp.userId}}</td>
-              <td   *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)' " class="text-muted" style="padding-top: 15px">{{emp.department.depName}}</td>
+            <tr *ngFor="let emp of users | filter:searchText">
+              <td  *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)' || !thisIsEmp" class="text-center text-muted" style="padding-top: 30px">{{emp.userId}}</td>
+              <td  *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)' || !thisIsEmp" class="text-center text-muted" style="padding-top: 30px">{{emp.cin}}</td>
               <td>
                 <div class="widget-content p-0">
                   <div class="widget-content-wrapper">
@@ -82,14 +81,11 @@
                     </div>
                     <div class="widget-content-left flex2">
                       <div class="widget-heading">{{emp.name}} {{emp.firstName}}</div>
-                      <div  class="text-muted" >{{emp.post.postName}}</div>
-                      <div style="padding-left:2px" *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)' || !thisIsEmp">
-                      </div>
+                      <div style="padding-left:2px" class="widget-subheading opacity-7">{{emp.post.postName}}</div>
                     </div>
                   </div>
                 </div>
               </td>
-              <td  *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)' || !thisIsEmp" class="text-center text-muted" style="padding-top: 15px">{{emp.cin}}</td>
               <td *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)' || !thisIsEmp">
                 <div class="widget-subheading opacity-7">{{emp.email}}</div>
               </td>

@@ -35,8 +35,11 @@ import { AddDepartmentComponent } from './dialogs/dialog-forms/add-department/ad
 import {MatDialogModule} from '@angular/material/dialog';
 import { DeleteDepDialogComponent } from './dialogs/delete-dep-dialog/delete-dep-dialog.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
-import {MatMenuModule} from "@angular/material/menu";
+import {MatMenuModule} from '@angular/material/menu';
 import { JsloaderComponent } from './jsloader/jsloader.component';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -81,6 +84,9 @@ import { JsloaderComponent } from './jsloader/jsloader.component';
     ReactiveFormsModule,
     MatDialogModule,
     MatMenuModule,
+    MatInputModule,
+    MatButtonToggleModule,
+    MatSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

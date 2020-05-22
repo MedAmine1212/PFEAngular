@@ -38,14 +38,17 @@ import {EmployeesComponent} from '../employees/employees.component';
 export class RemoteMonotoringComponent implements OnInit {
   clickedDeparment: Department;
 
+
   constructor(public router: Router) { }
   time = new Date();
   @ViewChild(EmployeesComponent) employeesComponent: EmployeesComponent;
   ngOnInit() {
+
     setInterval(() => {
       this.time = new Date();
     }, 1000);
   }
+
   setClickedDep(dep: Department) {
     setTimeout (() => {
     if (dep) {
