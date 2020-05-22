@@ -10,12 +10,16 @@ import {MatDialog} from '@angular/material/dialog';
 import {AddDepartmentComponent} from '../../dialogs/dialog-forms/add-department/add-department.component';
 import {AddUserComponent} from '../../dialogs/dialog-forms/add-user/add-user.component';
 import {UserService} from '../../services/user/user.service';
+
+
+
 @Component({
   selector: 'app-employees',
   templateUrl: './employees.component.html',
   styleUrls: ['./employees.component.css']
 })
 export class EmployeesComponent implements OnInit {
+
 
   clickedDep: Department;
   thisIsEmp: boolean;
@@ -26,11 +30,16 @@ export class EmployeesComponent implements OnInit {
   showAddDep: boolean;
   showForm: boolean;
   showUpdateDep: boolean;
+  loadAPI: Promise<unknown>;
 // tslint:disable-next-line:max-line-length
 constructor(public dialog: MatDialog, public router: Router, private departmentService: DepartmentService, private userService: UserService) {
   }
 
   ngOnInit(): void {
+    this.loadAPI = new Promise(resolve => {
+      console.log('resolving promise...');
+      this.loadScript();
+    });
     this.showForm = false;
     this.showUpdateDep = false;
     this.showAddUser = false;
@@ -38,6 +47,15 @@ constructor(public dialog: MatDialog, public router: Router, private departmentS
     this.thisIsEmp = true;
     this.users = [];
     this.reloadData();
+  }
+  public loadScript() {
+    console.log('preparing to load...');
+    const node = document.createElement('script');
+    node.src = '../../../assets/scripts/temp.js';
+    node.type = 'text/javascript';
+    node.async = true;
+    node.charset = 'utf-8';
+    document.getElementsByTagName('head')[0].appendChild(node);
   }
   setDepartment(dep: Department) {
     this.users = [];

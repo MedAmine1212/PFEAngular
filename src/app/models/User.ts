@@ -9,9 +9,9 @@ export class User {
   gender: string;
   birthDay: Date;
   hireDay: Date;
-  phone: number;
+  phone: string;
   email: string;
-  departement: Department;
+  department: Department;
   addresses: Address[];
   post: Post;
 

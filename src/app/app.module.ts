@@ -36,6 +36,9 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { DeleteDepDialogComponent } from './dialogs/delete-dep-dialog/delete-dep-dialog.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import {MatMenuModule} from "@angular/material/menu";
+import {MatInputModule} from "@angular/material/input";
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -79,6 +82,9 @@ import {MatMenuModule} from "@angular/material/menu";
     ReactiveFormsModule,
     MatDialogModule,
     MatMenuModule,
+    MatInputModule,
+    MatButtonToggleModule,
+    MatSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
