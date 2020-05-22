@@ -80,20 +80,20 @@ export class EmployeesComponent implements OnInit {
     const dialogRef = this.dialog.open(AddDepartmentComponent, {
       width: '800px',
       height: '600px',
-      data: this.clickedDep
+      data: [this.clickedDep, 1]
     });
     dialogRef.afterClosed().subscribe(result => {
     });
   }
 
   showUpdateDepDialog() {
-    /*const dialogRef = this.dialog.open(AddDepartmentComponent, {
+    const dialogRef = this.dialog.open(AddDepartmentComponent, {
       width: '800px',
       height: '600px',
-      data: this.clickedDep
+      data: [this.clickedDep, 2]
     });
     dialogRef.afterClosed().subscribe(result => {
-    });*/
+    });
   }
 
   showAddUserDialog() {

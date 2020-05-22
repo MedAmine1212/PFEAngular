@@ -15,12 +15,19 @@ export class AddDepartmentComponent implements OnInit {
   depId: number;
   departments: Department[];
   department: Department = new Department();
+  public sender: number;
+  newName: string;
   constructor(public dialogRef: MatDialogRef<AddDepartmentComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: Department,
+              @Inject(MAT_DIALOG_DATA) public data: Array<any>,
               private formBuilder: FormBuilder, private departmentService: DepartmentService ) { }
 
   ngOnInit(): void {
-    this.dep = this.data;
+    this.newName = '';
+    this.dep = this.data[0];
+    this.sender = this.data[1];
+    if (this.sender === 2) {
+      this.department = this.dep;
+    }
     this.registerForm = this.formBuilder.group({
       depName: [this.department.depName, [Validators.required]]
     });
@@ -50,5 +57,12 @@ export class AddDepartmentComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  updateDep() {
+    this.department.depName = this.newName;
+    // tslint:disable-next-line:max-line-length
+    this.departmentService.modify(this.department.depId, this.department).subscribe(data => console.log(data), error1 => console.log(error1));
+    console.log(this.dep);
+    this.dialogRef.close();
+  }
 }
 
