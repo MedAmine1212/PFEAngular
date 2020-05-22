@@ -32,6 +32,7 @@ export class EmployeesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.clickedDep = null;
     this.showForm = false;
     this.showUpdateDep = false;
     this.showAddUser = false;

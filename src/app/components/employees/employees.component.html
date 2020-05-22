@@ -19,7 +19,7 @@
     <i *ngIf="thisIsEmp" style="color:grey;margin-right: 15px;margin-top: -15px" class="fa fa-user-friends"></i>
     <h2 *ngIf="thisIsEmp" class="app-sidebar__heading" style="font-weight: bolder">Employees
       <span style="margin-left: 30px">
-      <span style="cursor:pointer" title="add" class="fa fa-user-plus butts"></span>
+      <span style="cursor:pointer" title="add" (click)="showAddUserDialog()" class="fa fa-user-plus butts"></span>
       <span title="open" [routerLink]="[{ outlets: {mainCon: ['Employees'] } }]" *ngIf="router.url != '/RemoteMonotoring/(mainCon:Employees)'" style="cursor:pointer;margin-left:15px" class="fa fa-external-link-alt butts"></span>
     </span>
 

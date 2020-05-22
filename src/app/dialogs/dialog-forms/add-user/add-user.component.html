@@ -3,11 +3,14 @@
 
   <mat-step [stepControl]="firstFormGroup">
       <div class="form-row">
-        <div *ngIf="dep==null" class="form-group col-md-6">
+        <div *ngIf="dep==null && departments != null" class="form-group col-md-6">
           <h1>Department</h1>
           <hr>
           <select required class="custom-select" id="inputGroupSelect01">
-            <option selected *ngFor="let depp of departments" value="{{depp.depId}}">{{depp.depName}}</option>
+            <option style="color: grey;" disabled selected value="null">Chose a department: </option>
+            <option *ngFor="let depp of departments" value="{{depp.depId}}">
+              <span>{{depp.depName}}</span>
+            </option>
           </select>
         </div>
 
@@ -20,7 +23,8 @@
   </mat-step>
 
 <mat-step [stepControl]="secondFormGroup">
-<h1>Add a user to <b>{{dep.depName}}</b> department</h1>
+<h1 *ngIf="dep != null">Add a user to<b>{{dep.depName}}</b>department</h1>
+<h1 *ngIf="dep == null">User info</h1>
 <hr>
   <div class="form-row">
     <div class="form-group col-md-6">

@@ -28,6 +28,7 @@ export class AbsencesComponent implements OnInit {
   showMotifs: boolean;
   showPoint: boolean
   showAbsences: boolean;
+  private loadAPI: Promise<unknown>;
 
   constructor(private calendar: NgbCalendar) {
   }
@@ -36,6 +37,19 @@ export class AbsencesComponent implements OnInit {
   this.showMotifs = false;
   this.showAbsences = true;
   this.showPoint = false;
+    this.loadAPI = new Promise(resolve => {
+      console.log('resolving promise...');
+      this.loadScript();
+    });
+  }
+  public loadScript() {
+    console.log('preparing to load...');
+    const node = document.createElement('script');
+    node.src = '../../../assets/scripts/temp.js';
+    node.type = 'text/javascript';
+    node.async = true;
+    node.charset = 'utf-8';
+    document.getElementsByTagName('head')[0].appendChild(node);
   }
 
   showHide(x: number) {

@@ -42,6 +42,7 @@ export class AddUserComponent implements AfterViewInit  {
               @Inject(MAT_DIALOG_DATA) public data: Department,
               private formBuilder: FormBuilder, private departmentService: DepartmentService) {
   if (this.data != null ) {
+      this.dep = null;
       this.dep = this.data;
   }
   }
@@ -84,4 +85,5 @@ export class AddUserComponent implements AfterViewInit  {
         this.cin = input.target.value;
       }
     }
+
 }
