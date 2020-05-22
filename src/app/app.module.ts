@@ -37,6 +37,7 @@ import { DeleteDepDialogComponent } from './dialogs/delete-dep-dialog/delete-dep
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import {MatMenuModule} from "@angular/material/menu";
 import { JsloaderComponent } from './jsloader/jsloader.component';
+import { EmployeeDetailsComponent } from './dialogs/employee-details/employee-details.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { JsloaderComponent } from './jsloader/jsloader.component';
     DeleteDepDialogComponent,
     SidenavComponent,
     JsloaderComponent,
+    EmployeeDetailsComponent,
   ],
   imports: [
     BrowserModule,

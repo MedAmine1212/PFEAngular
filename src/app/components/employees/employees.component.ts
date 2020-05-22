@@ -10,6 +10,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {AddDepartmentComponent} from '../../dialogs/dialog-forms/add-department/add-department.component';
 import {AddUserComponent} from '../../dialogs/dialog-forms/add-user/add-user.component';
 import {UserService} from '../../services/user/user.service';
+import {EmployeeDetailsComponent} from "../../dialogs/employee-details/employee-details.component";
 @Component({
   selector: 'app-employees',
   templateUrl: './employees.component.html',
@@ -109,6 +110,16 @@ export class EmployeesComponent implements OnInit {
   private reloadData() {
     this.userService.list().subscribe(r => {
       this.users = r;
+    });
+  }
+
+  openDetailsDialog(emp: User) {
+    const dialogRef = this.dialog.open(EmployeeDetailsComponent, {
+      width: '900px',
+      height: '515px',
+      data: emp
+    });
+    dialogRef.afterClosed().subscribe(result => {
     });
   }
 }
