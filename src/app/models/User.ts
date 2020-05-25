@@ -7,11 +7,11 @@ export class User {
   name: string;
   firstName: string;
   gender: string;
-  birthDay: Date;
+  birthDate: string;
   hireDay: Date;
   phone: number;
   email: string;
-  departement: Department;
+  department: Department;
   addresses: Address[];
   post: Post;
 

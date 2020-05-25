@@ -11,6 +11,12 @@ html, body {overflow-y: auto;
 }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+input:focus, textarea , button{
+  outline: none !important;
+}
+.matDialogClass mat-dialog-container {
+  margin-top: 28px;
+}
 /*!
  =========================================================
  * ArchitectUI HTML Theme Dashboard - v1.0.0

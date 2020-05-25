@@ -10,7 +10,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {AddDepartmentComponent} from '../../dialogs/dialog-forms/add-department/add-department.component';
 import {AddUserComponent} from '../../dialogs/dialog-forms/add-user/add-user.component';
 import {UserService} from '../../services/user/user.service';
-import {EmployeeDetailsComponent} from "../../dialogs/employee-details/employee-details.component";
+import {EmployeeDetailsComponent} from '../../dialogs/employee-details/employee-details.component';
 @Component({
   selector: 'app-employees',
   templateUrl: './employees.component.html',
@@ -81,6 +81,7 @@ export class EmployeesComponent implements OnInit {
     const dialogRef = this.dialog.open(AddDepartmentComponent, {
       width: '800px',
       height: '600px',
+      panelClass: 'matDialogClass',
       data: [this.clickedDep, 1]
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -91,6 +92,7 @@ export class EmployeesComponent implements OnInit {
     const dialogRef = this.dialog.open(AddDepartmentComponent, {
       width: '800px',
       height: '600px',
+      panelClass: 'matDialogClass',
       data: [this.clickedDep, 2]
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -101,6 +103,7 @@ export class EmployeesComponent implements OnInit {
     const dialogRef = this.dialog.open(AddUserComponent, {
       width: '800px',
       height: '615px',
+      panelClass: 'matDialogClass',
       data: this.clickedDep
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -116,7 +119,8 @@ export class EmployeesComponent implements OnInit {
   openDetailsDialog(emp: User) {
     const dialogRef = this.dialog.open(EmployeeDetailsComponent, {
       width: '900px',
-      height: '515px',
+      height: '650px',
+      panelClass: 'matDialogClass',
       data: emp
     });
     dialogRef.afterClosed().subscribe(result => {

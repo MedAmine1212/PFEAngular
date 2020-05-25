@@ -1,7 +1,39 @@
 .tag{
-  padding-bottom: 8px;
+  height:28px;
+  padding-right: 90px;
   font-weight: bolder;
+}
+.data{
+  height:28px;
 }
 table{
   font-size: 13px;
+}
+.buttonsContainer{
+  font-size: 25px;
+  margin-top: -12px;
+  float:right;
+}
+i{
+  cursor: pointer;
+}
+.saveBut{
+  margin-right: 20px;
+}
+.saveBut:hover{
+  color:rgb(52,248,61);
+}
+.editBut:hover{
+  color:rgb(82,148,226);
+}
+.cancelBut:hover{
+  color:red;
+}
+input{
+  border: none;
+  border-bottom: 1px solid rgb(82,148,226);
+  width: 300px;
+}
+.addIn{
+  width: 100%;
 }
