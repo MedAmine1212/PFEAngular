@@ -1,5 +1,5 @@
 <div  class="main-card mb-3 card" style="margin-left:5px;border: none">
-  <div class="card-header" >
+  <div class="card-header">
     <i style="color:grey;margin-right: 15px;margin-top: -15px" class="fa fa-user-friends"></i>
     <h2 class="app-sidebar__heading" style="font-weight: bolder">Employee details
     </h2>
@@ -11,7 +11,7 @@
       </div>
     </div>
   </div>
-  <div class="card-body contacts_body" >
+  <div class="card-body">
     <table>
 <tr>
   <td class="tag"> Badge id:</td>
@@ -65,7 +65,11 @@
         <td class="tag">Departement:</td>
         <td class="data">
           <span *ngIf="!showUpdateForm">{{emp.department.depName}}</span>
-          <input *ngIf="showUpdateForm" type="text" value="{{emp.department.depName}}"/>
+          <select *ngIf="showUpdateForm" required class="custom-select" id="inputGroupSelect01">
+            <option *ngFor="let depp of departments" value="{{depp.depId}}">
+              <span>{{depp.depName}}</span>
+            </option>
+          </select>
         </td></tr>
       <tr>
         <td class="tag">Post:</td>
@@ -99,19 +103,20 @@
     <tbody>
       <tr *ngFor="let add of emp.addresses">
         <td class="data">
-          <span *ngIf="!showAddressUpdateForm">{{add.streetNumber}} {{add.streetName}}, {{add.governorate}}</span>
-          <input class="addIn" *ngIf="showAddressUpdateForm" type="text" value="{{add.streetNumber}} {{add.streetName}}, {{add.governorate}}"/>
+          <div style="height:24px" *ngIf="!showAddressUpdateForm">{{add.streetNumber}} {{add.streetName}}, {{add.governorate}}</div>
+          <input style="height:24px" class="addIn" *ngIf="showAddressUpdateForm" type="text" value="{{add.streetNumber}} {{add.streetName}}, {{add.governorate}}"/>
         </td>
         <td class="data">
-          <span *ngIf="!showAddressUpdateForm">{{add.state}}</span>
-          <input class="addIn" *ngIf="showAddressUpdateForm" type="text" value="{{add.state}}"/>
+          <div style="height:24px" *ngIf="!showAddressUpdateForm">{{add.state}}</div>
+          <input style="height:24px" class="addIn" *ngIf="showAddressUpdateForm" type="text" value="{{add.state}}"/>
         </td>
         <td class="data">
-          <span *ngIf="!showAddressUpdateForm">{{add.zipCode}}</span>
-          <input class="addIn" *ngIf="showAddressUpdateForm" type="text" value="{{add.zipCode}}"/>
+          <div style="height:24px" *ngIf="!showAddressUpdateForm">{{add.zipCode}}</div>
+          <input style="height:24px" class="addIn" *ngIf="showAddressUpdateForm" type="text" value="{{add.zipCode}}"/>
         </td>
       </tr>
     </tbody>
   </table>
     </div>
 </div>
+  <button class="btn btn-outline-danger" (click)="onNoClick()">Close</button>

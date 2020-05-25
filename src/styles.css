@@ -11,7 +11,7 @@ html, body {overflow-y: auto;
 }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-input:focus, textarea , button{
+input:focus, textarea , button, select{
   outline: none !important;
 }
 .matDialogClass mat-dialog-container {
