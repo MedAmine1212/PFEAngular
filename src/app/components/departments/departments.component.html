@@ -22,7 +22,7 @@
   </div>
   <div class="scrollbar-sidebar">
     <div class="app-sidebar__inner">
-      <ul class="vertical-nav-menu">
+      <ul  class="vertical-nav-menu">
 
 
         <li class="app-sidebar__heading" style="font-size: 15px;padding-top: 10px">
@@ -35,7 +35,7 @@
 
         </li>
 
-        <li>
+        <li style="overflow: auto;max-height: 580px;">
           <div>
             <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
               <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
