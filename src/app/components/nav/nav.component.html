@@ -39,18 +39,18 @@
           </li>
           <li class="btn-group nav-item">
 
-            <a [routerLink]="[{ outlets: {mainCon: ['Departements'] } }]" class="nav-link" href="">Departments</a>
+            <a [routerLink]="[{ outlets: {mainCon: ['Departements'] } }]" class="nav-link">Departments</a>
           </li>
           <li class="btn-group nav-item">
 
-            <a [routerLink]="[{ outlets: {mainCon: ['Employees'] } }]" class="nav-link" href="">Employees</a>
+            <a [routerLink]="[{ outlets: {mainCon: ['Employees'] } }]" class="nav-link">Employees</a>
           </li>
           <li class="nav-item">
-            <a [routerLink]="[{ outlets: {mainCon: ['Administrators'] } }]" class="nav-link" href="">Administrators</a>
+            <a [routerLink]="[{ outlets: {mainCon: ['Administrators'] } }]" class="nav-link">Administrators</a>
           </li>
 
           <li class="nav-item">
-            <a [routerLink]="[{ outlets: {mainCon: ['TimeTables'] } }]" class="nav-link" href="">Time Tables</a>
+            <a [routerLink]="[{ outlets: {mainCon: ['TimeTables'] } }]" class="nav-link">Time Tables</a>
           </li>
         </ul>
       </div>
@@ -68,7 +68,7 @@
                   <div class="menuContent">
                     <button class="dropdown-item">User account</button>
                     <div tabindex="-1" class="dropdown-divider"></div>
-                    <button type="button" tabindex="0" class="dropdown-item">Log out</button>
+                    <button type="button" tabindex="0" routerLink="/" class="dropdown-item">Log out</button>
                   </div>
                 </mat-menu>
               </div>
