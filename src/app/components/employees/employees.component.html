@@ -36,12 +36,14 @@
           <h1 *ngIf="!thisIsEmp && clickedDep.depId != -1" style="margin-top: 20px;margin-right: 30px" class="empTitle">{{clickedDep.depName}} Employees </h1>
         </td>
         <td>
-          <div style="position: absolute;background-color: transparent;margin-top: -15px;margin-left: -35px;" class="search-wrapper">
+          <div class="search-wrapper">
+           <div style="position: absolute;background-color: transparent;margin-top: -15px;margin-left: -35px;" [ngClass]="{'search-wrapper active': showHideInput}">
             <div class="input-holder">
-              <input style="" type="text" [(ngModel)]="searchText" style="width: 100%" class="search-input" placeholder="Search (name, Email, Phone,...)">
-              <button [ngStyle]="{'opacity':thisIsEmp || clickedDep.depId!=-1 ? '1' : '0' }" class="search-icon"><span></span></button>
+              <input type="text" [(ngModel)]="searchText" style="width: 100%" class="search-input" placeholder="Search (name, Email, Phone,...)">
+              <button (click)="showHideInput = true;" class="search-icon"><span></span></button>
             </div>
-            <button class="close"></button>
+            <button (click)="showHideInput = false;" class="close"></button>
+           </div>
           </div>
         </td>
       </tr>
@@ -108,4 +110,3 @@
     </div>
 </div>
 </div>
-<app-jsloader></app-jsloader>

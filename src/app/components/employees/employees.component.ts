@@ -22,13 +22,16 @@ export class EmployeesComponent implements OnInit {
   clickedDep: Department;
   thisIsEmp: boolean;
   searchText;
+  showHideInput: boolean;
   chefDep: User;
   users: User[];
-// tslint:disable-next-line:max-line-length
-  constructor(public dialog: MatDialog, public router: Router, private departmentService: DepartmentService, private userService: UserService) {
+  private loadAPI: Promise<any>;
+  constructor(public dialog: MatDialog, public router: Router,
+              private departmentService: DepartmentService, private userService: UserService) {
   }
 
   ngOnInit(): void {
+    this.showHideInput = false;
     this.clickedDep = null;
     this.thisIsEmp = true;
     this.users = [];
@@ -114,4 +117,20 @@ export class EmployeesComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
     });
   }
+  refreshScript() {
+    this.loadAPI = new Promise(resolve => {
+      console.log('resolving promise...');
+      this.loadScript();
+    });
+  }
+  public loadScript() {
+    console.log('preparing to load...');
+    const node = document.createElement('script');
+    node.src = '../../../assets/scripts/temp.js';
+    node.type = 'text/javascript';
+    node.async = true;
+    node.charset = 'utf-8';
+    document.getElementsByTagName('head')[0].appendChild(node);
+  }
 }
+

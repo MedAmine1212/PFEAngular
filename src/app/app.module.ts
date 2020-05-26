@@ -35,8 +35,7 @@ import { AddDepartmentComponent } from './dialogs/dialog-forms/add-department/ad
 import {MatDialogModule} from '@angular/material/dialog';
 import { DeleteDepDialogComponent } from './dialogs/delete-dep-dialog/delete-dep-dialog.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
-import {MatMenuModule} from "@angular/material/menu";
-import { JsloaderComponent } from './jsloader/jsloader.component';
+import {MatMenuModule} from '@angular/material/menu';
 import { EmployeeDetailsComponent } from './dialogs/employee-details/employee-details.component';
 
 @NgModule({
@@ -56,7 +55,6 @@ import { EmployeeDetailsComponent } from './dialogs/employee-details/employee-de
     AddDepartmentComponent,
     DeleteDepDialogComponent,
     SidenavComponent,
-    JsloaderComponent,
     EmployeeDetailsComponent,
   ],
   imports: [
