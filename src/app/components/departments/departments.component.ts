@@ -164,11 +164,11 @@ export class DepartmentsComponent implements  OnInit {
       data: [null, 1]
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.ngOnInit();
+      this.reloadData();
     });
   }
 
-  private reloadData() {
+  public reloadData() {
     this.departmentService.list().subscribe(r => {
       this.data = r;
       this.dataSource.data = this.database.initialData(this.data);

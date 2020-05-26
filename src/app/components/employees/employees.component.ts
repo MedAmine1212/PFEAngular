@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {newArray} from '@angular/compiler/src/util';
@@ -18,6 +18,7 @@ import {EmployeeDetailsComponent} from '../../dialogs/employee-details/employee-
 })
 export class EmployeesComponent implements OnInit {
 
+  @Output() outPutData = new EventEmitter<any>();
   clickedDep: Department;
   thisIsEmp: boolean;
   searchText;
@@ -58,6 +59,7 @@ export class EmployeesComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
         this.departmentService.remove(this.clickedDep.depId).subscribe();
+        this.outPutData.emit();
       }
     });
   }
@@ -70,6 +72,7 @@ export class EmployeesComponent implements OnInit {
       data: [this.clickedDep, 1]
     });
     dialogRef.afterClosed().subscribe(result => {
+      this.outPutData.emit();
     });
   }
 

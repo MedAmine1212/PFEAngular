@@ -23,7 +23,7 @@
 
       <!--Departments-->
       <app-departements *ngIf="router.url === '/RemoteMonotoring/(mainCon:Departements)'" [@enterAnimation] (outPutData)="setClickedDep($event)"></app-departements>
-      <app-employees *ngIf="router.url === '/RemoteMonotoring/(mainCon:Departements)'" [@enterSecondAnimation]></app-employees>
+      <app-employees *ngIf="router.url === '/RemoteMonotoring/(mainCon:Departements)'" (outPutData)="reloadDep($event)" [@enterSecondAnimation]></app-employees>
 
 
     </div>
