@@ -19,6 +19,5 @@ export class DeleteDepDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.depName);
   }
 }

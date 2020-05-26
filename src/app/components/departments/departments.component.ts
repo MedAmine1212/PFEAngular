@@ -172,7 +172,6 @@ export class DepartmentsComponent implements  OnInit {
     this.departmentService.list().subscribe(r => {
       this.data = r;
       this.dataSource.data = this.database.initialData(this.data);
-      console.table(this.data);
     });
   }
 }

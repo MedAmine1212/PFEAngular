@@ -51,17 +51,14 @@ export class AddDepartmentComponent implements OnInit {
     if (this.dep != null) {
       this.department.supDep = this.dep;
     }
-    console.log(this.department);
-    this.departmentService.add(this.department).subscribe(data => console.log(data), error1 => console.log(error1));
-    console.log(this.dep);
+    this.departmentService.add(this.department).subscribe(data => console.log('done'), error1 => console.log(error1));
     this.dialogRef.close();
   }
 
   updateDep() {
     this.department.depName = this.newName;
     // tslint:disable-next-line:max-line-length
-    this.departmentService.modify(this.department.depId, this.department).subscribe(data => console.log(data), error1 => console.log(error1));
-    console.log(this.dep);
+    this.departmentService.modify(this.department.depId, this.department).subscribe(data => console.log('done'), error1 => console.log(error1));
     this.dialogRef.close();
   }
 }

@@ -57,7 +57,6 @@ export class AddUserComponent implements AfterViewInit  {
       this.departments = r;
     });
     } else {
-      console.log(this.stepper._steps);
       this.stepper.selectedIndex = 1;
     }
     this.firstFormGroup = this.formBuilder.group({

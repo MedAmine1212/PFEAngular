@@ -36,7 +36,6 @@ export class EmployeeDetailsComponent implements OnInit {
         this.i++;
       }
       this.departments[0] = this.emp.department;
-      console.table(this.departments);
     });
   }
 

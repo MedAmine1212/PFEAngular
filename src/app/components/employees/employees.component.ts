@@ -23,21 +23,12 @@ export class EmployeesComponent implements OnInit {
   searchText;
   chefDep: User;
   users: User[];
-  showAddUser: boolean;
-  showAddDep: boolean;
-  showForm: boolean;
-  showUpdateDep: boolean;
-  private loadAPI: Promise<unknown>;
 // tslint:disable-next-line:max-line-length
   constructor(public dialog: MatDialog, public router: Router, private departmentService: DepartmentService, private userService: UserService) {
   }
 
   ngOnInit(): void {
     this.clickedDep = null;
-    this.showForm = false;
-    this.showUpdateDep = false;
-    this.showAddUser = false;
-    this.showAddDep = false;
     this.thisIsEmp = true;
     this.users = [];
     this.reloadData();
@@ -56,12 +47,6 @@ export class EmployeesComponent implements OnInit {
     this.departmentService.getChefDep(cDepId).subscribe(user => {
       this.chefDep = user;
     });
-  }
-
-  closeForm(close: boolean) {
-    if (close) {
-      this.showForm = this.showAddDep = this.showAddUser = false;
-    }
   }
 
   showDeleteDialog(): void {
