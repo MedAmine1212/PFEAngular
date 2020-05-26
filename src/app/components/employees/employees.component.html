@@ -1,5 +1,5 @@
 <div  class="main-card mb-3 card" style="margin-left:15px;border: none">
-  <div class="card-header" >
+  <div class="card-header">
     <div border="1" *ngIf="!thisIsEmp && clickedDep.depId!=-1" style="color:black;padding-bottom: 10px;width: 100%" >
       <span> Department: {{clickedDep.depName}}       </span>
       <div class="btn-actions-pane-right">
@@ -29,16 +29,14 @@
 
     </div>
   </div>
-
-  <div class="card-body contacts_body" >
-
+  <div class="card-body">
     <table>
       <tr>
         <td>
-          <h1 *ngIf="!thisIsEmp && clickedDep.depId != -1" style="margin-top: 20px" class="empTitle">{{clickedDep.depName}} Employees</h1>
+          <h1 *ngIf="!thisIsEmp && clickedDep.depId != -1" style="margin-top: 20px;margin-right: 30px" class="empTitle">{{clickedDep.depName}} Employees </h1>
         </td>
         <td>
-          <div   style="background-color: transparent;margin-left: -15px" class="search-wrapper">
+          <div style="position: absolute;background-color: transparent;margin-top: -15px;margin-left: -35px;" class="search-wrapper">
             <div class="input-holder">
               <input style="" type="text" [(ngModel)]="searchText" style="width: 100%" class="search-input" placeholder="Search (name, Email, Phone,...)">
               <button [ngStyle]="{'opacity':thisIsEmp || clickedDep.depId!=-1 ? '1' : '0' }" class="search-icon"><span></span></button>
@@ -55,9 +53,8 @@
 
     <div style="width: 100%;text-align:center;margin:0;color: black;padding-top: 10%;font-weight: bolder;font-size: 20px" *ngIf="(thisIsEmp && users.length === 0) || (!thisIsEmp && clickedDep.depId!==-1 && users==null)"> No Employees to show</div>
     <div *ngIf="users!=null">
-      <div class="main-card mb-3 card" style="border-radius:0" *ngIf="(users.length !=0 && thisIsEmp) || (users.length !=0 && clickedDep.depId != -1)">
-        <div class="table-responsive">
-          <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+      <div class="main-card mb-3 card" style="margin-top: 40px;border-radius:0" *ngIf="(users.length !=0 && thisIsEmp) || (users.length !=0 && clickedDep.depId != -1)">
+        <table class="align-middle mb-0 table table-borderless table-striped table-hover">
             <thead>
             <tr *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)' || !thisIsEmp">
               <th class="text-center">N°</th>
@@ -83,8 +80,6 @@
                     <div class="widget-content-left flex2">
                       <div class="widget-heading">{{emp.name}} {{emp.firstName}}</div>
                       <div  class="text-muted" >{{emp.post.postName}}</div>
-                      <div style="padding-left:2px" *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)' || !thisIsEmp">
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -109,10 +104,8 @@
             </tr>
             </tbody>
           </table>
-        </div>
       </div>
     </div>
-  </div>
 </div>
-
+</div>
 <app-jsloader></app-jsloader>
