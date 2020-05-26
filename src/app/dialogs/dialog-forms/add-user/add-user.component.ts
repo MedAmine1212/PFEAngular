@@ -85,4 +85,8 @@ export class AddUserComponent implements AfterViewInit  {
       }
     }
 
+  nextSection() {
+
+    this.stepper.selectedIndex++;
+  }
 }

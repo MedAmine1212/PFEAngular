@@ -15,7 +15,6 @@ input:focus, textarea , button, select{
   outline: none !important;
 }
 .matDialogClass mat-dialog-container {
-  overflow: hidden;
   margin-top: 28px;
 }
 /*!

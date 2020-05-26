@@ -2,30 +2,47 @@
 <mat-horizontal-stepper [linear]="isLinear" #stepper>
 
   <mat-step [stepControl]="firstFormGroup">
-      <div class="form-row">
-        <div *ngIf="dep==null && departments != null" class="form-group col-md-6">
+    <div  class="main-card mb-3 card">
+        <div *ngIf="dep==null && departments != null">
+          <div class="card-header">
           <h1>Department</h1>
           <hr>
+          </div>
+          <div class="card-body">
           <select required class="custom-select" id="inputGroupSelect01">
           <option style="color: grey;" disabled selected value="null">Chose a department: </option>
           <option *ngFor="let depp of departments" value="{{depp.depId}}">
             <span>{{depp.depName}}</span>
           </option>
         </select>
+          </div>
         </div>
 
-        <div *ngIf="dep!=null" class="form-group col-md-6">
+        <div *ngIf="dep!=null">
+          <div class="card-header">
           <h1>Department</h1>
           <hr>
+          </div>
+        <div class="card-body">
           <input type="text" class="form-control" id="inputDep" value="{{dep.depName}}" disabled="true">
+        </div>
       </div>
       </div>
+
+
+    <div style="width: 100%">
+    <button (click)="nextSection()" style="float: right" class="btn btn-outline-primary">Next</button>
+    </div>
   </mat-step>
 
 <mat-step [stepControl]="secondFormGroup">
-<h1 *ngIf="dep != null">Add a user to<b>{{dep.depName}}</b>department</h1>
+<div  class="main-card mb-3 card">
+  <div class="card-header">
+<h1 *ngIf="dep != null">Add a user to <b>{{dep.depName}}</b> department</h1>
 <h1 *ngIf="dep == null">User info</h1>
 <hr>
+  </div>
+  <div class="card-body" style="padding-bottom: 40px">
   <div class="form-row">
     <div class="form-group col-md-6">
       <label for="inputEmail">Email*</label>
@@ -94,12 +111,22 @@
       </mat-form-field>
     </div>
   </div>
+</div>
+</div>
+  <div style="width: 100%;margin-top: -12px">
+    <button (click)="nextSection()" style="float: right" class="btn btn-outline-primary">Next</button>
+  </div>
 </mat-step>
 
   <mat-step [stepControl]="thirdFormGroup">
+
     <div id="firstAdress">
+    <div  class="main-card mb-3 card">
+      <div class="card-header">
       <h2>Address</h2>
       <hr>
+    </div>
+        <div class="card-body">
     <div class="form-row">
       <div class="form-group col-md-6">
         <label for="inputStreetName1">Street Name</label>
@@ -126,17 +153,23 @@
           </div>
         </div>
     </div>
+      </div>
+    </div>
     <div class="note">
       <button (click)="showOtherAddress=!showOtherAddress"  class="btn btn-info addAddressButton">
         <span mat-raised-button matTooltip="Add second Address now" *ngIf="!showOtherAddress" class="fas fa-plus-circle"></span>
         <span mat-raised-button matTooltip="Hide form" *ngIf="showOtherAddress" class="fas fa-minus-circle"></span>
       </button>
    <span *ngIf="!showOtherAddress"> Note: Each user can have 2 addresses, you can add another address now, otherwise this user or the employer can add another address later.</span>
-      </div>
+      </div><br>
 
-    <div style="margin-top: 10px" [@enterAnimation] *ngIf="showOtherAddress" id="secondAddress">
+    <div style="margin-top: 40px;width: 100%" [@enterAnimation] *ngIf="showOtherAddress" id="secondAddress">
+      <div  class="main-card mb-3 card">
+        <div class="card-header">
       <h2>Address 2</h2>
       <hr>
+        </div>
+        <div class="card-body">
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="inputStreetName2">Street Name</label>
@@ -162,15 +195,15 @@
           <input matInput required type="number" class="form-control" id="inputZip2" placeholder="Zip code">
         </div>
       </div>
-
+        </div></div>
+    </div>
+    <div class="buttons">
+      <div style="float: right;">
+        <button type="submit" disabled class="btn btn-primary"  (click)="addUser()">Add user</button>
+        <button type="button" (click)="closeThis()" class="btn btn-light" style="margin-left: 20px;">Cancel</button>
+      </div>
     </div>
   </mat-step>
 
 </mat-horizontal-stepper>
-  <div class="buttons">
-    <div style="float: right;">
-      <button type="submit" disabled class="btn btn-primary"  (click)="addUser()">Add user</button>
-      <button type="button" (click)="closeThis()" class="btn btn-light" style="margin-left: 20px;">Cancel</button>
-    </div>
-  </div>
 </form>
