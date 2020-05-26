@@ -48,10 +48,11 @@ export class RemoteMonotoringComponent implements OnInit {
   }
   setClickedDep(dep: Department) {
     setTimeout (() => {
-    if (dep) {
+    if (dep && this.employeesComponent != null) {
       this.clickedDeparment = dep;
       this.employeesComponent.setDepartment(dep);
     }
     }, 1);
   }
+
 }

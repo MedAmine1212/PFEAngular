@@ -12,7 +12,6 @@ import {DeleteDepDialogComponent} from '../../delete-dep-dialog/delete-dep-dialo
 export class AddDepartmentComponent implements OnInit {
   registerForm: FormGroup;
   dep: Department;
-  depId: number;
   departments: Department[];
   department: Department = new Department();
   public sender: number;
@@ -23,8 +22,10 @@ export class AddDepartmentComponent implements OnInit {
 
   ngOnInit(): void {
     this.newName = '';
-    this.dep = this.data[0];
-    this.sender = this.data[1];
+    if (this.data != null) {
+      this.dep = this.data[0];
+      this.sender = this.data[1];
+    }
     if (this.sender === 2) {
       this.department = this.dep;
     }

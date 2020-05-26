@@ -161,10 +161,10 @@ export class DepartmentsComponent implements  OnInit {
     const dialogRef = this.dialog.open(AddDepartmentComponent, {
       width: '800px',
       height: '600px',
-      data: null
+      data: [null, 1]
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.reloadData();
+      this.ngOnInit();
     });
   }
 

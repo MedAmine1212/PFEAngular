@@ -1,4 +1,4 @@
-<div  class="main-card mb-3 card" style="margin-left:5px;border: none">
+<div  class="main-card mb-3 card" style="margin-top:-8px;margin-left:5px;border: none">
   <div class="card-header">
     <i style="color:grey;margin-right: 15px;margin-top: -15px" class="fa fa-user-friends"></i>
     <h2 class="app-sidebar__heading" style="font-weight: bolder">Employee details
@@ -79,18 +79,22 @@
         </td>
       </tr>
     </table>
-    <div class="card-header" >
+  </div>
+</div>
+  <div class="main-card mb-3 card" style="margin-top: -25px">
+    <div class="card-header">
       <i style="color:grey;margin-right: 15px;margin-top: -15px" class="fa fa-map-marker-alt"></i>
       <h2 class="app-sidebar__heading" style="font-weight: bolder">Employee Addresses
       </h2>
       <div style="width: 100%">
         <div class="buttonsContainer">
           <i *ngIf="showAddressUpdateForm" (click)="saveAddresses()" class="fa fa-save saveBut"></i>
-          <i *ngIf="!showAddressUpdateForm" style="margin-right: -30px" (click)="showAddressUpdateForm = true;" class="fa fa-edit editBut"></i>
-          <i *ngIf="showAddressUpdateForm" style="margin-right: -30px" (click)="showAddressUpdateForm = false;" class="fa fa-undo cancelBut"></i>
+          <i *ngIf="!showAddressUpdateForm" (click)="showAddressUpdateForm = true;" class="fa fa-edit editBut"></i>
+          <i *ngIf="showAddressUpdateForm" (click)="showAddressUpdateForm = false;" class="fa fa-undo cancelBut"></i>
         </div>
       </div>
     </div>
+    <div card-body>
   <span style="color:grey" *ngIf="emp.addresses.length == 0">No addresses to show</span>
   <table style="width: 100%" *ngIf="emp.addresses.length>0" class="align-middle mb-0 table table-borderless table-striped table-hover">
     <thead>
