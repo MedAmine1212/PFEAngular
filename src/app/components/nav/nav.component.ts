@@ -8,7 +8,6 @@ import {RemoteMonotoringComponent} from '../remote-monotoring/remote-monotoring.
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
-  
   constructor() { }
 
   ngOnInit(): void {
