@@ -11,7 +11,6 @@ import {AddDepartmentComponent} from '../../dialogs/dialog-forms/add-department/
 import {AddUserComponent} from '../../dialogs/dialog-forms/add-user/add-user.component';
 import {UserService} from '../../services/user/user.service';
 import {EmployeeDetailsComponent} from '../../dialogs/employee-details/employee-details.component';
-import {DeleteUserDialogComponent} from "../../dialogs/delete-user-dialog/delete-user-dialog.component";
 @Component({
   selector: 'app-employees',
   templateUrl: './employees.component.html',
@@ -62,8 +61,10 @@ export class EmployeesComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
-        this.departmentService.remove(this.clickedDep.depId).subscribe();
-        this.outPutData.emit();
+        this.departmentService.remove(this.clickedDep.depId).subscribe(() => {
+          console.log('Refreshing departments..');
+          this.outPutData.emit();
+        });
       }
     });
   }
@@ -76,6 +77,7 @@ export class EmployeesComponent implements OnInit {
       data: [this.clickedDep, 1]
     });
     dialogRef.afterClosed().subscribe(result => {
+      console.log('Refreshing departments..');
       this.outPutData.emit();
     });
   }
@@ -88,6 +90,8 @@ export class EmployeesComponent implements OnInit {
       data: [this.clickedDep, 2]
     });
     dialogRef.afterClosed().subscribe(result => {
+      console.log('Refreshing departments..');
+      this.outPutData.emit();
     });
   }
 
@@ -99,6 +103,8 @@ export class EmployeesComponent implements OnInit {
       data: this.clickedDep
     });
     dialogRef.afterClosed().subscribe(result => {
+      console.log('Refreshing Employees..');
+      this.reloadData();
     });
   }
 
@@ -116,34 +122,22 @@ export class EmployeesComponent implements OnInit {
       data: emp
     });
     dialogRef.afterClosed().subscribe(result => {
+      console.log('Refreshing employees..');
+      this.reloadData();
     });
   }
-  refreshScript() {
-    this.loadAPI = new Promise(resolve => {
-      console.log('resolving promise...');
-      this.loadScript();
-    });
-  }
-  public loadScript() {
-    console.log('preparing to load...');
-    const node = document.createElement('script');
-    node.src = '../../../assets/scripts/temp.js';
-    node.type = 'text/javascript';
-    node.async = true;
-    node.charset = 'utf-8';
-    document.getElementsByTagName('head')[0].appendChild(node);
-  }
-
-  openDeleteEmpDialog(emp: any) {
-    const dialogRef = this.dialog.open(DeleteUserDialogComponent, {
+  openDeleteEmpDialog(emp: User) {
+    const dialogRef = this.dialog.open(DeleteDepDialogComponent, {
       width: '400px',
       height: '380',
-      data: emp
+      data: {depName: this.clickedDep.depName}
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
-        this.userService.remove(emp.userId).subscribe();
-        this.reloadData();
+        this.userService.remove(emp.userId).subscribe(() => {
+          console.log('Refreshing employees..');
+          this.reloadData();
+        });
       }
     });
   }

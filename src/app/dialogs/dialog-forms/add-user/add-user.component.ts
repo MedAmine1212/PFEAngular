@@ -34,8 +34,6 @@ export class AddUserComponent implements AfterViewInit  {
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
   departments: Department[];
-  firstPanelOpenState: boolean;
-  secondPanelOpenState: boolean;
   dep: Department;
   showOtherAddress: boolean;
   constructor(public dialogRef: MatDialogRef<AddUserComponent>,
@@ -49,8 +47,6 @@ export class AddUserComponent implements AfterViewInit  {
 
   ngAfterViewInit(): void {
     this.showOtherAddress = false;
-    this.firstPanelOpenState = true;
-    this.secondPanelOpenState = false;
     this.departments = [];
     if (this.dep == null) {
     this.departmentService.list().subscribe(r => {

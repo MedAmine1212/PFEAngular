@@ -21,7 +21,7 @@ export class DepartmentService {
   }
 
   remove(id) {
-    return this.http.delete(this.baseUrl + 'remove/' + id );
+    return this.http.delete(this.baseUrl + 'delete/' + id );
   }
 
   modify(departmentId: number, departement: Department): Observable<any> {

@@ -157,21 +157,22 @@ export class DepartmentsComponent implements  OnInit {
     this.sendData(this.fakedep);
   }
 
-  addDepartment() {
+  public reloadData() {
+
+    console.log('Reloading...');
+    this.departmentService.list().subscribe(r => {
+      this.data = r;
+      this.dataSource.data = this.database.initialData(this.data);
+    });
+  }
+   addDepartment() {
     const dialogRef = this.dialog.open(AddDepartmentComponent, {
       width: '800px',
       height: '600px',
       data: [null, 1]
     });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(async result => {
       this.reloadData();
-    });
-  }
-
-  public reloadData() {
-    this.departmentService.list().subscribe(r => {
-      this.data = r;
-      this.dataSource.data = this.database.initialData(this.data);
     });
   }
 }
