@@ -65,7 +65,7 @@
       <form [formGroup]="secondFormGroup" >
   <div class="form-row">
     <div class="form-group col-md-6">
-      <label for="inputFirstName">firstName*</label>
+      <!-- <label for="inputFirstName">firstName*</label> -->
       <input
         required
         class="form-control"
@@ -79,7 +79,7 @@
       </mat-error></div>
     </div>
     <div class="form-group col-md-6">
-      <label for="inputName">Name*</label>
+      <!-- <label for="inputName">Name*</label> -->
       <input
         required
         class="form-control"
@@ -95,7 +95,7 @@
   </div>
   <div class="form-row">
     <div class="form-group col-md-6">
-      <label for="inputBirthDate">Birth Date*</label><br>
+      <!-- <label for="inputBirthDate">Birth Date*</label> --><br>
       <div class="input-group">
         <input
           required
@@ -120,28 +120,28 @@
       </mat-error></div>
     </div>
     <div class="form-group col-md-6">
-      <label for="inputName">Sexe </label><br>
-<!--      <div class="btn-group btn-group-toggle" data-toggle="buttons">-->
-<!--        <label style="width: 157px" class="btn btn-info active">-->
-<!--          <input type="radio"  name="options" id="Male" autocomplete="off" checked> Male-->
-<!--        </label>-->
-<!--        <label style="width: 157px" class="btn btn-info">-->
-<!--          <input type="radio"  name="options" id="Female" autocomplete="off"> Female-->
-<!--        </label>-->
-<!--      </div>-->
-      <mat-button-toggle-group formControlName="gender" appearance="Legacy" [(ngModel)]="user.gender" name="fontStyle" aria-label="Font Style">
-        <mat-button-toggle  value="Male"   >Male</mat-button-toggle>
-        <mat-button-toggle  value="Female" >Female</mat-button-toggle>
-      </mat-button-toggle-group>
-      <div class="mat-errorContainer">
-      <mat-error *ngIf="!gender.valid && gender.touched ">
-        Sexe is required !
-      </mat-error></div>
+      <!-- <label for="inputName">Sexe </label> --><br>
+      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+         <label style="width: 157px" class="btn btn-info active">
+          <input type="radio" (focus)="user.gender = 'male'"  name="options" autocomplete="off" checked> Male
+        </label>
+        <label style="width: 157px" class="btn btn-info">
+          <input type="radio"  name="options" (focus)="user.gender = 'female'" autocomplete="off"> Female
+        </label>
+      </div>
+<!--      <mat-button-toggle-group formControlName="gender" appearance="Legacy" [(ngModel)]="user.gender" name="fontStyle" aria-label="Font Style">-->
+<!--        <mat-button-toggle  value="Male"   >Male</mat-button-toggle>-->
+<!--        <mat-button-toggle  value="Female" >Female</mat-button-toggle>-->
+<!--      </mat-button-toggle-group>-->
+<!--      <div class="mat-errorContainer">-->
+<!--      <mat-error *ngIf="!gender.valid && gender.touched ">-->
+<!--        Sexe is required !-->
+<!--      </mat-error></div>-->
     </div>
   </div>
   <div class="form-row">
     <div class="form-group col-md-6">
-      <label for="inputCIN">CIN*</label>
+      <!-- <label for="inputCIN">CIN*</label> -->
       <input
         required
         class="form-control"
@@ -157,7 +157,7 @@
       </mat-error></div>
     </div>
     <div class="form-group col-md-6">
-      <label for="inputEmail">Email*</label>
+      <!-- <label for="inputEmail">Email*</label> -->
       <input
         required
         id="inputEmail"
@@ -193,7 +193,7 @@
       </mat-form-field>
     </div>
     <div class="form-group col-md-6">
-          <label for="inputPost">Post*</label><br>
+          <!-- <label for="inputPost">Post*</label> --><br>
           <select
             required
             class="custom-select"
@@ -236,7 +236,7 @@
         <div class="card-body">
     <div class="form-row">
       <div class="form-group col-md-6">
-        <label for="inputStreetName1">Street Name</label>
+        <!-- <label for="inputStreetName1">Street Name</label> -->
         <input
           required
           class="form-control"
@@ -250,7 +250,7 @@
         </mat-error></div>
       </div>
       <div class="form-group col-md-6">
-        <label for="inputStreetNumber1">Street number</label>
+        <!-- <label for="inputStreetNumber1">Street number</label> -->
         <input
           required
           class="form-control"
@@ -266,7 +266,7 @@
     </div>
         <div class="form-row">
           <div class="form-group col-md-6">
-            <label for="inputState1">State</label>
+            <!-- <label for="inputState1">State</label> -->
             <input
               required
               class="form-control"
@@ -280,7 +280,7 @@
             </mat-error></div>
           </div>
           <div class="form-group col-md-4">
-            <label for="inputGov1">Governorate</label>
+            <!-- <label for="inputGov1">Governorate</label> -->
             <input
               required
               class="form-control"
@@ -294,7 +294,7 @@
             </mat-error></div>
           </div>
           <div class="form-group col-md-2">
-            <label for="inputZip1">Zip</label>
+            <!-- <label for="inputZip1">Zip</label> -->
             <input
               required
               class="form-control"
@@ -327,7 +327,7 @@
         <div class="card-body">
       <div class="form-row">
         <div class="form-group col-md-6">
-          <label for="inputStreetName2">Street Name</label>
+          <!-- <label for="inputStreetName2">Street Name</label> -->
           <input
             [(ngModel)]="address2.streetName"
             [ngModelOptions]="{standalone: true}"
@@ -337,7 +337,7 @@
             placeholder="Street Name">
         </div>
         <div class="form-group col-md-6">
-          <label for="inputStreetNumber2">Street number</label>
+          <!-- <label for="inputStreetNumber2">Street number</label> -->
           <input
             [(ngModel)]="address2.streetNumber"
             [ngModelOptions]="{standalone: true}"
@@ -349,7 +349,7 @@
       </div>
       <div class="form-row">
         <div class="form-group col-md-6">
-          <label for="inputState2">State</label>
+          <!-- <label for="inputState2">State</label> -->
           <input
             [(ngModel)]="address2.state"
             [ngModelOptions]="{standalone: true}"
@@ -358,14 +358,14 @@
             placeholder="State (ex: Tunis)" id="inputState2">
         </div>
         <div class="form-group col-md-4">
-          <label for="inputGov2">Governorate</label>
+          <!-- <label for="inputGov2">Governorate</label> -->
           <input
             [(ngModel)]="address2.governorate"
             [ngModelOptions]="{standalone: true}"
             type="text" id="inputGov2" class="form-control" placeholder="Governorate"/>
         </div>
         <div class="form-group col-md-2">
-          <label for="inputZip2">Zip</label>
+          <!-- <label for="inputZip2">Zip</label> -->
 
           <input
             [(ngModel)]="address2.zipCode"

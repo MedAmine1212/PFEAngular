@@ -99,7 +99,7 @@ export class AddUserComponent implements  OnInit  {
   }
 
   ngOnInit(): void {
-
+    this.user.gender = 'male';
     if (this.user.department !== null) {
 
       setTimeout(() => {
@@ -146,7 +146,7 @@ export class AddUserComponent implements  OnInit  {
         cin: [this.user.cin, [Validators.required,  Validators.minLength(8), Validators.maxLength(8)], this.checkInUseCin.bind(this)],
         phoneNumber: [this.user.phone, [Validators.required], this.checkInUsePhoneNumber.bind(this)],
         birthDate: [this.user.birthDate, [Validators.required]],
-        gender: [this.user.gender, [Validators.required]],
+        // gender: [this.user.gender, [Validators.required]],
         post: [this.user.post, [Validators.required]]
     });
   }
@@ -256,9 +256,9 @@ export class AddUserComponent implements  OnInit  {
 
 
   // Get form controls Errors
-  getErrorGender() {
-    return 'Field is required' ;
-  }
+  // getErrorGender() {
+  //   return 'Field is required' ;
+  // }
   getErrorFirstName() {
     return this.firstName.hasError('required') ?
       'Field is required' :
@@ -328,9 +328,9 @@ export class AddUserComponent implements  OnInit  {
   get birthDate() {
     return this.secondFormGroup.get('birthDate') as FormControl;
   }
-  get gender() {
-    return this.secondFormGroup.get('gender') as FormControl;
-  }
+  // get gender() {
+  //   return this.secondFormGroup.get('gender') as FormControl;
+  // }
   get post() {
     return this.secondFormGroup.get('post') as FormControl;
   }
@@ -379,11 +379,10 @@ export class AddUserComponent implements  OnInit  {
     console.log(event.target.value);
     this.firstFormGroup.controls.department.setErrors(null);
     for (const dep of this.departments) {
-      if(event.target.value === dep.depName){
+      if (event.target.value === dep.depName) {
         this.user.department = dep;
       }
     }
     console.log(this.user.department);
   }
-
 }
