@@ -4,20 +4,21 @@
   <!-- ************************************  1st stepper  ***************************************-->
   <mat-step [stepControl]="firstFormGroup"  >
     <ng-template matStepLabel>Select department</ng-template>
-  <form [formGroup]="firstFormGroup">
+  <form >
     <div class="form-row">
-<!--      <div *ngIf="user.department===null" class="form-group col-md-6">-->
+      <div *ngIf="user.department===null" class="form-group col-md-6">
         <h1>Department</h1>
         <hr>
         <select
           required
           class="custom-select"
           id="inputGroupSelect01"
-          [disabled]="router.url === '/RemoteMonotoring/(mainCon:Departements)'"
           (change)="depChange($event)"
         >
+<!--          [disabled]="router.url === '/RemoteMonotoring/(mainCon:Departements)'"-->
+
           <option style="color: grey;" disabled [selected]="user.department === null" value="null">Chose a department: </option>
-            <option *ngFor="let depp of departments"  [ngValue]="depp" [selected]=" user.department!== null &&  depp.depName == user.department.depName">
+            <option *ngFor="let depp of departments"  [ngValue]="depp" [selected]=" user.department!== null &&  depp.depName === user.department.depName">
               <span>{{depp.depName}}</span>
             </option>
 
@@ -26,19 +27,19 @@
         <mat-error *ngIf="!department.valid && department.touched">
           {{getErrorDepartment()}}
         </mat-error>
-<!--      </div>-->
+      </div>
 
-<!--      <div *ngIf="user.department!=null" class="form-group col-md-6">-->
-<!--        <h1>Department</h1>-->
-<!--        <hr>-->
-<!--        <input  type="text" class="form-control" id="inputDep" value="{{this.user.department.depName}}" disabled="true">-->
-<!--      </div>-->
+      <div *ngIf="user.department!=null" class="form-group col-md-6">
+        <h1>Department</h1>
+        <hr>
+        <input  type="text" class="form-control" id="inputDep" value="{{this.user.department.depName}}" disabled="true">
+      </div>
     </div>
 
     <br>
   </form>
     <div style="float: right">
-      <button type="submit" mat-raised-button color="primary" [disabled]="!firstFormGroup.valid"  matStepperNext >Next</button>
+      <button type="submit" mat-raised-button color="primary" [disabled]="!firstFormGroup.valid && user.department == null"  matStepperNext >Next</button>
       <button type="button" (click)="closeThis()" class="btn btn-light" style="margin-left: 20px;">Cancel</button>
     </div>
   </mat-step>

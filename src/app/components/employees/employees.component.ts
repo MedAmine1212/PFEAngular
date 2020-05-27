@@ -39,7 +39,6 @@ export class EmployeesComponent implements OnInit {
     this.thisIsEmp = true;
     this.users = [];
     this.reloadData();
-
   }
   setDepartment(dep: Department) {
     this.users = [];
@@ -83,6 +82,8 @@ export class EmployeesComponent implements OnInit {
       data: [this.clickedDep, 1]
     });
     dialogRef.afterClosed().subscribe(result => {
+      console.log();
+      this.reloadData();
     });
   }
 
@@ -103,8 +104,6 @@ export class EmployeesComponent implements OnInit {
       data: this.clickedDep
     });
     dialogRef.afterClosed().subscribe(result => {
-      // this.router.navigate('(mainCon:Departements)');
-
     });
   }
 

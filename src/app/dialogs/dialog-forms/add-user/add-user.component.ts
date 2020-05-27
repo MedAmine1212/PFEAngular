@@ -35,7 +35,7 @@ import {Router} from '@angular/router';
   templateUrl: './add-user.component.html',
   styleUrls: ['./add-user.component.css']
 })
-export class AddUserComponent implements AfterViewInit, OnInit  {
+export class AddUserComponent implements  OnInit  {
   dialogComponent: MatDialogRef<DialogComponent>;
   @ViewChild('stepper') stepper: MatStepper;
   isLinear = false;
@@ -104,7 +104,7 @@ export class AddUserComponent implements AfterViewInit, OnInit  {
 
       setTimeout(() => {
         this.stepper.selectedIndex = 1;
-      }, 1000);
+      }, 500);
     }
     this.createFirstFormGroup();
     this.createSecondFormGroup();
@@ -128,15 +128,11 @@ export class AddUserComponent implements AfterViewInit, OnInit  {
 
 
   }
-  ngAfterViewInit(): void {
 
-
-
-  }
 
  createFirstFormGroup() {
     this.firstFormGroup = this.formBuilder.group({
-      department: [this.user.department, [Validators.required]]
+      department: ['', [Validators.required]]
     });
  }
   createSecondFormGroup() {
@@ -314,8 +310,7 @@ export class AddUserComponent implements AfterViewInit, OnInit  {
 
 
   // Get the form controls
-
-  get email() {
+    get email() {
     return this.secondFormGroup.get('email') as FormControl;
   }
   get cin() {
@@ -381,6 +376,7 @@ export class AddUserComponent implements AfterViewInit, OnInit  {
   }
 
   depChange(event) {
+    console.log(event.target.value);
     this.firstFormGroup.controls.department.setErrors(null);
     for (const dep of this.departments) {
       if(event.target.value === dep.depName){
