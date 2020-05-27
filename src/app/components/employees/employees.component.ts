@@ -62,6 +62,8 @@ export class EmployeesComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
         this.departmentService.remove(this.clickedDep.depId).subscribe(() => {
+          this.clickedDep = new Department();
+          this.clickedDep.depId = -1;
           console.log('Refreshing departments..');
           this.outPutData.emit();
         });

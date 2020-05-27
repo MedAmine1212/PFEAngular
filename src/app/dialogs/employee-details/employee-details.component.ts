@@ -59,7 +59,7 @@ export class EmployeeDetailsComponent implements OnInit {
   }
   saveAddresses() {
     for (const add of this.newEmpAddresses) {
-      this.addressService.modify(add.addressId, add);
+      this.addressService.modify(add.addressId, add).subscribe();
     }
     this.showUpdateForm = false;
     this.showAddressUpdateForm = false;
@@ -71,7 +71,7 @@ export class EmployeeDetailsComponent implements OnInit {
           break;
         }
     }
-    this.userService.modify(this.newEmp);
+    this.userService.modify(this.emp.userId, this.newEmp).subscribe();
     this.showUpdateForm = false;
   }
   onNoClick(): void {

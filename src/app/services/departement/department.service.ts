@@ -24,8 +24,8 @@ export class DepartmentService {
     return this.http.delete(this.baseUrl + 'delete/' + id );
   }
 
-  modify(departmentId: number, departement: Department): Observable<any> {
-    return this.http.put( this.baseUrl + 'update/' + departmentId, Department);
+  modify(departmentId: number, department: Department): Observable<any> {
+    return this.http.put( this.baseUrl + 'update/' + departmentId, department);
   }
 
   findById(id): Observable<any> {

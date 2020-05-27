@@ -28,17 +28,13 @@ export class UserService {
   }
 
   remove(id) {
-    this.headers = new HttpHeaders({Authorization: 'Bearer ' + localStorage.token});
-    return this.http.delete(this.baseurl + 'users/' + id, {
-      headers: this.headers
-    });
+    // this.headers = new HttpHeaders({Authorization: 'Bearer ' + localStorage.token});
+    return this.http.delete(this.baseurl + 'delete/' + id);
   }
 
-  modify(user) {
-    this.headers = new HttpHeaders({Authorization: 'Bearer ' + localStorage.token});
-    return this.http.put(this.baseurl + 'update', user, {
-      headers: this.headers
-    });
+  modify(id, user) {
+    // this.headers = new HttpHeaders({Authorization: 'Bearer ' + localStorage.token});
+    return this.http.put(this.baseurl + 'update/' + id, user);
   }
 
   findById(id): Observable<User> {

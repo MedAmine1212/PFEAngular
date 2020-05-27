@@ -8,14 +8,13 @@ import {Component, OnInit} from '@angular/core';
 
 })
 export class LoginComponent implements OnInit {
-  private loadAPI: Promise<any>;
+  private loadAPI: any;
 
   constructor() {
   }
 
   ngOnInit(): void {
   }
-
   reloadJs() {
     this.loadAPI = new Promise(resolve => {
       console.log('resolving promise...');

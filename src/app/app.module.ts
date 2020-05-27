@@ -34,7 +34,6 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { AddDepartmentComponent } from './dialogs/dialog-forms/add-department/add-department.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { DeleteDepDialogComponent } from './dialogs/delete-dep-dialog/delete-dep-dialog.component';
-import { SidenavComponent } from './components/sidenav/sidenav.component';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
@@ -58,7 +57,6 @@ import {EmployeeDetailsComponent} from './dialogs/employee-details/employee-deta
     AddUserComponent,
     AddDepartmentComponent,
     DeleteDepDialogComponent,
-    SidenavComponent,
     DialogComponent,
     EmployeeDetailsComponent
   ],

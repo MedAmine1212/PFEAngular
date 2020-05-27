@@ -1,18 +1,18 @@
-  <div class="app-header header-shadow bg-dark sidebar-text-dark header-text-light">
-    <div class="app-header__logo">
-      <a style="cursor: pointer" routerLink="../RemoteMonotoring" class="navbar-brand">
-        <div class="logo-src">Remote monotoring</div>
-      </a>
-      <div class="header__pane ml-auto">
-        <div>
-          <button type="button" class="hamburger close-sidebar-btn hamburger--elastic is active" data-class="closed-sidebar">
+<div class="app-header header-shadow bg-dark sidebar-text-dark header-text-light">
+  <div class="app-header__logo">
+    <a style="cursor: pointer" routerLink="../RemoteMonotoring" class="navbar-brand">
+      <div class="logo-src">Remote monotoring</div>
+    </a>
+    <div class="header__pane ml-auto">
+      <div>
+        <button type="button" class="hamburger close-sidebar-btn hamburger--elastic is active" data-class="closed-sidebar">
             <span class="hamburger-box">
             <span class="hamburger-inner"></span>
             </span>
         </button>
-        </div>
       </div>
     </div>
+  </div>
   <div class="app-header__mobile-menu">
     <div>
       <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
@@ -32,28 +32,28 @@
   </span>
   </div>
   <div class="app-header__content">
-      <div class="app-header-left">
-        <ul class="header-menu nav">
-          <li class="nav-item">
-            <a [routerLink]="[{ outlets: {mainCon: ['Absences'] } }]" class="nav-link" href="#">Absences</a>
-          </li>
-          <li class="btn-group nav-item">
+    <div class="app-header-left">
+      <ul class="header-menu nav">
+        <li class="nav-item">
+          <a [routerLink]="[{ outlets: {mainCon: ['Absences'] } }]" class="nav-link" href="#">Absences</a>
+        </li>
+        <li class="btn-group nav-item">
 
-            <a [routerLink]="[{ outlets: {mainCon: ['Departements'] } }]" class="nav-link">Departments</a>
-          </li>
-          <li class="btn-group nav-item">
+          <a [routerLink]="[{ outlets: {mainCon: ['Departements'] } }]" class="nav-link">Departments</a>
+        </li>
+        <li class="btn-group nav-item">
 
-            <a [routerLink]="[{ outlets: {mainCon: ['Employees'] } }]" class="nav-link">Employees</a>
-          </li>
-          <li class="nav-item">
-            <a [routerLink]="[{ outlets: {mainCon: ['Administrators'] } }]" class="nav-link">Administrators</a>
-          </li>
+          <a [routerLink]="[{ outlets: {mainCon: ['Employees'] } }]" class="nav-link">Employees</a>
+        </li>
+        <li class="nav-item">
+          <a [routerLink]="[{ outlets: {mainCon: ['Administrators'] } }]" class="nav-link">Administrators</a>
+        </li>
 
-          <li class="nav-item">
-            <a [routerLink]="[{ outlets: {mainCon: ['TimeTables'] } }]" class="nav-link">Time Tables</a>
-          </li>
-        </ul>
-      </div>
+        <li class="nav-item">
+          <a [routerLink]="[{ outlets: {mainCon: ['TimeTables'] } }]" class="nav-link">Time Tables</a>
+        </li>
+      </ul>
+    </div>
     <div class="app-header-right">
       <div class="header-btn-lg pr-0">
         <div class="widget-content p-0">
@@ -92,4 +92,4 @@
       </div>
     </div>
   </div>
-  </div>
+</div>
