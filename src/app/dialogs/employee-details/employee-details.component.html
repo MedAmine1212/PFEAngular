@@ -5,68 +5,69 @@
     </h2>
     <div style="width: 100%">
       <div class="buttonsContainer">
-        <i *ngIf="showUpdateForm" (click)="saveUser()" class="fa fa-save saveBut"></i>
-        <i *ngIf="!showUpdateForm" (click)="showUpdateForm = true;" class="fa fa-user-edit editBut"></i>
-        <i *ngIf="showUpdateForm" (click)="showUpdateForm = false;" class="fa fa-undo cancelBut"></i>
+        <i *ngIf="showUpdateForm" (click)="saveUser()" matTooltip="Save" class="fa fa-save saveBut"></i>
+        <i *ngIf="!showUpdateForm" (click)="showUpdateForm = true;" matTooltip="Edit user details" class="fa fa-user-edit editBut"></i>
+        <i *ngIf="showUpdateForm" (click)="undoUserChanges();" matTooltip="Undo changes" class="fa fa-undo cancelBut"></i>
       </div>
     </div>
   </div>
   <div class="card-body">
     <table>
-<tr>
-  <td class="tag"> Badge id:</td>
-<td class="data">
-{{emp.userId}}
-</td>
-</tr>
+      <tr>
+        <td class="tag"> Badge id:</td>
+        <td class="data">
+          {{newEmp.userId}}
+        </td>
+      </tr>
       <tr>
         <td class="tag">CIN:</td>
-<td class="data">
-<span *ngIf="!showUpdateForm">{{emp.cin}}</span>
-  <input *ngIf="showUpdateForm" type="text" value="{{emp.cin}}"/>
-</td></tr>
+        <td class="data">
+          <span *ngIf="!showUpdateForm">{{newEmp.cin}}</span>
+          <input *ngIf="showUpdateForm" [(ngModel)]="newEmp.cin" type="text"/>
+        </td></tr>
       <tr>
         <td class="tag">Name:</td>
-<td class="data">
-  <span *ngIf="!showUpdateForm">{{emp.name}}</span>
-  <input *ngIf="showUpdateForm" type="text" value="{{emp.name}}"/>
-</td></tr>
+        <td class="data">
+          <span *ngIf="!showUpdateForm">{{newEmp.name}}</span>
+          <input [(ngModel)]="newEmp.name" *ngIf="showUpdateForm" type="text"/>
+        </td></tr>
       <tr>
         <td class="tag"> First name:</td>
-<td class="data">
-  <span *ngIf="!showUpdateForm">{{emp.firstName}}</span>
-  <input *ngIf="showUpdateForm" type="text" value="{{emp.firstName}}"/>
-</td></tr>
+        <td class="data">
+          <span *ngIf="!showUpdateForm">{{newEmp.firstName}}</span>
+          <input [(ngModel)]="newEmp.firstName" *ngIf="showUpdateForm" type="text"/>
+        </td></tr>
       <tr>
         <td class="tag"> gender:</td>
-<td class="data">
-  <span *ngIf="!showUpdateForm">{{emp.gender}}</span>
-  <input *ngIf="showUpdateForm" type="text" value="{{emp.gender}}"/>
-</td></tr>
+        <td class="data">
+          <span *ngIf="!showUpdateForm">{{newEmp.gender}}</span>
+          <input [(ngModel)]="newEmp.gender" *ngIf="showUpdateForm" type="text"/>
+        </td></tr>
       <tr>
         <td class="tag">Birth date:</td>
-<td class="data">
-  <span *ngIf="!showUpdateForm">{{emp.birthDate}}</span>
-  <input *ngIf="showUpdateForm" type="text" value="{{emp.birthDate}}"/>
-</td></tr>
+        <td class="data">
+          <span *ngIf="!showUpdateForm">{{newEmp.birthDate}}</span>
+          <input [(ngModel)]="newEmp.birthDate" *ngIf="showUpdateForm" type="text"/>
+        </td></tr>
       <tr>
         <td class="tag">Phone number:</td>
-<td class="data">
-  <span *ngIf="!showUpdateForm">{{emp.phone}}</span>
-  <input *ngIf="showUpdateForm" type="text" value="{{emp.phone}}"/>
-</td></tr>
+        <td class="data">
+          <span *ngIf="!showUpdateForm">{{newEmp.phone}}</span>
+          <input [(ngModel)]="newEmp.phone" *ngIf="showUpdateForm" type="text"/>
+        </td></tr>
       <tr>
         <td class="tag">Email:</td>
-<td class="data">
-  <span *ngIf="!showUpdateForm">{{emp.email}}</span>
-  <input *ngIf="showUpdateForm" type="email" value="{{emp.email}}"/>
-</td></tr>
+        <td class="data">
+          <span *ngIf="!showUpdateForm">{{newEmp.email}}</span>
+          <input [(ngModel)]="newEmp.email" *ngIf="showUpdateForm" type="email"/>
+        </td></tr>
       <tr>
         <td class="tag">Departement:</td>
         <td class="data">
-          <span *ngIf="!showUpdateForm">{{emp.department.depName}}</span>
-          <select *ngIf="showUpdateForm" required class="custom-select" id="inputGroupSelect01">
-            <option *ngFor="let depp of departments" value="{{depp.depId}}">
+          <span *ngIf="!showUpdateForm">{{newEmp.department.depName}}</span>
+          <select *ngIf="showUpdateForm"  class="custom-select" id="inputGroupSelect01"
+                   [(ngModel)]='selectedDep'>
+            <option *ngFor="let depp of departments" value="{{depp.depId}}" selected>
               <span>{{depp.depName}}</span>
             </option>
           </select>
@@ -74,41 +75,43 @@
       <tr>
         <td class="tag">Post:</td>
         <td class="data">
-          <span *ngIf="!showUpdateForm">{{emp.post.postName}}</span>
-          <input *ngIf="showUpdateForm" type="text" value="{{emp.post.postName}}"/>
+          <span *ngIf="!showUpdateForm">{{newEmp.post.postName}}</span>
+          <input [(ngModel)]="newEmp.post.postName" *ngIf="showUpdateForm" type="text"/>
         </td>
       </tr>
     </table>
   </div>
 </div>
-  <div class="main-card mb-3 card" style="margin-top: -25px">
-    <div class="card-header">
-      <i style="color:grey;margin-right: 15px;margin-top: -15px" class="fa fa-map-marker-alt"></i>
-      <h2 class="app-sidebar__heading" style="font-weight: bolder">Employee Addresses
-      </h2>
-      <div style="width: 100%">
-        <div class="buttonsContainer">
-          <i *ngIf="showAddressUpdateForm" (click)="saveAddresses()" class="fa fa-save saveBut"></i>
-          <i *ngIf="!showAddressUpdateForm" (click)="showAddressUpdateForm = true;" class="fa fa-edit editBut"></i>
-          <i *ngIf="showAddressUpdateForm" (click)="showAddressUpdateForm = false;" class="fa fa-undo cancelBut"></i>
-        </div>
+<div class="main-card mb-3 card" style="margin-top: -25px">
+  <div class="card-header">
+    <i style="color:grey;margin-right: 15px;margin-top: -15px" class="fa fa-map-marker-alt"></i>
+    <h2 class="app-sidebar__heading" style="font-weight: bolder">Employee Addresses
+    </h2>
+    <div style="width: 100%">
+      <div class="buttonsContainer">
+        <i *ngIf="showAddressUpdateForm" (click)="saveAddresses()" matTooltip="Save" class="fa fa-save saveBut"></i>
+        <i *ngIf="!showAddressUpdateForm" (click)="showAddressUpdateForm = true;" matTooltip="Edit user addresses" class="fa fa-edit editBut"></i>
+        <i *ngIf="showAddressUpdateForm" (click)="undoAddressesChanges()" matTooltip="Undo changes" class="fa fa-undo cancelBut"></i>
       </div>
     </div>
-    <div card-body>
-  <span style="color:grey" *ngIf="emp.addresses.length == 0">No addresses to show</span>
-  <table style="width: 100%" *ngIf="emp.addresses.length>0" class="align-middle mb-0 table table-borderless table-striped table-hover">
-    <thead>
-    <tr>
-      <th style="width: 60%">Address</th>
-      <th style="width: 20%">City</th>
-      <th style="width: 20%">zip Code</th>
-    </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let add of emp.addresses">
+  </div>
+  <div card-body>
+    <span style="color:grey" *ngIf="emp.addresses.length == 0">No addresses to show</span>
+    <table style="width: 100%" *ngIf="emp.addresses.length>0" class="align-middle mb-0 table table-borderless table-striped table-hover">
+      <thead>
+      <tr>
+        <th style="width: 60%">Address</th>
+        <th style="width: 20%">City</th>
+        <th style="width: 20%">zip Code</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let add of newEmpAddresses">
         <td class="data">
           <div style="height:24px" *ngIf="!showAddressUpdateForm">{{add.streetNumber}} {{add.streetName}}, {{add.governorate}}</div>
-          <input style="height:24px" class="addIn" *ngIf="showAddressUpdateForm" type="text" value="{{add.streetNumber}} {{add.streetName}}, {{add.governorate}}"/>
+          <input style="height:24px;width: 30%" class="addIn" *ngIf="showAddressUpdateForm" type="text" matTooltip="Street number" value="{{add.streetNumber}}"/>
+          <input style="height:24px;width: 30%" class="addIn" *ngIf="showAddressUpdateForm" type="text" matTooltip="Street name" value="{{add.streetName}}"/>
+          <input style="height:24px;width: 30%" class="addIn" *ngIf="showAddressUpdateForm" type="text" matTooltip="Gouvernorate" value="{{add.governorate}}"/>
         </td>
         <td class="data">
           <div style="height:24px" *ngIf="!showAddressUpdateForm">{{add.state}}</div>
@@ -119,7 +122,7 @@
           <input style="height:24px" class="addIn" *ngIf="showAddressUpdateForm" type="text" value="{{add.zipCode}}"/>
         </td>
       </tr>
-    </tbody>
-  </table>
-    </div>
+      </tbody>
+    </table>
+  </div>
 </div>

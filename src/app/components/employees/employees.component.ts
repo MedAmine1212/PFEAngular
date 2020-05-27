@@ -11,6 +11,7 @@ import {AddDepartmentComponent} from '../../dialogs/dialog-forms/add-department/
 import {AddUserComponent} from '../../dialogs/dialog-forms/add-user/add-user.component';
 import {UserService} from '../../services/user/user.service';
 import {EmployeeDetailsComponent} from '../../dialogs/employee-details/employee-details.component';
+import {DeleteUserDialogComponent} from "../../dialogs/delete-user-dialog/delete-user-dialog.component";
 @Component({
   selector: 'app-employees',
   templateUrl: './employees.component.html',
@@ -131,6 +132,20 @@ export class EmployeesComponent implements OnInit {
     node.async = true;
     node.charset = 'utf-8';
     document.getElementsByTagName('head')[0].appendChild(node);
+  }
+
+  openDeleteEmpDialog(emp: any) {
+    const dialogRef = this.dialog.open(DeleteUserDialogComponent, {
+      width: '400px',
+      height: '380',
+      data: emp
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.userService.remove(emp.userId).subscribe();
+        this.reloadData();
+      }
+    });
   }
 }
 
