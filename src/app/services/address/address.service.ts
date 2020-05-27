@@ -26,8 +26,8 @@ export class AddressService {
     return this.http.delete(this.baseUrl + 'delete/' + id , {headers: this.headers });
   }
 
-  modify(addressId: number, address: Address): Observable<any> {
-    return this.http.put( this.baseUrl + 'update/' + addressId, address);
+  modify( address: Address): Observable<any> {
+    return this.http.put( this.baseUrl + 'update' , address);
   }
 
   findById(id): Observable<any> {

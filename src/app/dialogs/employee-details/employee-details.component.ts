@@ -58,8 +58,12 @@ export class EmployeeDetailsComponent implements OnInit {
     }
   }
   saveAddresses() {
+    this.emp.addresses = this.newEmpAddresses;
     for (const add of this.newEmpAddresses) {
-      this.addressService.modify(add.addressId, add).subscribe();
+      add.user = this.emp;
+      this.addressService.modify(add).subscribe(ad=>{
+        console.log(ad);
+      });
     }
     this.showUpdateForm = false;
     this.showAddressUpdateForm = false;
