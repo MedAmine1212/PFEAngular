@@ -31,7 +31,7 @@ import {Router} from '@angular/router';
         ])
       ]
     )
-    ],
+  ],
   templateUrl: './add-user.component.html',
   styleUrls: ['./add-user.component.css']
 })
@@ -86,10 +86,10 @@ export class AddUserComponent implements  OnInit  {
               public dialog: MatDialog,
               private addressService: AddressService,
               private postService: PostService) {
-  if (this.data != null ) {
+    if (this.data != null ) {
       this.user.department = this.data;
-  }
-  console.log(this.user.department);
+    }
+    console.log(this.user.department);
 
 
 
@@ -130,24 +130,24 @@ export class AddUserComponent implements  OnInit  {
   }
 
 
- createFirstFormGroup() {
+  createFirstFormGroup() {
     this.firstFormGroup = this.formBuilder.group({
       department: ['', [Validators.required]]
     });
- }
+  }
   createSecondFormGroup() {
     // tslint:disable-next-line:max-line-length
     const emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const name: RegExp = /^[a-zA-Z]*$/;
     this.secondFormGroup = this.formBuilder.group({
-        firstName: [this.user.firstName, [Validators.required, Validators.pattern(name),  Validators.minLength(3)]],
-        name: [this.user.name, [Validators.required, Validators.pattern(name), Validators.minLength(3)]],
-        email: [this.user.email, [Validators.required, Validators.pattern(emailregex)], this.checkInUseEmail.bind(this)],
-        cin: [this.user.cin, [Validators.required,  Validators.minLength(8), Validators.maxLength(8)], this.checkInUseCin.bind(this)],
-        phoneNumber: [this.user.phone, [Validators.required], this.checkInUsePhoneNumber.bind(this)],
-        birthDate: [this.user.birthDate, [Validators.required]],
-        // gender: [this.user.gender, [Validators.required]],
-        post: [this.user.post, [Validators.required]]
+      firstName: [this.user.firstName, [Validators.required, Validators.pattern(name),  Validators.minLength(3)]],
+      name: [this.user.name, [Validators.required, Validators.pattern(name), Validators.minLength(3)]],
+      email: [this.user.email, [Validators.required, Validators.pattern(emailregex)], this.checkInUseEmail.bind(this)],
+      cin: [this.user.cin, [Validators.required,  Validators.minLength(8), Validators.maxLength(8)], this.checkInUseCin.bind(this)],
+      phoneNumber: [this.user.phone, [Validators.required], this.checkInUsePhoneNumber.bind(this)],
+      birthDate: [this.user.birthDate, [Validators.required]],
+      // gender: [this.user.gender, [Validators.required]],
+      post: [this.user.post, [Validators.required]]
     });
   }
 
@@ -210,11 +210,11 @@ export class AddUserComponent implements  OnInit  {
     const cins = [];
     console.log('dkhal lil cin');
     this.userService.list().subscribe(users => {
-        for (const user of users) {
-          // @ts-ignore
-            cins.push(user.cin);
-        }
-      });
+      for (const user of users) {
+        // @ts-ignore
+        cins.push(user.cin);
+      }
+    });
     console.log(cins);
     return new Observable(observer => {
       setTimeout(() => {
@@ -229,12 +229,12 @@ export class AddUserComponent implements  OnInit  {
     const phoneNumbers = [];
     console.log('dkhal lil num');
     this.userService.list().subscribe(users => {
-        for (const user of users) {
-          // @ts-ignore
-          // console.log(user.name);
-            phoneNumbers.push(user.phone);
-        }
-      });
+      for (const user of users) {
+        // @ts-ignore
+        // console.log(user.name);
+        phoneNumbers.push(user.phone);
+      }
+    });
     console.log(phoneNumbers);
     return new Observable(observer => {
       setTimeout(() => {
@@ -310,7 +310,7 @@ export class AddUserComponent implements  OnInit  {
 
 
   // Get the form controls
-    get email() {
+  get email() {
     return this.secondFormGroup.get('email') as FormControl;
   }
   get cin() {

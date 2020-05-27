@@ -111,7 +111,7 @@
           <div style="height:24px" *ngIf="!showAddressUpdateForm">{{add.streetNumber}} {{add.streetName}}, {{add.governorate}}</div>
           <input style="height:24px;width: 30%" class="addIn" *ngIf="showAddressUpdateForm" type="text" matTooltip="Street number" value="{{add.streetNumber}}"/>
           <input style="height:24px;width: 30%" class="addIn" *ngIf="showAddressUpdateForm" type="text" matTooltip="Street name" value="{{add.streetName}}"/>
-          <input style="height:24px;width: 30%" class="addIn" *ngIf="showAddressUpdateForm" type="text" matTooltip="Gouvernorate" value="{{add.governorate}}"/>
+          <input style="height:24px;width: 30%" class="addIn" *ngIf="showAddressUpdateForm" type="number" matTooltip="Gouvernorate" value="{{add.governorate}}"/>
         </td>
         <td class="data">
           <div style="height:24px" *ngIf="!showAddressUpdateForm">{{add.state}}</div>

@@ -1,389 +1,389 @@
 <form style="color:black;overflow: hidden">
-<mat-horizontal-stepper [linear]="isLinear" #stepper>
+  <mat-horizontal-stepper [linear]="isLinear" #stepper>
 
-  <!-- ************************************  1st stepper  ***************************************-->
-  <mat-step [stepControl]="firstFormGroup"  >
-    <div  class="main-card mb-3 card">
-    <ng-template matStepLabel>Select department</ng-template>
-      <div *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)'" >
-        <div class="card-header">
-        <h1>Department</h1>
-        <hr>
-        </div>
-        <div class="card-body">
-        <select
-          required
-          class="custom-select"
-          id="inputGroupSelect01"
-          (change)="depChange($event)"
-        >
-<!--          [disabled]="router.url === '/RemoteMonotoring/(mainCon:Departements)'"-->
-
-          <option style="color: grey;" disabled [selected]="user.department === null" value="null">Chose a department: </option>
-            <option *ngFor="let depp of departments"  [ngValue]="depp" [selected]=" user.department!== null &&  depp.depName === user.department.depName">
-              <span>{{depp.depName}}</span>
-            </option>
-        </select>
-          <div class="mat-errorContainer">
-        <mat-error *ngIf="!department.valid && department.touched">
-          {{getErrorDepartment()}}
-        </mat-error></div>
-        </div>
-      </div>
-
-      <div *ngIf="router.url === '/RemoteMonotoring/(mainCon:Departements)'">
-        <div class="card-header">
-        <h1>Department</h1>
-        <hr>
-        </div>
-        <div class="card-body">
-        <input  type="text" class="form-control" id="inputDep" value="{{this.user.department.depName}}" disabled="true">
-      </div>
-      </div>
-      </div>
-
-    <div style="float: right">
-      <button type="submit" mat-raised-button color="primary" [disabled]="!firstFormGroup.valid && user.department == null"  matStepperNext >Next</button>
-      <button type="button" (click)="closeThis()" class="btn btn-light" style="margin-left: 20px;">Cancel</button>
-    </div>
-
-  </mat-step>
-
-
-  <!-- ************************************  2nd stepper  ***************************************-->
-
-  <mat-step [stepControl]="secondFormGroup" >
-    <ng-template matStepLabel>Fill out user informations</ng-template>
-    <div  class="main-card mb-3 card">
-      <div class="card-header">
-
-      <h1 *ngIf="user.department != null">Add a user to <b>{{user.department.depName}}</b> department</h1>
-      <h1 *ngIf="user.department == null">User info</h1>
-      <hr>
-      </div>
-      <div class="card-body" style="padding-bottom: 40px">
-      <form [formGroup]="secondFormGroup" >
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <!-- <label for="inputFirstName">firstName*</label> -->
-      <input
-        required
-        class="form-control"
-        id="inputFirstName"
-        placeholder="FirstName"
-        formControlName="firstName"
-        [(ngModel)]="user.firstName">
-      <div class="mat-errorContainer">
-      <mat-error *ngIf="!firstName.valid && firstName.touched ">
-        {{ getErrorFirstName() }}
-      </mat-error></div>
-    </div>
-    <div class="form-group col-md-6">
-      <!-- <label for="inputName">Name*</label> -->
-      <input
-        required
-        class="form-control"
-        id="inputName"
-        placeholder="Name"
-        formControlName="name"
-        [(ngModel)]="user.name">
-      <div class="mat-errorContainer">
-      <mat-error *ngIf="!name.valid && name.touched ">
-        {{ getErrorName() }}
-      </mat-error></div>
-    </div>
-  </div>
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <!-- <label for="inputBirthDate">Birth Date*</label> --><br>
-      <div class="input-group">
-        <input
-          required
-          id="inputBirthDate"
-          class="form-control"
-          placeholder="yyyy-mm-dd"
-          name="dp"
-          ngbDatepicker
-          #d="ngbDatepicker"
-          formControlName="birthDate"
-          (dateSelect)="onDateSelect($event)"
-        >
-        <div class="input-group-append">
-          <button class="btn btn-outline-info" (click)="d.toggle()" type="button">
-            <span class="fas fa-calendar-alt"></span>
-          </button>
-        </div>
-      </div>
-      <div class="mat-errorContainer">
-      <mat-error *ngIf="!birthDate.valid && birthDate.touched ">
-        Birth Date is required !
-      </mat-error></div>
-    </div>
-    <div class="form-group col-md-6">
-      <!-- <label for="inputName">Sexe </label> --><br>
-      <div class="btn-group btn-group-toggle" data-toggle="buttons">
-         <label style="width: 157px" class="btn btn-info active">
-          <input type="radio" (focus)="user.gender = 'male'"  name="options" autocomplete="off" checked> Male
-        </label>
-        <label style="width: 157px" class="btn btn-info">
-          <input type="radio"  name="options" (focus)="user.gender = 'female'" autocomplete="off"> Female
-        </label>
-      </div>
-<!--      <mat-button-toggle-group formControlName="gender" appearance="Legacy" [(ngModel)]="user.gender" name="fontStyle" aria-label="Font Style">-->
-<!--        <mat-button-toggle  value="Male"   >Male</mat-button-toggle>-->
-<!--        <mat-button-toggle  value="Female" >Female</mat-button-toggle>-->
-<!--      </mat-button-toggle-group>-->
-<!--      <div class="mat-errorContainer">-->
-<!--      <mat-error *ngIf="!gender.valid && gender.touched ">-->
-<!--        Sexe is required !-->
-<!--      </mat-error></div>-->
-    </div>
-  </div>
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <!-- <label for="inputCIN">CIN*</label> -->
-      <input
-        required
-        class="form-control"
-        id="inputCIN"
-        placeholder="CIN"
-        formControlName="cin"
-        [(ngModel)]="user.cin"
-      >
-<!--      (input)="checkCin($event)"-->
-      <div class="mat-errorContainer">
-      <mat-error *ngIf="!cin.valid && cin.touched ">
-        {{ getErrorCin() }}
-      </mat-error></div>
-    </div>
-    <div class="form-group col-md-6">
-      <!-- <label for="inputEmail">Email*</label> -->
-      <input
-        required
-        id="inputEmail"
-        name="email"
-        class="form-control"
-        placeholder="Email"
-        formControlName="email"
-        [(ngModel)]="user.email"
-      >
-      <div class="mat-errorContainer">
-      <mat-error *ngIf="!email.valid && email.touched ">
-        {{ getErrorEmail() }}
-      </mat-error></div>
-    </div>
-
-  </div>
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <mat-form-field class="phoneInput"><br><br>
-        <ngx-mat-intl-tel-input required
-          placeholder="Phone number"
-          [preferredCountries]="['tn']"
-          [enablePlaceholder]="true"
-          [enableSearch]="true"
-          name="phone"
-          formControlName="phoneNumber"
-          [(ngModel)]="user.phone"
-        ></ngx-mat-intl-tel-input>
-        <div class="mat-errorContainer">
-        <mat-error *ngIf="!phoneNumber.valid && phoneNumber.touched">
-          {{ getErrorPhoneNumber() }}
-        </mat-error></div>
-      </mat-form-field>
-    </div>
-    <div class="form-group col-md-6">
-          <!-- <label for="inputPost">Post*</label> --><br>
-          <select
-            required
-            class="custom-select"
-            formControlName="post"
-            id="inputPost"
-          >
-            <option style="color: grey;" disabled selected value="null"> Post: </option>
-            <option *ngFor="let post of posts"  [ngValue]="post">
-              <span>{{post.postName}}</span>
-            </option>
-          </select>
-      <div class="mat-errorContainer">
-        <mat-error *ngIf="!post.valid && post.touched ">
-          {{ getErrorPost() }}
-        </mat-error></div>
-    </div>
-    </div>
-    </form>
-      </div>
-    </div>
-      <div style="width:100%">
-    <div style="float: right">
-      <button type="submit" mat-raised-button color="primary" [disabled]="!secondFormGroup.valid" (click)="test()" matStepperNext >Next</button>
-      <button type="button" (click)="closeThis()" class="btn btn-light" style="margin-left: 20px;">Cancel</button>
-    </div>
-      </div>
-</mat-step>
-
-  <!-- ************************************  3rd stepper  ***************************************-->
-
-  <mat-step [stepControl]="thirdFormGroup" >
-    <ng-template matStepLabel>Addresses</ng-template>
-    <form [formGroup]="thirdFormGroup" >
-    <div id="firstAdress">
-    <div  class="main-card mb-3 card">
-      <div class="card-header">
-      <h2>Address</h2>
-      <hr>
-    </div>
-        <div class="card-body">
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <!-- <label for="inputStreetName1">Street Name</label> -->
-        <input
-          required
-          class="form-control"
-          id="inputStreetName1"
-          placeholder="Street Name"
-          formControlName="streetName"
-          [(ngModel)]="address1.streetName">
-        <div class="mat-errorContainer">
-        <mat-error *ngIf="!streetName.valid && streetName.touched ">
-          {{ getErrorStreetName() }}
-        </mat-error></div>
-      </div>
-      <div class="form-group col-md-6">
-        <!-- <label for="inputStreetNumber1">Street number</label> -->
-        <input
-          required
-          class="form-control"
-          id="inputStreetNumber1"
-          placeholder="Street Number"
-          formControlName="streetNumber"
-          [(ngModel)]="address1.streetNumber">
-        <div class="mat-errorContainer">
-        <mat-error *ngIf="!streetNumber.valid && streetNumber.touched ">
-          {{ getErrorStreetNumber() }}
-        </mat-error></div>
-      </div>
-    </div>
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <!-- <label for="inputState1">State</label> -->
-            <input
-              required
-              class="form-control"
-              id="inputState1"
-              placeholder="State (ex: Tunis)"
-              formControlName="state"
-              [(ngModel)]="address1.state">
-            <div class="mat-errorContainer">
-            <mat-error *ngIf="!state.valid && state.touched">
-              {{ getErrorState() }}
-            </mat-error></div>
-          </div>
-          <div class="form-group col-md-4">
-            <!-- <label for="inputGov1">Governorate</label> -->
-            <input
-              required
-              class="form-control"
-              id="inputGov1"
-              placeholder="Governorate"
-              formControlName="gov"
-              [(ngModel)]="address1.governorate">
-            <div class="mat-errorContainer">
-            <mat-error *ngIf="!gov.valid && gov.touched ">
-              {{ getErrorGov() }}
-            </mat-error></div>
-          </div>
-          <div class="form-group col-md-2">
-            <!-- <label for="inputZip1">Zip</label> -->
-            <input
-              required
-              class="form-control"
-              id="inputZip1"
-              placeholder="Zip code"
-              formControlName="zipCode"
-              [(ngModel)]="address1.zipCode">
-            <div class="mat-errorContainer">
-            <mat-error *ngIf="!zipCode.valid && zipCode.touched ">
-              {{ getErrorZipCode() }}
-            </mat-error></div>
-          </div>
-        </div>
-    </div>
-      </div>
-    </div>
-    <div class="note">
-      <button (click)="showOtherAddress=!showOtherAddress"  class="btn btn-info addAddressButton">
-        <span mat-raised-button matTooltip="Add second Address now" *ngIf="!showOtherAddress" class="fas fa-plus-circle"></span>
-        <span mat-raised-button matTooltip="Hide form" *ngIf="showOtherAddress" class="fas fa-minus-circle"></span>
-      </button>
-   <span *ngIf="!showOtherAddress"> Note: Each user can have 2 addresses, you can add another address now, otherwise this user or the employer can add another address later.</span>
-      </div><br>
-    </form>
-    <div style="margin-top: 40px;width: 100%" [@enterAnimation] *ngIf="showOtherAddress" id="secondAddress">
+    <!-- **********************************  1st stepper  ***************************************-->
+    <mat-step [stepControl]="firstFormGroup"  >
       <div  class="main-card mb-3 card">
-        <div class="card-header">      <h2>Address 2</h2>
-      <hr>
-        </div>
-        <div class="card-body">
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <!-- <label for="inputStreetName2">Street Name</label> -->
-          <input
-            [(ngModel)]="address2.streetName"
-            [ngModelOptions]="{standalone: true}"
-            type="text"
-            class="form-control"
-            id="inputStreetName2"
-            placeholder="Street Name">
-        </div>
-        <div class="form-group col-md-6">
-          <!-- <label for="inputStreetNumber2">Street number</label> -->
-          <input
-            [(ngModel)]="address2.streetNumber"
-            [ngModelOptions]="{standalone: true}"
-            required type="text"
-            class="form-control"
-            id="inputStreetNumber2"
-            placeholder="Street Number">
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <!-- <label for="inputState2">State</label> -->
-          <input
-            [(ngModel)]="address2.state"
-            [ngModelOptions]="{standalone: true}"
-            type="text"
-            class="form-control"
-            placeholder="State (ex: Tunis)" id="inputState2">
-        </div>
-        <div class="form-group col-md-4">
-          <!-- <label for="inputGov2">Governorate</label> -->
-          <input
-            [(ngModel)]="address2.governorate"
-            [ngModelOptions]="{standalone: true}"
-            type="text" id="inputGov2" class="form-control" placeholder="Governorate"/>
-        </div>
-        <div class="form-group col-md-2">
-          <!-- <label for="inputZip2">Zip</label> -->
+        <ng-template matStepLabel>Select department</ng-template>
+        <div *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)'" >
+          <div class="card-header">
+            <h1>Department</h1>
+            <hr>
+          </div>
+          <div class="card-body">
+            <select
+              required
+              class="custom-select"
+              id="inputGroupSelect01"
+              (change)="depChange($event)"
+            >
+              <!--          [disabled]="router.url === '/RemoteMonotoring/(mainCon:Departements)'"-->
 
-          <input
-            [(ngModel)]="address2.zipCode"
-            [ngModelOptions]="{standalone: true}"
-            required type="number" class="form-control" id="inputZip2" placeholder="Zip code">
+              <option style="color: grey;" disabled [selected]="user.department === null" value="null">Chose a department: </option>
+              <option *ngFor="let depp of departments"  [ngValue]="depp" [selected]=" user.department!== null &&  depp.depName === user.department.depName">
+                <span>{{depp.depName}}</span>
+              </option>
+            </select>
+            <div class="mat-errorContainer">
+              <mat-error *ngIf="!department.valid && department.touched">
+                {{getErrorDepartment()}}
+              </mat-error></div>
+          </div>
+        </div>
+
+        <div *ngIf="router.url === '/RemoteMonotoring/(mainCon:Departements)'">
+          <div class="card-header">
+            <h1>Department</h1>
+            <hr>
+          </div>
+          <div class="card-body">
+            <input  type="text" class="form-control" id="inputDep" value="{{this.user.department.depName}}" disabled="true">
+          </div>
         </div>
       </div>
-        </div></div>
-    </div>
+
+      <div style="float: right">
+        <button type="submit" mat-raised-button color="primary" [disabled]="!firstFormGroup.valid && user.department == null"  matStepperNext >Next</button>
+        <button type="button" (click)="closeThis()" class="btn btn-light" style="margin-left: 20px;">Cancel</button>
+      </div>
+
+    </mat-step>
+
+
+    <!-- **********************************  2nd stepper  ***************************************-->
+
+    <mat-step [stepControl]="secondFormGroup" >
+      <ng-template matStepLabel>Fill out user informations</ng-template>
+      <div  class="main-card mb-3 card">
+        <div class="card-header">
+
+          <h1 *ngIf="user.department != null">Add a user to <b>{{user.department.depName}}</b> department</h1>
+          <h1 *ngIf="user.department == null">User info</h1>
+          <hr>
+        </div>
+        <div class="card-body" style="padding-bottom: 40px">
+          <form [formGroup]="secondFormGroup" >
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <!-- <label for="inputFirstName">firstName*</label> -->
+                <input
+                  required
+                  class="form-control"
+                  id="inputFirstName"
+                  placeholder="FirstName"
+                  formControlName="firstName"
+                  [(ngModel)]="user.firstName">
+                <div class="mat-errorContainer">
+                  <mat-error *ngIf="!firstName.valid && firstName.touched ">
+                    {{ getErrorFirstName() }}
+                  </mat-error></div>
+              </div>
+              <div class="form-group col-md-6">
+                <!-- <label for="inputName">Name*</label> -->
+                <input
+                  required
+                  class="form-control"
+                  id="inputName"
+                  placeholder="Name"
+                  formControlName="name"
+                  [(ngModel)]="user.name">
+                <div class="mat-errorContainer">
+                  <mat-error *ngIf="!name.valid && name.touched ">
+                    {{ getErrorName() }}
+                  </mat-error></div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <!-- <label for="inputBirthDate">Birth Date*</label> --><br>
+                <div class="input-group">
+                  <input
+                    required
+                    id="inputBirthDate"
+                    class="form-control"
+                    placeholder="yyyy-mm-dd"
+                    name="dp"
+                    ngbDatepicker
+                    #d="ngbDatepicker"
+                    formControlName="birthDate"
+                    (dateSelect)="onDateSelect($event)"
+                  >
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-info" (click)="d.toggle()" type="button">
+                      <span class="fas fa-calendar-alt"></span>
+                    </button>
+                  </div>
+                </div>
+                <div class="mat-errorContainer">
+                  <mat-error *ngIf="!birthDate.valid && birthDate.touched ">
+                    Birth Date is required !
+                  </mat-error></div>
+              </div>
+              <div class="form-group col-md-6">
+                <!-- <label for="inputName">Sexe </label> --><br>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                  <label style="width: 157px" class="btn btn-info active">
+                    <input type="radio" (focus)="user.gender = 'male'"  name="options" autocomplete="off" checked> Male
+                  </label>
+                  <label style="width: 157px" class="btn btn-info">
+                    <input type="radio"  name="options" (focus)="user.gender = 'female'" autocomplete="off"> Female
+                  </label>
+                </div>
+                <!--      <mat-button-toggle-group formControlName="gender" appearance="Legacy" [(ngModel)]="user.gender" name="fontStyle" aria-label="Font Style">-->
+                <!--        <mat-button-toggle  value="Male"   >Male</mat-button-toggle>-->
+                <!--        <mat-button-toggle  value="Female" >Female</mat-button-toggle>-->
+                <!--      </mat-button-toggle-group>-->
+                <!--      <div class="mat-errorContainer">-->
+                <!--      <mat-error *ngIf="!gender.valid && gender.touched ">-->
+                <!--        Sexe is required !-->
+                <!--      </mat-error></div>-->
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <!-- <label for="inputCIN">CIN*</label> -->
+                <input
+                  required
+                  class="form-control"
+                  id="inputCIN"
+                  placeholder="CIN"
+                  formControlName="cin"
+                  [(ngModel)]="user.cin"
+                >
+                <!--      (input)="checkCin($event)"-->
+                <div class="mat-errorContainer">
+                  <mat-error *ngIf="!cin.valid && cin.touched ">
+                    {{ getErrorCin() }}
+                  </mat-error></div>
+              </div>
+              <div class="form-group col-md-6">
+                <!-- <label for="inputEmail">Email*</label> -->
+                <input
+                  required
+                  id="inputEmail"
+                  name="email"
+                  class="form-control"
+                  placeholder="Email"
+                  formControlName="email"
+                  [(ngModel)]="user.email"
+                >
+                <div class="mat-errorContainer">
+                  <mat-error *ngIf="!email.valid && email.touched ">
+                    {{ getErrorEmail() }}
+                  </mat-error></div>
+              </div>
+
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <mat-form-field class="phoneInput"><br><br>
+                  <ngx-mat-intl-tel-input required
+                                          placeholder="Phone number"
+                                          [preferredCountries]="['tn']"
+                                          [enablePlaceholder]="true"
+                                          [enableSearch]="true"
+                                          name="phone"
+                                          formControlName="phoneNumber"
+                                          [(ngModel)]="user.phone"
+                  ></ngx-mat-intl-tel-input>
+                  <div class="mat-errorContainer">
+                    <mat-error *ngIf="!phoneNumber.valid && phoneNumber.touched">
+                      {{ getErrorPhoneNumber() }}
+                    </mat-error></div>
+                </mat-form-field>
+              </div>
+              <div class="form-group col-md-6">
+                <!-- <label for="inputPost">Post*</label> --><br>
+                <select
+                  required
+                  class="custom-select"
+                  formControlName="post"
+                  id="inputPost"
+                >
+                  <option style="color: grey;" disabled selected value="null"> Post: </option>
+                  <option *ngFor="let post of posts"  [ngValue]="post">
+                    <span>{{post.postName}}</span>
+                  </option>
+                </select>
+                <div class="mat-errorContainer">
+                  <mat-error *ngIf="!post.valid && post.touched ">
+                    {{ getErrorPost() }}
+                  </mat-error></div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div style="width:100%">
+        <div style="float: right">
+          <button type="submit" mat-raised-button color="primary" [disabled]="!secondFormGroup.valid" (click)="test()" matStepperNext >Next</button>
+          <button type="button" (click)="closeThis()" class="btn btn-light" style="margin-left: 20px;">Cancel</button>
+        </div>
+      </div>
+    </mat-step>
+
+    <!-- **********************************  3rd stepper  ***************************************-->
+
+    <mat-step [stepControl]="thirdFormGroup" >
+      <ng-template matStepLabel>Addresses</ng-template>
+      <form [formGroup]="thirdFormGroup" >
+        <div id="firstAdress">
+          <div  class="main-card mb-3 card">
+            <div class="card-header">
+              <h2>Address</h2>
+              <hr>
+            </div>
+            <div class="card-body">
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <!-- <label for="inputStreetName1">Street Name</label> -->
+                  <input
+                    required
+                    class="form-control"
+                    id="inputStreetName1"
+                    placeholder="Street Name"
+                    formControlName="streetName"
+                    [(ngModel)]="address1.streetName">
+                  <div class="mat-errorContainer">
+                    <mat-error *ngIf="!streetName.valid && streetName.touched ">
+                      {{ getErrorStreetName() }}
+                    </mat-error></div>
+                </div>
+                <div class="form-group col-md-6">
+                  <!-- <label for="inputStreetNumber1">Street number</label> -->
+                  <input
+                    required
+                    class="form-control"
+                    id="inputStreetNumber1"
+                    placeholder="Street Number"
+                    formControlName="streetNumber"
+                    [(ngModel)]="address1.streetNumber">
+                  <div class="mat-errorContainer">
+                    <mat-error *ngIf="!streetNumber.valid && streetNumber.touched ">
+                      {{ getErrorStreetNumber() }}
+                    </mat-error></div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <!-- <label for="inputState1">State</label> -->
+                  <input
+                    required
+                    class="form-control"
+                    id="inputState1"
+                    placeholder="State (ex: Tunis)"
+                    formControlName="state"
+                    [(ngModel)]="address1.state">
+                  <div class="mat-errorContainer">
+                    <mat-error *ngIf="!state.valid && state.touched">
+                      {{ getErrorState() }}
+                    </mat-error></div>
+                </div>
+                <div class="form-group col-md-4">
+                  <!-- <label for="inputGov1">Governorate</label> -->
+                  <input
+                    required
+                    class="form-control"
+                    id="inputGov1"
+                    placeholder="Governorate"
+                    formControlName="gov"
+                    [(ngModel)]="address1.governorate">
+                  <div class="mat-errorContainer">
+                    <mat-error *ngIf="!gov.valid && gov.touched ">
+                      {{ getErrorGov() }}
+                    </mat-error></div>
+                </div>
+                <div class="form-group col-md-2">
+                  <!-- <label for="inputZip1">Zip</label> -->
+                  <input
+                    required
+                    class="form-control"
+                    id="inputZip1"
+                    placeholder="Zip code"
+                    formControlName="zipCode"
+                    [(ngModel)]="address1.zipCode">
+                  <div class="mat-errorContainer">
+                    <mat-error *ngIf="!zipCode.valid && zipCode.touched ">
+                      {{ getErrorZipCode() }}
+                    </mat-error></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="note">
+          <button (click)="showOtherAddress=!showOtherAddress"  class="btn btn-info addAddressButton">
+            <span mat-raised-button matTooltip="Add second Address now" *ngIf="!showOtherAddress" class="fas fa-plus-circle"></span>
+            <span mat-raised-button matTooltip="Hide form" *ngIf="showOtherAddress" class="fas fa-minus-circle"></span>
+          </button>
+          <span *ngIf="!showOtherAddress"> Note: Each user can have 2 addresses, you can add another address now, otherwise this user or the employer can add another address later.</span>
+        </div><br>
+      </form>
+      <div style="margin-top: 40px;width: 100%" [@enterAnimation] *ngIf="showOtherAddress" id="secondAddress">
+        <div  class="main-card mb-3 card">
+          <div class="card-header">      <h2>Address 2</h2>
+            <hr>
+          </div>
+          <div class="card-body">
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <!-- <label for="inputStreetName2">Street Name</label> -->
+                <input
+                  [(ngModel)]="address2.streetName"
+                  [ngModelOptions]="{standalone: true}"
+                  type="text"
+                  class="form-control"
+                  id="inputStreetName2"
+                  placeholder="Street Name">
+              </div>
+              <div class="form-group col-md-6">
+                <!-- <label for="inputStreetNumber2">Street number</label> -->
+                <input
+                  [(ngModel)]="address2.streetNumber"
+                  [ngModelOptions]="{standalone: true}"
+                  required type="text"
+                  class="form-control"
+                  id="inputStreetNumber2"
+                  placeholder="Street Number">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <!-- <label for="inputState2">State</label> -->
+                <input
+                  [(ngModel)]="address2.state"
+                  [ngModelOptions]="{standalone: true}"
+                  type="text"
+                  class="form-control"
+                  placeholder="State (ex: Tunis)" id="inputState2">
+              </div>
+              <div class="form-group col-md-4">
+                <!-- <label for="inputGov2">Governorate</label> -->
+                <input
+                  [(ngModel)]="address2.governorate"
+                  [ngModelOptions]="{standalone: true}"
+                  type="text" id="inputGov2" class="form-control" placeholder="Governorate"/>
+              </div>
+              <div class="form-group col-md-2">
+                <!-- <label for="inputZip2">Zip</label> -->
+
+                <input
+                  [(ngModel)]="address2.zipCode"
+                  [ngModelOptions]="{standalone: true}"
+                  required type="number" class="form-control" id="inputZip2" placeholder="Zip code">
+              </div>
+            </div>
+          </div></div>
+      </div>
 
       <div class="buttons">
         <div style="float: right;">
-        <button type="submit" [disabled]="!thirdFormGroup.valid" class="btn btn-primary"  (click)="addUser()">Add user</button>
-        <button type="button" (click)="closeThis()" class="btn btn-light" style="margin-left: 20px;">Cancel</button>
-      </div>
+          <button type="submit" [disabled]="!thirdFormGroup.valid" class="btn btn-primary"  (click)="addUser()">Add user</button>
+          <button type="button" (click)="closeThis()" class="btn btn-light" style="margin-left: 20px;">Cancel</button>
+        </div>
       </div>
 
-  </mat-step>
-</mat-horizontal-stepper>
+    </mat-step>
+  </mat-horizontal-stepper>
 
 </form>
