@@ -40,6 +40,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatSelectModule} from '@angular/material/select';
 import {DialogComponent} from './dialogs/dialog.component';
+import {EmployeeDetailsComponent} from './dialogs/employee-details/employee-details.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,8 @@ import {DialogComponent} from './dialogs/dialog.component';
     AddDepartmentComponent,
     DeleteDepDialogComponent,
     SidenavComponent,
+    DialogComponent,
+    EmployeeDetailsComponent
   ],
   imports: [
     BrowserModule,

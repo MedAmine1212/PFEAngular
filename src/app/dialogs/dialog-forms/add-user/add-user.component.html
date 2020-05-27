@@ -5,7 +5,7 @@
   <mat-step [stepControl]="firstFormGroup"  >
     <div  class="main-card mb-3 card">
     <ng-template matStepLabel>Select department</ng-template>
-      <div *ngIf="user.department===null" >
+      <div *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)'" >
         <div class="card-header">
         <h1>Department</h1>
         <hr>
@@ -24,13 +24,14 @@
               <span>{{depp.depName}}</span>
             </option>
         </select>
+          <div class="mat-errorContainer">
         <mat-error *ngIf="!department.valid && department.touched">
           {{getErrorDepartment()}}
-        </mat-error>
+        </mat-error></div>
         </div>
       </div>
 
-      <div *ngIf="user.department!=null" class="form-group col-md-6">
+      <div *ngIf="router.url === '/RemoteMonotoring/(mainCon:Departements)'">
         <div class="card-header">
         <h1>Department</h1>
         <hr>
@@ -72,9 +73,10 @@
         placeholder="FirstName"
         formControlName="firstName"
         [(ngModel)]="user.firstName">
+      <div class="mat-errorContainer">
       <mat-error *ngIf="!firstName.valid && firstName.touched ">
         {{ getErrorFirstName() }}
-      </mat-error>
+      </mat-error></div>
     </div>
     <div class="form-group col-md-6">
       <label for="inputName">Name*</label>
@@ -85,9 +87,10 @@
         placeholder="Name"
         formControlName="name"
         [(ngModel)]="user.name">
+      <div class="mat-errorContainer">
       <mat-error *ngIf="!name.valid && name.touched ">
         {{ getErrorName() }}
-      </mat-error>
+      </mat-error></div>
     </div>
   </div>
   <div class="form-row">
@@ -111,9 +114,10 @@
           </button>
         </div>
       </div>
+      <div class="mat-errorContainer">
       <mat-error *ngIf="!birthDate.valid && birthDate.touched ">
         Birth Date is required !
-      </mat-error>
+      </mat-error></div>
     </div>
     <div class="form-group col-md-6">
       <label for="inputName">Sexe </label><br>
@@ -129,9 +133,10 @@
         <mat-button-toggle  value="Male"   >Male</mat-button-toggle>
         <mat-button-toggle  value="Female" >Female</mat-button-toggle>
       </mat-button-toggle-group>
+      <div class="mat-errorContainer">
       <mat-error *ngIf="!gender.valid && gender.touched ">
         Sexe is required !
-      </mat-error>
+      </mat-error></div>
     </div>
   </div>
   <div class="form-row">
@@ -146,9 +151,10 @@
         [(ngModel)]="user.cin"
       >
 <!--      (input)="checkCin($event)"-->
+      <div class="mat-errorContainer">
       <mat-error *ngIf="!cin.valid && cin.touched ">
         {{ getErrorCin() }}
-      </mat-error>
+      </mat-error></div>
     </div>
     <div class="form-group col-md-6">
       <label for="inputEmail">Email*</label>
@@ -161,9 +167,10 @@
         formControlName="email"
         [(ngModel)]="user.email"
       >
+      <div class="mat-errorContainer">
       <mat-error *ngIf="!email.valid && email.touched ">
         {{ getErrorEmail() }}
-      </mat-error>
+      </mat-error></div>
     </div>
 
   </div>
@@ -179,9 +186,10 @@
           formControlName="phoneNumber"
           [(ngModel)]="user.phone"
         ></ngx-mat-intl-tel-input>
+        <div class="mat-errorContainer">
         <mat-error *ngIf="!phoneNumber.valid && phoneNumber.touched">
           {{ getErrorPhoneNumber() }}
-        </mat-error>
+        </mat-error></div>
       </mat-form-field>
     </div>
     <div class="form-group col-md-6">
@@ -191,25 +199,27 @@
             class="custom-select"
             formControlName="post"
             id="inputPost"
-            style="width: 350px"
           >
             <option style="color: grey;" disabled selected value="null"> Post: </option>
             <option *ngFor="let post of posts"  [ngValue]="post">
               <span>{{post.postName}}</span>
             </option>
           </select>
+      <div class="mat-errorContainer">
         <mat-error *ngIf="!post.valid && post.touched ">
           {{ getErrorPost() }}
-        </mat-error>
+        </mat-error></div>
     </div>
     </div>
     </form>
       </div>
+    </div>
+      <div style="width:100%">
     <div style="float: right">
       <button type="submit" mat-raised-button color="primary" [disabled]="!secondFormGroup.valid" (click)="test()" matStepperNext >Next</button>
       <button type="button" (click)="closeThis()" class="btn btn-light" style="margin-left: 20px;">Cancel</button>
     </div>
-    </div>
+      </div>
 </mat-step>
 
   <!-- ************************************  3rd stepper  ***************************************-->
@@ -234,9 +244,10 @@
           placeholder="Street Name"
           formControlName="streetName"
           [(ngModel)]="address1.streetName">
+        <div class="mat-errorContainer">
         <mat-error *ngIf="!streetName.valid && streetName.touched ">
           {{ getErrorStreetName() }}
-        </mat-error>
+        </mat-error></div>
       </div>
       <div class="form-group col-md-6">
         <label for="inputStreetNumber1">Street number</label>
@@ -247,9 +258,10 @@
           placeholder="Street Number"
           formControlName="streetNumber"
           [(ngModel)]="address1.streetNumber">
+        <div class="mat-errorContainer">
         <mat-error *ngIf="!streetNumber.valid && streetNumber.touched ">
           {{ getErrorStreetNumber() }}
-        </mat-error>
+        </mat-error></div>
       </div>
     </div>
         <div class="form-row">
@@ -262,9 +274,10 @@
               placeholder="State (ex: Tunis)"
               formControlName="state"
               [(ngModel)]="address1.state">
+            <div class="mat-errorContainer">
             <mat-error *ngIf="!state.valid && state.touched">
               {{ getErrorState() }}
-            </mat-error>
+            </mat-error></div>
           </div>
           <div class="form-group col-md-4">
             <label for="inputGov1">Governorate</label>
@@ -275,9 +288,10 @@
               placeholder="Governorate"
               formControlName="gov"
               [(ngModel)]="address1.governorate">
+            <div class="mat-errorContainer">
             <mat-error *ngIf="!gov.valid && gov.touched ">
               {{ getErrorGov() }}
-            </mat-error>
+            </mat-error></div>
           </div>
           <div class="form-group col-md-2">
             <label for="inputZip1">Zip</label>
@@ -288,9 +302,10 @@
               placeholder="Zip code"
               formControlName="zipCode"
               [(ngModel)]="address1.zipCode">
+            <div class="mat-errorContainer">
             <mat-error *ngIf="!zipCode.valid && zipCode.touched ">
               {{ getErrorZipCode() }}
-            </mat-error>
+            </mat-error></div>
           </div>
         </div>
     </div>

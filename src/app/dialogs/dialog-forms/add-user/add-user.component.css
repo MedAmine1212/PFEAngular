@@ -36,3 +36,6 @@ input[type=number] {
   margin-left: 40px;
   border-radius:1000px;
 }
+.mat-errorContainer{
+  height: 10px;
+}
