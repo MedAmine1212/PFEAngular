@@ -1,21 +1,23 @@
-import {AfterViewInit, Component, Inject, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, Input, OnInit, Output, ViewChild, ViewEncapsulation} from '@angular/core';
 import {Department} from '../../../models/Department';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {DepartmentService} from '../../../services/departement/department.service';
 import {MatStepper} from '@angular/material/stepper';
 import {animate, style, transition, trigger} from '@angular/animations';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {DeleteDepDialogComponent} from '../../delete-dep-dialog/delete-dep-dialog.component';
-import {User} from '../../../models/User';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {UserService} from '../../../services/user/user.service';
 import {Observable} from 'rxjs';
 import {Post} from '../../../models/Post';
 import {PostService} from '../../../services/post/post.service';
+import {AddressService} from '../../../services/address/address.service';
+import {Address} from '../../../models/Address';
+import {User} from '../../../models/User';
+import {NgbDate} from '@ng-bootstrap/ng-bootstrap';
+import {DialogComponent} from '../../dialog.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-add-user',
-  encapsulation: ViewEncapsulation.None,
-
   animations: [
     trigger(
       'enterAnimation', [
@@ -34,23 +36,20 @@ import {PostService} from '../../../services/post/post.service';
   styleUrls: ['./add-user.component.css']
 })
 export class AddUserComponent implements AfterViewInit, OnInit  {
+  dialogComponent: MatDialogRef<DialogComponent>;
   @ViewChild('stepper') stepper: MatStepper;
   isLinear = false;
-  cin: string;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
-  departments: Department[];
-   posts: Post[] = [];
-  firstPanelOpenState: boolean;
-  secondPanelOpenState: boolean;
-  dep: Department;
+  departments: Department[] = [];
+  posts: Post[] = [];
   showOtherAddress: boolean;
   user: User = {
-    CIN: '',
+    cin: '',
     addresses: [],
-    birthDay: undefined,
-    department: undefined,
+    birthDate: undefined,
+    department: null,
     email: '',
     firstName: '',
     gender: '',
@@ -58,51 +57,88 @@ export class AddUserComponent implements AfterViewInit, OnInit  {
     name: '',
     phone: '',
     post: undefined,
-    userId: 0
+    userId: null
+  };
+  address1: Address = {
+    addressId: null,
+    governorate: '',
+    state: '',
+    streetName: '',
+    streetNumber: '',
+    user: undefined,
+    zipCode: null
+  };
+  address2: Address = {
+    addressId: null,
+    governorate: '',
+    state: '',
+    streetName: '',
+    streetNumber: '',
+    user: undefined,
+    zipCode: null
   };
   constructor(public dialogRef: MatDialogRef<AddUserComponent>,
               @Inject(MAT_DIALOG_DATA) public data: Department,
-              private formBuilder: FormBuilder, private departmentService: DepartmentService,
+              private formBuilder: FormBuilder,
+              private departmentService: DepartmentService,
               private userService: UserService,
+              public router: Router,
+              public dialog: MatDialog,
+              private addressService: AddressService,
               private postService: PostService) {
   if (this.data != null ) {
-      this.dep = null;
-      this.dep = this.data;
+      this.user.department = this.data;
   }
+  console.log(this.user.department);
+
+
+
+
+
+
   }
 
   ngOnInit(): void {
 
-    this.createSecondFormGroup();
-    this.thirdFormGroup = this.formBuilder.group({
-      secondCtrl: ['', Validators.required]
-    });
+    if (this.user.department !== null) {
 
+      setTimeout(() => {
+        this.stepper.selectedIndex = 1;
+      }, 1000);
+    }
+    this.createFirstFormGroup();
+    this.createSecondFormGroup();
+    this.createThirdFormGroup();
     this.postService.list().subscribe(posts => {
       for (const post of posts) {
         this.posts.push(post);
       }
-      console.table(this.posts);
     });
+    this.departmentService.list().subscribe(r => {
+      this.departments = r;
+      for (const depp of this.departments) {
+        if (depp === this.user.department) {
+          console.log(depp);
+        }
+      }
+    });
+
+
+
+
+
   }
   ngAfterViewInit(): void {
-    this.showOtherAddress = false;
-    this.firstPanelOpenState = true;
-    this.secondPanelOpenState = false;
-    this.departments = [];
-    // if (this.dep == null) {
-    // this.departmentService.list().subscribe(r => {
-    //   this.departments = r;
-    // });
-    // } else {
-    //   console.log(this.stepper._steps);
-    //   this.stepper.selectedIndex = 1;
-    // }
 
 
 
   }
 
+ createFirstFormGroup() {
+    this.firstFormGroup = this.formBuilder.group({
+      department: [this.user.department, [Validators.required]]
+    });
+ }
   createSecondFormGroup() {
     // tslint:disable-next-line:max-line-length
     const emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -111,11 +147,21 @@ export class AddUserComponent implements AfterViewInit, OnInit  {
         firstName: [this.user.firstName, [Validators.required, Validators.pattern(name),  Validators.minLength(3)]],
         name: [this.user.name, [Validators.required, Validators.pattern(name), Validators.minLength(3)]],
         email: [this.user.email, [Validators.required, Validators.pattern(emailregex)], this.checkInUseEmail.bind(this)],
-        cin: [this.user.CIN, [Validators.required,  Validators.minLength(8), Validators.maxLength(8)], this.checkInUseCin.bind(this)],
+        cin: [this.user.cin, [Validators.required,  Validators.minLength(8), Validators.maxLength(8)], this.checkInUseCin.bind(this)],
         phoneNumber: [this.user.phone, [Validators.required], this.checkInUsePhoneNumber.bind(this)],
-        birthDate: [this.user.birthDay, [Validators.required]],
+        birthDate: [this.user.birthDate, [Validators.required]],
         gender: [this.user.gender, [Validators.required]],
         post: [this.user.post, [Validators.required]]
+    });
+  }
+
+  createThirdFormGroup() {
+    this.thirdFormGroup = this.formBuilder.group({
+      streetName: [this.address1.streetName, Validators.required],
+      streetNumber: [this.address1.streetNumber, Validators.required],
+      state: [this.address1.state, Validators.required],
+      zipCode: [this.address1.zipCode, Validators.required],
+      gov: [this.address1.governorate, Validators.required]
     });
   }
   closeThis() {
@@ -123,6 +169,25 @@ export class AddUserComponent implements AfterViewInit, OnInit  {
   }
 
   addUser() {
+    this.user.post = this.secondFormGroup.controls.post.value;
+
+    this.user.addresses.push(this.address1);
+    if (this.address2.streetName !== '') {
+      this.user.addresses.push(this.address2);
+    }
+
+    console.log(this.user);
+    this.userService.add(this.user).subscribe(user => {
+      console.log(user);
+    });
+    this.dialogComponent = this.dialog.open(DialogComponent, {
+      width: '400px',
+      data : 'User added successfully ! '
+    });
+    this.dialogComponent.afterClosed().subscribe(() =>
+      this.closeThis()
+    );
+
   }
 
   // CHECK IN USE
@@ -141,7 +206,7 @@ export class AddUserComponent implements AfterViewInit, OnInit  {
         const result = (emails.indexOf(control.value) !== -1) ? { alreadyInUse: true } : null;
         observer.next(result);
         observer.complete();
-      }, 4000);
+      }, 1000);
     });
   }
   checkInUseCin(control) {
@@ -160,7 +225,7 @@ export class AddUserComponent implements AfterViewInit, OnInit  {
         const result = (cins.indexOf(control.value) !== -1) ? { alreadyInUse: true } : null;
         observer.next(result);
         observer.complete();
-      }, 4000);
+      }, 1000);
     });
   }
   checkInUsePhoneNumber(control) {
@@ -170,7 +235,8 @@ export class AddUserComponent implements AfterViewInit, OnInit  {
     this.userService.list().subscribe(users => {
         for (const user of users) {
           // @ts-ignore
-            phoneNumbers.push(user.phoneNumber);
+          // console.log(user.name);
+            phoneNumbers.push(user.phone);
         }
       });
     console.log(phoneNumbers);
@@ -179,7 +245,7 @@ export class AddUserComponent implements AfterViewInit, OnInit  {
         const result = (phoneNumbers.indexOf(control.value) !== -1) ? { alreadyInUse: true } : null;
         observer.next(result);
         observer.complete();
-      }, 4000);
+      }, 1000);
     });
   }
 
@@ -224,10 +290,31 @@ export class AddUserComponent implements AfterViewInit, OnInit  {
   getErrorPost() {
     return 'Post required ' ;
   }
+  getErrorStreetName() {
+    return 'street name required ' ;
+  }
+  getErrorStreetNumber() {
+    return 'street number required ' ;
+  }
+  getErrorState() {
+    return 'state required ' ;
+  }
+  getErrorGov() {
+    return 'Governorate required ' ;
+  }
+  getErrorZipCode() {
+    return 'Zip code required ' ;
+  }
+  getErrorDepartment() {
+    return 'Department  required ' ;
+  }
+
+
 
 
 
   // Get the form controls
+
   get email() {
     return this.secondFormGroup.get('email') as FormControl;
   }
@@ -252,6 +339,24 @@ export class AddUserComponent implements AfterViewInit, OnInit  {
   get post() {
     return this.secondFormGroup.get('post') as FormControl;
   }
+  get streetName() {
+    return this.thirdFormGroup.get('streetName') as FormControl;
+  }
+  get streetNumber() {
+    return this.thirdFormGroup.get('streetNumber') as FormControl;
+  }
+  get state() {
+    return this.thirdFormGroup.get('state') as FormControl;
+  }
+  get zipCode() {
+    return this.thirdFormGroup.get('zipCode') as FormControl;
+  }
+  get gov() {
+    return this.thirdFormGroup.get('gov') as FormControl;
+  }
+  get department() {
+    return this.firstFormGroup.get('department') as FormControl;
+  }
 
   test() {
     const controls = this.secondFormGroup.controls;
@@ -265,4 +370,24 @@ export class AddUserComponent implements AfterViewInit, OnInit  {
   teste() {
     console.log(this.user.post);
   }
+
+
+  onDateSelect(event) {
+    const year = event.year;
+    const month = event.month <= 9 ? '0' + event.month : event.month;
+    const day = event.day <= 9 ? '0' + event.day : event.day;
+    const finalDate = year + '-' + month + '-' + day;
+    this.user.birthDate = finalDate;
+  }
+
+  depChange(event) {
+    this.firstFormGroup.controls.department.setErrors(null);
+    for (const dep of this.departments) {
+      if(event.target.value === dep.depName){
+        this.user.department = dep;
+      }
+    }
+    console.log(this.user.department);
+  }
+
 }

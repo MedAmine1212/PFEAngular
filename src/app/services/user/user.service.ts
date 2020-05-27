@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {User} from '../../Models/User';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {User} from "../../models/User";
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,7 @@ export class UserService {
   }
 
   add(user: User) {
-    return this.http.post(this.baseurl + 'findAll', user, );
+    return this.http.post(this.baseurl + 'add', user );
   }
 
   list(): Observable<any> {

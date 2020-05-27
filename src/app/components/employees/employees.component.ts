@@ -26,7 +26,6 @@ export class EmployeesComponent implements OnInit {
   showAddDep: boolean;
   showForm: boolean;
   showUpdateDep: boolean;
-  private loadAPI: Promise<unknown>;
 // tslint:disable-next-line:max-line-length
   constructor(public dialog: MatDialog, public router: Router, private departmentService: DepartmentService, private userService: UserService) {
   }
@@ -40,6 +39,7 @@ export class EmployeesComponent implements OnInit {
     this.thisIsEmp = true;
     this.users = [];
     this.reloadData();
+
   }
   setDepartment(dep: Department) {
     this.users = [];
@@ -89,7 +89,7 @@ export class EmployeesComponent implements OnInit {
   showUpdateDepDialog() {
     const dialogRef = this.dialog.open(AddDepartmentComponent, {
       width: '800px',
-      height: '600px',
+      height: '400px',
       data: [this.clickedDep, 2]
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -103,6 +103,8 @@ export class EmployeesComponent implements OnInit {
       data: this.clickedDep
     });
     dialogRef.afterClosed().subscribe(result => {
+      // this.router.navigate('(mainCon:Departements)');
+
     });
   }
 

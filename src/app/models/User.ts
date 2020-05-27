@@ -3,11 +3,11 @@ import {Address} from './Address';
 import {Post} from './Post';
 export class User {
   userId: number;
-  CIN: string;
+  cin: string;
   name: string;
   firstName: string;
   gender: string;
-  birthDay: Date;
+  birthDate: string;
   hireDay: Date;
   phone: string;
   email: string;

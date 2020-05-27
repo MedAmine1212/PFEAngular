@@ -12,7 +12,7 @@ hr{
 }
 .buttons{
   position: absolute;
-  bottom: 65px;
+  /*bottom: 50px;*/
   left:60%;
   margin-top: 30px;
 }
