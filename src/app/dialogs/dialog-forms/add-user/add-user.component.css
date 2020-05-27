@@ -1,9 +1,4 @@
-.my-select-panel-class {
-  width:20px;
-  max-width:20px;
-  background-color: red;
-  font-size: 10px;
-}
+
 h1{
   color: black;
 }
@@ -11,10 +6,10 @@ hr{
   border:0.5px solid black;
 }
 .buttons{
-  position: absolute;
-  /*bottom: 50px;*/
-  left:60%;
-  margin-top: 30px;
+  margin-bottom: -90px;
+  margin-top: 5px;
+  padding: 0;
+  width: 100%;
 }
 .phoneInput{
   outline: none;

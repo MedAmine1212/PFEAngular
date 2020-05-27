@@ -1,0 +1,45 @@
+.tag{
+  height:28px;
+  padding-right: 90px;
+  font-weight: bolder;
+}
+.data{
+  height:28px;
+}
+table{
+  font-size: 13px;
+}
+.buttonsContainer{
+  font-size: 25px;
+  margin-top: -12px;
+  float:right;
+}
+i{
+  cursor: pointer;
+}
+.saveBut{
+  margin-right: 20px;
+}
+.saveBut:hover{
+  color:rgb(52,248,61);
+}
+.editBut:hover{
+  color:rgb(82,148,226);
+}
+.cancelBut:hover{
+  color:red;
+}
+input, select{
+  border: none;
+  border-bottom: 1px solid rgb(82,148,226);
+  height:25px;
+  font-size: 13px;
+  width: 300px;
+}
+select{
+font-size: 13px;
+padding: 0;
+}
+.addIn{
+  width: 100%;
+}

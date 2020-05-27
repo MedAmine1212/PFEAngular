@@ -8,13 +8,8 @@ import {RemoteMonotoringComponent} from '../remote-monotoring/remote-monotoring.
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
-  showLight: boolean;
-  showDark: boolean;
-
   constructor() { }
 
   ngOnInit(): void {
-    this.showLight = true;
-    this.showDark = false;
   }
 }

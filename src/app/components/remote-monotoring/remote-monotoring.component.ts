@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {Department} from '../../models/Department';
 import {EmployeesComponent} from '../employees/employees.component';
+import {DepartmentsComponent} from '../departments/departments.component';
 @Component({
   selector: 'app-remmote-monotoring',
   animations: [
@@ -42,6 +43,7 @@ export class RemoteMonotoringComponent implements OnInit {
   constructor(public router: Router) { }
   time = new Date();
   @ViewChild(EmployeesComponent) employeesComponent: EmployeesComponent;
+  @ViewChild(DepartmentsComponent) departmentComponent: DepartmentsComponent;
   ngOnInit() {
 
     setInterval(() => {
@@ -51,11 +53,14 @@ export class RemoteMonotoringComponent implements OnInit {
 
   setClickedDep(dep: Department) {
     setTimeout (() => {
-    if (dep) {
-      console.log(this.employeesComponent);
+    if (dep && this.employeesComponent != null) {
       this.clickedDeparment = dep;
       this.employeesComponent.setDepartment(dep);
     }
     }, 1);
+  }
+
+  reloadDep($event: any) {
+    this.departmentComponent.reloadData();
   }
 }

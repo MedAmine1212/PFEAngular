@@ -3,12 +3,14 @@
 
   <!-- ************************************  1st stepper  ***************************************-->
   <mat-step [stepControl]="firstFormGroup"  >
+    <div  class="main-card mb-3 card">
     <ng-template matStepLabel>Select department</ng-template>
-  <form >
-    <div class="form-row">
-      <div *ngIf="user.department===null" class="form-group col-md-6">
+      <div *ngIf="user.department===null" >
+        <div class="card-header">
         <h1>Department</h1>
         <hr>
+        </div>
+        <div class="card-body">
         <select
           required
           class="custom-select"
@@ -21,27 +23,29 @@
             <option *ngFor="let depp of departments"  [ngValue]="depp" [selected]=" user.department!== null &&  depp.depName === user.department.depName">
               <span>{{depp.depName}}</span>
             </option>
-
-
         </select>
         <mat-error *ngIf="!department.valid && department.touched">
           {{getErrorDepartment()}}
         </mat-error>
+        </div>
       </div>
 
       <div *ngIf="user.department!=null" class="form-group col-md-6">
+        <div class="card-header">
         <h1>Department</h1>
         <hr>
+        </div>
+        <div class="card-body">
         <input  type="text" class="form-control" id="inputDep" value="{{this.user.department.depName}}" disabled="true">
       </div>
-    </div>
+      </div>
+      </div>
 
-    <br>
-  </form>
     <div style="float: right">
       <button type="submit" mat-raised-button color="primary" [disabled]="!firstFormGroup.valid && user.department == null"  matStepperNext >Next</button>
       <button type="button" (click)="closeThis()" class="btn btn-light" style="margin-left: 20px;">Cancel</button>
     </div>
+
   </mat-step>
 
 
@@ -49,10 +53,15 @@
 
   <mat-step [stepControl]="secondFormGroup" >
     <ng-template matStepLabel>Fill out user informations</ng-template>
-    <form [formGroup]="secondFormGroup" >
+    <div  class="main-card mb-3 card">
+      <div class="card-header">
+
       <h1 *ngIf="user.department != null">Add a user to <b>{{user.department.depName}}</b> department</h1>
       <h1 *ngIf="user.department == null">User info</h1>
       <hr>
+      </div>
+      <div class="card-body" style="padding-bottom: 40px">
+      <form [formGroup]="secondFormGroup" >
   <div class="form-row">
     <div class="form-group col-md-6">
       <label for="inputFirstName">firstName*</label>
@@ -195,9 +204,11 @@
     </div>
     </div>
     </form>
+      </div>
     <div style="float: right">
       <button type="submit" mat-raised-button color="primary" [disabled]="!secondFormGroup.valid" (click)="test()" matStepperNext >Next</button>
       <button type="button" (click)="closeThis()" class="btn btn-light" style="margin-left: 20px;">Cancel</button>
+    </div>
     </div>
 </mat-step>
 
@@ -207,8 +218,12 @@
     <ng-template matStepLabel>Addresses</ng-template>
     <form [formGroup]="thirdFormGroup" >
     <div id="firstAdress">
+    <div  class="main-card mb-3 card">
+      <div class="card-header">
       <h2>Address</h2>
       <hr>
+    </div>
+        <div class="card-body">
     <div class="form-row">
       <div class="form-group col-md-6">
         <label for="inputStreetName1">Street Name</label>
@@ -279,17 +294,22 @@
           </div>
         </div>
     </div>
+      </div>
+    </div>
     <div class="note">
       <button (click)="showOtherAddress=!showOtherAddress"  class="btn btn-info addAddressButton">
         <span mat-raised-button matTooltip="Add second Address now" *ngIf="!showOtherAddress" class="fas fa-plus-circle"></span>
         <span mat-raised-button matTooltip="Hide form" *ngIf="showOtherAddress" class="fas fa-minus-circle"></span>
       </button>
    <span *ngIf="!showOtherAddress"> Note: Each user can have 2 addresses, you can add another address now, otherwise this user or the employer can add another address later.</span>
-      </div>
+      </div><br>
     </form>
-    <div style="margin-top: 10px" [@enterAnimation] *ngIf="showOtherAddress" id="secondAddress">
-      <h2>Address 2</h2>
+    <div style="margin-top: 40px;width: 100%" [@enterAnimation] *ngIf="showOtherAddress" id="secondAddress">
+      <div  class="main-card mb-3 card">
+        <div class="card-header">      <h2>Address 2</h2>
       <hr>
+        </div>
+        <div class="card-body">
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="inputStreetName2">Street Name</label>
@@ -338,15 +358,17 @@
             required type="number" class="form-control" id="inputZip2" placeholder="Zip code">
         </div>
       </div>
+        </div></div>
     </div>
 
       <div class="buttons">
+        <div style="float: right;">
         <button type="submit" [disabled]="!thirdFormGroup.valid" class="btn btn-primary"  (click)="addUser()">Add user</button>
         <button type="button" (click)="closeThis()" class="btn btn-light" style="margin-left: 20px;">Cancel</button>
+      </div>
       </div>
 
   </mat-step>
 </mat-horizontal-stepper>
 
 </form>
-

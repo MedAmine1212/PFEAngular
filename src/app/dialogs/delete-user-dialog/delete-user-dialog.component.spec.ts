@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { JsloaderComponent } from './jsloader.component';
+import { DeleteUserDialogComponent } from './delete-user-dialog.component';
 
-describe('JsloaderComponent', () => {
-  let component: JsloaderComponent;
-  let fixture: ComponentFixture<JsloaderComponent>;
+describe('DeleteUserDialogComponent', () => {
+  let component: DeleteUserDialogComponent;
+  let fixture: ComponentFixture<DeleteUserDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ JsloaderComponent ]
+      declarations: [ DeleteUserDialogComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(JsloaderComponent);
+    fixture = TestBed.createComponent(DeleteUserDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
