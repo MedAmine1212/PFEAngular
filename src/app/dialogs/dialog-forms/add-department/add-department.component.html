@@ -1,4 +1,4 @@
-<form [formGroup]="editForm"  (ngSubmit)="editForm.valid" novalidate  style="color:black">
+<form [formGroup]="editForm"   style="color:black">
   <div *ngIf="sender == 1">
     <h1 *ngIf="dep!=null" style="padding:30px;">Add department to <b>{{dep.depName}}</b> department</h1>
     <h1 *ngIf="dep==null" style="padding:30px;">Add a new department</h1>
@@ -9,21 +9,48 @@
     <div *ngIf="dep!=null" class="form-row">
       <div class="form-group col-md-6">
         <label for="supDep">Department Name</label>
-        <input disabled type="text" formControlName="none"  class="form-control" value="{{dep.depName}}">
+        <input disabled type="text"  class="form-control" value="{{dep.depName}}">
       </div>
     </div>
     <div style="height:100px" class="form-row">
       <div class="form-group col-md-6">
-        <label for="depName">New Department Name*</label>
-        <input matInput [(ngModel)]="newName" formControlName="depNameEdit" type="text" class="form-control" id="depNameEdit" placeholder="New department name">
+        <label for="depNameEdit">New Department Name</label>
+        <input [(ngModel)]="newName" formControlName="depNameEdit" type="text" class="form-control" id="depNameEdit" placeholder="New department name">
         <div class="mat-errorContainer">
-          <mat-error *ngIf="!depNameEdit.valid && depNameEdit.touched ">
-           Department name should only contain letters
-          </mat-error></div>
+          <mat-error *ngIf="!depNameEdit.valid && depNameEdit.touched && newName.length > 0 && newName.length < 3">
+            You need to specify at least 3 characters
+            {{disableButt()}}
+          </mat-error>
+          <mat-error *ngIf="!depNameEdit.valid && depNameEdit.touched && newName.length >= 3">
+            Department name should contain only characters
+            {{disableButt()}}
+          </mat-error>
+          <mat-error *ngIf="depNameEdit.valid && newName.length >= 3">
+            {{enableButt()}}
+          </mat-error>
+        </div>
     </div>
+    </div>
+    <div *ngIf="dep!=null" class="form-row">
+      <div class="form-group col-md-6">
+        <label for="supDep">Chef. Department</label>
+        <input *ngIf="chefDep !=null" disabled type="text"  class="form-control" value="{{chefDep.name}}">
+        <input *ngIf="chefDep === null" disabled type="text"  class="form-control" value="No chef. Department is set.">
+      </div>
+    </div>
+    <div style="height:100px" class="form-row">
+      <div class="form-group col-md-6">
+        <label>Change chef. Department</label>
+        <select (change)="enableDisableButt()" required class="custom-select" id="inputGroupSelect01" [(ngModel)]="newChefDep"[ngModelOptions]="{standalone: true}">
+          <option style="color:#3f6ad8;font-weight: bolder"  [ngValue]="null">Unchanged </option>
+          <option *ngFor="let user of dep.users" [ngValue]="user">
+            <span>{{user.name}} {{user.firstName}}</span>
+          </option>
+        </select>
+      </div>
     </div>
     <div class="buttons">
-      <button class="btn btn-primary"  [disabled]="registerForm.invalid" mat-raised-button  type="submit" (click)="updateDep()">Submit</button>
+      <button class="btn btn-primary"  [disabled]="disable" mat-raised-button  type="submit" (click)="updateDep()">Submit</button>
       <button type="button" (click)="closeThis()" class="btn btn-light" style="margin-left: 20px;">Cancel</button>
     </div>
   </div>
@@ -41,10 +68,10 @@
   <div style="height:100px" class="form-row">
       <div class="form-group col-md-6">
         <label for="depName">Department Name*</label>
-        <input matInput required [(ngModel)]="department.depName" formControlName="depName" type="text" class="form-control" id="depName" placeholder="Department name">
+        <input required [(ngModel)]="department.depName" formControlName="depName" type="text" class="form-control" id="depName" placeholder="Department name">
         <div class="mat-errorContainer">
           <mat-error *ngIf="!depName.valid && depName.touched ">
-            {{ getErrorDepName() }}
+            {{ getErrorDepName()}}
           </mat-error></div>
       </div>
     </div>
@@ -52,7 +79,7 @@
     <span> Note: this department will be submitted with no department supervisor, the supervisor can be set after adding employees to this department.</span>
   </div>
   <div class="buttons">
-    <button class="btn btn-primary"  [disabled]="registerForm.invalid" mat-raised-button  type="submit" (click)="addDep()">Add department</button>
+    <button class="btn btn-primary"  [disabled]="!registerForm.valid" mat-raised-button  type="submit" (click)="addDep()">Add department</button>
     <button type="button" (click)="closeThis()" class="btn btn-light" style="margin-left: 20px;">Cancel</button>
   </div>
   </div>

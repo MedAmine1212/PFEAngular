@@ -5,6 +5,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {DeleteDepDialogComponent} from '../../delete-dep-dialog/delete-dep-dialog.component';
 import {DepartmentsComponent} from '../../../components/departments/departments.component';
+import {User} from '../../../models/User';
 @Component({
   selector: 'app-add-department',
   templateUrl: './add-department.component.html',
@@ -13,28 +14,40 @@ import {DepartmentsComponent} from '../../../components/departments/departments.
 export class AddDepartmentComponent implements OnInit {
   registerForm: FormGroup;
   editForm: FormGroup;
+  chefDep: User;
+  newChefDep: User;
   dep: Department;
   departments: Department[];
   department: Department = new Department();
   public sender: number;
   newName: string;
+  disable: boolean;
   constructor(public dialogRef: MatDialogRef<AddDepartmentComponent>,
               @Inject(MAT_DIALOG_DATA) public data: Array<any>,
               private formBuilder: FormBuilder, private departmentService: DepartmentService,
               ) { }
 
   ngOnInit(): void {
+    this.disable = true;
+    this.createFormGroup();
+    this.createEditFormGroup();
+    this.dep =  null;
+    this.newChefDep = null;
     this.sender = 1;
     this.newName = '';
     if (this.data != null) {
-      this.dep = this.data[0];
       this.sender = this.data[1];
+      if (this.data[0] != null) {
+        this.dep = this.data[0];
+        this.departmentService.getChefDep(this.dep.depId).subscribe(user => {
+          this.chefDep = user;
+        });
+      }
     }
     if (this.sender === 2) {
       this.department = this.dep;
     }
-    this.createFormGroup();
-    this.createEditFormGroup();
+
     }
   private createFormGroup() {
     this.registerForm = this.formBuilder.group({
@@ -43,7 +56,7 @@ export class AddDepartmentComponent implements OnInit {
   }
   createEditFormGroup() {
     this.editForm = this.formBuilder.group({
-      depNameEdit: [this.newName, [Validators.pattern('[a-zA-Z ]*')]]
+      depNameEdit: [this.newName, [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.minLength(3)]]
     });
   }
   closeThis() {
@@ -59,8 +72,16 @@ export class AddDepartmentComponent implements OnInit {
   }
 
   updateDep() {
+    let update = false;
+    if (this.newChefDep != null) {
+      this.department.chefDep = this.newChefDep.userId;
+      update = true;
+    }
     if (this.newName !== '') {
       this.department.depName = this.newName;
+      update = true;
+    }
+    if (update) {
       this.departmentService.modify(this.department.depId, this.department).subscribe(
         data => console.log('done'), error1 => console.log(error1));
     }
@@ -72,10 +93,27 @@ export class AddDepartmentComponent implements OnInit {
   get depNameEdit() {
     return this.editForm.get('depNameEdit') as FormControl;
   }
-  getErrorDepName() { return this.depName.hasError('required') ?
-    'Department name required' :
-    this.depName.hasError('minlength') ? 'You need to specify at least 3 characters' : 'Department name should contain only characters';
+  getErrorDepName() {
+    return this.depName.hasError('required') ?
+      'Department name required' :
+      this.depName.hasError('minlength') ? 'You need to specify at least 3 characters' : 'Department name should contain only characters';
 
+  }
+
+  enableDisableButt() {
+    if (this.newChefDep == null && !this.depNameEdit.valid) {
+      this.disable = true;
+    } else {
+      this.disable = false;
+    }
+  }
+
+  disableButt() {
+    this.disable = true;
+  }
+
+  enableButt() {
+    this.disable = false;
   }
 }
 

@@ -94,6 +94,7 @@ export class EmployeesComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('Refreshing departments..');
       this.outPutData.emit();
+      console.log('Refreshing Employees..');
     });
   }
 
@@ -105,8 +106,7 @@ export class EmployeesComponent implements OnInit {
       data: this.clickedDep
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log('Refreshing Employees..');
-      this.reloadData();
+      this.outPutData.emit();
     });
   }
 
@@ -125,7 +125,7 @@ export class EmployeesComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('Refreshing employees..');
-      this.reloadData();
+      this.outPutData.emit();
     });
   }
   openDeleteEmpDialog(emp: User) {
@@ -138,7 +138,7 @@ export class EmployeesComponent implements OnInit {
       if (result === true) {
         this.userService.remove(emp.userId).subscribe(() => {
           console.log('Refreshing employees..');
-          this.reloadData();
+          this.outPutData.emit();
         });
       }
     });

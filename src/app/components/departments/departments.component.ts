@@ -124,7 +124,7 @@ export class DynamicDataSource implements DataSource<DynamicFlatNode> {
 
 export class DepartmentsComponent implements  OnInit {
   @Output() outPutData = new EventEmitter<Department>();
-  data: Department[];
+  data: Department[] = [];
   fakedep: Department;
   clickedDep: Department;
   treeControl: FlatTreeControl<DynamicFlatNode>;
@@ -133,9 +133,17 @@ export class DepartmentsComponent implements  OnInit {
   constructor(public dialog: MatDialog, private database: DynamicDatabase, private departmentService: DepartmentService) {
   }
 
+  sendDataFromParent() {
+   this.outPutData.emit(this.clickedDep);
+  }
   sendData(dep: Department) {
-    this.clickedDep = dep;
-    this.outPutData.emit(dep);
+    for (const depp of this.data) {
+      if (dep.depId === depp.depId) {
+        this.clickedDep = depp;
+        break;
+      }
+    }
+    this.outPutData.emit(this.clickedDep);
   }
   getLevel = (node: DynamicFlatNode) => node.level;
 
@@ -174,4 +182,5 @@ export class DepartmentsComponent implements  OnInit {
       this.reloadData();
     });
   }
+
 }

@@ -104,7 +104,7 @@ export class AddUserComponent implements  OnInit  {
 
       setTimeout(() => {
         this.stepper.selectedIndex = 1;
-      }, 500);
+      }, 600);
     }
     this.createFirstFormGroup();
     this.createSecondFormGroup();
@@ -373,16 +373,5 @@ export class AddUserComponent implements  OnInit  {
     const day = event.day <= 9 ? '0' + event.day : event.day;
     const finalDate = year + '-' + month + '-' + day;
     this.user.birthDate = finalDate;
-  }
-
-  depChange(event) {
-    console.log(event.target.value);
-    this.firstFormGroup.controls.department.setErrors(null);
-    for (const dep of this.departments) {
-      if (event.target.value === dep.depName) {
-        this.user.department = dep;
-      }
-    }
-    console.log(this.user.department);
   }
 }

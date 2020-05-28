@@ -15,7 +15,8 @@
               required
               class="custom-select"
               id="inputGroupSelect01"
-              (change)="depChange($event)"
+              [(ngModel)]="user.department"
+              [ngModelOptions]="{standalone: true}"
             >
               <!--          [disabled]="router.url === '/RemoteMonotoring/(mainCon:Departements)'"-->
 
