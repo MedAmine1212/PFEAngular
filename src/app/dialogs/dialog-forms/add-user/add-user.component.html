@@ -186,11 +186,13 @@
                                           formControlName="phoneNumber"
                                           [(ngModel)]="user.phone"
                   ></ngx-mat-intl-tel-input>
-                  <div class="mat-errorContainer">
-                    <mat-error *ngIf="!phoneNumber.valid && phoneNumber.touched">
-                      {{ getErrorPhoneNumber() }}
-                    </mat-error></div>
+                  <mat-error *ngIf="!phoneNumber.valid && phoneNumber.touched">
+                    {{ getErrorPhoneNumber() }}
+                  </mat-error>
                 </mat-form-field>
+<!--                <div class="mat-errorContainer">-->
+<!--                  -->
+<!--                </div>-->
               </div>
               <div class="form-group col-md-6">
                 <!-- <label for="inputPost">Post*</label> --><br>

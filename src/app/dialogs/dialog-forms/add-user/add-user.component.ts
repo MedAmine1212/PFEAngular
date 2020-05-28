@@ -279,7 +279,7 @@ export class AddUserComponent implements  OnInit  {
         this.email.hasError('alreadyInUse') ? 'This email address is already in use' : '';
   }
   getErrorCin() {
-    return this.email.hasError('required') ? 'Field is required' :
+    return this.cin.hasError('required') ? 'Field is required' :
       this.cin.hasError('alreadyInUse') ? 'This CIN is already in use' :
         'Invalid CIN length ' ;
   }
