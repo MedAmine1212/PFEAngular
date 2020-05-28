@@ -109,17 +109,17 @@
       <tr *ngFor="let add of newEmpAddresses">
         <td class="data">
           <div style="height:24px" *ngIf="!showAddressUpdateForm">{{add.streetNumber}} {{add.streetName}}, {{add.governorate}}</div>
-          <input style="height:24px;width: 30%" class="addIn" *ngIf="showAddressUpdateForm" type="text" matTooltip="Street number" value="{{add.streetNumber}}"/>
-          <input style="height:24px;width: 30%" class="addIn" *ngIf="showAddressUpdateForm" type="text" matTooltip="Street name" value="{{add.streetName}}"/>
-          <input style="height:24px;width: 30%" class="addIn" *ngIf="showAddressUpdateForm" type="number" matTooltip="Gouvernorate" value="{{add.governorate}}"/>
+          <input style="height:24px;width: 30%" class="addIn" *ngIf="showAddressUpdateForm" type="text" matTooltip="Street number" [(ngModel)]="add.streetNumber"/>
+          <input style="height:24px;width: 30%" class="addIn" *ngIf="showAddressUpdateForm" type="text" matTooltip="Street name" [(ngModel)]="add.streetName"/>
+          <input style="height:24px;width: 30%" class="addIn" *ngIf="showAddressUpdateForm" type="text" matTooltip="Gouvernorate" [(ngModel)]="add.governorate"/>
         </td>
         <td class="data">
           <div style="height:24px" *ngIf="!showAddressUpdateForm">{{add.state}}</div>
-          <input style="height:24px" class="addIn" *ngIf="showAddressUpdateForm" type="text" value="{{add.state}}"/>
+          <input style="height:24px" class="addIn" *ngIf="showAddressUpdateForm" type="text" [(ngModel)]="add.state"/>
         </td>
         <td class="data">
           <div style="height:24px" *ngIf="!showAddressUpdateForm">{{add.zipCode}}</div>
-          <input style="height:24px" class="addIn" *ngIf="showAddressUpdateForm" type="text" value="{{add.zipCode}}"/>
+          <input style="height:24px" class="addIn" *ngIf="showAddressUpdateForm" type="number"  [(ngModel)]="add.state"/>
         </td>
       </tr>
       </tbody>
