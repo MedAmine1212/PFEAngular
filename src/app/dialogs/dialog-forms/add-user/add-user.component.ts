@@ -89,19 +89,11 @@ export class AddUserComponent implements  OnInit  {
     if (this.data != null ) {
       this.user.department = this.data;
     }
-    console.log(this.user.department);
-
-
-
-
-
-
   }
 
   ngOnInit(): void {
     this.user.gender = 'male';
     if (this.user.department !== null) {
-
       setTimeout(() => {
         this.stepper.selectedIndex = 1;
       }, 600);
@@ -122,14 +114,7 @@ export class AddUserComponent implements  OnInit  {
         }
       }
     });
-
-
-
-
-
   }
-
-
   createFirstFormGroup() {
     this.firstFormGroup = this.formBuilder.group({
       department: ['', [Validators.required]]

@@ -74,7 +74,7 @@ export class EmployeesComponent implements OnInit {
   showAddDepDialog(): void {
     const dialogRef = this.dialog.open(AddDepartmentComponent, {
       width: '800px',
-      height: '600px',
+      height: '500px',
       panelClass: 'matDialogClass',
       data: [this.clickedDep, 1]
     });
@@ -87,7 +87,7 @@ export class EmployeesComponent implements OnInit {
   showUpdateDepDialog() {
     const dialogRef = this.dialog.open(AddDepartmentComponent, {
       width: '800px',
-      height: '600px',
+      height: '615px',
       panelClass: 'matDialogClass',
       data: [this.clickedDep, 2]
     });

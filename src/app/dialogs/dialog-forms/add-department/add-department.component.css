@@ -5,11 +5,14 @@
   color: grey;
 }
 .buttons{
-  position: absolute;
-  bottom: 100px;
-  left:55%;
-  margin-top: 30px;
+  margin-top: -10px;
+  margin-bottom: -20px;
+  float: right;
 }
 .mat-errorContainer{
   margin: 5px;
+  height: 15px;
+}
+.line{
+  padding: 5px;
 }

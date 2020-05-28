@@ -56,7 +56,7 @@ export class AddDepartmentComponent implements OnInit {
   }
   createEditFormGroup() {
     this.editForm = this.formBuilder.group({
-      depNameEdit: [this.newName, [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.minLength(3)]]
+      depNameEdit: [this.newName, [Validators.pattern('[a-zA-Z ]*'), Validators.minLength(3)]]
     });
   }
   closeThis() {
@@ -101,7 +101,7 @@ export class AddDepartmentComponent implements OnInit {
   }
 
   enableDisableButt() {
-    if (this.newChefDep == null && !this.depNameEdit.valid) {
+    if (this.newChefDep == null && this.newName === '') {
       this.disable = true;
     } else {
       this.disable = false;
@@ -109,7 +109,9 @@ export class AddDepartmentComponent implements OnInit {
   }
 
   disableButt() {
+    if (this.newChefDep == null || !this.depNameEdit.valid) {
     this.disable = true;
+    }
   }
 
   enableButt() {

@@ -187,9 +187,11 @@
                                           formControlName="phoneNumber"
                                           [(ngModel)]="user.phone"
                   ></ngx-mat-intl-tel-input>
+                  <div class="mat-errorContainer">
                   <mat-error *ngIf="!phoneNumber.valid && phoneNumber.touched">
                     {{ getErrorPhoneNumber() }}
                   </mat-error>
+                  </div>
                 </mat-form-field>
 <!--                <div class="mat-errorContainer">-->
 <!--                  -->
@@ -218,7 +220,7 @@
         </div>
       </div>
       <div style="width:100%">
-        <div style="float: right">
+        <div style="float: right;margin-top: -10px;margin-bottom: -10px;padding-top: 8px">
           <button type="submit" mat-raised-button color="primary" [disabled]="!secondFormGroup.valid" (click)="test()" matStepperNext >Next</button>
           <button type="button" (click)="closeThis()" class="btn btn-light" style="margin-left: 20px;">Cancel</button>
         </div>

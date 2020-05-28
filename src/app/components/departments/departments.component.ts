@@ -175,7 +175,7 @@ export class DepartmentsComponent implements  OnInit {
   addDepartment() {
     const dialogRef = this.dialog.open(AddDepartmentComponent, {
       width: '800px',
-      height: '600px',
+      height: '460px',
       data: [null, 1]
     });
     dialogRef.afterClosed().subscribe(async result => {
