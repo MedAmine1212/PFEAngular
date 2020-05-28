@@ -42,7 +42,7 @@ import {DialogComponent} from './dialogs/dialog.component';
 import {EmployeeDetailsComponent} from './dialogs/employee-details/employee-details.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatNativeDateModule} from '@angular/material/core';
-
+import {DeleteUserDialogComponent} from "./dialogs/delete-user-dialog/delete-user-dialog.component";
 
 @NgModule({
   declarations: [
@@ -61,7 +61,8 @@ import {MatNativeDateModule} from '@angular/material/core';
     AddDepartmentComponent,
     DeleteDepDialogComponent,
     DialogComponent,
-    EmployeeDetailsComponent
+    EmployeeDetailsComponent,
+    DeleteUserDialogComponent
   ],
     imports: [
         BrowserModule,

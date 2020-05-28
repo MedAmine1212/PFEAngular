@@ -39,3 +39,7 @@ input[type=number] {
 .mat-errorContainer{
   height: 10px;
 }
+.card{
+  margin-top: 10px;
+  margin-bottom: -40px;
+}

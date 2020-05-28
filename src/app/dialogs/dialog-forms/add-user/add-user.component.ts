@@ -36,8 +36,6 @@ import {Router} from '@angular/router';
   styleUrls: ['./add-user.component.css']
 })
 export class AddUserComponent implements  OnInit  {
-  minDate: Date;
-  maxDate: Date;
   dialogComponent: MatDialogRef<DialogComponent>;
   @ViewChild('stepper') stepper: MatStepper;
   isLinear = false;
@@ -93,12 +91,6 @@ export class AddUserComponent implements  OnInit  {
     }
     console.log(this.user.department);
 
-    const currentYear = new Date().getFullYear();
-    const currentMonth = new Date().getMonth();
-    const currentDay = new Date().getDate();
-    this.minDate = new Date(currentYear - 50, 0, 1);
-    this.maxDate = new Date( currentYear, currentMonth, currentDay);
-
 
 
 
@@ -109,10 +101,9 @@ export class AddUserComponent implements  OnInit  {
   ngOnInit(): void {
     this.user.gender = 'male';
     if (this.user.department !== null) {
-
       setTimeout(() => {
         this.stepper.selectedIndex = 1;
-      }, 500);
+      }, 600);
     }
     this.createFirstFormGroup();
     this.createSecondFormGroup();
@@ -130,14 +121,7 @@ export class AddUserComponent implements  OnInit  {
         }
       }
     });
-
-
-
-
-
   }
-
-
   createFirstFormGroup() {
     this.firstFormGroup = this.formBuilder.group({
       department: ['', [Validators.required]]
@@ -270,12 +254,12 @@ export class AddUserComponent implements  OnInit  {
   getErrorFirstName() {
     return this.firstName.hasError('required') ?
       'Field is required' :
-      this.firstName.hasError('minlength') ? 'You need to specify at least 3 characters' : 'First name should be contain only caracters';
+      this.firstName.hasError('minlength') ? 'You need to specify at least 3 characters' : 'First name should contain only characters';
   }
   getErrorName() {
     return this.name.hasError('required') ?
       'Field is required' :
-      this.name.hasError('minlength') ? 'You need to specify at least 3 characters' : 'Last name should be contain only caracters';
+      this.name.hasError('minlength') ? 'You need to specify at least 3 characters' : 'Last name should contain only characters';
   }
   getErrorPhoneNumber() {
     return this.phoneNumber.hasError('alreadyInUse') ? 'This phone number is already in use' :
@@ -376,22 +360,10 @@ export class AddUserComponent implements  OnInit  {
 
 
   onDateSelect(event) {
-    console.log(event.target.value);
     const year = event.year;
     const month = event.month <= 9 ? '0' + event.month : event.month;
     const day = event.day <= 9 ? '0' + event.day : event.day;
     const finalDate = year + '-' + month + '-' + day;
     this.user.birthDate = finalDate;
-  }
-
-  depChange(event) {
-    console.log(event.target.value);
-    this.firstFormGroup.controls.department.setErrors(null);
-    for (const dep of this.departments) {
-      if (event.target.value === dep.depName) {
-        this.user.department = dep;
-      }
-    }
-    console.log(this.user.department);
   }
 }

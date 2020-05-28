@@ -11,6 +11,7 @@ import {AddDepartmentComponent} from '../../dialogs/dialog-forms/add-department/
 import {AddUserComponent} from '../../dialogs/dialog-forms/add-user/add-user.component';
 import {UserService} from '../../services/user/user.service';
 import {EmployeeDetailsComponent} from '../../dialogs/employee-details/employee-details.component';
+import {DeleteUserDialogComponent} from "../../dialogs/delete-user-dialog/delete-user-dialog.component";
 @Component({
   selector: 'app-employees',
   templateUrl: './employees.component.html',
@@ -26,6 +27,7 @@ export class EmployeesComponent implements OnInit {
   chefDep: User;
   users: User[];
   private loadAPI: Promise<any>;
+  private deleteId: number;
   constructor(public dialog: MatDialog, public router: Router,
               private departmentService: DepartmentService, private userService: UserService) {
   }
@@ -61,11 +63,12 @@ export class EmployeesComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
+        this.deleteId = this.clickedDep.depId;
         this.departmentService.remove(this.clickedDep.depId).subscribe(() => {
           this.clickedDep = new Department();
           this.clickedDep.depId = -1;
-          console.log('Refreshing departments..');
           this.outPutData.emit();
+          console.log('Refreshing departments..');
         });
       }
     });
@@ -74,7 +77,7 @@ export class EmployeesComponent implements OnInit {
   showAddDepDialog(): void {
     const dialogRef = this.dialog.open(AddDepartmentComponent, {
       width: '800px',
-      height: '600px',
+      height: '500px',
       panelClass: 'matDialogClass',
       data: [this.clickedDep, 1]
     });
@@ -87,31 +90,32 @@ export class EmployeesComponent implements OnInit {
   showUpdateDepDialog() {
     const dialogRef = this.dialog.open(AddDepartmentComponent, {
       width: '800px',
-      height: '600px',
+      height: '615px',
       panelClass: 'matDialogClass',
       data: [this.clickedDep, 2]
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('Refreshing departments..');
       this.outPutData.emit();
+      console.log('Refreshing Employees..');
+      this.setChefDep(this.clickedDep.depId);
     });
   }
 
   showAddUserDialog() {
     const dialogRef = this.dialog.open(AddUserComponent, {
-      width: '800px',
+      width: '850px',
       height: '615px',
       panelClass: 'matDialogClass',
       data: this.clickedDep
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log('Refreshing Employees..');
-      this.reloadData();
+      this.outPutData.emit();
     });
   }
 
   private reloadData() {
-    this.userService.list().subscribe(r => {
+      this.userService.list().subscribe(r => {
       this.users = r;
     });
   }
@@ -119,26 +123,26 @@ export class EmployeesComponent implements OnInit {
   openDetailsDialog(emp: User) {
     const dialogRef = this.dialog.open(EmployeeDetailsComponent, {
       width: '900px',
-      height: '650px',
+      height: '625px',
       panelClass: 'matDialogClass',
       data: emp
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('Refreshing employees..');
-      this.reloadData();
+      this.outPutData.emit();
     });
   }
   openDeleteEmpDialog(emp: User) {
-    const dialogRef = this.dialog.open(DeleteDepDialogComponent, {
+    const dialogRef = this.dialog.open(DeleteUserDialogComponent, {
       width: '400px',
       height: '380',
-      data: {depName: this.clickedDep.depName}
+      data: emp
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
         this.userService.remove(emp.userId).subscribe(() => {
           console.log('Refreshing employees..');
-          this.reloadData();
+          this.outPutData.emit();
         });
       }
     });

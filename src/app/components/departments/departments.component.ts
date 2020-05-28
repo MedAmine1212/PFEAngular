@@ -124,7 +124,7 @@ export class DynamicDataSource implements DataSource<DynamicFlatNode> {
 
 export class DepartmentsComponent implements  OnInit {
   @Output() outPutData = new EventEmitter<Department>();
-  data: Department[];
+  data: Department[] = [];
   fakedep: Department;
   clickedDep: Department;
   treeControl: FlatTreeControl<DynamicFlatNode>;
@@ -132,10 +132,14 @@ export class DepartmentsComponent implements  OnInit {
   dataSource: DynamicDataSource;
   constructor(public dialog: MatDialog, private database: DynamicDatabase, private departmentService: DepartmentService) {
   }
-
   sendData(dep: Department) {
-    this.clickedDep = dep;
-    this.outPutData.emit(dep);
+    for (const depp of this.data) {
+      if (dep.depId === depp.depId) {
+        this.clickedDep = depp;
+        break;
+      }
+    }
+    this.outPutData.emit(this.clickedDep);
   }
   getLevel = (node: DynamicFlatNode) => node.level;
 
@@ -158,21 +162,21 @@ export class DepartmentsComponent implements  OnInit {
   }
 
   public reloadData() {
-
     console.log('Reloading...');
     this.departmentService.list().subscribe(r => {
-      this.data = r;
-      this.dataSource.data = this.database.initialData(this.data);
+    this.data = r;
+    this.dataSource.data = this.database.initialData(this.data);
     });
   }
   addDepartment() {
     const dialogRef = this.dialog.open(AddDepartmentComponent, {
       width: '800px',
-      height: '600px',
+      height: '460px',
       data: [null, 1]
     });
     dialogRef.afterClosed().subscribe(async result => {
       this.reloadData();
     });
   }
+
 }
