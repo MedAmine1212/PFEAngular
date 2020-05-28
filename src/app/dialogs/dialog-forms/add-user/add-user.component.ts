@@ -262,12 +262,12 @@ export class AddUserComponent implements  OnInit  {
   getErrorFirstName() {
     return this.firstName.hasError('required') ?
       'Field is required' :
-      this.firstName.hasError('minlength') ? 'You need to specify at least 3 characters' : 'First name should be contain only caracters';
+      this.firstName.hasError('minlength') ? 'You need to specify at least 3 characters' : 'First name should contain only characters';
   }
   getErrorName() {
     return this.name.hasError('required') ?
       'Field is required' :
-      this.name.hasError('minlength') ? 'You need to specify at least 3 characters' : 'Last name should be contain only caracters';
+      this.name.hasError('minlength') ? 'You need to specify at least 3 characters' : 'Last name should contain only characters';
   }
   getErrorPhoneNumber() {
     return this.phoneNumber.hasError('alreadyInUse') ? 'This phone number is already in use' :

@@ -4,6 +4,7 @@ import {DepartmentService} from '../../../services/departement/department.servic
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {DeleteDepDialogComponent} from '../../delete-dep-dialog/delete-dep-dialog.component';
+import {DepartmentsComponent} from '../../../components/departments/departments.component';
 @Component({
   selector: 'app-add-department',
   templateUrl: './add-department.component.html',
@@ -11,6 +12,7 @@ import {DeleteDepDialogComponent} from '../../delete-dep-dialog/delete-dep-dialo
 })
 export class AddDepartmentComponent implements OnInit {
   registerForm: FormGroup;
+  editForm: FormGroup;
   dep: Department;
   departments: Department[];
   department: Department = new Department();
@@ -18,7 +20,8 @@ export class AddDepartmentComponent implements OnInit {
   newName: string;
   constructor(public dialogRef: MatDialogRef<AddDepartmentComponent>,
               @Inject(MAT_DIALOG_DATA) public data: Array<any>,
-              private formBuilder: FormBuilder, private departmentService: DepartmentService ) { }
+              private formBuilder: FormBuilder, private departmentService: DepartmentService,
+              ) { }
 
   ngOnInit(): void {
     this.sender = 1;
@@ -30,12 +33,19 @@ export class AddDepartmentComponent implements OnInit {
     if (this.sender === 2) {
       this.department = this.dep;
     }
-    this.registerForm = this.formBuilder.group({
-      depName: [this.department.depName, [Validators.required]]
-    });
-
+    this.createFormGroup();
+    this.createEditFormGroup();
     }
-  get f() { return this.registerForm.controls; }
+  private createFormGroup() {
+    this.registerForm = this.formBuilder.group({
+      depName: [this.department.depName, [Validators.required, Validators.pattern('[a-zA-Z ]*'),  Validators.minLength(3)]]
+    });
+  }
+  createEditFormGroup() {
+    this.editForm = this.formBuilder.group({
+      depNameEdit: [this.newName, [Validators.pattern('[a-zA-Z ]*')]]
+    });
+  }
   closeThis() {
     this.dialogRef.close();
   }
@@ -49,10 +59,23 @@ export class AddDepartmentComponent implements OnInit {
   }
 
   updateDep() {
-    this.department.depName = this.newName;
-    this.departmentService.modify(this.department.depId, this.department).subscribe(
-      data => console.log('done'), error1 => console.log(error1));
+    if (this.newName !== '') {
+      this.department.depName = this.newName;
+      this.departmentService.modify(this.department.depId, this.department).subscribe(
+        data => console.log('done'), error1 => console.log(error1));
+    }
     this.dialogRef.close();
+  }
+  get depName() {
+    return this.registerForm.get('depName') as FormControl;
+  }
+  get depNameEdit() {
+    return this.editForm.get('depNameEdit') as FormControl;
+  }
+  getErrorDepName() { return this.depName.hasError('required') ?
+    'Department name required' :
+    this.depName.hasError('minlength') ? 'You need to specify at least 3 characters' : 'Department name should contain only characters';
+
   }
 }
 

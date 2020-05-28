@@ -1,4 +1,4 @@
-<form [formGroup]="registerForm"  (ngSubmit)="registerForm.valid" novalidate  style="color:black">
+<form [formGroup]="editForm"  (ngSubmit)="editForm.valid" novalidate  style="color:black">
   <div *ngIf="sender == 1">
     <h1 *ngIf="dep!=null" style="padding:30px;">Add department to <b>{{dep.depName}}</b> department</h1>
     <h1 *ngIf="dep==null" style="padding:30px;">Add a new department</h1>
@@ -9,15 +9,18 @@
     <div *ngIf="dep!=null" class="form-row">
       <div class="form-group col-md-6">
         <label for="supDep">Department Name</label>
-        <input disabled type="text" class="form-control" value="{{dep.depName}}">
+        <input disabled type="text" formControlName="none"  class="form-control" value="{{dep.depName}}">
       </div>
     </div>
     <div style="height:100px" class="form-row">
       <div class="form-group col-md-6">
         <label for="depName">New Department Name*</label>
-        <input matInput required [(ngModel)]="newName" formControlName="depName" type="text" class="form-control" id="newDepName" placeholder="New department name">
-        <mat-error style="margin-left: 5px;margin-bottom: -20px" *ngIf="registerForm.get('depName').hasError('required') && registerForm.get('depName').touched">Department name required</mat-error>
-      </div>
+        <input matInput [(ngModel)]="newName" formControlName="depNameEdit" type="text" class="form-control" id="depNameEdit" placeholder="New department name">
+        <div class="mat-errorContainer">
+          <mat-error *ngIf="!depNameEdit.valid && depNameEdit.touched ">
+           Department name should only contain letters
+          </mat-error></div>
+    </div>
     </div>
     <div class="buttons">
       <button class="btn btn-primary"  [disabled]="registerForm.invalid" mat-raised-button  type="submit" (click)="updateDep()">Submit</button>
@@ -25,6 +28,8 @@
     </div>
   </div>
 
+</form>
+<form [formGroup]="registerForm"  (ngSubmit)="registerForm.valid" novalidate  style="color:black">
 
   <div *ngIf="sender == 1" style="padding:40px;">
     <div *ngIf="dep!=null" class="form-row">
@@ -37,7 +42,10 @@
       <div class="form-group col-md-6">
         <label for="depName">Department Name*</label>
         <input matInput required [(ngModel)]="department.depName" formControlName="depName" type="text" class="form-control" id="depName" placeholder="Department name">
-        <mat-error style="margin-left: 5px;margin-bottom: -20px" *ngIf="registerForm.get('depName').hasError('required') && registerForm.get('depName').touched">Department name required</mat-error>
+        <div class="mat-errorContainer">
+          <mat-error *ngIf="!depName.valid && depName.touched ">
+            {{ getErrorDepName() }}
+          </mat-error></div>
       </div>
     </div>
   <div class="note">

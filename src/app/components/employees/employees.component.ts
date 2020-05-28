@@ -111,7 +111,7 @@ export class EmployeesComponent implements OnInit {
   }
 
   private reloadData() {
-    this.userService.list().subscribe(r => {
+      this.userService.list().subscribe(r => {
       this.users = r;
     });
   }

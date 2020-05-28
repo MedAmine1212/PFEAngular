@@ -158,11 +158,10 @@ export class DepartmentsComponent implements  OnInit {
   }
 
   public reloadData() {
-
     console.log('Reloading...');
     this.departmentService.list().subscribe(r => {
-      this.data = r;
-      this.dataSource.data = this.database.initialData(this.data);
+    this.data = r;
+    this.dataSource.data = this.database.initialData(this.data);
     });
   }
   addDepartment() {
