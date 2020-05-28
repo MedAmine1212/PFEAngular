@@ -40,6 +40,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatSelectModule} from '@angular/material/select';
 import {DialogComponent} from './dialogs/dialog.component';
 import {EmployeeDetailsComponent} from './dialogs/employee-details/employee-details.component';
+import {DragDropModule} from "@angular/cdk/drag-drop";
 
 @NgModule({
   declarations: [
@@ -60,34 +61,35 @@ import {EmployeeDetailsComponent} from './dialogs/employee-details/employee-deta
     DialogComponent,
     EmployeeDetailsComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    Ng2SearchPipeModule,
-    NgbDatepickerModule,
-    MatDatepickerModule,
-    HttpClientModule,
-    MatTreeModule,
-    MatIconModule,
-    MatProgressBarModule,
-    MatTooltipModule,
-    MatButtonModule,
-    BsDropdownModule,
-    NgxMatIntlTelInputModule,
-    NgxIntlTelInputModule,
-    MatFormFieldModule,
-    MatStepperModule,
-    MatExpansionModule,
-    ReactiveFormsModule,
-    MatDialogModule,
-    MatMenuModule,
-    MatInputModule,
-    MatButtonToggleModule,
-    MatSelectModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        Ng2SearchPipeModule,
+        NgbDatepickerModule,
+        MatDatepickerModule,
+        HttpClientModule,
+        MatTreeModule,
+        MatIconModule,
+        MatProgressBarModule,
+        MatTooltipModule,
+        MatButtonModule,
+        BsDropdownModule,
+        NgxMatIntlTelInputModule,
+        NgxIntlTelInputModule,
+        MatFormFieldModule,
+        MatStepperModule,
+        MatExpansionModule,
+        ReactiveFormsModule,
+        MatDialogModule,
+        MatMenuModule,
+        MatInputModule,
+        MatButtonToggleModule,
+        MatSelectModule,
+        DragDropModule,
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

@@ -35,4 +35,7 @@ export class DepartmentService {
   getChefDep(depId): Observable<any> {
     return this.http.get(this.baseUrl + 'getChefDep/' + depId);
   }
+  getSupDep(depId): Observable<any> {
+    return this.http.get(this.baseUrl + 'getSupDep/' + depId);
+  }
 }

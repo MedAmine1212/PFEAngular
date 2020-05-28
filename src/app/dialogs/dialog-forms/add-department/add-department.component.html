@@ -1,5 +1,5 @@
 <form [formGroup]="registerForm"  (ngSubmit)="registerForm.valid" novalidate  style="color:black">
-  <div *ngIf="sender ==1">
+  <div *ngIf="sender == 1">
     <h1 *ngIf="dep!=null" style="padding:30px;">Add department to <b>{{dep.depName}}</b> department</h1>
     <h1 *ngIf="dep==null" style="padding:30px;">Add a new department</h1>
   </div>
