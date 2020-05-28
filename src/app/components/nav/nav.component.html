@@ -66,7 +66,7 @@
                 </button>
                 <mat-menu class="menu" #menu="matMenu">
                   <div class="menuContent">
-                    <button class="dropdown-item">User account</button>
+                    <button class="dropdown-item" [routerLink]="[{ outlets: {mainCon: ['Profile'] } }]">User account</button>
                     <div tabindex="-1" class="dropdown-divider"></div>
                     <button type="button" tabindex="0" routerLink="/" class="dropdown-item">Log out</button>
                   </div>
