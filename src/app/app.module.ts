@@ -41,6 +41,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {DialogComponent} from './dialogs/dialog.component';
 import {EmployeeDetailsComponent} from './dialogs/employee-details/employee-details.component';
 import {DragDropModule} from "@angular/cdk/drag-drop";
+import {DeleteUserDialogComponent} from "./dialogs/delete-user-dialog/delete-user-dialog.component";
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
     AddDepartmentComponent,
     DeleteDepDialogComponent,
     DialogComponent,
-    EmployeeDetailsComponent
+    EmployeeDetailsComponent,
+    DeleteUserDialogComponent
   ],
     imports: [
         BrowserModule,

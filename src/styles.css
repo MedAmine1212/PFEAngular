@@ -14,8 +14,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 input:focus, textarea , button, select{
   outline: none !important;
 }
-.matDialogClass mat-dialog-container {
-  margin-top: 28px;
+.mat-dialog-container {
+  margin-top: 28px !important;
 }
 /*!
  =========================================================

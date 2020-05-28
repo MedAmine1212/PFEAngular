@@ -11,6 +11,7 @@ import {AddDepartmentComponent} from '../../dialogs/dialog-forms/add-department/
 import {AddUserComponent} from '../../dialogs/dialog-forms/add-user/add-user.component';
 import {UserService} from '../../services/user/user.service';
 import {EmployeeDetailsComponent} from '../../dialogs/employee-details/employee-details.component';
+import {DeleteUserDialogComponent} from "../../dialogs/delete-user-dialog/delete-user-dialog.component";
 @Component({
   selector: 'app-employees',
   templateUrl: './employees.component.html',
@@ -100,7 +101,7 @@ export class EmployeesComponent implements OnInit {
 
   showAddUserDialog() {
     const dialogRef = this.dialog.open(AddUserComponent, {
-      width: '800px',
+      width: '850px',
       height: '615px',
       panelClass: 'matDialogClass',
       data: this.clickedDep
@@ -119,7 +120,7 @@ export class EmployeesComponent implements OnInit {
   openDetailsDialog(emp: User) {
     const dialogRef = this.dialog.open(EmployeeDetailsComponent, {
       width: '900px',
-      height: '650px',
+      height: '625px',
       panelClass: 'matDialogClass',
       data: emp
     });
@@ -129,10 +130,10 @@ export class EmployeesComponent implements OnInit {
     });
   }
   openDeleteEmpDialog(emp: User) {
-    const dialogRef = this.dialog.open(DeleteDepDialogComponent, {
+    const dialogRef = this.dialog.open(DeleteUserDialogComponent, {
       width: '400px',
       height: '380',
-      data: {depName: this.clickedDep.depName}
+      data: emp
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {

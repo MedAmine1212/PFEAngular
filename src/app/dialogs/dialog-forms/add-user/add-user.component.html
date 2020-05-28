@@ -5,7 +5,7 @@
     <mat-step [stepControl]="firstFormGroup"  >
       <div  class="main-card mb-3 card">
         <ng-template matStepLabel>Select department</ng-template>
-        <div *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)'" >
+        <div *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)' || router.url === '/RemoteMonotoring/(mainCon:Absences)'" >
           <div class="card-header">
             <h1>Department</h1>
             <hr>
@@ -220,7 +220,7 @@
         </div>
       </div>
       <div style="width:100%">
-        <div style="float: right;margin-top: -10px;margin-bottom: -10px;padding-top: 8px">
+        <div style="float: right;margin-top: -15px;margin-bottom: -20px;padding-top: 5px">
           <button type="submit" mat-raised-button color="primary" [disabled]="!secondFormGroup.valid" (click)="test()" matStepperNext >Next</button>
           <button type="button" (click)="closeThis()" class="btn btn-light" style="margin-left: 20px;">Cancel</button>
         </div>
