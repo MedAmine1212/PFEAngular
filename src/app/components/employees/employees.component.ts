@@ -27,6 +27,7 @@ export class EmployeesComponent implements OnInit {
   chefDep: User;
   users: User[];
   private loadAPI: Promise<any>;
+  private deleteId: number;
   constructor(public dialog: MatDialog, public router: Router,
               private departmentService: DepartmentService, private userService: UserService) {
   }
@@ -62,11 +63,12 @@ export class EmployeesComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
+        this.deleteId = this.clickedDep.depId;
         this.departmentService.remove(this.clickedDep.depId).subscribe(() => {
           this.clickedDep = new Department();
           this.clickedDep.depId = -1;
-          console.log('Refreshing departments..');
           this.outPutData.emit();
+          console.log('Refreshing departments..');
         });
       }
     });
@@ -96,6 +98,7 @@ export class EmployeesComponent implements OnInit {
       console.log('Refreshing departments..');
       this.outPutData.emit();
       console.log('Refreshing Employees..');
+      this.setChefDep(this.clickedDep.depId);
     });
   }
 

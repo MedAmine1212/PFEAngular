@@ -62,6 +62,5 @@ export class RemoteMonotoringComponent implements OnInit {
 
   reloadDep($event: any) {
     this.departmentComponent.reloadData();
-    this.departmentComponent.sendDataFromParent();
   }
 }

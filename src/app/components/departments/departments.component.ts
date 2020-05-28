@@ -132,10 +132,6 @@ export class DepartmentsComponent implements  OnInit {
   dataSource: DynamicDataSource;
   constructor(public dialog: MatDialog, private database: DynamicDatabase, private departmentService: DepartmentService) {
   }
-
-  sendDataFromParent() {
-   this.outPutData.emit(this.clickedDep);
-  }
   sendData(dep: Department) {
     for (const depp of this.data) {
       if (dep.depId === depp.depId) {
