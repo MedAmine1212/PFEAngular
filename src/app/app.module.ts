@@ -40,7 +40,9 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatSelectModule} from '@angular/material/select';
 import {DialogComponent} from './dialogs/dialog.component';
 import {EmployeeDetailsComponent} from './dialogs/employee-details/employee-details.component';
-import {DragDropModule} from "@angular/cdk/drag-drop";
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import {MatNativeDateModule} from '@angular/material/core';
+
 
 @NgModule({
   declarations: [
@@ -89,6 +91,8 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
         MatButtonToggleModule,
         MatSelectModule,
         DragDropModule,
+      MatNativeDateModule,
+
     ],
   providers: [],
   bootstrap: [AppComponent]

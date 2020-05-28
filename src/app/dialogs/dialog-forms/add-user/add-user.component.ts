@@ -36,6 +36,8 @@ import {Router} from '@angular/router';
   styleUrls: ['./add-user.component.css']
 })
 export class AddUserComponent implements  OnInit  {
+  minDate: Date;
+  maxDate: Date;
   dialogComponent: MatDialogRef<DialogComponent>;
   @ViewChild('stepper') stepper: MatStepper;
   isLinear = false;
@@ -90,6 +92,12 @@ export class AddUserComponent implements  OnInit  {
       this.user.department = this.data;
     }
     console.log(this.user.department);
+
+    const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth();
+    const currentDay = new Date().getDate();
+    this.minDate = new Date(currentYear - 50, 0, 1);
+    this.maxDate = new Date( currentYear, currentMonth, currentDay);
 
 
 
@@ -368,6 +376,7 @@ export class AddUserComponent implements  OnInit  {
 
 
   onDateSelect(event) {
+    console.log(event.target.value);
     const year = event.year;
     const month = event.month <= 9 ? '0' + event.month : event.month;
     const day = event.day <= 9 ? '0' + event.day : event.day;

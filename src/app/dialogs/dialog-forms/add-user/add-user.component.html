@@ -65,37 +65,45 @@
           <form [formGroup]="secondFormGroup" >
             <div class="form-row">
               <div class="form-group col-md-6">
-                <!-- <label for="inputFirstName">firstName*</label> -->
-                <input
-                  required
-                  class="form-control"
-                  id="inputFirstName"
-                  placeholder="FirstName"
-                  formControlName="firstName"
-                  [(ngModel)]="user.firstName">
-                <div class="mat-errorContainer">
+                <mat-form-field  appearance="outline">
+                  <mat-label>First Name</mat-label>
+                  <input
+                    matInput
+                    required
+                    id="inputFirstName"
+                    placeholder="FirstName"
+                    formControlName="firstName"
+                    [(ngModel)]="user.firstName">
+                  <button mat-button *ngIf="user.firstName" matSuffix mat-icon-button aria-label="Clear" (click)="user.firstName=''">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                  <mat-icon matPrefix>perm_identity</mat-icon>
                   <mat-error *ngIf="!firstName.valid && firstName.touched ">
-                    {{ getErrorFirstName() }}
-                  </mat-error></div>
+                      {{ getErrorFirstName() }}
+                    </mat-error>
+                </mat-form-field>
               </div>
               <div class="form-group col-md-6">
-                <!-- <label for="inputName">Name*</label> -->
-                <input
-                  required
-                  class="form-control"
-                  id="inputName"
-                  placeholder="Name"
-                  formControlName="name"
-                  [(ngModel)]="user.name">
-                <div class="mat-errorContainer">
-                  <mat-error *ngIf="!name.valid && name.touched ">
-                    {{ getErrorName() }}
-                  </mat-error></div>
+                <mat-form-field appearance="outline">
+                  <input
+                    matInput
+                    required
+                    id="inputName"
+                    placeholder="Name"
+                    formControlName="name"
+                    [(ngModel)]="user.name">
+                  <button mat-button *ngIf="user.name" matSuffix mat-icon-button aria-label="Clear" (click)="user.name=''">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                  <mat-icon matPrefix>perm_identity</mat-icon>
+                    <mat-error *ngIf="!name.valid && name.touched ">
+                      {{ getErrorName() }}
+                    </mat-error>
+                </mat-form-field>
               </div>
             </div>
             <div class="form-row">
               <div class="form-group col-md-6">
-                <!-- <label for="inputBirthDate">Birth Date*</label> --><br>
                 <div class="input-group">
                   <input
                     required
@@ -114,13 +122,12 @@
                     </button>
                   </div>
                 </div>
-                <div class="mat-errorContainer">
+
                   <mat-error *ngIf="!birthDate.valid && birthDate.touched ">
                     Birth Date is required !
-                  </mat-error></div>
+                  </mat-error>
               </div>
               <div class="form-group col-md-6">
-                <!-- <label for="inputName">Sexe </label> --><br>
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                   <label style="width: 157px" class="btn btn-info active">
                     <input type="radio" (focus)="user.gender = 'male'"  name="options" autocomplete="off" checked> Male
@@ -129,54 +136,56 @@
                     <input type="radio"  name="options" (focus)="user.gender = 'female'" autocomplete="off"> Female
                   </label>
                 </div>
-                <!--      <mat-button-toggle-group formControlName="gender" appearance="Legacy" [(ngModel)]="user.gender" name="fontStyle" aria-label="Font Style">-->
-                <!--        <mat-button-toggle  value="Male"   >Male</mat-button-toggle>-->
-                <!--        <mat-button-toggle  value="Female" >Female</mat-button-toggle>-->
-                <!--      </mat-button-toggle-group>-->
-                <!--      <div class="mat-errorContainer">-->
-                <!--      <mat-error *ngIf="!gender.valid && gender.touched ">-->
-                <!--        Sexe is required !-->
-                <!--      </mat-error></div>-->
               </div>
             </div>
             <div class="form-row">
               <div class="form-group col-md-6">
-                <!-- <label for="inputCIN">CIN*</label> -->
+              <mat-form-field appearance="outline">
+                <mat-label>CIN</mat-label>
                 <input
+                  matInput
+                  maxlength="8"
                   required
-                  class="form-control"
                   id="inputCIN"
                   placeholder="CIN"
                   formControlName="cin"
                   [(ngModel)]="user.cin"
+                  #c
                 >
-                <!--      (input)="checkCin($event)"-->
-                <div class="mat-errorContainer">
-                  <mat-error *ngIf="!cin.valid && cin.touched ">
-                    {{ getErrorCin() }}
-                  </mat-error></div>
+                <mat-hint align="end">{{c.value?.length || 0}}/8</mat-hint>
+                <button mat-button *ngIf="user.cin" matSuffix mat-icon-button aria-label="Clear" (click)="user.cin=''">
+                  <mat-icon>close</mat-icon>
+                </button>
+                <mat-icon matPrefix>credit_card</mat-icon>
+                <mat-error *ngIf="!cin.valid && cin.touched ">
+                  {{ getErrorCin() }}
+                </mat-error>
+              </mat-form-field>
               </div>
               <div class="form-group col-md-6">
-                <!-- <label for="inputEmail">Email*</label> -->
-                <input
-                  required
-                  id="inputEmail"
-                  name="email"
-                  class="form-control"
-                  placeholder="Email"
-                  formControlName="email"
-                  [(ngModel)]="user.email"
-                >
-                <div class="mat-errorContainer">
+                <mat-form-field appearance="outline">
+                  <mat-label>Email</mat-label>
+                  <input
+                    matInput
+                    required
+                    id="inputEmail"
+                    placeholder="Email"
+                    formControlName="email"
+                    [(ngModel)]="user.email"
+                  >
+                  <button mat-button *ngIf="user.email" matSuffix mat-icon-button aria-label="Clear" (click)="user.email=''">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                  <mat-icon matPrefix>card_membership</mat-icon>
                   <mat-error *ngIf="!email.valid && email.touched ">
                     {{ getErrorEmail() }}
-                  </mat-error></div>
+                  </mat-error>
+                </mat-form-field>
               </div>
-
             </div>
             <div class="form-row">
               <div class="form-group col-md-6">
-                <mat-form-field class="phoneInput"><br><br>
+                <mat-form-field class="phoneInput" ><br><br>
                   <ngx-mat-intl-tel-input required
                                           placeholder="Phone number"
                                           [preferredCountries]="['tn']"
@@ -238,76 +247,79 @@
             <div class="card-body">
               <div class="form-row">
                 <div class="form-group col-md-6">
-                  <!-- <label for="inputStreetName1">Street Name</label> -->
-                  <input
-                    required
-                    class="form-control"
-                    id="inputStreetName1"
-                    placeholder="Street Name"
-                    formControlName="streetName"
-                    [(ngModel)]="address1.streetName">
-                  <div class="mat-errorContainer">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Street Name</mat-label>
+                    <input
+                      matInput
+                      required
+                      placeholder="Street Name"
+                      formControlName="streetName"
+                      [(ngModel)]="address1.streetName">
                     <mat-error *ngIf="!streetName.valid && streetName.touched ">
                       {{ getErrorStreetName() }}
-                    </mat-error></div>
+                    </mat-error>
+                  </mat-form-field>
+
                 </div>
                 <div class="form-group col-md-6">
-                  <!-- <label for="inputStreetNumber1">Street number</label> -->
-                  <input
-                    required
-                    class="form-control"
-                    id="inputStreetNumber1"
-                    placeholder="Street Number"
-                    formControlName="streetNumber"
-                    [(ngModel)]="address1.streetNumber">
-                  <div class="mat-errorContainer">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Street Number</mat-label>
+                    <input
+                      matInput
+                      required
+                      placeholder="Street Number"
+                      formControlName="streetNumber"
+                      [(ngModel)]="address1.streetNumber">
                     <mat-error *ngIf="!streetNumber.valid && streetNumber.touched ">
                       {{ getErrorStreetNumber() }}
-                    </mat-error></div>
+                    </mat-error>
+                  </mat-form-field>
                 </div>
               </div>
               <div class="form-row">
                 <div class="form-group col-md-6">
-                  <!-- <label for="inputState1">State</label> -->
-                  <input
-                    required
-                    class="form-control"
-                    id="inputState1"
-                    placeholder="State (ex: Tunis)"
-                    formControlName="state"
-                    [(ngModel)]="address1.state">
-                  <div class="mat-errorContainer">
-                    <mat-error *ngIf="!state.valid && state.touched">
+                  <mat-form-field appearance="outline">
+                    <mat-label>State</mat-label>
+
+                    <input
+                      matInput
+                      required
+                      placeholder="State"
+                      formControlName="state"
+                      [(ngModel)]="address1.state">
+                    <mat-error *ngIf="!state.valid && streetNumber.touched ">
                       {{ getErrorState() }}
-                    </mat-error></div>
+                    </mat-error>
+                  </mat-form-field>
                 </div>
                 <div class="form-group col-md-4">
-                  <!-- <label for="inputGov1">Governorate</label> -->
-                  <input
-                    required
-                    class="form-control"
-                    id="inputGov1"
-                    placeholder="Governorate"
-                    formControlName="gov"
-                    [(ngModel)]="address1.governorate">
-                  <div class="mat-errorContainer">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Governorate</mat-label>
+                    <input
+                      matInput
+                      required
+                      placeholder="Governorate"
+                      formControlName="gov"
+                      [(ngModel)]="address1.governorate">
                     <mat-error *ngIf="!gov.valid && gov.touched ">
                       {{ getErrorGov() }}
-                    </mat-error></div>
+                    </mat-error>
+                  </mat-form-field>
                 </div>
                 <div class="form-group col-md-2">
-                  <!-- <label for="inputZip1">Zip</label> -->
-                  <input
-                    required
-                    class="form-control"
-                    id="inputZip1"
-                    placeholder="Zip code"
-                    formControlName="zipCode"
-                    [(ngModel)]="address1.zipCode">
-                  <div class="mat-errorContainer">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Zip Code</mat-label>
+                    <input
+                      matInput
+                      required
+                      type="number"
+                      placeholder="Zip Code"
+                      formControlName="zipCode"
+                      [(ngModel)]="address1.zipCode">
                     <mat-error *ngIf="!zipCode.valid && zipCode.touched ">
                       {{ getErrorZipCode() }}
-                    </mat-error></div>
+                    </mat-error>
+                  </mat-form-field>
                 </div>
               </div>
             </div>
