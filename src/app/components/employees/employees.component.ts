@@ -38,7 +38,9 @@ export class EmployeesComponent implements OnInit {
     this.clickedDep = null;
     this.thisIsEmp = true;
     this.users = [];
-    this.reloadData();
+    if (this.router.url === '/RemoteMonotoring/(mainCon:Employees)') {
+      this.reloadData();
+    }
   }
   setDepartment(dep: Department) {
     this.users = [];
@@ -49,7 +51,6 @@ export class EmployeesComponent implements OnInit {
       this.setChefDep(this.clickedDep.depId);
       this.users = this.clickedDep.users;
     }
-    console.log('cbn');
   }
   setChefDep(cDepId: number) {
     this.departmentService.getChefDep(cDepId).subscribe(user => {
@@ -144,6 +145,10 @@ export class EmployeesComponent implements OnInit {
   }
 
   openDetailsDialog(emp: User) {
+    if (this.router.url === '/RemoteMonotoring/(mainCon:Departments)') {
+      console.log('hiiiiiiiiiiiiiii');
+      emp.department = this.clickedDep;
+    }
     const dialogRef = this.dialog.open(EmployeeDetailsComponent, {
       width: '900px',
       height: '625px',
@@ -153,6 +158,9 @@ export class EmployeesComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('Refreshing employees..');
       this.reloadData();
+      if (this.router.url === '/RemoteMonotoring/(mainCon:Departments)') {
+        this.outPutData.emit();
+      }
     });
   }
   openDeleteEmpDialog(emp: User) {
