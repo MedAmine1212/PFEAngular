@@ -5,7 +5,7 @@ import {CollectionViewer, DataSource, SelectionChange} from '@angular/cdk/collec
 import {BehaviorSubject, merge, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {Department} from '../../models/Department';
-import {DepartmentService} from '../../services/departement/department.service';
+import {DepartmentService} from '../../services/department/department.service';
 import {AddDepartmentComponent} from '../../dialogs/dialog-forms/add-department/add-department.component';
 import {MatDialog} from '@angular/material/dialog';
 
@@ -116,7 +116,7 @@ export class DynamicDataSource implements DataSource<DynamicFlatNode> {
  * @title Tree with dynamic data
  */
 @Component({
-  selector: 'app-departements',
+  selector: 'app-departments',
   templateUrl: './departments.component.html',
   styleUrls: ['./departments.component.css']
 })

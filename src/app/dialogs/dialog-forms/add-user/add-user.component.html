@@ -1,3 +1,4 @@
+<div *ngIf="fourthFormGroup !=null;">
 <form style="color:black;overflow: hidden">
   <mat-horizontal-stepper [linear]="isLinear" #stepper>
 
@@ -18,7 +19,7 @@
               [(ngModel)]="user.department"
               [ngModelOptions]="{standalone: true}"
             >
-              <!--          [disabled]="router.url === '/RemoteMonotoring/(mainCon:Departements)'"-->
+              <!--          [disabled]="router.url === '/RemoteMonotoring/(mainCon:Departments)'"-->
 
               <option style="color: grey;" disabled [selected]="user.department === null" value="null">Chose a department: </option>
               <option *ngFor="let depp of departments"  [ngValue]="depp" [selected]=" user.department!== null &&  depp.depName === user.department.depName">
@@ -32,7 +33,7 @@
           </div>
         </div>
 
-        <div *ngIf="router.url === '/RemoteMonotoring/(mainCon:Departements)'">
+        <div *ngIf="router.url === '/RemoteMonotoring/(mainCon:Departments)'">
           <div class="card-header">
             <h1>Department</h1>
             <hr>
@@ -444,3 +445,4 @@
   </mat-horizontal-stepper>
 
 </form>
+</div>

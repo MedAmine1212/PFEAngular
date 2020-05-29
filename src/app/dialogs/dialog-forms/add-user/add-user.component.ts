@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, Inject, Input, OnInit, Output, ViewChild, ViewEncapsulation} from '@angular/core';
 import {Department} from '../../../models/Department';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {DepartmentService} from '../../../services/departement/department.service';
+import {DepartmentService} from '../../../services/department/department.service';
 import {MatStepper} from '@angular/material/stepper';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
@@ -35,7 +35,7 @@ import {Router} from '@angular/router';
   templateUrl: './add-user.component.html',
   styleUrls: ['./add-user.component.css']
 })
-export class AddUserComponent implements  OnInit  {
+export class AddUserComponent implements  AfterViewInit  {
   dialogComponent: MatDialogRef<DialogComponent>;
   @ViewChild('stepper') stepper: MatStepper;
   isLinear = false;
@@ -99,13 +99,13 @@ export class AddUserComponent implements  OnInit  {
 
   }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.showOtherAddress = false;
     this.user.gender = 'male';
     if (this.user.department !== null) {
       setTimeout(() => {
         this.stepper.selectedIndex = 1;
-      }, 600);
+      }, 900);
     }
     this.createFirstFormGroup();
     this.createSecondFormGroup();

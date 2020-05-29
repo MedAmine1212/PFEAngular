@@ -2,7 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {User} from '../../models/User';
 import {Department} from '../../models/Department';
-import {DepartmentService} from '../../services/departement/department.service';
+import {DepartmentService} from '../../services/department/department.service';
 import {Address} from '../../models/Address';
 import {UserService} from '../../services/user/user.service';
 import {AddressService} from '../../services/address/address.service';

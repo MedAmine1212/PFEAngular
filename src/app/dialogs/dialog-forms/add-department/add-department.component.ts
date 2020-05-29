@@ -1,6 +1,6 @@
 import {Component, Inject, Input, OnInit, Output} from '@angular/core';
 import {Department} from '../../../models/Department';
-import {DepartmentService} from '../../../services/departement/department.service';
+import {DepartmentService} from '../../../services/department/department.service';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {DeleteDepDialogComponent} from '../../delete-dep-dialog/delete-dep-dialog.component';

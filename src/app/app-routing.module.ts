@@ -29,7 +29,7 @@ const routes: Routes = [
         outlet: 'mainCon'
       },
       {
-        path: 'Departements',
+        path: 'Departments',
         component: DepartmentsComponent,
         outlet: 'mainCon'
       },

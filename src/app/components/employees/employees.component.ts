@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {newArray} from '@angular/compiler/src/util';
 import {Department} from '../../models/Department';
 import {User} from '../../models/User';
-import {DepartmentService} from '../../services/departement/department.service';
+import {DepartmentService} from '../../services/department/department.service';
 import {DeleteDepDialogComponent} from '../../dialogs/delete-dep-dialog/delete-dep-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {AddDepartmentComponent} from '../../dialogs/dialog-forms/add-department/add-department.component';
@@ -26,6 +26,7 @@ export class EmployeesComponent implements OnInit {
   showHideInput: boolean;
   chefDep: User;
   users: User[];
+  usersForDep: User[];
   private loadAPI: Promise<any>;
   private deleteId: number;
   constructor(public dialog: MatDialog, public router: Router,
@@ -48,6 +49,7 @@ export class EmployeesComponent implements OnInit {
       this.setChefDep(this.clickedDep.depId);
       this.users = this.clickedDep.users;
     }
+    console.log('cbn');
   }
   setChefDep(cDepId: number) {
     this.departmentService.getChefDep(cDepId).subscribe(user => {
@@ -114,13 +116,30 @@ export class EmployeesComponent implements OnInit {
         this.reloadData();
       } else {
         this.outPutData.emit();
+        this.reloadData();
       }
     });
   }
 
   private reloadData() {
-      this.userService.list().subscribe(r => {
-      this.users = r;
+    this.users = [];
+
+    this.userService.list().subscribe(r => {
+      if (this.router.url === '/RemoteMonotoring/(mainCon:Departments)' && this.clickedDep.depId !== -1) {
+        this.chefDep = null;
+        this.setChefDep(this.clickedDep.depId);
+        this.usersForDep = r;
+        for (const emp of this.usersForDep) {
+          if (emp.department.depId === this.clickedDep.depId) {
+            this.users.push(emp);
+          }
+        }
+        this.clickedDep.users = [];
+        this.clickedDep.users = this.users;
+        this.outPutData.emit();
+      } else {
+        this.users = r;
+      }
     });
   }
 
@@ -133,7 +152,7 @@ export class EmployeesComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('Refreshing employees..');
-      this.outPutData.emit();
+      this.reloadData();
     });
   }
   openDeleteEmpDialog(emp: User) {
@@ -144,12 +163,11 @@ export class EmployeesComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
-        this.userService.remove(emp.userId).subscribe(() => {
+          this.userService.remove(emp.userId).subscribe(() => {
           console.log('Refreshing employees..');
-          this.outPutData.emit();
+          this.reloadData();
         });
       }
     });
   }
 }
-

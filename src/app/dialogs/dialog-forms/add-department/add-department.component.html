@@ -36,7 +36,7 @@
     <div class="card-body">
       <div class="line">
         <label for="supDep">Chef. Department</label>
-        <input *ngIf="chefDep !=null" disabled type="text"  class="form-control" value="{{chefDep.name}}">
+        <input *ngIf="chefDep !=null" disabled type="text"  class="form-control" value="{{chefDep.name}} {{chefDep.firstName}}">
         <input *ngIf="chefDep === null" disabled type="text"  class="form-control" value="No chef. Department is set.">
       </div>
 
