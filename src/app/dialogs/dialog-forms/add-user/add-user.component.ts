@@ -176,8 +176,6 @@ export class AddUserComponent implements  OnInit  {
     });
   }
   hideFourthFormGroup() {
-    console.log('Forms: ' + this.firstFormGroup.valid + ', ' + this.secondFormGroup.valid + ', ' +
-      this.thirdFormGroup.valid + ', ' + this.fourthFormGroup.valid);
     this.showOtherAddress = false;
     this.fourthFormGroup = null;
     this.createFourthFormGroup();
@@ -211,7 +209,6 @@ export class AddUserComponent implements  OnInit  {
   // CHECK IN USE
   checkInUseEmail(control) {
     const emails = [];
-    console.log('dkhal lil emails');
     this.userService.list().subscribe(users => {
       for (const user of users) {
         // @ts-ignore
@@ -230,7 +227,6 @@ export class AddUserComponent implements  OnInit  {
   checkInUseCin(control) {
     // mimic http database access
     const cins = [];
-    console.log('dkhal lil cin');
     this.userService.list().subscribe(users => {
       for (const user of users) {
         // @ts-ignore
@@ -249,7 +245,6 @@ export class AddUserComponent implements  OnInit  {
   checkInUsePhoneNumber(control) {
     // mimic http database access
     const phoneNumbers = [];
-    console.log('dkhal lil num');
     this.userService.list().subscribe(users => {
       for (const user of users) {
         // @ts-ignore
