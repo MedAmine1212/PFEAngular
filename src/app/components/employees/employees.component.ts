@@ -38,7 +38,7 @@ export class EmployeesComponent implements OnInit {
     this.clickedDep = null;
     this.thisIsEmp = true;
     this.users = [];
-    if (this.router.url === '/RemoteMonotoring/(mainCon:Employees)') {
+    if (this.router.url === '/RemoteMonotoring/(mainCon:Employees)' || this.router.url === '/RemoteMonotoring/(mainCon:Absences)') {
       this.reloadData();
     }
   }
