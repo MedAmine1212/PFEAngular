@@ -41,7 +41,7 @@
             <div style="position: absolute;background-color: transparent;margin-top: -15px;margin-left: -35px;" [ngClass]="{'search-wrapper active': showHideInput}">
               <div class="input-holder">
                 <input type="text" [(ngModel)]="searchText" style="width: 100%" class="search-input" placeholder="Search (name, Email, Phone,...)">
-                <button [ngStyle]="{'opacity':thisIsEmp || clickedDep.depId!=-1 ? '1' : '0' }"ng (click)="showHideInput = true;" class="search-icon"><span></span></button>
+                <button [ngStyle]="{'opacity':thisIsEmp || clickedDep.depId!=-1 ? '1' : '0' }" (click)="showHideInput = true;" class="search-icon"><span></span></button>
               </div>
               <button (click)="showHideInput = false;" class="close"></button>
             </div>

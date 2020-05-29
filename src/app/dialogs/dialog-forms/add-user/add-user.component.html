@@ -65,7 +65,7 @@
         <div class="card-body" style="padding-bottom: 40px">
           <form [formGroup]="secondFormGroup" >
             <div class="form-row">
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-5">
                 <mat-form-field  appearance="outline">
                   <mat-label>First Name</mat-label>
                   <input
@@ -75,7 +75,7 @@
                     placeholder="FirstName"
                     formControlName="firstName"
                     [(ngModel)]="user.firstName">
-                  <button mat-button *ngIf="user.firstName" matSuffix mat-icon-button aria-label="Clear" (click)="user.firstName=''">
+                  <button mat-button [ngStyle]="{'opacity':user.firstName ? '1' : '0' }" matSuffix mat-icon-button aria-label="Clear" (click)="user.firstName=''">
                     <mat-icon>close</mat-icon>
                   </button>
                   <mat-icon matPrefix>perm_identity</mat-icon>
@@ -84,8 +84,9 @@
                     </mat-error>
                 </mat-form-field>
               </div>
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-5">
                 <mat-form-field appearance="outline">
+                  <mat-label>Name</mat-label>
                   <input
                     matInput
                     required
@@ -93,7 +94,7 @@
                     placeholder="Name"
                     formControlName="name"
                     [(ngModel)]="user.name">
-                  <button mat-button *ngIf="user.name" matSuffix mat-icon-button aria-label="Clear" (click)="user.name=''">
+                  <button mat-button [ngStyle]="{'opacity': user.name? '1' : '0' }" matSuffix mat-icon-button aria-label="Clear" (click)="user.name=''">
                     <mat-icon>close</mat-icon>
                   </button>
                   <mat-icon matPrefix>perm_identity</mat-icon>
@@ -103,44 +104,9 @@
                 </mat-form-field>
               </div>
             </div>
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <div class="input-group">
-                  <input
-                    required
-                    id="inputBirthDate"
-                    class="form-control"
-                    placeholder="yyyy-mm-dd"
-                    name="dp"
-                    ngbDatepicker
-                    #d="ngbDatepicker"
-                    formControlName="birthDate"
-                    (dateSelect)="onDateSelect($event)"
-                  >
-                  <div class="input-group-append">
-                    <button class="btn btn-outline-info" (click)="d.toggle()" type="button">
-                      <span class="fas fa-calendar-alt"></span>
-                    </button>
-                  </div>
-                </div>
 
-                  <mat-error *ngIf="!birthDate.valid && birthDate.touched ">
-                    Birth Date is required !
-                  </mat-error>
-              </div>
-              <div class="form-group col-md-6">
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                  <label style="width: 157px" class="btn btn-info active">
-                    <input type="radio" (focus)="user.gender = 'male'"  name="options" autocomplete="off" checked> Male
-                  </label>
-                  <label style="width: 157px" class="btn btn-info">
-                    <input type="radio"  name="options" (focus)="user.gender = 'female'" autocomplete="off"> Female
-                  </label>
-                </div>
-              </div>
-            </div>
             <div class="form-row">
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-5">
               <mat-form-field appearance="outline">
                 <mat-label>CIN</mat-label>
                 <input
@@ -154,7 +120,7 @@
                   #c
                 >
                 <mat-hint align="end">{{c.value?.length || 0}}/8</mat-hint>
-                <button mat-button *ngIf="user.cin" matSuffix mat-icon-button aria-label="Clear" (click)="user.cin=''">
+                <button mat-button [ngStyle]="{'opacity':user.cin ? '1' : '0' }" matSuffix mat-icon-button aria-label="Clear" (click)="user.cin=''">
                   <mat-icon>close</mat-icon>
                 </button>
                 <mat-icon matPrefix>credit_card</mat-icon>
@@ -163,7 +129,7 @@
                 </mat-error>
               </mat-form-field>
               </div>
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-5">
                 <mat-form-field appearance="outline">
                   <mat-label>Email</mat-label>
                   <input
@@ -174,7 +140,7 @@
                     formControlName="email"
                     [(ngModel)]="user.email"
                   >
-                  <button mat-button *ngIf="user.email" matSuffix mat-icon-button aria-label="Clear" (click)="user.email=''">
+                  <button mat-button [ngStyle]="{'opacity':user.email ? '1' : '0' }"  matSuffix mat-icon-button aria-label="Clear" (click)="user.email=''">
                     <mat-icon>close</mat-icon>
                   </button>
                   <mat-icon matPrefix>card_membership</mat-icon>
@@ -182,6 +148,44 @@
                     {{ getErrorEmail() }}
                   </mat-error>
                 </mat-form-field>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <div class="input-group">
+                  <input
+                    required
+                    id="inputBirthDate"
+                    class="form-control"
+                    placeholder="Birth date (yyyy-mm-dd)"
+                    name="dp"
+                    ngbDatepicker
+                    #d="ngbDatepicker"
+                    formControlName="birthDate"
+                    (dateSelect)="onDateSelect($event)"
+                  >
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-info" (click)="d.toggle()" type="button">
+                      <span class="fas fa-calendar-alt"></span>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="mat-errorContainer">
+                <mat-error *ngIf="!birthDate.valid && birthDate.touched ">
+                  Birth Date is required !
+                </mat-error>
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <div style="margin-left: 10px" class="btn-group btn-group-toggle" data-toggle="buttons">
+                  <label style="width: 170px" class="btn btn-info active">
+                    <input type="radio" (focus)="user.gender = 'male'"  name="options" autocomplete="off" checked> Male
+                  </label>
+                  <label style="width: 170px" class="btn btn-info">
+                    <input type="radio"  name="options" (focus)="user.gender = 'female'" autocomplete="off"> Female
+                  </label>
+                </div>
               </div>
             </div>
             <div class="form-row">
@@ -196,17 +200,17 @@
                                           formControlName="phoneNumber"
                                           [(ngModel)]="user.phone"
                   ></ngx-mat-intl-tel-input>
-                  <div class="mat-errorContainer">
-                  <mat-error *ngIf="!phoneNumber.valid && phoneNumber.touched">
-                    {{ getErrorPhoneNumber() }}
-                  </mat-error>
-                  </div>
                 </mat-form-field>
+                <div style="margin-top: 35px;margin-bottom: -35px" class="mat-errorContainer">
+                <mat-error *ngIf="!phoneNumber.valid && phoneNumber.touched">
+                  {{ getErrorPhoneNumber() }}
+                </mat-error>
+              </div>
 <!--                <div class="mat-errorContainer">-->
 <!--                  -->
 <!--                </div>-->
               </div>
-              <div class="form-group col-md-6">
+              <div style="margin-bottom: -30px;padding-top:18px" class="form-group col-md-6">
                 <!-- <label for="inputPost">Post*</label> --><br>
                 <select
                   required
@@ -229,7 +233,7 @@
         </div>
       </div>
       <div style="width:100%">
-        <div style="float: right;margin-top: -15px;margin-bottom: -20px;padding-top: 5px">
+        <div style="float: right;margin-top: -25px;margin-bottom: -20px;padding-top: 5px">
           <button type="submit" mat-raised-button color="primary" [disabled]="!secondFormGroup.valid" (click)="test()" matStepperNext >Next</button>
           <button type="button" (click)="closeThis()" class="btn btn-light" style="margin-left: 20px;">Cancel</button>
         </div>
@@ -249,7 +253,7 @@
             </div>
             <div class="card-body">
               <div class="form-row">
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-4">
                   <mat-form-field appearance="outline">
                     <mat-label>Street Name</mat-label>
                     <input
@@ -264,7 +268,7 @@
                   </mat-form-field>
 
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-4">
                   <mat-form-field appearance="outline">
                     <mat-label>Street Number</mat-label>
                     <input
@@ -280,7 +284,7 @@
                 </div>
               </div>
               <div class="form-row">
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-4">
                   <mat-form-field appearance="outline">
                     <mat-label>State</mat-label>
 
@@ -329,73 +333,109 @@
           </div>
         </div>
         <div class="note">
-          <button (click)="showOtherAddress=!showOtherAddress"  class="btn btn-info addAddressButton">
-            <span mat-raised-button matTooltip="Add second Address now" *ngIf="!showOtherAddress" class="fas fa-plus-circle"></span>
-            <span mat-raised-button matTooltip="Hide form" *ngIf="showOtherAddress" class="fas fa-minus-circle"></span>
+          <button (click)="showFourthFormGroup()" *ngIf="!showOtherAddress" class="btn btn-info addAddressButton">
+            <span mat-raised-button matTooltip="Add second Address now" class="fas fa-plus-circle"></span>
           </button>
+          <button (click)="hideFourthFormGroup()" *ngIf="showOtherAddress"  class="btn btn-info addAddressButton">
+          <span mat-raised-button matTooltip="Hide form"  class="fas fa-minus-circle"></span>
+        </button>
           <span *ngIf="!showOtherAddress"> Note: Each user can have 2 addresses, you can add another address now, otherwise this user or the employer can add another address later.</span>
         </div><br>
       </form>
       <div style="margin-top: 40px;width: 100%" [@enterAnimation] *ngIf="showOtherAddress" id="secondAddress">
-        <div  class="main-card mb-3 card">
-          <div class="card-header">      <h2>Address 2</h2>
-            <hr>
+            <form [formGroup]="fourthFormGroup" >
+              <div>
+                <div  class="main-card mb-3 card">
+                  <div class="card-header">
+                    <h2>Address 2</h2>
+                    <hr>
+                  </div>
+                  <div class="card-body">
+                    <div class="form-row">
+                      <div class="form-group col-md-4">
+                        <mat-form-field appearance="outline">
+                          <mat-label>Street Name</mat-label>
+                          <input
+                            matInput
+                            required
+                            placeholder="Street Name"
+                            formControlName="streetName2"
+                            [(ngModel)]="address2.streetName">
+                          <mat-error *ngIf="!streetName2.valid && streetName2.touched ">
+                            {{ getErrorStreetName() }}
+                          </mat-error>
+                        </mat-form-field>
+
+                      </div>
+                      <div class="form-group col-md-4">
+                        <mat-form-field appearance="outline">
+                          <mat-label>Street Number</mat-label>
+                          <input
+                            matInput
+                            required
+                            placeholder="Street Number"
+                            formControlName="streetNumber2"
+                            [(ngModel)]="address2.streetNumber">
+                          <mat-error *ngIf="!streetNumber2.valid && streetNumber2.touched ">
+                            {{ getErrorStreetNumber() }}
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-4">
+                        <mat-form-field appearance="outline">
+                          <mat-label>State</mat-label>
+
+                          <input
+                            matInput
+                            required
+                            placeholder="State"
+                            formControlName="state2"
+                            [(ngModel)]="address2.state">
+                          <mat-error *ngIf="!state2.valid && streetNumber2.touched ">
+                            {{ getErrorState() }}
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div class="form-group col-md-4">
+                        <mat-form-field appearance="outline">
+                          <mat-label>Governorate</mat-label>
+                          <input
+                            matInput
+                            required
+                            placeholder="Governorate"
+                            formControlName="gov2"
+                            [(ngModel)]="address2.governorate">
+                          <mat-error *ngIf="!gov2.valid && gov2.touched ">
+                            {{ getErrorGov() }}
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div class="form-group col-md-2">
+                        <mat-form-field appearance="outline">
+                          <mat-label>Zip Code</mat-label>
+                          <input
+                            matInput
+                            required
+                            type="number"
+                            placeholder="Zip Code"
+                            formControlName="zipCode2"
+                            [(ngModel)]="address2.zipCode">
+                          <mat-error *ngIf="!zipCode2.valid && zipCode2.touched ">
+                            {{ getErrorZipCode() }}
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
           </div>
-          <div class="card-body">
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <!-- <label for="inputStreetName2">Street Name</label> -->
-                <input
-                  [(ngModel)]="address2.streetName"
-                  [ngModelOptions]="{standalone: true}"
-                  type="text"
-                  class="form-control"
-                  id="inputStreetName2"
-                  placeholder="Street Name">
-              </div>
-              <div class="form-group col-md-6">
-                <!-- <label for="inputStreetNumber2">Street number</label> -->
-                <input
-                  [(ngModel)]="address2.streetNumber"
-                  [ngModelOptions]="{standalone: true}"
-                  required type="text"
-                  class="form-control"
-                  id="inputStreetNumber2"
-                  placeholder="Street Number">
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <!-- <label for="inputState2">State</label> -->
-                <input
-                  [(ngModel)]="address2.state"
-                  [ngModelOptions]="{standalone: true}"
-                  type="text"
-                  class="form-control"
-                  placeholder="State (ex: Tunis)" id="inputState2">
-              </div>
-              <div class="form-group col-md-4">
-                <!-- <label for="inputGov2">Governorate</label> -->
-                <input
-                  [(ngModel)]="address2.governorate"
-                  [ngModelOptions]="{standalone: true}"
-                  type="text" id="inputGov2" class="form-control" placeholder="Governorate"/>
-              </div>
-              <div class="form-group col-md-2">
-                <!-- <label for="inputZip2">Zip</label> -->
-
-                <input
-                  [(ngModel)]="address2.zipCode"
-                  [ngModelOptions]="{standalone: true}"
-                  required type="number" class="form-control" id="inputZip2" placeholder="Zip code">
-              </div>
-            </div>
-          </div></div>
-      </div>
-
       <div class="buttons">
         <div style="float: right;">
-          <button type="submit" [disabled]="!thirdFormGroup.valid" class="btn btn-primary"  (click)="addUser()">Add user</button>
+          <button type="submit" [disabled]="!thirdFormGroup.valid || (showOtherAddress && !fourthFormGroup.valid)" class="btn btn-primary"  (click)="addUser()">Add user</button>
           <button type="button" (click)="closeThis()" class="btn btn-light" style="margin-left: 20px;">Cancel</button>
         </div>
       </div>

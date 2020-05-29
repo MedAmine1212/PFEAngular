@@ -42,6 +42,7 @@ export class AddUserComponent implements  OnInit  {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
+  public fourthFormGroup: FormGroup;
   departments: Department[] = [];
   posts: Post[] = [];
   showOtherAddress: boolean;
@@ -99,6 +100,7 @@ export class AddUserComponent implements  OnInit  {
   }
 
   ngOnInit(): void {
+    this.showOtherAddress = false;
     this.user.gender = 'male';
     if (this.user.department !== null) {
       setTimeout(() => {
@@ -108,6 +110,7 @@ export class AddUserComponent implements  OnInit  {
     this.createFirstFormGroup();
     this.createSecondFormGroup();
     this.createThirdFormGroup();
+    this.createFourthFormGroup();
     this.postService.list().subscribe(posts => {
       for (const post of posts) {
         this.posts.push(post);
@@ -152,6 +155,33 @@ export class AddUserComponent implements  OnInit  {
       gov: [this.address1.governorate, Validators.required]
     });
   }
+  createFourthFormGroup() {
+    this.fourthFormGroup = this.formBuilder.group({
+      streetName2: [this.address2.streetName, Validators.required],
+      streetNumber2: [this.address2.streetNumber, Validators.required],
+      state2: [this.address2.state, Validators.required],
+      zipCode2: [this.address2.zipCode, Validators.required],
+      gov2: [this.address2.governorate, Validators.required]
+    });
+  }
+  showFourthFormGroup() {
+    this.showOtherAddress = true;
+    this.fourthFormGroup = null;
+    this.fourthFormGroup = this.formBuilder.group({
+      streetName2: [this.address2.streetName],
+      streetNumber2: [this.address2.streetNumber],
+      state2: [this.address2.state],
+      zipCode2: [this.address2.zipCode],
+      gov2: [this.address2.governorate]
+    });
+  }
+  hideFourthFormGroup() {
+    console.log('Forms: ' + this.firstFormGroup.valid + ', ' + this.secondFormGroup.valid + ', ' +
+      this.thirdFormGroup.valid + ', ' + this.fourthFormGroup.valid);
+    this.showOtherAddress = false;
+    this.fourthFormGroup = null;
+    this.createFourthFormGroup();
+  }
   closeThis() {
     this.dialogRef.close();
   }
@@ -160,7 +190,7 @@ export class AddUserComponent implements  OnInit  {
     this.user.post = this.secondFormGroup.controls.post.value;
 
     this.user.addresses.push(this.address1);
-    if (this.address2.streetName !== '') {
+    if (this.showOtherAddress) {
       this.user.addresses.push(this.address2);
     }
 
@@ -302,6 +332,10 @@ export class AddUserComponent implements  OnInit  {
 
 
   // Get the form controls
+
+  get department() {
+    return this.firstFormGroup.get('department') as FormControl;
+  }
   get email() {
     return this.secondFormGroup.get('email') as FormControl;
   }
@@ -341,10 +375,22 @@ export class AddUserComponent implements  OnInit  {
   get gov() {
     return this.thirdFormGroup.get('gov') as FormControl;
   }
-  get department() {
-    return this.firstFormGroup.get('department') as FormControl;
-  }
 
+  get streetName2() {
+    return this.fourthFormGroup.get('streetName2') as FormControl;
+  }
+  get streetNumber2() {
+    return this.fourthFormGroup.get('streetNumber2') as FormControl;
+  }
+  get state2() {
+    return this.fourthFormGroup.get('state2') as FormControl;
+  }
+  get zipCode2() {
+    return this.fourthFormGroup.get('zipCode2') as FormControl;
+  }
+  get gov2() {
+    return this.fourthFormGroup.get('gov2') as FormControl;
+  }
   test() {
     const controls = this.secondFormGroup.controls;
     for (const name in controls) {

@@ -11,7 +11,7 @@ import {AddDepartmentComponent} from '../../dialogs/dialog-forms/add-department/
 import {AddUserComponent} from '../../dialogs/dialog-forms/add-user/add-user.component';
 import {UserService} from '../../services/user/user.service';
 import {EmployeeDetailsComponent} from '../../dialogs/employee-details/employee-details.component';
-import {DeleteUserDialogComponent} from "../../dialogs/delete-user-dialog/delete-user-dialog.component";
+import {DeleteUserDialogComponent} from '../../dialogs/delete-user-dialog/delete-user-dialog.component';
 @Component({
   selector: 'app-employees',
   templateUrl: './employees.component.html',
@@ -110,7 +110,11 @@ export class EmployeesComponent implements OnInit {
       data: this.clickedDep
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.outPutData.emit();
+      if (this.router.url === '/RemoteMonotoring/(mainCon:Employees)' || this.router.url === '/RemoteMonotoring/(mainCon:Absences)') {
+        this.reloadData();
+      } else {
+        this.outPutData.emit();
+      }
     });
   }
 
