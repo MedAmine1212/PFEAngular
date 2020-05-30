@@ -28,6 +28,7 @@
     "@material/theme": "^6.0.0",
     "@nebular/theme": "^5.0.0",
     "@ng-bootstrap/ng-bootstrap": "latest",
+    "@syncfusion/ej2-angular-schedule": "^18.1.54",
     "angular": "^1.7.9",
     "angular-bootstrap-calendar": "^1.0.0",
     "angular-popper": "^2.0.1",

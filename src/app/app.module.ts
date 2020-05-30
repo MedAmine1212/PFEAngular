@@ -43,6 +43,15 @@ import {EmployeeDetailsComponent} from './dialogs/employee-details/employee-deta
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatNativeDateModule} from '@angular/material/core';
 import {DeleteUserDialogComponent} from './dialogs/delete-user-dialog/delete-user-dialog.component';
+import {
+  AgendaService,
+  DayService, DragAndDropService, MonthAgendaService, MonthService,
+  RecurrenceEditorModule, ResizeService,
+  ScheduleModule, TimelineMonthService, TimelineViewsService,
+  WeekService,
+  WorkWeekService
+} from '@syncfusion/ej2-angular-schedule';
+
 
 @NgModule({
   declarations: [
@@ -92,10 +101,21 @@ import {DeleteUserDialogComponent} from './dialogs/delete-user-dialog/delete-use
         MatButtonToggleModule,
         MatSelectModule,
         DragDropModule,
-      MatNativeDateModule,
+        MatNativeDateModule,
+        ScheduleModule,
+        RecurrenceEditorModule
 
     ],
-  providers: [],
+  providers: [DayService,
+    WeekService,
+    WorkWeekService,
+    MonthService,
+    AgendaService,
+    MonthAgendaService,
+    TimelineViewsService,
+    TimelineMonthService,
+    ResizeService,
+    DragAndDropService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
