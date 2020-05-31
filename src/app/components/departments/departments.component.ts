@@ -148,11 +148,15 @@ export class DepartmentsComponent implements  OnInit {
   constructor(public dialog: MatDialog, private database: DynamicDatabase, private departmentService: DepartmentService) {
   }
   sendData(dep: Department) {
+    if (dep.depId === -1) {
+      this.clickedDep = dep;
+    } else {
     for (const depp of this.data) {
       if (dep.depId === depp.depId) {
         this.clickedDep = depp;
         break;
       }
+    }
     }
     this.outPutData.emit(this.clickedDep);
   }

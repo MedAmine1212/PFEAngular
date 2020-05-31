@@ -8,10 +8,6 @@ import { Component, OnInit } from '@angular/core';
 
 })
 export class TimetablesComponent implements OnInit {
-  setDate: any;
-  startHour = '07:00';
-  endHour = '24:00';
-
   constructor() {
   }
 
