@@ -181,7 +181,7 @@ export class AddUserComponent implements  AfterViewInit  {
     this.createFourthFormGroup();
   }
   closeThis() {
-    this.dialogRef.close();
+    this.dialogRef.close(false);
   }
 
   addUser() {
@@ -191,19 +191,15 @@ export class AddUserComponent implements  AfterViewInit  {
     if (this.showOtherAddress) {
       this.user.addresses.push(this.address2);
     }
-
-    console.log(this.user);
     this.userService.add(this.user).subscribe(user => {
-      console.log(user);
-    });
-    this.dialogComponent = this.dialog.open(DialogComponent, {
-      width: '400px',
-      data : 'User added successfully ! '
-    });
-    this.dialogComponent.afterClosed().subscribe(() =>
-      this.closeThis()
-    );
-
+      this.dialogComponent = this.dialog.open(DialogComponent, {
+        width: '400px',
+        data : 'User added successfully ! '
+      });
+      this.dialogComponent.afterClosed().subscribe(() =>
+        this.dialogRef.close(true)
+      );
+    }, error1 => console.log(error1));
   }
 
   // CHECK IN USE

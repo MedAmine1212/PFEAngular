@@ -38,7 +38,7 @@
         <li style="overflow: auto;max-height: 580px;">
           <div>
             <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-              <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+              <mat-tree-node  [@enterAnimation] *matTreeNodeDef="let node" matTreeNodePadding>
                 <span class="dis" style="width:20px" disabled></span>
                 <span (click)="sendData(node.item)" class="item" style="margin-left: 22px">
 
@@ -46,7 +46,7 @@
 
     </span>
               </mat-tree-node>
-              <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+              <mat-tree-node [@enterAnimation] *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
     <span class="expandCollapse"
           [attr.aria-label]="'toggle ' + node.filename" matTreeNodeToggle>
       <mat-icon class="mat-icon-rtl-mirror">

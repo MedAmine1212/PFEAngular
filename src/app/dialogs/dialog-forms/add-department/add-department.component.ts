@@ -60,15 +60,15 @@ export class AddDepartmentComponent implements OnInit {
     });
   }
   closeThis() {
-    this.dialogRef.close();
+    this.dialogRef.close(false);
   }
 
   addDep() {
     if (this.dep != null) {
       this.department.supDep = this.dep;
     }
-    this.departmentService.add(this.department).subscribe(data => console.log('done'), error1 => console.log(error1));
-    this.dialogRef.close();
+    this.departmentService.add(this.department).subscribe(
+      data => this.dialogRef.close(true), error1 => console.log(error1));
   }
 
   updateDep() {
@@ -83,9 +83,8 @@ export class AddDepartmentComponent implements OnInit {
     }
     if (update) {
       this.departmentService.modify(this.department.depId, this.department).subscribe(
-        data => console.log('done'), error1 => console.log(error1));
+        data => this.dialogRef.close(true), error1 => console.log(error1));
     }
-    this.dialogRef.close();
   }
   get depName() {
     return this.registerForm.get('depName') as FormControl;
