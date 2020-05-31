@@ -1,5 +1,23 @@
-<table>
-  <tr>
-    <th *ngFor="let x in [1.24]">{{x}}</th>
-  </tr>
+<div style="height:630px;width:100%;margin-right:40px;margin-top: 40px;padding-right: 25px">
+<table class="table-striped table-borderless"  style="width: 100%;height: 100%">
+    <thead>
+    <tr>
+    <th></th>
+    <th style="width:4%" *ngFor="let hour of hours">{{hour}}</th>
+    </tr>
+    </thead>
+  <tbody>
+    <tr *ngFor="let day of days">
+      <td style="padding-left: 15px">
+        {{day}}
+      </td>
+      <td style="padding: 5px 0 5px 0;margin: 0" *ngFor="let hour of hours" >
+        <span *ngFor="let sch of scheduals">
+          <span *ngIf="sch.schedualDays.indexOf(day) > -1 && sch.startHour <= hour && sch.endHour > hour " [ngClass]="sch.color" style="cursor:pointer;border-radius:0;width:100%;margin: 3px 0;height:20px" (click)="setCliked(sch,day,hour)"></span>
+          <span *ngIf="!(sch.schedualDays.indexOf(day) > -1 && sch.startHour <= hour && sch.endHour > hour) " class="btn btn-primary" style="cursor: default;border-radius:0;width:100%;margin: 3px 0;height:20px;opacity: 0"></span>
+        </span>
+      </td>
+    </tr>
+  </tbody>
 </table>
+</div>
