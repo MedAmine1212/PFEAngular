@@ -1,23 +1,38 @@
-<div style="height:630px;width:100%;margin-right:40px;margin-top: 40px;padding-right: 25px">
-<table class="table-striped table-borderless"  style="width: 100%;height: 100%">
-    <thead>
-    <tr>
-    <th></th>
-    <th style="width:4%" *ngFor="let hour of hours">{{hour}}</th>
-    </tr>
-    </thead>
-  <tbody>
-    <tr *ngFor="let day of days">
-      <td style="padding-left: 15px">
-        {{day}}
-      </td>
-      <td style="padding: 5px 0 5px 0;margin: 0" *ngFor="let hour of hours" >
+<div style="width: 100%;padding-right: 20px">
+  <div class="main-card mb-3 card" style="height:670px;width:100%;margin-top: 40px">
+    <div class="card-header">
+
+    </div>
+    <div class="card-body" style="overflow:auto;height:650px;margin-bottom: 10px">
+      <table class="table-striped" style="width: 100%;height: 100%">
+        <thead>
+        <tr>
+          <th style="width: 4%;height:35px"></th>
+          <th style="width:4%" *ngFor="let hour of hours">
+            <span *ngIf="hour<10">0</span>{{hour}} <span *ngIf="hour<13">AM</span><span *ngIf="hour>=13">PM</span>
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let day of days">
+          <td style="padding-left: 15px">
+            {{day}}
+          </td>
+          <td style="padding: 5px 0 5px 0;margin: 0" *ngFor="let hour of hours" >
         <span *ngFor="let sch of scheduals">
-          <span *ngIf="sch.schedualDays.indexOf(day) > -1 && sch.startHour <= hour && sch.endHour > hour " [ngClass]="sch.color" style="cursor:pointer;border-radius:0;width:100%;margin: 3px 0;height:20px" (click)="setCliked(sch,day,hour)"></span>
-          <span *ngIf="!(sch.schedualDays.indexOf(day) > -1 && sch.startHour <= hour && sch.endHour > hour) " class="btn btn-primary" style="cursor: default;border-radius:0;width:100%;margin: 3px 0;height:20px;opacity: 0"></span>
+          {{checkSch(sch,day,hour)}}
+          <span matTooltip="{{showTip(hour)}}" *ngIf="showSch" [ngClass]="sch.color" style="border-radius:0;width:100%;cursor:pointer;margin: 3px 0;height:20px" (click)="setCliked(sch,day,hour)"></span>
+          <span *ngIf="!showSch && !showPause" class="btn btn-primary" style="cursor: default;border-radius:0;width:100%;margin: 3px 0;height:20px;opacity: 0"></span>
+          <span *ngIf="showPause" class="btn btn-secondary" matTooltip="Pause time" style="opacity:0.3;cursor:default;border-radius:0;width:100%;margin: 3px 0;height:20px;"></span>
         </span>
-      </td>
-    </tr>
-  </tbody>
-</table>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card-footer">
+      {{time | date: 'dd MMMM yyyy '}} <span class="time">{{ time | date: 'hh:mm:ss a' }}</span>
+    </div>
+
+  </div>
 </div>
