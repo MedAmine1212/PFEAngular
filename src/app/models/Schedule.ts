@@ -5,7 +5,7 @@ export class Schedule {
   startHour: number;
   endHour: number;
   scheduleDays: string[];
-  repeadCycle: number;
+  repeatCycle: number;
   color: string;
   pauseTime: boolean;
   pauseStart: number;

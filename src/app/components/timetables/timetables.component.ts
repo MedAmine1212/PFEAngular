@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Schedule} from '../../models/Schedule';
+import {ScheduleService} from "../../services/schedule/schedule.service";
 
 
 @Component({
@@ -19,12 +20,14 @@ export class TimetablesComponent implements OnInit {
   time = new Date();
   showSch: boolean;
   showPause: boolean;
-  constructor() {
+  constructor(private  scheduleService: ScheduleService) {
     this.hours = Array(24).fill(0).map((x, i) => i);
     this.days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
   }
 
   ngOnInit(): void {
+    this.scheduleService.list().subscribe(list => console.log(list));
+
     this.showPause = false;
     this.showSch = false;
     setInterval(() => {
@@ -36,7 +39,7 @@ export class TimetablesComponent implements OnInit {
     this.schedule.startHour = 8;
     this.schedule.endHour = 17;
     this.schedule.scheduleDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-    this.schedule.repeadCycle = 1;
+    this.schedule.repeatCycle = 1;
     this.schedule.color = 'btn btn-success';
     this.schedule.pauseTime = true;
     this.schedule.pauseStart = 12;
@@ -48,7 +51,7 @@ export class TimetablesComponent implements OnInit {
     this.schedule2.startHour = 8;
     this.schedule2.endHour = 13;
     this.schedule2.scheduleDays = ['Saturday'];
-    this.schedule2.repeadCycle = 1;
+    this.schedule2.repeatCycle = 1;
     this.schedule2.color = 'btn btn-info';
     this.schedule2.pauseTime = false;
 
@@ -58,7 +61,7 @@ export class TimetablesComponent implements OnInit {
     this.schedule3.startHour = 8;
     this.schedule3.endHour = 17;
     this.schedule3.scheduleDays = ['Monday', 'Wednesday', 'Friday'];
-    this.schedule3.repeadCycle = 2;
+    this.schedule3.repeatCycle = 2;
     this.schedule3.color = 'btn btn-primary';
     this.schedule3.pauseTime = true;
     this.schedule3.pauseStart = 12;
@@ -70,7 +73,7 @@ export class TimetablesComponent implements OnInit {
     this.schedule4.startHour = 8;
     this.schedule4.endHour = 17;
     this.schedule4.scheduleDays = ['Tuesday', 'Thursday'];
-    this.schedule4.repeadCycle = 2;
+    this.schedule4.repeatCycle = 2;
     this.schedule4.color = 'btn btn-warning';
     this.schedule4.pauseTime = false;
 

@@ -9,7 +9,8 @@
         <tr>
           <th style="width: 4%;height:35px"></th>
           <th style="width:4%" *ngFor="let hour of hours">
-            <span *ngIf="hour<10">0</span>{{hour}} <span *ngIf="hour<13">AM</span><span *ngIf="hour>=13">PM</span>
+            <span *ngIf="hour<10">0</span>{{hour}}
+<!--            <span *ngIf="hour<13">AM</span><span *ngIf="hour>=13">PM-->
           </th>
         </tr>
         </thead>
