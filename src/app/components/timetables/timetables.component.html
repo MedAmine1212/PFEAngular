@@ -19,7 +19,7 @@
             {{day}}
           </td>
           <td style="padding: 5px 0 5px 0;margin: 0" *ngFor="let hour of hours" >
-        <span *ngFor="let sch of scheduals">
+        <span *ngFor="let sch of schedules">
           {{checkSch(sch,day,hour)}}
           <span matTooltip="{{showTip(hour)}}" *ngIf="showSch" [ngClass]="sch.color" style="border-radius:0;width:100%;cursor:pointer;margin: 3px 0;height:20px" (click)="setCliked(sch,day,hour)"></span>
           <span *ngIf="!showSch && !showPause" class="btn btn-primary" style="cursor: default;border-radius:0;width:100%;margin: 3px 0;height:20px;opacity: 0"></span>
