@@ -7,7 +7,9 @@ export class Schedule {
   scheduleDays: string[];
   repeatCycle: number;
   color: string;
+  colorIcon: string;
   pauseTime: boolean;
   pauseStart: number;
   pauseEnd: number;
+  showSch: boolean;
 }

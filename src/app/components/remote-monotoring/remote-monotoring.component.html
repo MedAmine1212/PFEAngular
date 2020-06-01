@@ -17,7 +17,7 @@
             <router-outlet  name="secCon"></router-outlet>
           </div>
           <div class="card-footer">
-            {{time | date: 'dd MMMM yyyy '}} <span class="time">{{ time | date: 'hh:mm:ss a' }}</span></div>
+            {{time | date: 'dd MMMM yyyy '}} <span class="time">{{ time | date: 'HH:mm:ss a' }}</span></div>
 
         </div>
 
@@ -25,14 +25,10 @@
       <app-departments *ngIf="router.url === '/RemoteMonotoring/(mainCon:Departments)'" [@enterAnimation] (outPutData)="setClickedDep($event)"></app-departments>
       <app-employees *ngIf="router.url === '/RemoteMonotoring/(mainCon:Departments)'" (outPutData)="reloadDep($event)" [@enterSecondAnimation]></app-employees>
 
-      <!--TimeTables-->
-      <app-departments *ngIf="router.url === '/RemoteMonotoring/(mainCon:TimeTables)'" [@enterAnimation]></app-departments>
-      <app-timetables *ngIf="router.url === '/RemoteMonotoring/(mainCon:TimeTables)'" [@enterSecondAnimation]></app-timetables>
-
     </div>
   </div>
 
   <!--the rest-->
-    <router-outlet *ngIf="router.url !== '/RemoteMonotoring/(mainCon:TimeTables)' && router.url !== '/RemoteMonotoring' && router.url !== '/RemoteMonotoring/(mainCon:Absences)' && router.url !== '/RemoteMonotoring/(mainCon:Departments)'" style="margin: 15px" name="mainCon"></router-outlet>
+    <router-outlet *ngIf="router.url !== '/RemoteMonotoring' && router.url !== '/RemoteMonotoring/(mainCon:Absences)' && router.url !== '/RemoteMonotoring/(mainCon:Departments)'" style="margin: 15px" name="mainCon"></router-outlet>
 </div>
 

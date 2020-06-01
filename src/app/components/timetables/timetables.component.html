@@ -1,39 +1,99 @@
-<div style="width: 100%;padding-right: 20px">
-  <div class="main-card mb-3 card" style="height:670px;width:100%;margin-top: 40px">
-    <div class="card-header">
 
+<div class="app-main" style="margin-top:0;padding-top: 0px;height: 100%">
+
+  <div class="app-main__outer" style="margin-top: -30px">
+
+  <!-- side nav -->
+    <div class="app-sidebar sidebar-shadow" style="margin-top: -30px;padding-left:10px;margin-left: -300px">
+      <div class="app-header__logo">
+        <div class="logo-src"></div>
+        <div class="header__pane ml-auto">
+          <div>
+            <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
+                                    <span class="hamburger-box">
+                                        <span class="hamburger-inner"></span>
+                                    </span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="app-header__mobile-menu">
+        <div>
+          <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
+                                <span class="hamburger-box">
+                                    <span class="hamburger-inner"></span>
+                                </span>
+          </button>
+        </div>
+      </div>
+      <div class="scrollbar-sidebar">
+        <div class="app-sidebar__inner">
+          <ul  class="vertical-nav-menu" style="overflow-x:hidden;overflow-y: auto;height: 580px;">
+            <li class="app-sidebar__heading" style="font-size: 18px;padding-top: 10px;padding-bottom: 15px">
+              <i style="margin-right:7px;color:grey" class="fa fa-clock"></i>
+              Schedules<br><br><br>
+              <div style="margin-left: 40px;width:180px" class="search-wrapper">
+                <div style="position: absolute;background-color: transparent;margin-top: -15px;margin-left: -35px;width:170px" [ngClass]="{'search-wrapper active': showHideInput}">
+                  <div style="max-width:195px" class="input-holder">
+                    <input style="width:160px" type="text" [(ngModel)]="searchText" class="search-input" placeholder="Search...">
+                    <button (click)="showHideInput = true;" class="search-icon"><span></span></button>
+                  </div>
+                  <button (click)="showHideInput = false;" style="margin-left:-100px;" class="close"></button>
+                </div>
+              </div><br>
+            </li>
+            <li (click)="sch.showSch = !sch.showSch" class="schItem" *ngFor="let sch of schedules  | filter:searchText">
+            <span class="schIconSpan" [ngClass]="sch.colorIcon">
+                <i [ngStyle]="{'opacity':sch.showSch? '1' : '0' }" class="fa fa-check-circle">
+                </i>
+              </span>
+                {{sch.scheduleName}}
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <div class="card-body" style="overflow:auto;height:650px;margin-bottom: 10px">
-      <table class="table-striped" style="width: 100%;height: 100%">
-        <thead>
-        <tr>
-          <th style="width: 4%;height:35px"></th>
-          <th style="width:4%" *ngFor="let hour of hours">
-            <span *ngIf="hour<10">0</span>{{hour}}
-<!--            <span *ngIf="hour<13">AM</span><span *ngIf="hour>=13">PM-->
-          </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let day of days">
-          <td style="padding-left: 15px">
-            {{day}}
-          </td>
-          <td style="padding: 5px 0 5px 0;margin: 0" *ngFor="let hour of hours" >
+
+
+    <!--body-->
+  <div style="width: 100%;padding-right: 20px">
+    <div class="main-card mb-3 card" style="height:600px;width:100%">
+      <div class="card-header">
+
+      </div>
+      <div class="card-body" style="overflow:auto;height:600px;margin-bottom: 10px">
+        <table class="table-striped" style="width: 100%;height: 100%">
+          <thead>
+          <tr>
+            <th style="width: 4%;height:35px"></th>
+            <th style="width:4%" *ngFor="let hour of hours">
+              <span *ngIf="hour<10">0</span>{{hour}}
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let day of days">
+            <td style="padding-left: 15px">
+              {{day}}
+            </td>
+            <td style="padding: 5px 0 5px 0;margin: 0" *ngFor="let hour of hours" >
         <span *ngFor="let sch of schedules">
           {{checkSch(sch,day,hour)}}
           <span matTooltip="{{showTip(hour)}}" *ngIf="showSch" [ngClass]="sch.color" style="border-radius:0;width:100%;cursor:pointer;margin: 3px 0;height:20px" (click)="setCliked(sch,day,hour)"></span>
           <span *ngIf="!showSch && !showPause" class="btn btn-primary" style="cursor: default;border-radius:0;width:100%;margin: 3px 0;height:20px;opacity: 0"></span>
           <span *ngIf="showPause" class="btn btn-secondary" matTooltip="Pause time" style="opacity:0.3;cursor:default;border-radius:0;width:100%;margin: 3px 0;height:20px;"></span>
         </span>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="card-footer">
-      {{time | date: 'dd MMMM yyyy '}} <span class="time">{{ time | date: 'hh:mm:ss a' }}</span>
-    </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card-footer">
+        {{time | date: 'dd MMMM yyyy '}} <span class="time">{{ time | date: 'HH:mm:ss' }}</span>
+      </div>
 
+    </div>
   </div>
+
+</div>
 </div>
