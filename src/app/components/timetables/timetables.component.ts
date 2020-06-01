@@ -1,18 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { EventSettingsModel , ActionEventArgs , PopupOpenEventArgs } from '@syncfusion/ej2-angular-schedule';
-import {ColorsDisplay} from 'jasmine-spec-reporter/built/display/colors-display';
-import {datasource} from './datasource';
-import { DropDownList } from '@syncfusion/ej2-dropdowns';
-import { DateTimePicker } from '@syncfusion/ej2-calendars';
-import { L10n } from '@syncfusion/ej2-base';
+import {Schedule} from '../../models/Schedule';
 
-L10n.load({
-  'en-US': {
-    schedule: {
-      newEvent: 'Add new work schedule'
-    }
-  }
-});
 
 @Component({
   selector: 'app-timetables',
@@ -21,51 +9,109 @@ L10n.load({
 
 })
 export class TimetablesComponent implements OnInit {
-  setDate: any;
-  startHour = '07:00';
-  endHour = '24:00';
+  hours: number[];
+  days: string[];
+  schedule: Schedule = new Schedule();
+  schedule2: Schedule = new Schedule();
+  schedule3: Schedule = new Schedule();
+  schedule4: Schedule = new Schedule();
+  schedules: Schedule[] = [];
+  time = new Date();
+  showSch: boolean;
+  showPause: boolean;
+  constructor() {
+    this.hours = Array(24).fill(0).map((x, i) => i);
+    this.days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  }
 
+  ngOnInit(): void {
+    this.showPause = false;
+    this.showSch = false;
+    setInterval(() => {
+      this.time = new Date();
+    }, 1000);
+    this.schedule.scheduleId = 1;
+    this.schedule.scheduleName = 'Regular schedual';
+    this.schedule.scheduleDesc = 'Regular work hours schedular';
+    this.schedule.startHour = 8;
+    this.schedule.endHour = 17;
+    this.schedule.scheduleDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+    this.schedule.repeadCycle = 1;
+    this.schedule.color = 'btn btn-success';
+    this.schedule.pauseTime = true;
+    this.schedule.pauseStart = 12;
+    this.schedule.pauseEnd = 14;
 
-  public eventSettings: EventSettingsModel = { dataSource: datasource };
+    this.schedule2.scheduleId = 2;
+    this.schedule2.scheduleName = 'Half-Time schedual';
+    this.schedule2.scheduleDesc = 'Half-time work hours schedular';
+    this.schedule2.startHour = 8;
+    this.schedule2.endHour = 13;
+    this.schedule2.scheduleDays = ['Saturday'];
+    this.schedule2.repeadCycle = 1;
+    this.schedule2.color = 'btn btn-info';
+    this.schedule2.pauseTime = false;
 
-  onPopupOpen(args: PopupOpenEventArgs): void {
-    if (args.type === 'Editor') {
-      const statusElement: HTMLInputElement = args.element.querySelector('#EventType') as HTMLInputElement;
-      if (!statusElement.classList.contains('e-dropdownlist')) {
-        const dropDownListObject: DropDownList = new DropDownList({
-          placeholder: 'Choose status', value: statusElement.value,
-          dataSource: ['New', 'Requested', 'Confirmed']
-        });
-        dropDownListObject.appendTo(statusElement);
-        statusElement.setAttribute('name', 'EventType');
-      }
-      const startElement: HTMLInputElement = args.element.querySelector('#StartTime') as HTMLInputElement;
-      if (!startElement.classList.contains('e-datetimepicker')) {
-        new DateTimePicker({ value: new Date(startElement.value) || new Date() }, startElement);
-      }
-      const endElement: HTMLInputElement = args.element.querySelector('#EndTime') as HTMLInputElement;
-      if (!endElement.classList.contains('e-datetimepicker')) {
-        new DateTimePicker({ value: new Date(endElement.value) || new Date() }, endElement);
+    this.schedule3.scheduleId = 3;
+    this.schedule3.scheduleName = 'Custom schedual';
+    this.schedule3.scheduleDesc = 'Custom work hours schedular';
+    this.schedule3.startHour = 8;
+    this.schedule3.endHour = 17;
+    this.schedule3.scheduleDays = ['Monday', 'Wednesday', 'Friday'];
+    this.schedule3.repeadCycle = 2;
+    this.schedule3.color = 'btn btn-primary';
+    this.schedule3.pauseTime = true;
+    this.schedule3.pauseStart = 12;
+    this.schedule3.pauseEnd = 14;
+
+    this.schedule4.scheduleId = 4;
+    this.schedule4.scheduleName = 'Custom2 schedual';
+    this.schedule4.scheduleDesc = 'Custom2 work hours schedular';
+    this.schedule4.startHour = 8;
+    this.schedule4.endHour = 17;
+    this.schedule4.scheduleDays = ['Tuesday', 'Thursday'];
+    this.schedule4.repeadCycle = 2;
+    this.schedule4.color = 'btn btn-warning';
+    this.schedule4.pauseTime = false;
+
+    this.schedules.push(this.schedule);
+    this.schedules.push(this.schedule2);
+    this.schedules.push(this.schedule3);
+    this.schedules.push(this.schedule4);
+  }
+
+  setCliked(sch: Schedule, day: string, hour: number) {
+    console.log(sch.scheduleName + ': ' + sch.scheduleDays.indexOf(day));
+    console.log(day + ' ' + hour);
+  }
+
+  checkSch(sch: Schedule, day: string, hour: number) {
+    this.showPause = false;
+    this.showSch = false;
+    if ( sch.scheduleDays.indexOf(day) > -1 && sch.startHour <= hour && sch.endHour >= hour) {
+     this.showSch = true;
+   }
+    if (sch.pauseTime) {
+      if (sch.pauseStart <= hour && sch.pauseEnd > hour) {
+        this.showSch = false;
+        if (sch.scheduleDays.indexOf(day) > -1) {
+          this.showPause = true;
+        }
       }
     }
   }
 
-
-
-
-  // matnajmch ta3ml event fil weekend
-  // public onActionBegin(args: ActionEventArgs): void {
-  //   const weekEnds: number[] = [0, 6];
-  //   if (args.requestType === 'eventCreate' && weekEnds.indexOf((args.data[0].StartTime).getDay()) >= 0) {
-  //     args.cancel = true;
-  //   }
-  // }
-  constructor() {
+  showTip(hour: number) {
+    let h: string;
+    h = hour.toString();
+    if (hour < 10) {
+      h = '0' + h;
+    }
+    if (hour < 13) {
+      h = h + ' AM';
+    } else {
+      h = h + ' PM';
+    }
+    return h;
   }
-
-  ngOnInit(): void {
-    console.log(this.eventSettings);
-  }
-
-
 }

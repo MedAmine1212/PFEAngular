@@ -13,19 +13,18 @@ import {AddressService} from '../../services/address/address.service';
   styleUrls: ['./employee-details.component.css']
 })
 export class EmployeeDetailsComponent implements OnInit {
+  constructor(
+  @Inject(MAT_DIALOG_DATA) public emp: User, private departmentService: DepartmentService, private  userService: UserService,
+  private addressService: AddressService) {}
+  static refreshEmp: boolean;
   showUpdateForm: boolean;
   showAddressUpdateForm: boolean;
   departments: Department[];
   newEmp: User = new User();
   newEmpAddresses: Address [];
   selectedDep: number;
-
-  constructor(
-  public dialogRef: MatDialogRef<EmployeeDetailsComponent>,
-  @Inject(MAT_DIALOG_DATA) public emp: User, private departmentService: DepartmentService, private  userService: UserService,
-  private addressService: AddressService) {}
-
   ngOnInit(): void {
+    EmployeeDetailsComponent.refreshEmp = false;
     this.selectedDep = this.emp.department.depId;
     this.duplicateUser();
     this.duplicateAddresses();
@@ -59,12 +58,12 @@ export class EmployeeDetailsComponent implements OnInit {
   }
   saveAddresses() {
     for (const add of this.newEmpAddresses) {
-      this.addressService.modify(add, add.addressId).subscribe(ad=>{
-        console.log(ad);
-      });
+      this.addressService.modify(add, add.addressId).subscribe(ad => {
+        console.log('done');
+        EmployeeDetailsComponent.refreshEmp = true;
+        this.showAddressUpdateForm = false;
+      }, error1 => {console.log(error1), this.undoAddressesChanges(); });
     }
-    this.showUpdateForm = false;
-    this.showAddressUpdateForm = false;
   }
   saveUser() {
     for (const depp of this.departments) {
@@ -73,21 +72,18 @@ export class EmployeeDetailsComponent implements OnInit {
           break;
         }
     }
-    this.userService.modify(this.emp.userId, this.newEmp).subscribe();
-    this.showUpdateForm = false;
-  }
-  onNoClick(): void {
-    this.dialogRef.close();
+    this.userService.modify(this.emp.userId, this.newEmp).subscribe( next => {
+      this.showUpdateForm = false;
+      EmployeeDetailsComponent.refreshEmp = true;
+    }, error1 => {console.log(error1), this.undoUserChanges(); });
   }
 
   undoUserChanges() {
     this.duplicateUser();
     this.showUpdateForm = false;
   }
-
   undoAddressesChanges() {
     this.duplicateAddresses();
     this.showAddressUpdateForm = false;
   }
-
 }

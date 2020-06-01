@@ -8,6 +8,7 @@ import {Department} from '../../models/Department';
 import {DepartmentService} from '../../services/department/department.service';
 import {AddDepartmentComponent} from '../../dialogs/dialog-forms/add-department/add-department.component';
 import {MatDialog} from '@angular/material/dialog';
+import {animate, style, transition, trigger} from "@angular/animations";
 
 export class DynamicFlatNode {
   constructor(public item: Department, public level = 1, public expandable = false,
@@ -117,6 +118,20 @@ export class DynamicDataSource implements DataSource<DynamicFlatNode> {
  */
 @Component({
   selector: 'app-departments',
+  animations: [
+    trigger(
+      'enterAnimation', [
+        transition(':enter', [
+          style({transform: 'translateY(-100%)', opacity: 0}),
+          animate('500ms', style({transform: 'translateY(0)', opacity: 1}))
+        ]),
+        transition(':leave', [
+          style({transform: 'translateY(0)', opacity: 1}),
+          animate('0ms', style({transform: 'translateY(-100%)', opacity: 0}))
+        ])
+      ]
+    ),
+  ],
   templateUrl: './departments.component.html',
   styleUrls: ['./departments.component.css']
 })
@@ -133,11 +148,15 @@ export class DepartmentsComponent implements  OnInit {
   constructor(public dialog: MatDialog, private database: DynamicDatabase, private departmentService: DepartmentService) {
   }
   sendData(dep: Department) {
+    if (dep.depId === -1) {
+      this.clickedDep = dep;
+    } else {
     for (const depp of this.data) {
       if (dep.depId === depp.depId) {
         this.clickedDep = depp;
         break;
       }
+    }
     }
     this.outPutData.emit(this.clickedDep);
   }
@@ -175,7 +194,9 @@ export class DepartmentsComponent implements  OnInit {
       data: [null, 1]
     });
     dialogRef.afterClosed().subscribe(async result => {
-      this.reloadData();
+      if (result) {
+        this.reloadData();
+      }
     });
   }
 

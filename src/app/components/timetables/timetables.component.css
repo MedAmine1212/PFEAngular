@@ -1,0 +1,12 @@
+
+.time{
+  color: black;
+  margin-left: 80%;
+}
+.card-footer{
+  border-top: 0 !important;
+  color:black;
+  font-weight: bolder;
+  font-size: 17px;
+  width: 100%;
+}
