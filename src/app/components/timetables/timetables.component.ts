@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Schedule} from '../../models/Schedule';
+import {ScheduleService} from "../../services/schedule/schedule.service";
 
 
 @Component({
@@ -19,12 +20,14 @@ export class TimetablesComponent implements OnInit {
   time = new Date();
   showSch: boolean;
   showPause: boolean;
-  constructor() {
+  constructor(private  scheduleService: ScheduleService) {
     this.hours = Array(24).fill(0).map((x, i) => i);
     this.days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
   }
 
   ngOnInit(): void {
+    this.scheduleService.list().subscribe(list => console.log(list));
+
     this.showPause = false;
     this.showSch = false;
     setInterval(() => {
