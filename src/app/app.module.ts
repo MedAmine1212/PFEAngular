@@ -103,7 +103,8 @@ import {
         DragDropModule,
         MatNativeDateModule,
         ScheduleModule,
-        RecurrenceEditorModule
+        RecurrenceEditorModule,
+
 
     ],
   providers: [DayService,
