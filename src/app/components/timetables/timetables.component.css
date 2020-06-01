@@ -18,7 +18,6 @@
   display: block;
   line-height: 2.4rem;
   height: 2.4rem;
-  padding: 0 1.5rem 0 20px;
   position: relative;
   border-radius: .25rem;
   color: #343a40;
@@ -38,4 +37,10 @@
 .schIconSpan:hover{
   color:lightgrey;
   background-color: transparent;
+}
+
+.buttons{
+  font-size: 15px;
+  margin-right: -20px;
+  width: 30px;
 }

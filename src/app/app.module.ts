@@ -54,6 +54,9 @@ import {
 import {CalendarModule} from 'angular-calendar';
 import {SchedulerModule} from 'angular-calendar-scheduler';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { AddScheduleComponent } from './dialogs/dialog-forms/add-schedule/add-schedule.component';
+import {NgxMaterialTimepickerModule} from "ngx-material-timepicker";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 
 @NgModule({
@@ -75,6 +78,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     DialogComponent,
     EmployeeDetailsComponent,
     DeleteUserDialogComponent,
+    AddScheduleComponent,
   ],
   imports: [
     BrowserModule,
@@ -110,6 +114,10 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     CalendarModule,
     SchedulerModule.forRoot({locale: 'en', headerDateFormat: 'daysRange'}),
     MatProgressSpinnerModule,
+    NgxMaterialTimepickerModule,
+    MatFormFieldModule,
+    MatCheckboxModule
+
 
   ],
   providers: [DayService,

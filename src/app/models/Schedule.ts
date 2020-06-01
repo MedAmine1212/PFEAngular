@@ -1,10 +1,11 @@
+import {Planning} from './Planning';
+
 export class Schedule {
   scheduleId: number;
   scheduleName: string;
   scheduleDesc: string;
   startHour: number;
   endHour: number;
-  scheduleDays: string[];
   repeatCycle: number;
   color: string;
   colorIcon: string;
@@ -12,4 +13,5 @@ export class Schedule {
   pauseStart: number;
   pauseEnd: number;
   showSch: boolean;
+  planning: Planning [];
 }

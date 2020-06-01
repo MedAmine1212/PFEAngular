@@ -22,6 +22,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 input:focus, textarea , button, select{
   outline: none !important;
 }
+.cdk-overlay-container {
+  z-index: 500 !important;
+}
 .mat-dialog-container {
   margin-top: 28px !important;
 }

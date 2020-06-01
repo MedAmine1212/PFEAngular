@@ -1,0 +1,176 @@
+  <ng-template matStepLabel>Fill out user informations</ng-template>
+  <div  class="main-card mb-3 card">
+    <div class="card-header">
+
+      <h1>Add schedule</h1>
+      <hr>
+    </div>
+    <div class="card-body" style="padding-bottom: 40px">
+      <form [formGroup]="formGroup">
+        <div class="form-row">
+          <div class="form-group col-md-5">
+            <mat-form-field  appearance="outline">
+              <mat-label>Schedule Name</mat-label>
+              <input
+                matInput
+                required
+                id="inputScheduleName"
+                placeholder="Schedule name"
+                formControlName="schName"
+                >
+              <button mat-button  matSuffix mat-icon-button aria-label="Clear" >
+                <mat-icon>close</mat-icon>
+              </button>
+              <mat-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="form-group col-md-5">
+            <mat-form-field  appearance="outline">
+              <mat-label>Schedule Description</mat-label>
+              <input
+                matInput
+                required
+                id="inputScheduleDesc"
+                placeholder="Schedule Description"
+                formControlName="schDesc"
+              >
+              <button mat-button  matSuffix mat-icon-button aria-label="Clear" >
+                <mat-icon>close</mat-icon>
+              </button>
+              <mat-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-5">
+            <mat-form-field appearance="outline">
+              <mat-label>Start date</mat-label>
+              <input
+                matInput
+                [matDatepicker]="picker"
+                formControlName="startDate"
+              >
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="form-group col-md-5">
+            <mat-form-field appearance="outline">
+              <mat-label>End date</mat-label>
+              <input
+                matInput [matDatepicker]="picker2"
+                formControlName="endDate"
+
+              >
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-5">
+            <mat-form-field  appearance="outline">
+              <mat-label>Repeat cycle</mat-label>
+              <input
+                matInput
+                required
+                type="number"
+                id="inputRepeatCycle"
+                placeholder="Repeat cycle (per week)"
+                formControlName="repeatCyc"
+              >
+              <button mat-button  matSuffix mat-icon-button aria-label="Clear" >
+                <mat-icon>close</mat-icon>
+              </button>
+              <mat-error>
+              </mat-error>
+              <mat-hint>(weeks)</mat-hint>
+            </mat-form-field>
+          </div>
+          <div style="padding-top: 30px" class="form-group col-md-3">
+              <input
+                [format]="24"  readonly
+                class="choseTime"
+                placeholder="Begin hour"
+                [ngxTimepicker]="picker3">
+              <ngx-material-timepicker style="z-index: 1100" #picker3></ngx-material-timepicker>
+          </div>
+          <div style="padding-top: 30px" class="form-group col-md-3">
+            <input
+              [format]="24"  readonly
+              class="choseTime"
+              placeholder="End hour"
+              [ngxTimepicker]="picker4">
+            <ngx-material-timepicker style="z-index: 1100" #picker4></ngx-material-timepicker>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <mat-checkbox (change)="pauseTime = !pauseTime"> Pause time
+            </mat-checkbox><br>
+            <div style="height: 70px">
+            <table *ngIf="pauseTime">
+              <tr><td>
+            <input
+              [format]="24"  readonly
+              class="choseTime"
+              placeholder="Pause begin hour"
+              [ngxTimepicker]="picker5">
+            <ngx-material-timepicker style="z-index: 1100" #picker5></ngx-material-timepicker>
+              </td><td> <input
+              [format]="24"  readonly
+              class="choseTime"
+              placeholder="pause end hour"
+              [ngxTimepicker]="picker6">
+            <ngx-material-timepicker style="z-index: 1100" #picker6></ngx-material-timepicker>
+              </td>  </tr>
+            </table>
+            </div>
+          </div>
+          <div style="margin-bottom: -30px;padding-top:18px" class="form-group col-md-6">
+            <mat-label>Color</mat-label>
+            <table style="width: 70%">
+            <tr>
+            <td><div matTooltip="Primary" style="border-radius: 120px;height:20px;width: 20px" class="btn-primary"></div></td>
+            <td><div matTooltip="Secondary" style="border-radius: 120px;height:20px;width: 20px" class="btn-secondary"></div></td>
+            <td><div matTooltip="Light blue" style="border-radius: 120px;height:20px;width: 20px" class="btn-info"></div></td>
+            <td><div matTooltip="Yellow" style="border-radius: 120px;height:20px;width: 20px" class="btn-warning"></div></td>
+            <td><div matTooltip="Green" style="border-radius: 120px;height:20px;width: 20px" class="btn-success"></div></td>
+            <td><div matTooltip="Red" style="border-radius: 120px;height:20px;width: 20px" class="btn-danger"></div></td>
+            <td><div matTooltip="Dark" style="border-radius: 120px;height:20px;width: 20px" class="btn-dark"></div></td>
+            </tr>
+            </table>
+          </div>
+
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <mat-label>Repeat days: </mat-label>
+            <table style="width: 70%">
+              <tr>
+                <td><div matTooltip="Monday" style="border-radius: 120px;height:25px;width: 25px" class="btn-primary">Mo</div></td>
+                <td><div matTooltip="Tuesday" style="border-radius: 120px;height:25px;width: 25px" class="btn-secondary">Tu</div></td>
+                <td><div matTooltip="Wednesday" style="border-radius: 120px;height:25px;width: 25px" class="btn-info">We</div></td>
+                <td><div matTooltip="Thursday" style="border-radius: 120px;height:25px;width: 25px" class="btn-warning">Th</div></td>
+                <td><div matTooltip="Friday" style="border-radius: 120px;height:25px;width: 25px" class="btn-success">Fr</div></td>
+                <td><div matTooltip="Saturday" style="border-radius: 120px;height:25px;width: 25px" class="btn-danger">Sa</div></td>
+                <td><div matTooltip="Sunday" style="border-radius: 120px;height:25px;width: 25px" class="btn-dark">Su</div></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+  <div style="width:100%">
+    <div style="float: right;margin-top: -25px;margin-bottom: -20px;padding-top: 5px">
+      <button type="submit" mat-raised-button color="primary">Add Schedule</button>
+      <button type="button" (click)="closeThis()" class="btn btn-light" style="margin-left: 20px;">Cancel</button>
+    </div>
+  </div>
