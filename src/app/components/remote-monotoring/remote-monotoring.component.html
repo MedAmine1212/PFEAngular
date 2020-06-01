@@ -26,9 +26,13 @@
       <app-employees *ngIf="router.url === '/RemoteMonotoring/(mainCon:Departments)'" (outPutData)="reloadDep($event)" [@enterSecondAnimation]></app-employees>
 
     </div>
+  <!--the rest-->
+    <router-outlet *ngIf="router.url !== '/RemoteMonotoring' && router.url !== '/RemoteMonotoring/(mainCon:Employees)' && router.url !== '/RemoteMonotoring/(mainCon:Absences)' && router.url !== '/RemoteMonotoring/(mainCon:Departments)'" style="margin: 15px" name="mainCon"></router-outlet>
+
   </div>
 
-  <!--the rest-->
-    <router-outlet *ngIf="router.url !== '/RemoteMonotoring' && router.url !== '/RemoteMonotoring/(mainCon:Absences)' && router.url !== '/RemoteMonotoring/(mainCon:Departments)'" style="margin: 15px" name="mainCon"></router-outlet>
+  <!--Employees-->
+  <app-employees [@enterAnimation] *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)'" style="margin: 15px"></app-employees>
+
 </div>
 
