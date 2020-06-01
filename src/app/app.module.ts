@@ -51,9 +51,9 @@ import {
   WeekService,
   WorkWeekService
 } from '@syncfusion/ej2-angular-schedule';
-import {CalendarModule} from "angular-calendar";
-import {SchedulerModule} from "angular-calendar-scheduler";
-import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {CalendarModule} from 'angular-calendar';
+import {SchedulerModule} from 'angular-calendar-scheduler';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 @NgModule({

@@ -2,7 +2,10 @@
 
   <app-nav></app-nav>
 
-  <div class="app-main" style="height: 100%">
+  <!--time tables-->
+  <app-timetables *ngIf="router.url === '/RemoteMonotoring/(mainCon:TimeTables)'"></app-timetables>
+
+  <div *ngIf="router.url !== '/RemoteMonotoring/(mainCon:TimeTables)' && router.url !== '/RemoteMonotoring/(mainCon:Employees)'" class="app-main">
     <div class="app-main__outer">
       <!--Absences-->
         <div [@enterAnimation] *ngIf="router.url === '/RemoteMonotoring' || router.url === '/RemoteMonotoring/(mainCon:Absences)'" class="app-sidebar sidebar-shadow" style="max-width: 380px;margin-top: 0px;margin-left: -300px">
@@ -27,12 +30,13 @@
 
     </div>
   <!--the rest-->
-    <router-outlet *ngIf="router.url !== '/RemoteMonotoring' && router.url !== '/RemoteMonotoring/(mainCon:Employees)' && router.url !== '/RemoteMonotoring/(mainCon:Absences)' && router.url !== '/RemoteMonotoring/(mainCon:Departments)'" style="margin: 15px" name="mainCon"></router-outlet>
+    <router-outlet *ngIf="router.url !== '/RemoteMonotoring/(mainCon:TimeTables)' && router.url !== '/RemoteMonotoring' && router.url !== '/RemoteMonotoring/(mainCon:Employees)' && router.url !== '/RemoteMonotoring/(mainCon:Absences)' && router.url !== '/RemoteMonotoring/(mainCon:Departments)'" style="margin: 15px" name="mainCon"></router-outlet>
 
   </div>
 
   <!--Employees-->
-  <app-employees [@enterAnimation] *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)'" style="margin: 15px"></app-employees>
+  <app-employees [@enterAnimation] *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)'" style="margin: 70px 15px 15px;"></app-employees>
+
 
 </div>
 
