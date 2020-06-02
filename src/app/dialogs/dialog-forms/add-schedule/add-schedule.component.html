@@ -53,6 +53,7 @@
                 matInput
                 [matDatepicker]="picker"
                 formControlName="startDate"
+                [min]="minDate"
               >
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
@@ -83,6 +84,7 @@
                 id="inputRepeatCycle"
                 placeholder="Repeat cycle (per week)"
                 formControlName="repeatCyc"
+                [min]="1"
               >
               <button mat-button  matSuffix mat-icon-button aria-label="Clear" >
                 <mat-icon>close</mat-icon>
@@ -100,6 +102,8 @@
                 [format]="24"  readonly
                 class="choseTime"
                 placeholder="Begin hour"
+                [value]="beginHour"
+                #pickerBeginHour
                 [ngxTimepicker]="picker3">
               <ngx-material-timepicker class="timePicker" #picker3></ngx-material-timepicker>
           </div>
@@ -108,6 +112,8 @@
               [format]="24"  readonly
               class="choseTime"
               placeholder="End hour"
+              #pickerEndHour
+              [min]="pickerBeginHour.value"
               [ngxTimepicker]="picker4">
             <ngx-material-timepicker class="timePicker" #picker4></ngx-material-timepicker>
           </div>
@@ -160,12 +166,17 @@
                     [format]="24"  readonly
                     class="choseTime"
                     placeholder="Pause begin hour"
+                    [min]="pickerBeginHour.value"
+                    [max]="pickerEndHour.value"
+                    #pickerPauseBeginHour
                     [ngxTimepicker]="picker5">
                   <ngx-material-timepicker class="timePicker" #picker5></ngx-material-timepicker>
                 </td><td> <input
                   [format]="24"  readonly
                   class="choseTime"
                   placeholder="pause end hour"
+                  [min]="pickerPauseBeginHour.value"
+                  [max]="pickerEndHour.value"
                   [ngxTimepicker]="picker6">
                   <ngx-material-timepicker class="timePicker" #picker6></ngx-material-timepicker>
                 </td>  </tr>
