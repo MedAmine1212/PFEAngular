@@ -1,9 +1,9 @@
-<div class="app-main" style="margin-top: 50px">
+<div class="app-main main">
 
   <div class="app-main__outer">
 
     <!-- side nav -->
-    <div class="app-sidebar sidebar-shadow" style="padding-left: 0;margin-left: -280px">
+    <div class="app-sidebar sidebar-shadow sideBar">
       <div class="app-header__logo">
         <div class="logo-src"></div>
         <div class="header__pane ml-auto">
@@ -27,26 +27,26 @@
       </div>
       <div class="scrollbar-sidebar">
         <div class="app-sidebar__inner">
-          <ul  class="vertical-nav-menu" style="overflow-x:hidden;overflow-y: auto;height: 580px;">
-            <li class="app-sidebar__heading" style="font-size: 18px;padding-top: 10px;padding-bottom: 15px">
-              <i style="margin-right:7px;color:grey" class="fa fa-clock"></i>
+          <ul  class="vertical-nav-menu navMenu">
+            <li class="app-sidebar__heading sideBarHeading">
+              <i class="fa fa-clock"></i>
               Schedules
               <span class="buttons">
-                  <button (click)="addSchedule()" style="border-radius: 15px;margin-left:5px;margin-right: 9px" mat-raised-button matTooltip="Add Schedule" class="btn btn-outline-primary" ><span class="fas fa-plus"></span></button>
+                  <button (click)="addSchedule()" mat-raised-button matTooltip="Add Schedule" class="btn btn-outline-primary addSch" ><span class="fas fa-plus"></span></button>
              <span *ngIf="plannings.length>0">
-                <span *ngIf="selectedCount < plannings.length" (click)="showAll()" mat-raised-button matTooltip="Show all" style="cursor:pointer;font-size: 20px" class="fa fa-check-circle"></span>
-                <span *ngIf="selectedCount === plannings.length" (click)="hideAll()" mat-raised-button matTooltip="Hide all" style="cursor:pointer;font-size: 20px;color:red" class="fa fa-times-circle"></span>
+                <span *ngIf="selectedCount < plannings.length" (click)="showAll()" mat-raised-button matTooltip="Show all" class="fa fa-check-circle showAll"></span>
+                <span *ngIf="selectedCount === plannings.length" (click)="hideAll()" mat-raised-button matTooltip="Hide all" class="fa fa-times-circle showAll hideAll"></span>
               </span>
                 </span>
 
               <br><br><br>
-              <div  *ngIf="plannings.length>0" style="margin-left: 40px;width:180px" class="search-wrapper">
-                <div style="position: absolute;background-color: transparent;margin-top: -15px;margin-left: -35px;width:170px" [ngClass]="{'search-wrapper active': showHideInput}">
-                  <div style="max-width:195px" class="input-holder">
-                    <input style="width:160px" type="text" [(ngModel)]="searchText" class="search-input" placeholder="Search...">
+              <div  *ngIf="plannings.length>0" class="search-wrapper wrapper">
+                <div class="searchContainer" [ngClass]="{'search-wrapper active': showHideInput}">
+                  <div  class="input-holder holder">
+                    <input type="text" [(ngModel)]="searchText" class="search-input searchInput" placeholder="Search...">
                     <button (click)="showHideInput = true;" class="search-icon"><span></span></button>
                   </div>
-                  <button (click)="showHideInput = false;" style="margin-left:-100px;" class="close"></button>
+                  <button (click)="showHideInput = false;" class="close closeSearchButt"></button>
                 </div>
               </div><br>
             </li>
@@ -55,7 +55,7 @@
                 <i [ngStyle]="{'opacity':pl.schedule.showSch? '1' : '0' }" class="fa fa-check-circle">
                 </i>
               </span>
-              {{pl.schedule.scheduleName}}<span style="margin-left: 5px;color: grey;font-size: 10px;" matTooltip="Planned days">{{planningDaysDesc(pl)}}</span>
+              {{pl.schedule.scheduleName}}<span class="planDays" matTooltip="Planned days">{{planningDaysDesc(pl)}}</span>
             </li>
           </ul>
         </div>
@@ -64,24 +64,24 @@
 
 
     <!--body-->
-    <div style="padding-right: 20px;padding-left: 20px;">
-      <div *ngIf="plannings.length<=0" class="main-card mb-3 card" style="margin-top: -20px;height:530px">
-        <div class="card-body" style="margin: auto">
-          <div style="padding-top: 50%;text-align: center;color:black;font-weight:bolder;margin:0 auto;font-size:25px;width: 100%">
+    <div class="bodyContainer">
+      <div *ngIf="plannings.length<=0" class="main-card mb-3 card bodyCard">
+        <div class="card-body noSchBod">
+          <div class="noSchContainer">
             No schedules to show<br><br>
             <button class="btn btn-primary" (click)="addSchedule()">Add schedule</button>
           </div>
         </div>
       </div>
-      <div  *ngIf="plannings.length>0" class="main-card mb-3 card" style="margin-top: -20px;height:620px">
+      <div  *ngIf="plannings.length>0" class="main-card mb-3 card schCard">
         <div class="card-header">
           Time table
         </div>
-        <div class="card-body" style="overflow:auto;height:600px;margin-bottom: 10px;font-size: 13px">
-          <table class="table-hover mat-calendar-table-header"  style="height: 100%">
+        <div class="card-body schBody">
+          <table class="table-hover mat-calendar-table-header tableHeader">
             <thead>
             <tr class="d-table-row">
-              <th style="height:35px"></th>
+              <th class="emptyTh"></th>
               <th *ngFor="let hour of hours">
                 <span *ngIf="hour<10">0</span>{{hour}}:00
               </th>
@@ -89,15 +89,15 @@
             </thead>
             <tbody>
             <tr class="d-table-row" *ngFor="let day of days">
-              <td style="padding-left: 15px">
+              <td class="dayTd">
                 {{day}}
               </td>
-              <td style="padding: 5px 0 5px 0;margin: 0" *ngFor="let hour of hours" >
+              <td class="hrouTd" style="padding: 5px 0 5px 0" *ngFor="let hour of hours" >
         <span *ngFor="let pl of plannings">
           {{checkSch(pl,day,hour)}}
-          <span matTooltip="{{showTip(hour)}}" *ngIf="showSch" [ngClass]="pl.schedule.color" style="border-radius:0;width:100%;cursor:pointer;margin: 3px 0;height:20px" (click)="setCliked(pl,day,hour)"></span>
-          <span *ngIf="!showSch && !showPause" class="btn btn-primary" style="cursor: default;border-radius:0;width:100%;margin: 3px 0;height:20px;opacity: 0"></span>
-          <span *ngIf="showPause" class="btn btn-secondary" matTooltip="Pause time" style="opacity:0.3;cursor:default;border-radius:0;width:100%;margin: 3px 0;height:20px;"></span>
+          <span matTooltip="{{showTip(hour)}}" *ngIf="showSch" [ngClass]="pl.schedule.color" class="schSpan" (click)="setCliked(pl,day,hour)"></span>
+          <span *ngIf="!showSch && !showPause" class="btn btn-primary nothingSpan"></span>
+          <span *ngIf="showPause" class="btn btn-secondary pauseSpan" matTooltip="Pause time"></span>
         </span>
               </td>
             </tr>

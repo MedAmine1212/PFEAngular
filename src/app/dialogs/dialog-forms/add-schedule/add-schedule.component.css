@@ -2,3 +2,67 @@
   border:none;
   border-bottom: 1px solid grey;
 }
+.days{
+  padding-left: 7px;
+  padding-top:5px;
+  border-radius: 120px;
+  height:30px;
+  width: 30px;
+  cursor: pointer;
+}
+.days:hover{
+  background-color: cornflowerblue;
+}
+.daysChecked{
+  background-color: cornflowerblue;
+}
+.daysTd{
+  padding-bottom: 8px;
+}
+.colors {
+  border-radius: 120px;
+  height:20px;
+  width: 20px;
+  cursor: pointer;
+}
+.colors:hover{
+  border:4px solid lightblue;
+}
+.colorsChecked{
+  border:4px solid lightblue;
+}
+.lastRow{
+  height: 80px;
+  margin-bottom: -40px;
+}
+.buttonsDiv{
+  float: right;
+  margin-top:15px;
+}
+.cancelButt{
+  margin-left: 20px;
+}
+.main{
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.hours {
+  padding-top: 30px;
+}
+.timePicker{
+  z-index: 1100;
+}
+.daysTable{
+  width: 45%;
+  margin-top:5px;
+}
+.colorsRow{
+  margin-bottom: -30px;
+  padding-top:18px
+}
+.colorTable{
+  width: 70%;
+}
+.pauseTimeDiv{
+  height: 70px;
+}

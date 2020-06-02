@@ -104,7 +104,7 @@ export class TimetablesComponent implements OnInit {
   addSchedule() {
     const dialogRef = this.dialog.open(AddScheduleComponent, {
       width: '800px',
-      height: '580px',
+      height: '620px',
       data: null
     });
     dialogRef.afterClosed().subscribe(async result => {
