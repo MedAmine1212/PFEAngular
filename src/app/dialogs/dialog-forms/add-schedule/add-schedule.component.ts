@@ -1,6 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Schedule} from '../../../models/Schedule';
+import {Planning} from '../../../models/Planning';
 
 @Component({
   selector: 'app-add-schedule',
@@ -9,19 +11,19 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 })
 export class AddScheduleComponent implements OnInit {
   formGroup: FormGroup;
-  pauseTime: boolean;
-  repeatDays: string[] = [];
-  color: string;
-  iconColor: string;
+  schedule: Schedule = new Schedule();
+  planning: Planning = new Planning();
 
   constructor(public dialogRef: MatDialogRef<AddScheduleComponent>,
               private formBuilder: FormBuilder,
               @Inject(MAT_DIALOG_DATA) public data: Array<any>) { }
 
   ngOnInit(): void {
-    this.color = 'btn btn-primary';
-    this.iconColor = 'btn btn-outline-primary';
-    this.pauseTime = false;
+    this.planning.schedule = this.schedule;
+    this.schedule.color = 'btn btn-primary';
+    this.schedule.colorIcon = 'btn btn-outline-primary';
+    this.schedule.pauseTime = false;
+    this.planning.scheduleDays = [];
     this.FormGroup();
   }
 
@@ -42,15 +44,15 @@ export class AddScheduleComponent implements OnInit {
   }
 
   addRemoveDay(day: string) {
-    if (this.repeatDays.indexOf(day) > -1) {
-        this.repeatDays.splice(this.repeatDays.indexOf(day), 1);
+    if (this.planning.scheduleDays.indexOf(day) > -1) {
+        this.planning.scheduleDays.splice(this.planning.scheduleDays.indexOf(day), 1);
     } else {
-      this.repeatDays.push(day);
+      this.planning.scheduleDays.push(day);
     }
   }
 
   choseColor(color: string) {
-    this.color = 'btn btn-' + color;
-    this.iconColor = 'btn btn-outline-' + color;
+    this.schedule.color = 'btn btn-' + color;
+    this.schedule.colorIcon = 'btn btn-outline-' + color;
   }
 }

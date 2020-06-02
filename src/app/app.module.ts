@@ -40,19 +40,9 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatSelectModule} from '@angular/material/select';
 import {DialogComponent} from './dialogs/dialog.component';
 import {EmployeeDetailsComponent} from './dialogs/employee-details/employee-details.component';
-import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatNativeDateModule} from '@angular/material/core';
 import {DeleteUserDialogComponent} from './dialogs/delete-user-dialog/delete-user-dialog.component';
-import {
-  AgendaService,
-  DayService, DragAndDropService, MonthAgendaService, MonthService,
-  RecurrenceEditorModule, ResizeService,
-  ScheduleModule, TimelineMonthService, TimelineViewsService,
-  WeekService,
-  WorkWeekService
-} from '@syncfusion/ej2-angular-schedule';
 import {CalendarModule} from 'angular-calendar';
-import {SchedulerModule} from 'angular-calendar-scheduler';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { AddScheduleComponent } from './dialogs/dialog-forms/add-schedule/add-schedule.component';
 import {NgxMaterialTimepickerModule} from "ngx-material-timepicker";
@@ -107,29 +97,16 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     MatInputModule,
     MatButtonToggleModule,
     MatSelectModule,
-    DragDropModule,
     MatNativeDateModule,
-    ScheduleModule,
-    RecurrenceEditorModule,
     CalendarModule,
-    SchedulerModule.forRoot({locale: 'en', headerDateFormat: 'daysRange'}),
     MatProgressSpinnerModule,
-    NgxMaterialTimepickerModule,
     MatFormFieldModule,
-    MatCheckboxModule
+    NgxMaterialTimepickerModule,
+    MatCheckboxModule,
 
 
   ],
-  providers: [DayService,
-    WeekService,
-    WorkWeekService,
-    MonthService,
-    AgendaService,
-    MonthAgendaService,
-    TimelineViewsService,
-    TimelineMonthService,
-    ResizeService,
-    DragAndDropService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -118,13 +118,13 @@
             </div>
             <table class="daysTable">
               <tr>
-                <td class="daysTd"><div matTooltip="Monday" (click)="addRemoveDay('Monday')" style="padding-left: 5px !important;"  class="btn-secondary days" [ngStyle]="{'background-color':repeatDays.indexOf('Monday')> -1 ? 'cornflowerblue' :''}">Mo</div></td>
-                <td class="daysTd"><div matTooltip="Tuesday" (click)="addRemoveDay('Tuesday')" class="btn-secondary days" [ngStyle]="{'background-color':repeatDays.indexOf('Tuesday')> -1 ? 'cornflowerblue' :''}">Tu</div></td>
-                <td class="daysTd"><div matTooltip="Wednesday" (click)="addRemoveDay('Wednesday')" style="padding-left: 5px !important;" class="btn-secondary days" [ngStyle]="{'background-color':repeatDays.indexOf('Wednesday')> -1 ? 'cornflowerblue' :''}">We</div></td></tr><tr>
-              <td class="daysTd"><div matTooltip="Thursday" (click)="addRemoveDay('Thursday')"  class="btn-secondary days" [ngStyle]="{'background-color':repeatDays.indexOf('Thursday')> -1 ? 'cornflowerblue' :''}">Th</div></td>
-              <td class="daysTd"><div matTooltip="Friday" (click)="addRemoveDay('Friday')" style="padding-left: 8px" class="btn-secondary days" [ngStyle]="{'background-color':repeatDays.indexOf('Friday')> -1 ? 'cornflowerblue' :''}">Fr</div></td>
-              <td class="daysTd"><div matTooltip="Saturday" (click)="addRemoveDay('Saturday')" class="btn-secondary days" [ngStyle]="{'background-color':repeatDays.indexOf('Saturday')> -1 ? 'cornflowerblue' :''}">Sa</div></td>
-              <td class="daysTd"><div matTooltip="Sunday" (click)="addRemoveDay('Sunday')" class="btn-secondary days" [ngStyle]="{'background-color':repeatDays.indexOf('Sunday')> -1 ? 'cornflowerblue' :''}">Su</div></td>
+                <td class="daysTd"><div matTooltip="Monday" (click)="addRemoveDay('Monday')" style="padding-left: 5px !important;"  class="btn-secondary days" [ngStyle]="{'background-color':planning.scheduleDays.indexOf('Monday')> -1 ? 'cornflowerblue' :''}">Mo</div></td>
+                <td class="daysTd"><div matTooltip="Tuesday" (click)="addRemoveDay('Tuesday')" class="btn-secondary days" [ngStyle]="{'background-color':planning.scheduleDays.indexOf('Tuesday')> -1 ? 'cornflowerblue' :''}">Tu</div></td>
+                <td class="daysTd"><div matTooltip="Wednesday" (click)="addRemoveDay('Wednesday')" style="padding-left: 5px !important;" class="btn-secondary days" [ngStyle]="{'background-color':planning.scheduleDays.indexOf('Wednesday')> -1 ? 'cornflowerblue' :''}">We</div></td></tr><tr>
+              <td class="daysTd"><div matTooltip="Thursday" (click)="addRemoveDay('Thursday')"  class="btn-secondary days" [ngStyle]="{'background-color':planning.scheduleDays.indexOf('Thursday')> -1 ? 'cornflowerblue' :''}">Th</div></td>
+              <td class="daysTd"><div matTooltip="Friday" (click)="addRemoveDay('Friday')" style="padding-left: 8px" class="btn-secondary days" [ngStyle]="{'background-color':planning.scheduleDays.indexOf('Friday')> -1 ? 'cornflowerblue' :''}">Fr</div></td>
+              <td class="daysTd"><div matTooltip="Saturday" (click)="addRemoveDay('Saturday')" class="btn-secondary days" [ngStyle]="{'background-color':planning.scheduleDays.indexOf('Saturday')> -1 ? 'cornflowerblue' :''}">Sa</div></td>
+              <td class="daysTd"><div matTooltip="Sunday" (click)="addRemoveDay('Sunday')" class="btn-secondary days" [ngStyle]="{'background-color':planning.scheduleDays.indexOf('Sunday')> -1 ? 'cornflowerblue' :''}">Su</div></td>
             </tr>
             </table>
           </div>
@@ -134,13 +134,13 @@
             </div>
             <table class="colorTable">
             <tr>
-            <td matTooltip="Primary"><div (click)="choseColor('primary')" [ngClass]="color === 'btn btn-primary' ? 'btn-primary colorsChecked' : 'btn-primary colors'"></div></td>
-            <td  matTooltip="Secondary" ><div (click)="choseColor('secondary')" [ngClass]="color === 'btn btn-secondary' ? 'btn-secondary colorsChecked' : 'btn-secondary colors'"></div></td>
-            <td matTooltip="Light blue"><div (click)="choseColor('info')" [ngClass]="color === 'btn btn-info' ? 'btn-info colorsChecked' : 'btn-info colors'"></div></td>
-            <td matTooltip="Yellow"><div (click)="choseColor('warning')" [ngClass]="color === 'btn btn-warning' ? 'btn-warning colorsChecked' : 'btn-warning colors'"></div></td>
-            <td matTooltip="Green"><div (click)="choseColor('success')" [ngClass]="color === 'btn btn-success' ? 'btn-success colorsChecked' : 'btn-success colors'"></div></td>
-            <td matTooltip="Red"><div (click)="choseColor('danger')" [ngClass]="color === 'btn btn-danger' ? 'btn-danger colorsChecked' : 'btn-danger colors'"></div></td>
-            <td matTooltip="Dark"><div (click)="choseColor('dark')" [ngClass]="color === 'btn btn-dark' ? 'btn-dark colorsChecked' : 'btn-dark colors'"></div></td>
+            <td matTooltip="Primary"><div (click)="choseColor('primary')" [ngClass]="schedule.color === 'btn btn-primary' ? 'btn-primary colorsChecked' : 'btn-primary colors'"></div></td>
+            <td  matTooltip="Secondary" ><div (click)="choseColor('secondary')" [ngClass]="schedule.color === 'btn btn-secondary' ? 'btn-secondary colorsChecked' : 'btn-secondary colors'"></div></td>
+            <td matTooltip="Light blue"><div (click)="choseColor('info')" [ngClass]="schedule.color === 'btn btn-info' ? 'btn-info colorsChecked' : 'btn-info colors'"></div></td>
+            <td matTooltip="Yellow"><div (click)="choseColor('warning')" [ngClass]="schedule.color === 'btn btn-warning' ? 'btn-warning colorsChecked' : 'btn-warning colors'"></div></td>
+            <td matTooltip="Green"><div (click)="choseColor('success')" [ngClass]="schedule.color === 'btn btn-success' ? 'btn-success colorsChecked' : 'btn-success colors'"></div></td>
+            <td matTooltip="Red"><div (click)="choseColor('danger')" [ngClass]="schedule.color === 'btn btn-danger' ? 'btn-danger colorsChecked' : 'btn-danger colors'"></div></td>
+            <td matTooltip="Dark"><div (click)="choseColor('dark')" [ngClass]="schedule.color === 'btn btn-dark' ? 'btn-dark colorsChecked' : 'btn-dark colors'"></div></td>
             </tr>
             </table>
           </div>
@@ -150,10 +150,10 @@
         <div class="form-row lastRow">
 
           <div class="form-group col-md-6">
-            <mat-checkbox (change)="pauseTime = !pauseTime"> Pause time
+            <mat-checkbox (change)="schedule.pauseTime = !schedule.pauseTime"> Pause time
             </mat-checkbox><br>
             <div class="pauseTimeDiv">
-              <table *ngIf="pauseTime">
+              <table *ngIf="schedule.pauseTime">
                 <tr><td>
                   <input
                     [format]="24"  readonly
