@@ -57,6 +57,5 @@ export class AddScheduleComponent implements OnInit {
 
   addSchedule() {
     this.schedule.showSch = true;
-
   }
 }
