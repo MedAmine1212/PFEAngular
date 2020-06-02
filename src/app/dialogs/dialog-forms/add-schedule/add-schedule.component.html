@@ -17,6 +17,7 @@
                 id="inputScheduleName"
                 placeholder="Schedule name"
                 formControlName="schName"
+                [(ngModel)]="schedule.scheduleName"
                 >
               <button mat-button  matSuffix mat-icon-button aria-label="Clear" >
                 <mat-icon>close</mat-icon>
@@ -173,7 +174,7 @@
           </div>
           <div class="form-group col-md-6">
             <div class="buttonsDiv">
-              <button type="submit" mat-raised-button color="primary">Add Schedule</button>
+              <button type="submit" mat-raised-button color="primary" (click)="addSchedule()" [disabled]="!formGroup.valid">Add Schedule</button>
               <button type="button" (click)="closeThis()" class="btn btn-light cancelButt">Cancel</button>
             </div>
 

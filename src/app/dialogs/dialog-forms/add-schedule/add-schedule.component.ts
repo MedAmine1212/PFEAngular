@@ -39,7 +39,6 @@ export class AddScheduleComponent implements OnInit {
       endDate: ['', [Validators.required]],
       beginHour: ['', [Validators.required]],
       repeatCyc: ['', [Validators.required]],
-      color: ['', [Validators.required]],
     });
   }
 
@@ -54,5 +53,10 @@ export class AddScheduleComponent implements OnInit {
   choseColor(color: string) {
     this.schedule.color = 'btn btn-' + color;
     this.schedule.colorIcon = 'btn btn-outline-' + color;
+  }
+
+  addSchedule() {
+    this.schedule.showSch = true;
+
   }
 }
