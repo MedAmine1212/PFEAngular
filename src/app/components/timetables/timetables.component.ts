@@ -50,12 +50,16 @@ export class TimetablesComponent implements OnInit {
   checkSch(pl: Planning, day: string, hour: number) {
     this.showPause = false;
     this.showSch = false;
+    const hb = pl.schedule.startHour / 60;
+    const hd = pl.schedule.endHour / 60;
+    const ps = pl.schedule.pauseStart / 60;
+    const pe = pl.schedule.pauseEnd / 60;
     if (pl.schedule.showSch) {
-      if ( pl.scheduleDays.indexOf(day) > -1 && pl.schedule.startHour <= hour && pl.schedule.endHour >= hour) {
+      if ( pl.scheduleDays.indexOf(day) > -1 && Math.floor(hb) <= hour && Math.floor(hd) >= hour) {
         this.showSch = true;
       }
       if (pl.schedule.pauseTime) {
-        if (pl.schedule.pauseStart <= hour && pl.schedule.pauseEnd > hour) {
+        if (Math.floor(ps) <= hour && Math.floor(pe) > hour) {
           this.showSch = false;
           if (pl.scheduleDays.indexOf(day) > -1) {
             this.showPause = true;

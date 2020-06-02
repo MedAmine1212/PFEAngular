@@ -35,7 +35,7 @@ export class AddScheduleComponent implements OnInit {
     const currentMonth = new Date().getMonth();
     const currentDay = new Date().getDay();
     this.minDate = new Date(currentYear , currentMonth, currentDay);
-    this.schedule.planning = [];
+    this.schedule.plannings = [];
     this.pauseEndHour = '';
     this.pauseStartHour = '';
     this.schedule.color = 'btn btn-primary';
@@ -45,7 +45,6 @@ export class AddScheduleComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.scheduleService.list().subscribe(r => console.log(r));
     this.FormGroup();
     this.FormGroup2();
   }
@@ -95,8 +94,8 @@ export class AddScheduleComponent implements OnInit {
       Number.parseInt(this.pauseEndHour.slice(3, this.pauseEndHour.length), 0);
     this.planning.startDate = this.startDate;
     this.planning.endDate = this.endDate;
-    this.schedule.planning.push(this.planning);
-    this.scheduleService.add(this.schedule).subscribe(user => {
+    this.schedule.plannings.push(this.planning);
+    this.scheduleService.add(this.schedule).subscribe(sch => {
       this.dialogComponent = this.dialog.open(DialogComponent, {
         width: '400px',
         data : 'Schedule added successfully ! '

@@ -12,5 +12,5 @@ export class Schedule {
   pauseStart: number;
   pauseEnd: number;
   showSch: boolean;
-  planning: Planning [];
+  plannings: Planning [];
 }
