@@ -96,7 +96,9 @@ export class AddScheduleComponent implements OnInit {
     this.planning.startDate = this.startDate;
     this.planning.endDate = this.endDate;
     this.schedule.planning.push(this.planning);
-    this.scheduleService.add(this.schedule).subscribe(user => {
+    console.log(this.schedule);
+    this.scheduleService.add(this.schedule).subscribe(sch => {
+      console.log(sch);
       this.dialogComponent = this.dialog.open(DialogComponent, {
         width: '400px',
         data : 'Schedule added successfully ! '
