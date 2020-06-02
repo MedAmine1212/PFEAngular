@@ -6,4 +6,5 @@ export class Planning {
   scheduleDays: string[];
   startDate: string;
   endDate: string;
+  repeatCycle: number;
 }

@@ -91,12 +91,6 @@ export class AddUserComponent implements  AfterViewInit  {
       this.user.department = this.data;
     }
     console.log(this.user.department);
-
-
-
-
-
-
   }
 
   ngAfterViewInit(): void {

@@ -6,7 +6,6 @@ export class Schedule {
   scheduleDesc: string;
   startHour: number;
   endHour: number;
-  repeatCycle: number;
   color: string;
   colorIcon: string;
   pauseTime: boolean;
