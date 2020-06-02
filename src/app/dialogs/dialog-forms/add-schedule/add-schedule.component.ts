@@ -19,8 +19,8 @@ export class AddScheduleComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: Array<any>) { }
 
   ngOnInit(): void {
-    this.color = '';
-    this.iconColor = '';
+    this.color = 'btn btn-primary';
+    this.iconColor = 'btn btn-outline-primary';
     this.pauseTime = false;
     this.FormGroup();
   }

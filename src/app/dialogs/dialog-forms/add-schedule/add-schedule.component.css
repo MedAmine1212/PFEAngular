@@ -68,3 +68,20 @@
 .pauseTimeDiv{
   height: 70px;
 }
+.colorsLabel{
+  color: grey;
+  margin-top: -20px;
+  margin-bottom: 20px;
+}
+.timeLabel{
+  color: grey;
+  margin-top: -30px;
+  margin-bottom: 11px;
+}
+.daysLabel{
+  margin-bottom: 15px;
+  color: grey;
+}
+.daysColorsRow{
+  margin-top: -8px;
+}
