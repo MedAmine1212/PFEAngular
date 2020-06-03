@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {LoginComponent} from './components/login/login.component';
-import { RemoteMonotoringComponent} from './components/remote-monotoring/remote-monotoring.component';
+import { RemoteMonitoringComponent} from './components/remote-monitoring/remote-monitoring.component';
 import {AbsencesComponent} from './components/absences/absences.component';
 import {DepartmentsComponent} from './components/departments/departments.component';
 import {AdministratorsComponent} from './components/administrators/administrators.component';
@@ -11,7 +11,7 @@ import {EmployeesComponent} from './components/employees/employees.component';
 
 const routes: Routes = [
   {path : '' , component: LoginComponent},
-  {path : 'RemoteMonotoring' , component: RemoteMonotoringComponent,
+  {path : 'RemoteMonitoring' , component: RemoteMonitoringComponent,
     children:[
       {
         path: '',

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {animate, style, transition, trigger} from '@angular/animations';
-import {RemoteMonotoringComponent} from '../remote-monotoring/remote-monotoring.component';
+import {RemoteMonitoringComponent} from '../remote-monitoring/remote-monitoring.component';
 
 @Component({
   selector: 'app-nav',
