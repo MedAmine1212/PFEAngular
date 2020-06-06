@@ -95,7 +95,7 @@
               <td class="hrouTd" style="padding: 5px 0 5px 0" *ngFor="let hour of hours" >
         <span *ngFor="let pl of plannings">
           {{checkSch(pl,day,hour)}}
-          <span matTooltip="{{showTip(hour)}}" *ngIf="showSch" [ngClass]="pl.schedule.color" class="schSpan" (click)="setCliked(pl,day,hour)"></span>
+          <span matTooltip="{{showTip(hour,pl)}}" [ngStyle]="{'width': startHour == hour && startMinutes !== 0 ? returnWidth(startMinutes) : endHour == hour && endMinutes !== 0 ? returnWidth(endMinutes) : '100%' , 'float': startHour == hour ? 'right' : 'left'}" *ngIf="showSch" [ngClass]="pl.schedule.color" class="schSpan" (click)="setCliked(pl,day,hour)"></span>
           <span *ngIf="!showSch && !showPause" class="btn btn-primary nothingSpan"></span>
           <span *ngIf="showPause" class="btn btn-secondary pauseSpan" matTooltip="Pause time"></span>
         </span>
