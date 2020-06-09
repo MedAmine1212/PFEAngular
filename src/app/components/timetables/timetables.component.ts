@@ -6,6 +6,7 @@ import {AddScheduleComponent} from '../../dialogs/dialog-forms/add-schedule/add-
 import {MatDialog} from '@angular/material/dialog';
 import {PlanningService} from '../../services/planning/planning.service';
 import {Planning} from '../../models/Planning';
+import {DeletePlanningDialogComponent} from '../../dialogs/delete-planning-dialog/delete-planning-dialog.component';
 
 
 @Component({
@@ -33,6 +34,9 @@ export class TimetablesComponent implements OnInit {
   endHour: number;
   pauseStart: number;
   pauseEnd: number;
+  menuTop: string;
+  showMenu: boolean;
+  rightClicked: Planning;
   constructor(public dialog: MatDialog, private  scheduleService: ScheduleService, private  planningService: PlanningService) {
     this.hours = Array(24).fill(6).map((x, i) => i);
     this.days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -44,6 +48,8 @@ export class TimetablesComponent implements OnInit {
     this.endHour = 0;
     this.pauseStart = 0;
     this.pauseEnd = 0;
+    this.menuTop = '0';
+    this.showMenu = false;
   }
 
   ngOnInit(): void {
@@ -59,7 +65,7 @@ export class TimetablesComponent implements OnInit {
   }
 
   setCliked(pl: Planning, day: string, hour: number) {
-    console.log(pl.schedule.scheduleName + ': ' + pl.scheduleDays.indexOf(day));
+    console.log(pl.planningName + ': ' + pl.scheduleDays.indexOf(day));
     console.log(day + ' ' + hour);
   }
 
@@ -67,7 +73,7 @@ export class TimetablesComponent implements OnInit {
     this.showPause = false;
     this.showSch = false;
     this.getTime(pl);
-    if (pl.schedule.showSch) {
+    if (pl.showPl) {
       if ( pl.scheduleDays.indexOf(day) > -1 && this.startHour <= hour && this.endHour >= hour) {
         this.showSch = true;
       }
@@ -88,11 +94,18 @@ export class TimetablesComponent implements OnInit {
     if (hour < 10) {
       h = '0' + h;
     }
+    h = h + ':';
     this.getTime(pl);
-    if ( this.startHour === hour) {
-      h = h + ':' + this.startMinutes.toString();
-    } else if (this.endHour === hour) {
-      h = h + ':' + this.endMinutes.toString();
+    if ( this.startHour === hour && this.startMinutes > 0) {
+      if (this.startMinutes < 10) {
+        h = h + '0';
+      }
+      h = h + this.startMinutes.toString();
+    } else if (this.endHour === hour && this.endMinutes > 0) {
+      if (this.endHour < 10) {
+        h = h + '0';
+      }
+      h = h + this.endMinutes.toString();
     } else {
     h = h + ':00';
     }
@@ -102,7 +115,7 @@ export class TimetablesComponent implements OnInit {
   showAll() {
     this.selectedCount = this.plannings.length;
     for (const pl of this.plannings) {
-      pl.schedule.showSch = true;
+      pl.showPl = true;
     }
 
   }
@@ -111,21 +124,21 @@ export class TimetablesComponent implements OnInit {
   hideAll() {
     this.selectedCount = 0;
     for (const pl of this.plannings) {
-      pl.schedule.showSch = false;
+      pl.showPl = false;
     }
   }
 
   showHideSch(pl: Planning) {
-    pl.schedule.showSch = !pl.schedule.showSch;
+    pl.showPl = !pl.showPl;
 
-    if (pl.schedule.showSch) {
+    if (pl.showPl) {
       this.selectedCount++;
     } else {
       this.selectedCount--;
     }
   }
 
-  addSchedule() {
+  addPlanning() {
     const dialogRef = this.dialog.open(AddScheduleComponent, {
       width: '800px',
       height: '620px',
@@ -141,9 +154,8 @@ export class TimetablesComponent implements OnInit {
   private reloadData() {
     this.planningService.list().subscribe(list => {
       this.plannings = list;
-      console.table(this.plannings);
       for (const pl of this.plannings) {
-        if (pl.schedule.showSch) {
+        if (pl.showPl) {
           this.selectedCount++;
         }
       }
@@ -176,5 +188,56 @@ export class TimetablesComponent implements OnInit {
     this.pauseEnd = Math.floor(pl.schedule.pauseEnd / 60);
     this.pauseEndMinutes = pl.schedule.pauseEnd % 60;
 
+  }
+
+  onRightClick(e, pl) {
+    this.rightClicked = pl;
+    e.preventDefault();
+    this.showMenu = true;
+    this.menuTop = (e.pageY - 35) + 'px';
+  }
+
+  noClick() {
+    if (this.showMenu) {
+        this.showMenu = false;
+    }
+  }
+
+  openDeletePlanDialog() {
+    if (this.showMenu) {
+      const dialogRef = this.dialog.open(DeletePlanningDialogComponent, {
+        width: '400px',
+        height: '380',
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.planningService.remove(this.rightClicked.planningId).subscribe(() => {
+            this.rightClicked = null;
+            console.log('Refreshing plannings..');
+            this.reloadData();
+          }, error1 => console.log(error1));
+        }
+
+      });
+    }
+  }
+
+  openDetailsDialog() {
+    if (this.showMenu) {
+      const dialogRef = this.dialog.open(AddScheduleComponent, {
+        width: '900px',
+        height: '625px',
+        panelClass: 'matDialogClass2',
+        data: this.rightClicked
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+            this.rightClicked = null;
+            console.log('Refreshing plannings..');
+            this.reloadData();
+        }
+
+      });
+    }
   }
 }

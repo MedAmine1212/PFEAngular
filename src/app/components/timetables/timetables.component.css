@@ -96,6 +96,104 @@
 .closeSearchButt{
   margin-left:-100px;
 }
+.main{
+  margin-top: 50px;
+}
+.sideBar{
+  padding-left: 0;
+  margin-left: -280px;
+}
+.navMenu{
+  overflow-x:hidden;
+  overflow-y: auto;
+  height: 580px;
+}
+.sideBarHeading{
+  font-size: 18px;
+  padding-top: 10px;
+  padding-bottom: 15px;
+}
+.fa-clock{
+  margin-right:7px;
+  color:grey;
+}
+.addSch{
+  border-radius: 15px;
+  margin-left:5px;
+  margin-right: 9px;
+}
+.time{
+  color: black;
+  margin-left: 80%;
+}
+.card-footer{
+  border-top: 0 !important;
+  color:black;
+  font-weight: bolder;
+  font-size: 17px;
+  width: 100%;
+}
+
+.schItem{
+  font-size: 15px;
+  text-decoration: none;
+  background-color:transparent;
+  display: block;
+  line-height: 2.4rem;
+  height: 2.4rem;
+  position: relative;
+  border-radius: .25rem;
+  color: #343a40;
+  white-space: nowrap;
+  transition: all .2s;
+  margin: .1rem 0;
+}
+.schItem:hover{
+  background-color:rgb(224,243,255);
+  cursor: pointer;
+}
+
+.schIconSpan{
+  font-size: 16px;
+  border: none;
+}
+.schIconSpan:hover{
+  color:lightgrey;
+  background-color: transparent;
+}
+
+.buttons{
+  font-size: 15px;
+  margin-right: -20px;
+  width: 30px;
+}
+.showAll{
+  cursor:pointer;
+  font-size: 20px;
+}
+.hideAll{
+  color:red;
+}
+.wrapper{
+  margin-left: 40px;
+  width:180px;
+}
+.searchContainer{
+  position: absolute;
+  background-color: transparent;
+  margin-top: -15px;
+  margin-left: -35px;
+  width:170px;
+}
+.holder{
+  max-width:195px;
+}
+.searchInput{
+  width:160px;
+}
+.closeSearchButt{
+  margin-left:-100px;
+}
 .planDays{
   margin-left: 5px;
   color: grey;
@@ -164,4 +262,27 @@
   width:100%;
   margin: 3px 0;
   height:20px;
+}
+
+.menu {
+  width: 120px;
+  box-shadow: 0 4px 5px 3px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  z-index: 99999;
+
+}
+.menu-options {
+  list-style: none;
+  padding:0;
+
+}
+.menu-option {
+  font-weight: 500;
+  font-size: 14px;
+  padding: 10px 40px 10px 20px;
+  cursor: pointer;
+
+}
+.menu-option:hover {
+  background: rgba(0, 0, 0, 0.2);
 }

@@ -152,7 +152,6 @@ export class EmployeesComponent implements OnInit {
 
   openDetailsDialog(emp: User) {
     if (this.router.url === '/RemoteMonitoring/(mainCon:Departments)') {
-      console.log('hiiiiiiiiiiiiiii');
       emp.department = this.clickedDep;
     }
     const dialogRef = this.dialog.open(EmployeeDetailsComponent, {

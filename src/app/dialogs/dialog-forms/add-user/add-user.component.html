@@ -3,7 +3,7 @@
   <mat-horizontal-stepper [linear]="isLinear" #stepper>
 
     <!-- **********************************  1st stepper  ***************************************-->
-    <mat-step [stepControl]="firstFormGroup"  >
+    <mat-step [stepControl]="firstFormGroup" >
       <div  class="main-card mb-3 card">
         <ng-template matStepLabel>Select department</ng-template>
         <div *ngIf="router.url === '/RemoteMonitoring/(mainCon:Employees)' || router.url === '/RemoteMonitoring/(mainCon:Absences)'" >
