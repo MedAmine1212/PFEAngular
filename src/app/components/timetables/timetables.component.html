@@ -64,8 +64,8 @@
 
     </div>
 
-    <!--body-->
-    <div class="bodyContainer">
+<!--body-->
+    <div [@enterAnimation] *ngIf="showTable" class="bodyContainer">
       <div *ngIf="plannings.length<=0" class="main-card mb-3 card bodyCard">
         <div class="card-body noSchBod">
           <div class="noSchContainer">
@@ -111,7 +111,13 @@
 
       </div>
     </div>
-
+    <div *ngIf="!showTable" style="padding-top: 15%;width:100%">
+      <div style="width:200px;margin:auto">
+      <div class="spinner-container" style="">
+        <mat-spinner></mat-spinner>
+      </div>
+      </div>
+    </div>
     <div class="menu" *ngIf="showMenu"  [ngStyle]="{'left': '200px', 'top': menuTop}">
       <ul class="menu-options">
         <li class="menu-option" (click)="openDetailsDialog()">Details</li>

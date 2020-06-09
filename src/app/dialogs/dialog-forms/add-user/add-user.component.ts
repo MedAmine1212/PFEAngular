@@ -96,15 +96,12 @@ export class AddUserComponent implements  AfterViewInit  {
   ngAfterViewInit(): void {
     this.showOtherAddress = false;
     this.user.gender = 'male';
-    if (this.user.department !== null) {
-      setTimeout(() => {
-        this.stepper.selectedIndex = 1;
-      }, 900);
-    }
+    setTimeout(() => {
     this.createFirstFormGroup();
     this.createSecondFormGroup();
     this.createThirdFormGroup();
     this.createFourthFormGroup();
+    });
     this.postService.list().subscribe(posts => {
       for (const post of posts) {
         this.posts.push(post);
@@ -118,6 +115,11 @@ export class AddUserComponent implements  AfterViewInit  {
         }
       }
     });
+    if (this.user.department !== null) {
+      setTimeout(() => {
+        this.stepper.selectedIndex = 1;
+      }, 900);
+    }
   }
   createFirstFormGroup() {
     this.firstFormGroup = this.formBuilder.group({

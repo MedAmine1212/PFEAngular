@@ -21,8 +21,8 @@
             >
               <!--          [disabled]="router.url === '/RemoteMonitoring/(mainCon:Departments)'"-->
 
-              <option style="color: grey;" disabled [selected]="user.department === null" value="null">Chose a department: </option>
-              <option *ngFor="let depp of departments"  [ngValue]="depp" [selected]=" user.department!== null &&  depp.depName === user.department.depName">
+              <option style="color: grey;" disabled [selected]="user.department === null" value="null">Choose a department: </option>
+              <option *ngFor="let depp of departments"  [ngValue]="depp">
                 <span>{{depp.depName}}</span>
               </option>
             </select>
