@@ -11,6 +11,20 @@ import {DeletePlanningDialogComponent} from '../../dialogs/delete-planning-dialo
 
 @Component({
   selector: 'app-timetables',
+  animations: [
+    trigger(
+      'enterAnimation', [
+        transition(':enter', [
+          style({opacity: 0}),
+          animate('600ms', style({opacity: 1}))
+        ]),
+        transition(':leave', [
+          style({opacity: 1}),
+          animate('0ms', style({opacity: 0}))
+        ])
+      ]
+    ),
+    ],
   templateUrl: './timetables.component.html',
   styleUrls: ['./timetables.component.css'],
 
@@ -37,6 +51,7 @@ export class TimetablesComponent implements OnInit {
   menuTop: string;
   showMenu: boolean;
   rightClicked: Planning;
+  showTable: boolean;
   constructor(public dialog: MatDialog, private  scheduleService: ScheduleService, private  planningService: PlanningService) {
     this.hours = Array(24).fill(6).map((x, i) => i);
     this.days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -53,6 +68,10 @@ export class TimetablesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.showTable = false;
+    setTimeout(() => {
+      this.showTable = true;
+    }, 2000);
     this.selectedCount = 0;
     this.showHideInput = false;
     this.showPause = false;

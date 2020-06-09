@@ -8,6 +8,7 @@ import {DialogComponent} from '../../dialog.component';
 import {ScheduleService} from '../../../services/schedule/schedule.service';
 import {MatStepper} from '@angular/material/stepper';
 import {animate, style, transition, trigger} from '@angular/animations';
+import {PlanningService} from '../../../services/planning/planning.service';
 
 @Component({
   selector: 'app-add-schedule',
@@ -46,73 +47,83 @@ export class AddScheduleComponent implements AfterViewInit {
   @ViewChild('stepper') stepper: MatStepper;
   isLinear = false;
   newSch: boolean;
-  startHour: number;
-  startMinutes: number;
-  endMinutes: number;
-  pauseStart: number;
-  pauseStartMinutes: number;
-  pauseEnd: number;
-  pauseEndMinutes: number;
-  endHour2: number;
+  newSchStartHour: number;
+  newSchStartMinutes: number;
+  newSchEndMinutes: number;
+  newSchPauseStart: number;
+  newSchPauseStartMinutes: number;
+  newSchPauseEnd: number;
+  newSchPauseEndMinutes: number;
+  newSchEndHour: number;
+  noSch: boolean;
 
   constructor(public dialogRef: MatDialogRef<AddScheduleComponent>,
+              private planningService: PlanningService,
               @Inject(MAT_DIALOG_DATA) public pl: Planning,
               private formBuilder: FormBuilder,
               public dialog: MatDialog,
               private scheduleService: ScheduleService) {
-    this.newSch = true;
     const currentYear = new Date().getFullYear();
     const currentMonth = new Date().getMonth();
     const currentDay = new Date().getDay();
     this.minDate = new Date(currentYear , currentMonth, currentDay);
+    this.noSch = true;
     if (this.pl !== null) {
+      this.newSch = false;
       this.planning = this.pl;
       this.schedule = this.pl.schedule;
       this.startDate = pl.startDate;
       this.endDate = pl.endDate;
       console.log(this.planning);
     } else {
+    this.newSch = false;
     this.schedule.plannings = [];
-    this.pauseEndHour = '';
-    this.pauseStartHour = '';
     this.planning.color = 'btn btn-primary';
     this.planning.colorIcon = 'btn btn-outline-primary';
     this.schedule.pauseTime = false;
     this.planning.scheduleDays = [];
     }
-    this.startMinutes = 0;
-    this.endMinutes = 0;
-    this.pauseStartMinutes = 0;
-    this.pauseEndMinutes = 0;
-    this.startHour = 0;
-    this.endHour2 = 0;
-    this.pauseStart = 0;
-    this.pauseEnd = 0;
+    this.pauseEndHour = '';
+    this.pauseStartHour = '';
+    this.newSchStartMinutes = 0;
+    this.newSchEndMinutes = 0;
+    this.newSchPauseStartMinutes = 0;
+    this.newSchPauseEndMinutes = 0;
+    this.newSchStartHour = 0;
+    this.newSchEndHour = 0;
+    this.newSchPauseStart = 0;
+    this.newSchPauseEnd = 0;
   }
 
   ngAfterViewInit(): void {
+    setTimeout(() => {
     this.reloadSchedules();
     this.FormGroup();
     this.FormGroup2();
     this.FormGroup3();
-
+    });
     if (this.pl !== null) {
       setTimeout(() => {
         this.stepper.selectedIndex = 1;
       }, 600);
     }
   }
+
+// Schedules from dataBase
   reloadSchedules() {
     this.schedules = [];
     this.scheduleService.list().subscribe(r => {
       this.schedules = r;
+      if (this.schedules.length === 0) {
+        this.newSch = true;
+      }
     });
   }
-
+  // CLose dialog
   closeThis() {
     this.dialogRef.close(false);
   }
-
+  // initialise formGroups
   FormGroup() {
     this.formGroup = this.formBuilder.group({
       schName: ['', [Validators.required]],
@@ -133,6 +144,7 @@ export class AddScheduleComponent implements AfterViewInit {
       endHour: [this.endHour, [Validators.required]],
     });
   }
+  // add or remove days to planning days
   addRemoveDay(day: string) {
     if (this.planning.scheduleDays.indexOf(day) > -1) {
         this.planning.scheduleDays.splice(this.planning.scheduleDays.indexOf(day), 1);
@@ -140,14 +152,75 @@ export class AddScheduleComponent implements AfterViewInit {
       this.planning.scheduleDays.push(day);
     }
   }
-
+  // set planning color
   choseColor(color: string) {
     this.planning.color = 'btn btn-' + color;
     this.planning.colorIcon = 'btn btn-outline-' + color;
   }
+  // update planning
+  updatePlanning() {
 
-  addSchedule() {
     this.planning.showPl = true;
+    this.planning.startDate = this.startDate;
+    this.planning.endDate = this.endDate;
+    if (this.newSch) {
+        this.setFinalSchedule();
+        this.scheduleService.add(this.schedule).subscribe(r => {
+          // @ts-ignore
+          this.planning.schedule = r;
+          this.saveModifiedPlanning();
+          console.log('added new schedule');
+        }, error => console.log(error));
+    } else {
+    this.planning.schedule = this.schedule;
+    this.saveModifiedPlanning();
+    }
+  }
+  // save planning to database
+saveModifiedPlanning() {
+  this.planningService.modify(this.planning, this.pl.planningId).subscribe(() => {
+    this.dialogComponent = this.dialog.open(DialogComponent, {
+      width: '400px',
+      data : 'Planning updated successfully ! '
+    });
+    this.dialogComponent.afterClosed().subscribe(() =>
+      this.dialogRef.close(true)
+    );
+  }, error1 => console.log(error1));
+
+}
+ // newSch false.
+  updateExistingSchedule() {
+    this.schedule.plannings.push(this.planning);
+    this.scheduleService.modify(this.schedule, this.schedule.scheduleId).subscribe(() => {
+      this.dialogComponent = this.dialog.open(DialogComponent, {
+        width: '400px',
+        data : 'Planning added successfully ! '
+      });
+      this.dialogComponent.afterClosed().subscribe(() =>
+        this.dialogRef.close(true)
+      );
+    }, error1 => console.log(error1));
+  }
+
+  // newSch true
+  sendNewSchedule() {
+    this.schedule.plannings.push(this.planning);
+    this.scheduleService.add(this.schedule).subscribe(sch => {
+      this.dialogComponent = this.dialog.open(DialogComponent, {
+        width: '400px',
+        data : 'Planning added successfully ! '
+      });
+      this.dialogComponent.afterClosed().subscribe(() =>
+        this.dialogRef.close(true)
+      );
+    }, error1 => console.log(error1));
+  }
+
+
+  // set this.schedule
+  setFinalSchedule() {
+    this.schedule.plannings = [];
     this.schedule.startHour = (Number.parseInt(this.beginHour, 0) * 60) +
       Number.parseInt(this.beginHour.slice(3, this.beginHour.length), 0);
     this.schedule.endHour = (Number.parseInt(this.endHour, 0) * 60) +
@@ -156,21 +229,35 @@ export class AddScheduleComponent implements AfterViewInit {
       Number.parseInt(this.pauseStartHour.slice(3, this.pauseStartHour.length), 0);
     this.schedule.pauseEnd = (Number.parseInt(this.pauseEndHour, 0) * 60) +
       Number.parseInt(this.pauseEndHour.slice(3, this.pauseEndHour.length), 0);
-    this.planning.startDate = this.startDate;
-    this.planning.endDate = this.endDate;
-    this.schedule.plannings.push(this.planning);
-    this.scheduleService.add(this.schedule).subscribe(sch => {
-      this.dialogComponent = this.dialog.open(DialogComponent, {
-        width: '400px',
-        data : 'Schedule added successfully ! '
-      });
-      this.dialogComponent.afterClosed().subscribe(() =>
-        this.dialogRef.close(true)
-      );
-    }, error1 => console.log(error1));
-
   }
 
+  // returne schedule time for Modif
+  private getTime(sch) {
+    this.newSchStartHour = Math.floor(sch.startHour / 60);
+    this.newSchStartMinutes = sch.startHour % 60;
+    this.newSchEndHour = Math.floor(sch.endHour / 60);
+    this.newSchEndMinutes = sch.endHour % 60;
+    if (sch.pauseTime) {
+      this.newSchPauseStart = Math.floor(sch.pauseStart / 60);
+      this.newSchPauseStartMinutes = sch.pauseStart % 60;
+      this.newSchPauseEnd = Math.floor(sch.pauseEnd / 60);
+      this.newSchPauseEndMinutes = sch.pauseEnd % 60;
+    }
+  }
+  // add new planning
+  addPlanning() {
+    this.planning.showPl = true;
+    this.planning.startDate = this.startDate;
+    this.planning.endDate = this.endDate;
+    if (this.newSch) {
+      this.setFinalSchedule();
+      this.sendNewSchedule();
+    } else {
+      this.updateExistingSchedule();
+    }
+
+  }
+  // check repeatCycle input
   checkRepeatCycle(control) {
     return new Observable(observer => {
         const result = (control.value < 1) ? { invalidRepeatCycle: true } : null;
@@ -179,48 +266,43 @@ export class AddScheduleComponent implements AfterViewInit {
     });
   }
 
-  updateSchedule() {
-    console.log('haw zebi');
-  }
-
+  // change form from/to newSch
   isNewSch() {
     if (this.schedules.length > 0 ) {
       this.newSch = !this.newSch;
     }
-  }
-  private getTime(sch) {
-    this.startHour = Math.floor(sch.startHour / 60);
-    this.startMinutes = sch.startHour % 60;
-    this.endHour2 = Math.floor(sch.endHour / 60);
-    this.endMinutes = sch.endHour % 60;
-    if (sch.pauseTime) {
-      this.pauseStart = Math.floor(sch.pauseStart / 60);
-      this.pauseStartMinutes = sch.pauseStart % 60;
-      this.pauseEnd = Math.floor(sch.pauseEnd / 60);
-      this.pauseEndMinutes = sch.pauseEnd % 60;
+    if (this.newSch) {
+      this.schedule.plannings = [];
+      this.schedule.pauseTime = false;
+      this.schedule = new Schedule();
+    } else if (this.pl !== null && !this.newSch) {
+      this.schedule = this.pl.schedule;
     }
   }
+
+
+  // schedule ToString
   returnSchDesc(sch: Schedule) {
     this.getTime(sch);
     let desc: string;
     desc = 'Schedule id: ' + sch.scheduleId + ', From: ';
-    if (this.startHour < 10) {
+    if (this.newSchStartHour < 10) {
       desc = desc + '0';
     }
-    desc = desc + this.startHour + ':';
-    if (this.startMinutes < 10) {
+    desc = desc + this.newSchStartHour + ':';
+    if (this.newSchStartMinutes < 10) {
       desc = desc + '0';
     }
-    desc = desc + this.startMinutes + ', To: ';
+    desc = desc + this.newSchStartMinutes + ', To: ';
 
-    if (this.endHour2 < 10) {
+    if (this.newSchEndHour < 10) {
       desc = desc + '0';
     }
-    desc = desc + this.endHour2 + ':';
-    if (this.endMinutes < 10) {
+    desc = desc + this.newSchEndHour + ':';
+    if (this.newSchEndMinutes < 10) {
       desc = desc + '0';
     }
-    desc = desc + this.endMinutes;
+    desc = desc + this.newSchEndMinutes;
 
     if (!sch.pauseTime) {
       desc = desc + ' , No pause time.';
@@ -228,24 +310,34 @@ export class AddScheduleComponent implements AfterViewInit {
         // pause time
 
       desc = desc + ' , Pause time From: ';
-      if (this.pauseStart < 10) {
+      if (this.newSchPauseStart < 10) {
         desc = desc + '0';
       }
-      desc = desc + this.pauseStart + ':';
-      if (this.pauseStartMinutes < 10) {
+      desc = desc + this.newSchPauseStart + ':';
+      if (this.newSchPauseStartMinutes < 10) {
         desc = desc + '0';
       }
-      desc = desc + this.pauseStartMinutes + ', To: ';
+      desc = desc + this.newSchPauseStartMinutes + ', To: ';
 
-      if (this.pauseEnd < 10) {
+      if (this.newSchPauseEnd < 10) {
         desc = desc + '0';
       }
-      desc = desc + this.pauseEnd + ':';
-      if (this.pauseEndMinutes < 10) {
+      desc = desc + this.newSchPauseEnd + ':';
+      if (this.newSchPauseEndMinutes < 10) {
         desc = desc + '0';
       }
-      desc = desc + this.pauseEndMinutes;
+      desc = desc + this.newSchPauseEndMinutes;
     }
     return desc;
+  }
+  // schedule select
+  setSchedule(e) {
+    for (const sch of this.schedules) {
+      if (sch.scheduleId === Number.parseInt(e.target.value, 0)) {
+          this.schedule = sch;
+          this.noSch = false;
+          break;
+      }
+    }
   }
 }

@@ -1,4 +1,4 @@
-<div *ngIf="formGroup3 !=null;">
+<div *ngIf="formGroup3 != null">
 <mat-horizontal-stepper [linear]="isLinear" #stepper  style="margin-bottom: -100px;margin-top: -20px">
   <mat-step>
     <ng-template matStepLabel>Schedule Info</ng-template>
@@ -15,19 +15,24 @@
       </div>
 
       <div *ngIf="!newSch" style="padding-top: 40px" [@enterAnimation]>
+        <div class="line" style="margin-bottom: 40px" *ngIf="pl != null">
+          <label>Current schedule</label>
+          <input disabled type="text"  class="form-control" [value]="returnSchDesc(schedule)">
+        </div>
+        <div class="line">
         <select
           required
           class="custom-select"
           id="inputGroupSelect01"
-          [(ngModel)]="schedule"
-          [ngModelOptions]="{standalone: true}"
+          (change)="setSchedule($event)"
         >
-          <!--          [disabled]="router.url === '/RemoteMonitoring/(mainCon:Departments)'"-->
-
-          <option *ngFor="let sch of schedules"  [ngValue]="sch" [selected]=" pl !== null &&  sch.scheduleId === schedule.scheduleId">
+          <option style="color: grey;" selected disabled *ngIf="pl == null" [ngValue]="schedule">Choose a Schedule: </option>
+          <option style="color:#3f6ad8;font-weight: bolder" selected *ngIf="pl != null" [value]="pl.schedule">Unchanged</option>
+          <option *ngFor="let sch of schedules" value="{{sch.scheduleId}}">
             <span>{{returnSchDesc(sch)}}</span>
           </option>
         </select>
+        </div>
       </div>
         <div *ngIf="newSch" [@enterAnimation]>
           <form [formGroup]="formGroup3">
@@ -236,8 +241,8 @@
           </div>
           <div class="form-group col-md-6">
             <div class="buttonsDiv">
-              <button type="submit" *ngIf="pl == null" mat-raised-button color="primary" [disabled]="!formGroup.valid || (!formGroup2.valid && schedule.pauseTime) || !formGroup3.valid" (click)="addSchedule()">Add Schedule</button>
-              <button type="submit" *ngIf="pl != null" mat-raised-button color="primary" [disabled]="!formGroup.valid" (click)="updateSchedule()">Update</button>
+              <button type="submit" *ngIf="pl == null" mat-raised-button color="primary" [disabled]="planning.scheduleDays.length === 0 || !formGroup.valid || (!formGroup2.valid && schedule.pauseTime && newSch) || (!formGroup3.valid && newSch) || (noSch && !newSch)" (click)="addPlanning()">Add planning</button>
+              <button type="submit" *ngIf="pl != null" mat-raised-button color="primary" [disabled]="!formGroup.valid || (!formGroup3.valid && newSch) ||(!formGroup2.valid && schedule.pauseTime && newSch)" (click)="updatePlanning()">Update</button>
               <button type="button" (click)="closeThis()" class="btn btn-light cancelButt">Cancel</button>
             </div>
 
