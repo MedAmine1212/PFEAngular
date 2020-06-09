@@ -5,7 +5,7 @@ import {Department} from '../../models/Department';
 import {EmployeesComponent} from '../employees/employees.component';
 import {DepartmentsComponent} from '../departments/departments.component';
 @Component({
-  selector: 'app-remmote-monotoring',
+  selector: 'app-remmote-monitoring',
   animations: [
     trigger(
       'enterAnimation', [
@@ -32,11 +32,11 @@ import {DepartmentsComponent} from '../departments/departments.component';
       ]
     )
   ],
-  templateUrl: './remote-monotoring.component.html',
-  styleUrls: ['./remote-monotoring.component.css']
+  templateUrl: './remote-monitoring.component.html',
+  styleUrls: ['./remote-monitoring.component.css']
 })
 
-export class RemoteMonotoringComponent implements OnInit {
+export class RemoteMonitoringComponent implements OnInit {
   clickedDeparment: Department;
 
 

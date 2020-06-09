@@ -14,14 +14,14 @@
 
       <div class="line">
         <label for="depNameEdit">New Department Name</label>
-        <input [(ngModel)]="newName" formControlName="depNameEdit" type="text" class="form-control" id="depNameEdit" placeholder="New department name">
+        <input matInput [(ngModel)]="newName" formControlName="depNameEdit" type="text" class="form-control" id="depNameEdit" placeholder="New department name">
         <div class="mat-errorContainer">
           <mat-error *ngIf="!depNameEdit.valid && depNameEdit.touched && newName.length > 0 && newName.length < 3">
             You need to specify at least 3 characters
             {{disableButt()}}
           </mat-error>
-          <mat-error *ngIf="!depNameEdit.valid && depNameEdit.touched && newName.length >= 3">
-            Department name should contain only characters
+          <mat-error *ngIf="(!depNameEdit.valid && depNameEdit.touched) && newName.length >= 3">
+            {{ getErrorDepNameEdit()}}
             {{disableButt()}}
           </mat-error>
           <mat-error *ngIf="depNameEdit.valid && newName.length >= 3">

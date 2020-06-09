@@ -3,10 +3,10 @@
   <mat-horizontal-stepper [linear]="isLinear" #stepper>
 
     <!-- **********************************  1st stepper  ***************************************-->
-    <mat-step [stepControl]="firstFormGroup"  >
+    <mat-step [stepControl]="firstFormGroup" >
       <div  class="main-card mb-3 card">
         <ng-template matStepLabel>Select department</ng-template>
-        <div *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)' || router.url === '/RemoteMonotoring/(mainCon:Absences)'" >
+        <div *ngIf="router.url === '/RemoteMonitoring/(mainCon:Employees)' || router.url === '/RemoteMonitoring/(mainCon:Absences)'" >
           <div class="card-header">
             <h1>Department</h1>
             <hr>
@@ -19,7 +19,7 @@
               [(ngModel)]="user.department"
               [ngModelOptions]="{standalone: true}"
             >
-              <!--          [disabled]="router.url === '/RemoteMonotoring/(mainCon:Departments)'"-->
+              <!--          [disabled]="router.url === '/RemoteMonitoring/(mainCon:Departments)'"-->
 
               <option style="color: grey;" disabled [selected]="user.department === null" value="null">Chose a department: </option>
               <option *ngFor="let depp of departments"  [ngValue]="depp" [selected]=" user.department!== null &&  depp.depName === user.department.depName">
@@ -33,7 +33,7 @@
           </div>
         </div>
 
-        <div *ngIf="router.url === '/RemoteMonotoring/(mainCon:Departments)'">
+        <div *ngIf="router.url === '/RemoteMonitoring/(mainCon:Departments)'">
           <div class="card-header">
             <h1>Department</h1>
             <hr>

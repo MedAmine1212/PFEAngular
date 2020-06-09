@@ -1,4 +1,4 @@
-<div class="app-main main">
+<div class="app-main main"  (click)="noClick()">
 
   <div class="app-main__outer">
 
@@ -30,9 +30,9 @@
           <ul  class="vertical-nav-menu navMenu">
             <li class="app-sidebar__heading sideBarHeading">
               <i class="fa fa-clock"></i>
-              Schedules
+              Plannings
               <span class="buttons">
-                  <button (click)="addSchedule()" mat-raised-button matTooltip="Add Schedule" class="btn btn-outline-primary addSch" ><span class="fas fa-plus"></span></button>
+                  <button (click)="addPlanning()" mat-raised-button matTooltip="Add Planning" class="btn btn-outline-primary addSch" ><span class="fas fa-plus"></span></button>
              <span *ngIf="plannings.length>0">
                 <span *ngIf="selectedCount < plannings.length" (click)="showAll()" mat-raised-button matTooltip="Show all" class="fa fa-check-circle showAll"></span>
                 <span *ngIf="selectedCount === plannings.length" (click)="hideAll()" mat-raised-button matTooltip="Hide all" class="fa fa-times-circle showAll hideAll"></span>
@@ -50,39 +50,40 @@
                 </div>
               </div><br>
             </li>
-            <li (click)="showHideSch(pl)" class="schItem" *ngFor="let pl of plannings  | filter:searchText">
-            <span class="schIconSpan" [ngClass]="pl.schedule.colorIcon">
-                <i [ngStyle]="{'opacity':pl.schedule.showSch? '1' : '0' }" class="fa fa-check-circle">
+            <li (contextmenu)="onRightClick($event, pl)" (click)="showHideSch(pl)" class="schItem" *ngFor="let pl of plannings  | filter:searchText">
+            <span class="schIconSpan" [ngClass]="pl.colorIcon">
+                <i [ngStyle]="{'opacity':pl.showPl? '1' : '0' }" class="fa fa-check-circle">
                 </i>
+
               </span>
-              {{pl.schedule.scheduleName}}<span class="planDays" matTooltip="Planned days">{{planningDaysDesc(pl)}}</span>
+              {{pl.planningName}}<span class="planDays" matTooltip="Planned days">{{planningDaysDesc(pl)}}</span>
             </li>
           </ul>
         </div>
       </div>
-    </div>
 
+    </div>
 
     <!--body-->
     <div class="bodyContainer">
       <div *ngIf="plannings.length<=0" class="main-card mb-3 card bodyCard">
         <div class="card-body noSchBod">
           <div class="noSchContainer">
-            No schedules to show<br><br>
-            <button class="btn btn-primary" (click)="addSchedule()">Add schedule</button>
+            No plannings to show<br><br>
+            <button class="btn btn-primary" (click)="addPlanning()">Add Planning</button>
           </div>
         </div>
       </div>
       <div  *ngIf="plannings.length>0" class="main-card mb-3 card schCard">
         <div class="card-header">
-          Time table
+         Time table
         </div>
         <div class="card-body schBody">
           <table class="table-hover mat-calendar-table-header tableHeader">
             <thead>
             <tr class="d-table-row">
               <th class="emptyTh"></th>
-              <th *ngFor="let hour of hours">
+              <th style="width: 4%" *ngFor="let hour of hours">
                 <span *ngIf="hour<10">0</span>{{hour}}:00
               </th>
             </tr>
@@ -95,7 +96,7 @@
               <td class="hrouTd" style="padding: 5px 0 5px 0" *ngFor="let hour of hours" >
         <span *ngFor="let pl of plannings">
           {{checkSch(pl,day,hour)}}
-          <span matTooltip="{{showTip(hour)}}" *ngIf="showSch" [ngClass]="pl.schedule.color" class="schSpan" (click)="setCliked(pl,day,hour)"></span>
+          <span matTooltip="{{showTip(hour,pl)}}" [ngStyle]="{'width': startHour == hour && startMinutes !== 0 ? returnWidth(startMinutes) : endHour == hour && endMinutes !== 0 ? returnWidth(endMinutes) : '100%' , 'float': startHour == hour ? 'right' : 'left'}" *ngIf="showSch" [ngClass]="pl.color" class="schSpan" (click)="setCliked(pl,day,hour)"></span>
           <span *ngIf="!showSch && !showPause" class="btn btn-primary nothingSpan"></span>
           <span *ngIf="showPause" class="btn btn-secondary pauseSpan" matTooltip="Pause time"></span>
         </span>
@@ -109,6 +110,13 @@
         </div>
 
       </div>
+    </div>
+
+    <div class="menu" *ngIf="showMenu"  [ngStyle]="{'left': '200px', 'top': menuTop}">
+      <ul class="menu-options">
+        <li class="menu-option" (click)="openDetailsDialog()">Details</li>
+        <li class="menu-option" (click)="openDeletePlanDialog()">Delete</li>
+      </ul>
     </div>
 
   </div>

@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { RemoteMonotoringComponent } from './components/remote-monotoring/remote-monotoring.component';
+import { RemoteMonitoringComponent } from './components/remote-monitoring/remote-monitoring.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './components/nav/nav.component';
 import { AbsencesComponent } from './components/absences/absences.component';
@@ -45,15 +45,16 @@ import {DeleteUserDialogComponent} from './dialogs/delete-user-dialog/delete-use
 import {CalendarModule} from 'angular-calendar';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { AddScheduleComponent } from './dialogs/dialog-forms/add-schedule/add-schedule.component';
-import {NgxMaterialTimepickerModule} from "ngx-material-timepicker";
-import {MatCheckboxModule} from "@angular/material/checkbox";
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { DeletePlanningDialogComponent } from './dialogs/delete-planning-dialog/delete-planning-dialog.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RemoteMonotoringComponent,
+    RemoteMonitoringComponent,
     NavComponent,
     AbsencesComponent,
     DepartmentsComponent,
@@ -69,6 +70,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     EmployeeDetailsComponent,
     DeleteUserDialogComponent,
     AddScheduleComponent,
+    DeletePlanningDialogComponent,
   ],
   imports: [
     BrowserModule,

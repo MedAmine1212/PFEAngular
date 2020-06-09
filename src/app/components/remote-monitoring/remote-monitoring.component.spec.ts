@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RemoteMonotoringComponent } from './remote-monotoring.component';
+import { RemoteMonitoringComponent } from './remote-monitoring.component';
 
 describe('RemmoteMonotoringComponent', () => {
-  let component: RemoteMonotoringComponent;
-  let fixture: ComponentFixture<RemoteMonotoringComponent>;
+  let component: RemoteMonitoringComponent;
+  let fixture: ComponentFixture<RemoteMonitoringComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RemoteMonotoringComponent ]
+      declarations: [ RemoteMonitoringComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RemoteMonotoringComponent);
+    fixture = TestBed.createComponent(RemoteMonitoringComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

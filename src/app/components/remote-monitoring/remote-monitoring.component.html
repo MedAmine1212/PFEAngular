@@ -1,0 +1,42 @@
+<div  class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+
+  <app-nav></app-nav>
+
+  <!--time tables-->
+  <app-timetables *ngIf="router.url === '/RemoteMonitoring/(mainCon:TimeTables)'"></app-timetables>
+
+  <div *ngIf="router.url !== '/RemoteMonitoring/(mainCon:TimeTables)' && router.url !== '/RemoteMonitoring/(mainCon:Employees)'" class="app-main">
+    <div class="app-main__outer">
+      <!--Absences-->
+        <div [@enterAnimation] *ngIf="router.url === '/RemoteMonitoring' || router.url === '/RemoteMonitoring/(mainCon:Absences)'" class="app-sidebar sidebar-shadow" style="max-width: 380px;margin-top: 0px;margin-left: -300px">
+
+          <app-employees></app-employees>
+
+        </div>
+
+       <div [@enterSecondAnimation]  *ngIf="router.url === '/RemoteMonitoring' || router.url === '/RemoteMonitoring/(mainCon:Absences)'" class="card mainCard">
+
+          <div class="card-body">
+            <router-outlet  name="secCon"></router-outlet>
+          </div>
+          <div class="card-footer">
+            {{time | date: 'dd MMMM yyyy '}} <span class="time">{{ time | date: 'HH:mm:ss a' }}</span></div>
+
+        </div>
+
+      <!--Departments-->
+      <app-departments *ngIf="router.url === '/RemoteMonitoring/(mainCon:Departments)'" [@enterAnimation] (outPutData)="setClickedDep($event)"></app-departments>
+      <app-employees *ngIf="router.url === '/RemoteMonitoring/(mainCon:Departments)'" (outPutData)="reloadDep($event)" [@enterSecondAnimation]></app-employees>
+
+    </div>
+  <!--the rest-->
+    <router-outlet *ngIf="router.url !== '/RemoteMonitoring/(mainCon:TimeTables)' && router.url !== '/RemoteMonitoring' && router.url !== '/RemoteMonitoring/(mainCon:Employees)' && router.url !== '/RemoteMonitoring/(mainCon:Absences)' && router.url !== '/RemoteMonitoring/(mainCon:Departments)'" style="margin: 15px" name="mainCon"></router-outlet>
+
+  </div>
+
+  <!--Employees-->
+  <app-employees [@enterAnimation] *ngIf="router.url === '/RemoteMonitoring/(mainCon:Employees)'" style="margin: 70px 15px 15px;"></app-employees>
+
+
+</div>
+

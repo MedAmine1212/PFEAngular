@@ -37,8 +37,8 @@ export class EmployeesComponent implements OnInit {
     this.clickedDep = null;
     this.thisIsEmp = true;
     this.users = [];
-    if (this.router.url === '/RemoteMonotoring/(mainCon:Employees)'
-        || this.router.url === '/RemoteMonotoring/(mainCon:Absences)' || this.router.url === '/RemoteMonotoring') {
+    if (this.router.url === '/RemoteMonitoring/(mainCon:Employees)'
+        || this.router.url === '/RemoteMonitoring/(mainCon:Absences)' || this.router.url === '/RemoteMonitoring') {
       this.reloadData();
     }
   }
@@ -118,7 +118,7 @@ export class EmployeesComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        if (this.router.url === '/RemoteMonotoring/(mainCon:Employees)' || this.router.url === '/RemoteMonotoring/(mainCon:Absences)') {
+        if (this.router.url === '/RemoteMonitoring/(mainCon:Employees)' || this.router.url === '/RemoteMonitoring/(mainCon:Absences)') {
           this.reloadData();
         } else {
           this.outPutData.emit();
@@ -132,7 +132,7 @@ export class EmployeesComponent implements OnInit {
     this.users = [];
 
     this.userService.list().subscribe(r => {
-      if (this.router.url === '/RemoteMonotoring/(mainCon:Departments)' && this.clickedDep.depId !== -1) {
+      if (this.router.url === '/RemoteMonitoring/(mainCon:Departments)' && this.clickedDep.depId !== -1) {
         this.chefDep = null;
         this.setChefDep(this.clickedDep.depId);
         this.usersForDep = r;
@@ -151,8 +151,7 @@ export class EmployeesComponent implements OnInit {
   }
 
   openDetailsDialog(emp: User) {
-    if (this.router.url === '/RemoteMonotoring/(mainCon:Departments)') {
-      console.log('hiiiiiiiiiiiiiii');
+    if (this.router.url === '/RemoteMonitoring/(mainCon:Departments)') {
       emp.department = this.clickedDep;
     }
     const dialogRef = this.dialog.open(EmployeeDetailsComponent, {
@@ -165,7 +164,7 @@ export class EmployeesComponent implements OnInit {
       if (EmployeeDetailsComponent.refreshEmp) {
         console.log('Refreshing employees..');
         this.reloadData();
-        if (this.router.url === '/RemoteMonotoring/(mainCon:Departments)') {
+        if (this.router.url === '/RemoteMonitoring/(mainCon:Departments)') {
           this.outPutData.emit();
         }
       }

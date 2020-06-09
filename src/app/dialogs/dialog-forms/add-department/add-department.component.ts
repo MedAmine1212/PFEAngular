@@ -6,6 +6,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {DeleteDepDialogComponent} from '../../delete-dep-dialog/delete-dep-dialog.component';
 import {DepartmentsComponent} from '../../../components/departments/departments.component';
 import {User} from '../../../models/User';
+import {Observable} from 'rxjs';
 @Component({
   selector: 'app-add-department',
   templateUrl: './add-department.component.html',
@@ -51,12 +52,14 @@ export class AddDepartmentComponent implements OnInit {
     }
   private createFormGroup() {
     this.registerForm = this.formBuilder.group({
-      depName: [this.department.depName, [Validators.required, Validators.pattern('[a-zA-Z ]*'),  Validators.minLength(3)]]
+      depName: [this.department.depName, [Validators.required,
+        Validators.pattern('[a-zA-Z ]*'),  Validators.minLength(3)], this.checkInUseDepartment.bind(this)]
     });
   }
   createEditFormGroup() {
     this.editForm = this.formBuilder.group({
-      depNameEdit: [this.newName, [Validators.pattern('[a-zA-Z ]*'), Validators.minLength(3)]]
+      depNameEdit: [this.newName, [Validators.pattern('[a-zA-Z ]*'),
+        Validators.minLength(3)], this.checkInUseDepartmentEdit.bind(this)]
     });
   }
   closeThis() {
@@ -83,7 +86,7 @@ export class AddDepartmentComponent implements OnInit {
     }
     if (update) {
       this.departmentService.modify(this.department.depId, this.department).subscribe(
-        data => this.dialogRef.close(true), error1 => console.log(error1));
+        () => this.dialogRef.close(true), error1 => console.log(error1));
     }
   }
   get depName() {
@@ -95,10 +98,20 @@ export class AddDepartmentComponent implements OnInit {
   getErrorDepName() {
     return this.depName.hasError('required') ?
       'Department name required' :
-      this.depName.hasError('minlength') ? 'You need to specify at least 3 characters' : 'Department name should contain only characters';
+      this.depName.hasError('minlength') ? 'You need to specify at least 3 characters' :
+        this.depName.hasError('alreadyInUse') ? 'Department allready exists' :
+        'Department name should contain only characters';
 
   }
+  getErrorDepNameEdit() {
+    if (this.depNameEdit.hasError('pattern')) {
 
+      return  'Department name should contain only characters';
+    } else if (this.depNameEdit.hasError('alreadyInUseEdit')) {
+      return 'Department name already in use';
+      }
+
+  }
   enableDisableButt() {
     if (this.newChefDep == null && this.newName === '') {
       this.disable = true;
@@ -115,6 +128,43 @@ export class AddDepartmentComponent implements OnInit {
 
   enableButt() {
     this.disable = false;
+  }
+
+  checkInUseDepartment(control) {
+    // mimic http database access
+    const departments = [];
+    this.departmentService.list().subscribe(deps => {
+      for (const dep of deps) {
+        // @ts-ignore
+        departments.push(dep.depName.toLowerCase());
+      }
+    });
+    return new Observable(observer => {
+      setTimeout(() => {
+        const result = (departments.indexOf(control.value.toLowerCase()) !== -1) ? { alreadyInUse: true } : null;
+        observer.next(result);
+        observer.complete();
+      }, 1000);
+    });
+  }
+  checkInUseDepartmentEdit(control) {
+    // mimic http database access
+    const departments = [];
+    this.departmentService.list().subscribe(deps => {
+      for (const dep of deps) {
+        // @ts-ignore
+        if (dep.depName !== this.dep.depName) {
+        departments.push(dep.depName.toLowerCase());
+        }
+      }
+    });
+    return new Observable(observer => {
+      setTimeout(() => {
+        const result = (departments.indexOf(control.value.toLowerCase()) !== -1) ? { alreadyInUseEdit: true } : null;
+        observer.next(result);
+        observer.complete();
+      }, 500);
+    });
   }
 }
 

@@ -1,5 +1,6 @@
 .choseTime{
   border:none;
+  margin: 5px;
   border-bottom: 1px solid grey;
 }
 .days{
@@ -33,23 +34,16 @@
   border:4px solid lightblue;
   pointer-events: none;
 }
-.lastRow{
-  height: 80px;
-  margin-bottom: -40px;
-}
 .buttonsDiv{
   float: right;
-  margin-top:15px;
+  margin-top:35px;
 }
 .cancelButt{
   margin-left: 20px;
 }
 .main{
-  margin-bottom: 0;
-  padding-bottom: 0;
-}
-.hours {
-  padding-top: 30px;
+  margin-bottom: -20px;
+  padding-bottom: -20px;
 }
 .timePicker{
   z-index: 1100;
@@ -75,8 +69,6 @@
 }
 .timeLabel{
   color: grey;
-  margin-top: -30px;
-  margin-bottom: 11px;
 }
 .daysLabel{
   margin-bottom: 15px;
@@ -84,4 +76,9 @@
 }
 .daysColorsRow{
   margin-top: -8px;
+}
+
+.lasRow {
+  margin-bottom: -30px;
+  padding-bottom: -30px;
 }

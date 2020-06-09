@@ -21,12 +21,12 @@
     <h2 *ngIf="thisIsEmp" class="app-sidebar__heading" style="font-weight: bolder">Employees
       <span style="margin-left: 30px">
       <span style="cursor:pointer" title="add" (click)="showAddUserDialog()" class="fa fa-user-plus butts"></span>
-      <span title="open" [routerLink]="[{ outlets: {mainCon: ['Employees'] } }]" *ngIf="router.url != '/RemoteMonotoring/(mainCon:Employees)'" style="cursor:pointer;margin-left:15px" class="fa fa-external-link-alt butts"></span>
+      <span title="open" [routerLink]="[{ outlets: {mainCon: ['Employees'] } }]" *ngIf="router.url != '/RemoteMonitoring/(mainCon:Employees)'" style="cursor:pointer;margin-left:15px" class="fa fa-external-link-alt butts"></span>
     </span>
 
     </h2><br>
     <div style="width:100%">
-      <span title="close" routerLink="/RemoteMonotoring" *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)'" style="font-size:35px;margin-top:-10px;cursor:pointer;float:right" class="fa fa-compress butts"></span>
+      <span title="close" routerLink="/RemoteMonitoring" *ngIf="router.url === '/RemoteMonitoring/(mainCon:Employees)'" style="font-size:35px;margin-top:-10px;cursor:pointer;float:right" class="fa fa-compress butts"></span>
 
     </div>
   </div>
@@ -59,9 +59,9 @@
       <div class="main-card mb-3 card" style="overflow: auto;max-height: 480px;margin-top: 40px;border-radius:0" *ngIf="(users.length !=0 && thisIsEmp) || (users.length !=0 && clickedDep.depId != -1)">
           <table class="align-middle mb-0 table table-borderless table-striped table-hover">
           <thead>
-          <tr *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)' || !thisIsEmp">
+          <tr *ngIf="router.url === '/RemoteMonitoring/(mainCon:Employees)' || !thisIsEmp">
             <th class="text-center">N°</th>
-            <th  *ngIf="router.url !== '/RemoteMonotoring/(mainCon:Departments)' ">Department</th>
+            <th  *ngIf="router.url !== '/RemoteMonitoring/(mainCon:Departments)' ">Department</th>
             <th>Name</th>
             <th class="text-center">CIN</th>
             <th>Email</th>
@@ -70,8 +70,8 @@
           </thead>
           <tbody>
           <tr class="emp" *ngFor="let emp of users | filter:searchText">
-            <td  *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)' || !thisIsEmp" class="text-center text-muted" style="padding-top: 15px">{{emp.userId}}</td>
-            <td   *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)' " class="text-muted" style="padding-top: 15px">{{emp.department.depName}}</td>
+            <td  *ngIf="router.url === '/RemoteMonitoring/(mainCon:Employees)' || !thisIsEmp" class="text-center text-muted" style="padding-top: 15px">{{emp.userId}}</td>
+            <td   *ngIf="router.url === '/RemoteMonitoring/(mainCon:Employees)' " class="text-muted" style="padding-top: 15px">{{emp.department.depName}}</td>
             <td>
               <div class="widget-content p-0">
                 <div class="widget-content-wrapper">
@@ -87,14 +87,14 @@
                 </div>
               </div>
             </td>
-            <td  *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)' || !thisIsEmp" class="text-center text-muted" style="padding-top: 15px">{{emp.cin}}</td>
-            <td *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)' || !thisIsEmp">
+            <td  *ngIf="router.url === '/RemoteMonitoring/(mainCon:Employees)' || !thisIsEmp" class="text-center text-muted" style="padding-top: 15px">{{emp.cin}}</td>
+            <td *ngIf="router.url === '/RemoteMonitoring/(mainCon:Employees)' || !thisIsEmp">
               <div class="widget-subheading opacity-7">{{emp.email}}</div>
             </td>
-            <td *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)' || !thisIsEmp" >
+            <td *ngIf="router.url === '/RemoteMonitoring/(mainCon:Employees)' || !thisIsEmp" >
               <div class="widget-subheading opacity-7">{{emp.phone}}</div>
             </td>
-            <span *ngIf="router.url === '/RemoteMonotoring/(mainCon:Employees)' || !thisIsEmp">
+            <span *ngIf="router.url === '/RemoteMonitoring/(mainCon:Employees)' || !thisIsEmp">
 
                 <!--              <td class="text-center">-->
               <!--                <div class="badge badge-warning">Pending</div>-->

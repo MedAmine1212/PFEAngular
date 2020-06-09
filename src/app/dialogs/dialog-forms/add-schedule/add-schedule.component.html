@@ -1,22 +1,125 @@
-  <ng-template matStepLabel>Fill out user informations</ng-template>
-  <div  class="main-card mb-3 card main" >
+<div *ngIf="formGroup3 !=null;">
+<mat-horizontal-stepper [linear]="isLinear" #stepper  style="margin-bottom: -100px;margin-top: -20px">
+  <mat-step>
+    <ng-template matStepLabel>Schedule Info</ng-template>
+    <br>
+<div class="main-card mb-3 card">
     <div class="card-header">
-      <h1>Add schedule</h1>
+      <h1><S></S>Schedule</h1>
       <hr>
     </div>
-    <div class="card-body">
+    <div class="card-body" style="min-height: 300px">
+      <div style="margin-bottom: 40px">
+      <button class="btn btn-info" (click)="isNewSch()" *ngIf="newSch && schedules.length > 0" style="float: right">Existing schedule</button>
+      <button class="btn btn-info" (click)="isNewSch()" *ngIf="!newSch" style="float: right">New schedule</button>
+      </div>
+
+      <div *ngIf="!newSch" style="padding-top: 40px" [@enterAnimation]>
+        <select
+          required
+          class="custom-select"
+          id="inputGroupSelect01"
+          [(ngModel)]="schedule"
+          [ngModelOptions]="{standalone: true}"
+        >
+          <!--          [disabled]="router.url === '/RemoteMonitoring/(mainCon:Departments)'"-->
+
+          <option *ngFor="let sch of schedules"  [ngValue]="sch" [selected]=" pl !== null &&  sch.scheduleId === schedule.scheduleId">
+            <span>{{returnSchDesc(sch)}}</span>
+          </option>
+        </select>
+      </div>
+        <div *ngIf="newSch" [@enterAnimation]>
+          <form [formGroup]="formGroup3">
+
+            <div class="timeLabel">
+              <mat-label>Daily cycle</mat-label>
+            </div>
+            <input
+              [format]="24"
+              class="choseTime"
+              placeholder="Begin hour"
+              formControlName="beginHour"
+              #pickerBeginHour
+              [ngxTimepicker]="picker3"
+              [(ngModel)]="beginHour"
+            >
+            <ngx-material-timepicker class="timePicker" #picker3></ngx-material-timepicker>
+         <input
+              [format]="24"
+              class="choseTime"
+              placeholder="End hour"
+              formControlName="endHour"
+              #pickerEndHour
+              [min]="pickerBeginHour.value"
+              [ngxTimepicker]="picker4"
+              [(ngModel)]="endHour"
+            >
+            <ngx-material-timepicker class="timePicker" #picker4></ngx-material-timepicker>
+
+          </form>
+          <br><br>
+          <form [formGroup]="formGroup2">
+             <mat-checkbox (change)="schedule.pauseTime = !schedule.pauseTime"> Pause time
+              </mat-checkbox><br>
+              <div class="pauseTimeDiv">
+                <table *ngIf="schedule.pauseTime">
+                  <tr><td>
+                    <input
+                      [format]="24"  readonly
+                      class="choseTime"
+                      placeholder="Pause begin hour"
+                      formControlName="pauseStartHour"
+                      [min]="pickerBeginHour.value"
+                      [max]="pickerEndHour.value"
+                      #pickerPauseBeginHour
+                      [ngxTimepicker]="picker5"
+                      [(ngModel)]="pauseStartHour"
+                    >
+                    <ngx-material-timepicker class="timePicker" #picker5></ngx-material-timepicker>
+                  </td><td> <input
+                    [format]="24"  readonly
+                    class="choseTime"
+                    formControlName="pauseEndHour"
+                    placeholder="pause end hour"
+                    [min]="pickerPauseBeginHour.value"
+                    [max]="pickerEndHour.value"
+                    [ngxTimepicker]="picker6"
+                    [(ngModel)]="pauseEndHour"
+                  >
+                    <ngx-material-timepicker class="timePicker" #picker6></ngx-material-timepicker>
+                  </td>  </tr>
+                </table>
+              </div>
+
+          </form>
+        </div>
+    </div>
+</div>
+        </mat-step>
+        <mat-step>
+          <ng-template *ngIf="pl == null;" matStepLabel>Fill out planning info</ng-template>
+          <ng-template *ngIf="pl != null;" matStepLabel>Planning info</ng-template>
+          <br>
+          <div class="main-card mb-3 card main">
+            <div class="card-header">
+              <h1>Planning details</h1>
+              <hr>
+            </div>
+            <div class="card-body">
+
       <form [formGroup]="formGroup">
         <div class="form-row">
           <div class="form-group col-md-5">
             <mat-form-field  appearance="outline">
-              <mat-label>Schedule Name</mat-label>
+              <mat-label>Planning Name</mat-label>
               <input
                 matInput
                 required
                 id="inputScheduleName"
-                placeholder="Schedule name"
+                placeholder="Planning name"
                 formControlName="schName"
-                [(ngModel)]="schedule.scheduleName"
+                [(ngModel)]="planning.planningName"
                 >
               <button mat-button  matSuffix mat-icon-button aria-label="Clear" >
                 <mat-icon>close</mat-icon>
@@ -27,13 +130,13 @@
           </div>
           <div class="form-group col-md-5">
             <mat-form-field  appearance="outline">
-              <mat-label>Schedule Description</mat-label>
+              <mat-label>Planning Description</mat-label>
               <input
                 matInput
                 [ngModelOptions]="{standalone: true}"
                 id="inputScheduleDesc"
-                placeholder="Schedule Description"
-                [(ngModel)]="schedule.scheduleDesc"
+                placeholder="Planning Description"
+                [(ngModel)]="planning.planningDescription"
               >
               <button mat-button  matSuffix mat-icon-button aria-label="Clear" >
                 <mat-icon>close</mat-icon>
@@ -96,37 +199,26 @@
               <mat-hint>(weeks)</mat-hint>
             </mat-form-field>
           </div>
-          <div class="form-group col-md-3 hours">
-            <div class="timeLabel">
-            <mat-label>Daily cycle</mat-label>
+          <div class="form-group col-md-6 colorsRow">
+            <div class="colorsLabel">
+              <mat-label >Color</mat-label>
             </div>
-              <input
-                [format]="24"
-                class="choseTime"
-                placeholder="Begin hour"
-                formControlName="beginHour"
-                #pickerBeginHour
-                [ngxTimepicker]="picker3"
-                [(ngModel)]="beginHour"
-              >
-              <ngx-material-timepicker class="timePicker" #picker3></ngx-material-timepicker>
-          </div>
-          <div class="form-group col-md-3 hours">
-            <input
-              [format]="24"
-              class="choseTime"
-              placeholder="End hour"
-              formControlName="endHour"
-              #pickerEndHour
-              [min]="pickerBeginHour.value"
-              [ngxTimepicker]="picker4"
-              [(ngModel)]="endHour"
-            >
-            <ngx-material-timepicker class="timePicker" #picker4></ngx-material-timepicker>
+            <table class="colorTable">
+              <tr>
+                <td matTooltip="Primary"><div (click)="choseColor('primary')" [ngClass]="planning.color === 'btn btn-primary' ? 'btn-primary colorsChecked' : 'btn-primary colors'"></div></td>
+                <td  matTooltip="Secondary" ><div (click)="choseColor('secondary')" [ngClass]="planning.color === 'btn btn-secondary' ? 'btn-secondary colorsChecked' : 'btn-secondary colors'"></div></td>
+                <td matTooltip="Light blue"><div (click)="choseColor('info')" [ngClass]="planning.color === 'btn btn-info' ? 'btn-info colorsChecked' : 'btn-info colors'"></div></td>
+                <td matTooltip="Yellow"><div (click)="choseColor('warning')" [ngClass]="planning.color === 'btn btn-warning' ? 'btn-warning colorsChecked' : 'btn-warning colors'"></div></td>
+                <td matTooltip="Green"><div (click)="choseColor('success')" [ngClass]="planning.color === 'btn btn-success' ? 'btn-success colorsChecked' : 'btn-success colors'"></div></td>
+                <td matTooltip="Red"><div (click)="choseColor('danger')" [ngClass]="planning.color === 'btn btn-danger' ? 'btn-danger colorsChecked' : 'btn-danger colors'"></div></td>
+                <td matTooltip="Dark"><div (click)="choseColor('dark')" [ngClass]="planning.color === 'btn btn-dark' ? 'btn-dark colorsChecked' : 'btn-dark colors'"></div></td>
+              </tr>
+            </table>
           </div>
         </div>
-        <div class="form-row daysColorsRow">
-          <div class="form-group col-md-6">
+
+        <div class="form-row lasRow">
+          <div class="form-group col-md-6 daysColorsRow">
             <div class="daysLabel">
               <mat-label>Repeat days </mat-label>
             </div>
@@ -142,70 +234,19 @@
             </tr>
             </table>
           </div>
-          <div class="form-group col-md-6 colorsRow">
-            <div class="colorsLabel">
-              <mat-label >Color</mat-label>
-            </div>
-            <table class="colorTable">
-            <tr>
-            <td matTooltip="Primary"><div (click)="choseColor('primary')" [ngClass]="schedule.color === 'btn btn-primary' ? 'btn-primary colorsChecked' : 'btn-primary colors'"></div></td>
-            <td  matTooltip="Secondary" ><div (click)="choseColor('secondary')" [ngClass]="schedule.color === 'btn btn-secondary' ? 'btn-secondary colorsChecked' : 'btn-secondary colors'"></div></td>
-            <td matTooltip="Light blue"><div (click)="choseColor('info')" [ngClass]="schedule.color === 'btn btn-info' ? 'btn-info colorsChecked' : 'btn-info colors'"></div></td>
-            <td matTooltip="Yellow"><div (click)="choseColor('warning')" [ngClass]="schedule.color === 'btn btn-warning' ? 'btn-warning colorsChecked' : 'btn-warning colors'"></div></td>
-            <td matTooltip="Green"><div (click)="choseColor('success')" [ngClass]="schedule.color === 'btn btn-success' ? 'btn-success colorsChecked' : 'btn-success colors'"></div></td>
-            <td matTooltip="Red"><div (click)="choseColor('danger')" [ngClass]="schedule.color === 'btn btn-danger' ? 'btn-danger colorsChecked' : 'btn-danger colors'"></div></td>
-            <td matTooltip="Dark"><div (click)="choseColor('dark')" [ngClass]="schedule.color === 'btn btn-dark' ? 'btn-dark colorsChecked' : 'btn-dark colors'"></div></td>
-            </tr>
-            </table>
-          </div>
-
-        </div>
-      </form>
-
-      <form [formGroup]="formGroup2">
-        <div class="form-row lastRow">
-
-          <div class="form-group col-md-6">
-            <mat-checkbox (change)="schedule.pauseTime = !schedule.pauseTime"> Pause time
-            </mat-checkbox><br>
-            <div class="pauseTimeDiv">
-              <table *ngIf="schedule.pauseTime">
-                <tr><td>
-                  <input
-                    [format]="24"  readonly
-                    class="choseTime"
-                    placeholder="Pause begin hour"
-                    formControlName="pauseStartHour"
-                    [min]="pickerBeginHour.value"
-                    [max]="pickerEndHour.value"
-                    #pickerPauseBeginHour
-                    [ngxTimepicker]="picker5"
-                    [(ngModel)]="pauseStartHour"
-                  >
-                  <ngx-material-timepicker class="timePicker" #picker5></ngx-material-timepicker>
-                </td><td> <input
-                  [format]="24"  readonly
-                  class="choseTime"
-                  formControlName="pauseEndHour"
-                  placeholder="pause end hour"
-                  [min]="pickerPauseBeginHour.value"
-                  [max]="pickerEndHour.value"
-                  [ngxTimepicker]="picker6"
-                  [(ngModel)]="pauseEndHour"
-                >
-                  <ngx-material-timepicker class="timePicker" #picker6></ngx-material-timepicker>
-                </td>  </tr>
-              </table>
-            </div>
-          </div>
           <div class="form-group col-md-6">
             <div class="buttonsDiv">
-              <button type="submit" mat-raised-button color="primary" [disabled]="!formGroup.valid || (!formGroup2.valid && schedule.pauseTime)" (click)="addSchedule()">Add Schedule</button>
+              <button type="submit" *ngIf="pl == null" mat-raised-button color="primary" [disabled]="!formGroup.valid || (!formGroup2.valid && schedule.pauseTime) || !formGroup3.valid" (click)="addSchedule()">Add Schedule</button>
+              <button type="submit" *ngIf="pl != null" mat-raised-button color="primary" [disabled]="!formGroup.valid" (click)="updateSchedule()">Update</button>
               <button type="button" (click)="closeThis()" class="btn btn-light cancelButt">Cancel</button>
             </div>
 
           </div>
         </div>
+
       </form>
-    </div>
-  </div>
+            </div>
+          </div>
+        </mat-step>
+      </mat-horizontal-stepper>
+</div>
