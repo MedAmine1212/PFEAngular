@@ -11,25 +11,50 @@
           <h3>Sign In</h3>
         </div><br>
         <div class="card-body">
+          <div  style="height: 20px;margin-top: -20px;margin-bottom: 15px">
+            <mat-error *ngIf="showError">Username or password Invalid or does not exist !</mat-error>
+          </div>
+          <form [formGroup]="signInForm">
             <div class="input-group form-group">
               <div class="input-group-prepend">
                 <span style="padding-left: 18px;background-color: rgb(82,148,226);" class="input-group-text"><i class="fas fa-user"></i></span>
               </div>
-              <input type="text" class="form-control" placeholder="username">
-
+              <input
+                type="text"
+                required
+                class="form-control"
+                placeholder="CIN"
+                [(ngModel)]="login.cin"
+                formControlName="cin"
+              >
+            </div>
+            <div style="height: 20px;margin-top: -15px;margin-bottom: 5px">
+              <mat-error style="margin-top: -100px" *ngIf="signInForm.get('cin').hasError('required') && signInForm.get('cin').touched">CIN is required</mat-error>
             </div>
             <div class="input-group form-group">
               <div class="input-group-prepend">
                 <span style="padding-left: 18px;background-color: rgb(82,148,226);" class="input-group-text"><i class="fas fa-key"></i></span>
               </div>
-              <input type="password" class="form-control" placeholder="password">
+              <input
+                type="password"
+                class="form-control"
+                placeholder="password"
+                required
+                [(ngModel)]="login.password"
+                formControlName="password"
+              >
             </div>
-          <br>
+
+            <div style="height: 20px;margin-top: -15px;margin-bottom: 5px">
+            <mat-error *ngIf="signInForm.get('password').hasError('required') && signInForm.get('password').touched">Password is required</mat-error>
+            </div>
             <div class="row align-items-center remember">
               <input type="checkbox">Remember Me
             </div>
             <div class="form-group">
-              <input type="submit" value="Login" (click)="reloadJs()"  routerLink="/RemoteMonitoring" class="btn float-right login_btn">            </div>
+              <input type="submit" value="Login" (click)="submit()" [disabled]="!signInForm.valid"  class="btn float-right login_btn">            </div>
+<!--            routerLink="/RemoteMonitoring"  -->
+          </form>
         </div>
         <div class="card-footer">
           <div class="d-flex justify-content-center">

@@ -397,4 +397,6 @@ export class AddUserComponent implements  AfterViewInit  {
     const finalDate = year + '-' + month + '-' + day;
     this.user.birthDate = finalDate;
   }
+
+
 }

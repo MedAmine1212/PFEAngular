@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RemoteMonitoringComponent } from './remote-monitoring.component';
 
-describe('RemmoteMonotoringComponent', () => {
+describe('RemoteMonitoringComponent', () => {
   let component: RemoteMonitoringComponent;
   let fixture: ComponentFixture<RemoteMonitoringComponent>;
 

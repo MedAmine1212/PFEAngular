@@ -8,11 +8,13 @@ import {AdministratorsComponent} from './components/administrators/administrator
 import {TimetablesComponent} from './components/timetables/timetables.component';
 import {ProfileComponent} from './components/profile/profile.component';
 import {EmployeesComponent} from './components/employees/employees.component';
+import {AuthenticationGuard} from './guard/authentication.guard';
 
 const routes: Routes = [
-  {path : '' , component: LoginComponent},
-  {path : 'RemoteMonitoring' , component: RemoteMonitoringComponent,
-    children:[
+  {path : '' , component: LoginComponent, canActivate : [AuthenticationGuard]
+  },
+  {path : 'RemoteMonitoring' , component: RemoteMonitoringComponent, canActivate : [AuthenticationGuard],
+    children: [
       {
         path: '',
         component: AbsencesComponent,
@@ -22,6 +24,7 @@ const routes: Routes = [
         path: 'Absences',
         component: AbsencesComponent,
         outlet: 'mainCon'
+
       },
       {
         path: 'Employees',
@@ -52,7 +55,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

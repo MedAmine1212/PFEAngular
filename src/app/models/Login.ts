@@ -1,6 +1,8 @@
 export class Login {
-  username: string;
+  cin: string;
   password: string;
-  constructor() {
+  constructor(cin, password) {
+    this.cin = cin;
+    this.password = password;
   }
 }

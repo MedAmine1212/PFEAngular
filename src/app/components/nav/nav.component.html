@@ -68,17 +68,17 @@
                   <div class="menuContent">
                     <button class="dropdown-item" [routerLink]="[{ outlets: {mainCon: ['Profile'] } }]">User account</button>
                     <div tabindex="-1" class="dropdown-divider"></div>
-                    <button type="button" tabindex="0" routerLink="/" class="dropdown-item">Log out</button>
+                    <button type="button" tabindex="0" (click)="logout()" class="dropdown-item">Log out</button>
                   </div>
                 </mat-menu>
               </div>
             </div>
             <div class="widget-content-left  ml-3 header-user-info">
               <div class="widget-heading">
-                Kamel Sassi
+                {{this.user.name}} {{this.user.firstName}}
               </div>
               <div class="widget-subheading">
-                CEO
+                {{this.user.post.postName}}
               </div>
             </div>
             <div style="margin-top: 4px;margin-left: 40px">

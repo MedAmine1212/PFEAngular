@@ -4,6 +4,7 @@ import {animate, style, transition, trigger} from '@angular/animations';
 import {Department} from '../../models/Department';
 import {EmployeesComponent} from '../employees/employees.component';
 import {DepartmentsComponent} from '../departments/departments.component';
+import {AuthenticationService} from "../../services/Authentication/authentication.service";
 @Component({
   selector: 'app-remmote-monitoring',
   animations: [
@@ -40,12 +41,12 @@ export class RemoteMonitoringComponent implements OnInit {
   clickedDeparment: Department;
 
 
-  constructor(public router: Router) { }
+  constructor(public router: Router, private authService: AuthenticationService) { }
   time = new Date();
   @ViewChild(EmployeesComponent) employeesComponent: EmployeesComponent;
   @ViewChild(DepartmentsComponent) departmentComponent: DepartmentsComponent;
   ngOnInit() {
-
+    console.log('log : ', this.authService.loggedIn());
     setInterval(() => {
       this.time = new Date();
     }, 1000);
