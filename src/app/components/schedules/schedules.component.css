@@ -24,12 +24,11 @@
   width: 100%;
 }
 .schCard{
-  margin-top: -15px;
-  height:600px;
+  min-height:600px;
 }
 .schBody{
-  overflow:auto;
-  height:600px;
+  overflow:hidden;
+  height:100%;
   margin-bottom: 10px;
   font-size: 13px;
 }

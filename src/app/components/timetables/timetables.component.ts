@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Schedule} from '../../models/Schedule';
 import {ScheduleService} from '../../services/schedule/schedule.service';
 import {animate, style, transition, trigger} from '@angular/animations';
@@ -7,6 +7,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {PlanningService} from '../../services/planning/planning.service';
 import {Planning} from '../../models/Planning';
 import {DeletePlanningDialogComponent} from '../../dialogs/delete-planning-dialog/delete-planning-dialog.component';
+import {PlanningDetailsComponent} from '../planning-details/planning-details.component';
 
 
 @Component({
@@ -30,6 +31,8 @@ import {DeletePlanningDialogComponent} from '../../dialogs/delete-planning-dialo
 
 })
 export class TimetablesComponent implements OnInit {
+
+  @ViewChild(PlanningDetailsComponent) planningDetailsComp: PlanningDetailsComponent;
   hours: number[];
   days: string[];
   searchText;
@@ -49,10 +52,10 @@ export class TimetablesComponent implements OnInit {
   pauseStart: number;
   pauseEnd: number;
   menuTop: string;
-  showMenu: boolean;
-  rightClicked: Planning;
   showTable: boolean;
+  clickedPlanning: Planning;
   constructor(public dialog: MatDialog, private  scheduleService: ScheduleService, private  planningService: PlanningService) {
+    this.clickedPlanning = null;
     this.hours = Array(24).fill(6).map((x, i) => i);
     this.days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     this.startMinutes = 0;
@@ -64,7 +67,6 @@ export class TimetablesComponent implements OnInit {
     this.pauseStart = 0;
     this.pauseEnd = 0;
     this.menuTop = '0';
-    this.showMenu = false;
   }
 
   ngOnInit(): void {
@@ -148,6 +150,8 @@ export class TimetablesComponent implements OnInit {
   }
 
   showHideSch(pl: Planning) {
+    this.clickedPlanning = pl;
+    this.planningDetailsComp.setClickedPl(pl);
     pl.showPl = !pl.showPl;
 
     if (pl.showPl) {
@@ -208,55 +212,36 @@ export class TimetablesComponent implements OnInit {
     this.pauseEndMinutes = pl.schedule.pauseEnd % 60;
 
   }
-
-  onRightClick(e, pl) {
-    this.rightClicked = pl;
-    e.preventDefault();
-    this.showMenu = true;
-    this.menuTop = (e.pageY - 35) + 'px';
-  }
-
-  noClick() {
-    if (this.showMenu) {
-        this.showMenu = false;
-    }
-  }
-
   openDeletePlanDialog() {
-    if (this.showMenu) {
       const dialogRef = this.dialog.open(DeletePlanningDialogComponent, {
         width: '400px',
         height: '380',
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          this.planningService.remove(this.rightClicked.planningId).subscribe(() => {
-            this.rightClicked = null;
+          this.planningService.remove(this.clickedPlanning.planningId).subscribe(() => {
+            this.clickedPlanning = null;
             console.log('Refreshing plannings..');
             this.reloadData();
           }, error1 => console.log(error1));
         }
 
       });
-    }
   }
 
   openDetailsDialog() {
-    if (this.showMenu) {
       const dialogRef = this.dialog.open(AddPlanningComponent, {
         width: '900px',
         height: '625px',
         panelClass: 'matDialogClass2',
-        data: this.rightClicked
+        data: this.clickedPlanning
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-            this.rightClicked = null;
             console.log('Refreshing plannings..');
             this.reloadData();
         }
 
       });
-    }
   }
 }

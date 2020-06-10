@@ -290,3 +290,20 @@
 .menu-option:hover {
   background: rgba(0, 0, 0, 0.2);
 }
+
+.card{
+  border-radius: 10px;
+}
+.descCard{
+  min-height:400px;
+}
+
+.buttonsDetails{
+  float:right;
+}
+
+.btnDetails {
+  width: 50px !important;
+  margin-left: 10px;
+  font-size: 14px;
+}

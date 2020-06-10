@@ -1,4 +1,4 @@
-<div class="app-main main"  (click)="noClick()">
+<div class="app-main main" >
   <div class="app-main__outer">
 
     <!-- side nav -->
@@ -49,7 +49,7 @@
                 </div>
               </div><br>
             </li>
-            <li (contextmenu)="onRightClick($event, pl)" (click)="showHideSch(pl)" class="schItem" *ngFor="let pl of plannings  | filter:searchText">
+            <li (click)="showHideSch(pl)" class="schItem" *ngFor="let pl of plannings  | filter:searchText">
             <span class="schIconSpan" [ngClass]="pl.colorIcon">
                 <i [ngStyle]="{'opacity':pl.showPl? '1' : '0' }" class="fa fa-check-circle">
                 </i>
@@ -63,7 +63,7 @@
 
     </div>
 
-<!--body-->
+    <!--body-->
     <div [@enterAnimation] *ngIf="showTable" class="bodyContainer">
       <div *ngIf="plannings.length<=0" class="main-card mb-3 card bodyCard">
         <div class="card-body noSchBod">
@@ -75,7 +75,7 @@
       </div>
       <div  *ngIf="plannings.length>0" class="main-card mb-3 card schCard">
         <div class="card-header">
-         Time table
+          Time table
         </div>
         <div class="card-body schBody">
           <table class="table-hover mat-calendar-table-header tableHeader">
@@ -110,28 +110,36 @@
 
       </div>
     </div>
-    <table *ngIf="showTable" style="width: 100%">
-      <tr style="width: 100%">
-        <td style="width: 40%">
-          <app-planning-details></app-planning-details>
-        </td>
-      <td>
+    <div *ngIf="showTable" style="padding:0;width: 100%">
+
+      <div style="float: left;width: 60%">
         <app-schedules></app-schedules>
-      </td>
-      </tr>
-    </table>
-    <div *ngIf="!showTable" style="padding-top: 15%;width:100%">
-      <div style="width:200px;margin:auto">
-      <div class="spinner-container" style="">
-        <mat-spinner></mat-spinner>
       </div>
+      <div style="width: 40%;float: right">
+        <div [@enterAnimation] class="bodyContainer">
+          <div class="main-card mb-3 card descCard">
+            <div *ngIf="clickedPlanning != null" class="card-header" style="width: 100%">
+              <div style="width: 60%">
+                {{clickedPlanning.planningName}}
+              </div>
+              <div style="width: 40%">
+                <div class="buttonsDetails">
+                  <button mat-raised-button class="btn btn-secondary btnDetails" (click)="openDetailsDialog()" matTooltip="Update planning"><span class="fas fa-pencil-alt"></span></button>
+                  <button mat-raised-button class="btn btn-danger btnDetails" (click)="openDeletePlanDialog()" matTooltip="Delete planning"><span class="fas fa-trash-alt"></span></button>
+                </div>
+              </div>
+            </div>
+            <app-planning-details></app-planning-details>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="menu" *ngIf="showMenu"  [ngStyle]="{'left': '200px', 'top': menuTop}">
-      <ul class="menu-options">
-        <li class="menu-option" (click)="openDetailsDialog()">Edit</li>
-        <li class="menu-option" (click)="openDeletePlanDialog()">Delete</li>
-      </ul>
+    <div *ngIf="!showTable" style="padding-top: 15%;width:100%">
+      <div style="width:200px;margin:auto">
+        <div class="spinner-container" style="">
+          <mat-spinner></mat-spinner>
+        </div>
+      </div>
     </div>
 
   </div>
