@@ -1,0 +1,92 @@
+.main{
+  margin-top: 50px;
+}
+
+.bodyContainer{
+  padding-right: 20px;
+  padding-left: 20px;
+}
+.bodyCard{
+  margin-top: -20px;
+  height:530px;
+}
+
+.noSchBod{
+  margin:auto;
+}
+.noSchContainer{
+  padding-top: 50%;
+  text-align: center;
+  color:black;
+  font-weight:bolder;
+  margin:0 auto;
+  font-size:25px;
+  width: 100%;
+}
+.schCard{
+  margin-top: -15px;
+  height:600px;
+}
+.schBody{
+  overflow:auto;
+  height:600px;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+.tableHeader{
+  height: 100%;
+}
+.card{
+  border-radius: 10px;
+}
+.emptyTh{
+  height:35px;
+}
+.wrapper{
+  margin-left: 40px;
+  width:180px;
+}
+.searchContainer{
+  position: absolute;
+  background-color: transparent;
+  margin-top: -15px;
+  margin-left: -35px;
+  width:170px;
+}
+.holder{
+  max-width:195px;
+}
+.searchInput{
+  width:160px;
+}
+.closeSearchButt{
+  margin-left:-100px;
+}
+.main{
+  margin-top: 50px;
+}
+.buttons{
+  font-size: 15px;
+  margin-right: -20px;
+  width: 30px;
+}
+.wrapper{
+  margin-left: 40px;
+  width:180px;
+}
+.searchContainer{
+  position: absolute;
+  background-color: transparent;
+  margin-top: -15px;
+  margin-left: -35px;
+  width:170px;
+}
+.holder{
+  max-width:195px;
+}
+.searchInput{
+  width:160px;
+}
+.closeSearchButt{
+  margin-left:-100px;
+}

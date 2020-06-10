@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Schedule} from '../../models/Schedule';
 import {ScheduleService} from '../../services/schedule/schedule.service';
 import {animate, style, transition, trigger} from '@angular/animations';
-import {AddScheduleComponent} from '../../dialogs/dialog-forms/add-schedule/add-schedule.component';
+import {AddPlanningComponent} from '../../dialogs/dialog-forms/add-planning/add-planning.component';
 import {MatDialog} from '@angular/material/dialog';
 import {PlanningService} from '../../services/planning/planning.service';
 import {Planning} from '../../models/Planning';
@@ -158,7 +158,7 @@ export class TimetablesComponent implements OnInit {
   }
 
   addPlanning() {
-    const dialogRef = this.dialog.open(AddScheduleComponent, {
+    const dialogRef = this.dialog.open(AddPlanningComponent, {
       width: '800px',
       height: '620px',
       data: null
@@ -243,7 +243,7 @@ export class TimetablesComponent implements OnInit {
 
   openDetailsDialog() {
     if (this.showMenu) {
-      const dialogRef = this.dialog.open(AddScheduleComponent, {
+      const dialogRef = this.dialog.open(AddPlanningComponent, {
         width: '900px',
         height: '625px',
         panelClass: 'matDialogClass2',

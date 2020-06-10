@@ -1,0 +1,42 @@
+
+
+.bodyContainer{
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.noSchBod{
+  margin:auto;
+}
+.noSchContainer{
+  padding-top: 50%;
+  text-align: center;
+  color:black;
+  font-weight:bolder;
+  margin:0 auto;
+  font-size:25px;
+  width: 100%;
+}
+.schCard{
+  height:100px;
+  margin-top: -320px;
+}
+.schCard:hover{
+  height:400px;
+  margin-top: -20px;
+}
+.schBody{
+  overflow: hidden;
+  height:100%;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+.tableHeader{
+  height: 100%;
+}
+.card{
+  border-radius: 10px;
+}
+.emptyTh{
+  height:35px;
+}

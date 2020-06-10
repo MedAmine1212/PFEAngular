@@ -32,7 +32,7 @@ export class AuthenticationGuard implements CanActivate, CanActivateChild, CanLo
       } else {
         return true;
       }
-    }else {
+    } else {
       if (!this.auth.loggedIn()) {
         this.router.navigate(['/']);
         return false;
