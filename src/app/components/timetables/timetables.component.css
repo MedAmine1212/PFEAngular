@@ -205,10 +205,14 @@
 }
 .bodyCard{
   margin-top: -20px;
-  height:530px;
+  min-height:530px;
 }
 .noSchBod{
   margin:auto;
+}
+
+.card{
+  border-radius: 10px;
 }
 .noSchContainer{
   padding-top: 50%;
@@ -221,7 +225,7 @@
 }
 .schCard{
   margin-top: -20px;
-  height:600px;
+  min-height:570px;
 }
 .schBody{
   overflow:auto;

@@ -1,5 +1,4 @@
 <div class="app-main main"  (click)="noClick()">
-
   <div class="app-main__outer">
 
     <!-- side nav -->
@@ -111,6 +110,16 @@
 
       </div>
     </div>
+    <table *ngIf="showTable" style="width: 100%">
+      <tr style="width: 100%">
+        <td style="width: 40%">
+          <app-planning-details></app-planning-details>
+        </td>
+      <td>
+        <app-schedules></app-schedules>
+      </td>
+      </tr>
+    </table>
     <div *ngIf="!showTable" style="padding-top: 15%;width:100%">
       <div style="width:200px;margin:auto">
       <div class="spinner-container" style="">
@@ -120,7 +129,7 @@
     </div>
     <div class="menu" *ngIf="showMenu"  [ngStyle]="{'left': '200px', 'top': menuTop}">
       <ul class="menu-options">
-        <li class="menu-option" (click)="openDetailsDialog()">Details</li>
+        <li class="menu-option" (click)="openDetailsDialog()">Edit</li>
         <li class="menu-option" (click)="openDeletePlanDialog()">Delete</li>
       </ul>
     </div>

@@ -11,7 +11,7 @@ import {animate, style, transition, trigger} from '@angular/animations';
 import {PlanningService} from '../../../services/planning/planning.service';
 
 @Component({
-  selector: 'app-add-schedule',
+  selector: 'app-add-planning',
   animations: [
     trigger(
       'enterAnimation', [
@@ -26,10 +26,10 @@ import {PlanningService} from '../../../services/planning/planning.service';
       ]
     ),
     ],
-  templateUrl: './add-schedule.component.html',
-  styleUrls: ['./add-schedule.component.css']
+  templateUrl: './add-planning.component.html',
+  styleUrls: ['./add-planning.component.css']
 })
-export class AddScheduleComponent implements AfterViewInit {
+export class AddPlanningComponent implements AfterViewInit {
   dialogComponent: MatDialogRef<DialogComponent>;
   formGroup: FormGroup;
   formGroup2: FormGroup;
@@ -57,7 +57,7 @@ export class AddScheduleComponent implements AfterViewInit {
   newSchEndHour: number;
   noSch: boolean;
 
-  constructor(public dialogRef: MatDialogRef<AddScheduleComponent>,
+  constructor(public dialogRef: MatDialogRef<AddPlanningComponent>,
               private planningService: PlanningService,
               @Inject(MAT_DIALOG_DATA) public pl: Planning,
               private formBuilder: FormBuilder,
