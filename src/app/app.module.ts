@@ -42,13 +42,12 @@ import {DialogComponent} from './dialogs/dialog.component';
 import {EmployeeDetailsComponent} from './dialogs/employee-details/employee-details.component';
 import {MatNativeDateModule} from '@angular/material/core';
 import {DeleteUserDialogComponent} from './dialogs/delete-user-dialog/delete-user-dialog.component';
-import {CalendarModule} from 'angular-calendar';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { AddScheduleComponent } from './dialogs/dialog-forms/add-schedule/add-schedule.component';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { DeletePlanningDialogComponent } from './dialogs/delete-planning-dialog/delete-planning-dialog.component';
-import {AuthenticationGuard} from "./guard/authentication.guard";
+import {AuthenticationGuard} from './guard/authentication.guard';
 
 
 @NgModule({
@@ -101,7 +100,6 @@ import {AuthenticationGuard} from "./guard/authentication.guard";
     MatButtonToggleModule,
     MatSelectModule,
     MatNativeDateModule,
-    CalendarModule,
     MatProgressSpinnerModule,
     MatFormFieldModule,
     NgxMaterialTimepickerModule,
