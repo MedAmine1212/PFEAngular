@@ -49,7 +49,7 @@
             <mat-error *ngIf="signInForm.get('password').hasError('required') && signInForm.get('password').touched">Password is required</mat-error>
             </div>
             <div class="row align-items-center remember">
-              <input type="checkbox">Remember Me
+              <input type="checkbox" (click)="rememberChecked()" >Remember Me
             </div>
             <div class="form-group">
               <input type="submit" value="Login" (click)="submit()" [disabled]="!signInForm.valid"  class="btn float-right login_btn">            </div>
