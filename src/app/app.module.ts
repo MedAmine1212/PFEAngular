@@ -110,8 +110,6 @@ import { PlanningDetailsComponent } from './components/planning-details/planning
     MatFormFieldModule,
     NgxMaterialTimepickerModule,
     MatCheckboxModule,
-
-
   ],
   providers: [AuthenticationGuard],
   bootstrap: [AppComponent],

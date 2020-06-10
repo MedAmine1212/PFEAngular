@@ -4,7 +4,7 @@ import {animate, style, transition, trigger} from '@angular/animations';
 import {Department} from '../../models/Department';
 import {EmployeesComponent} from '../employees/employees.component';
 import {DepartmentsComponent} from '../departments/departments.component';
-import {AuthenticationService} from "../../services/Authentication/authentication.service";
+import {AuthenticationService} from '../../services/Authentication/authentication.service';
 @Component({
   selector: 'app-remmote-monitoring',
   animations: [
