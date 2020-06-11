@@ -8,14 +8,18 @@ import {Login} from '../../models/Login';
   providedIn: 'root'
 })
 export class AuthenticationService  {
-  url = 'http://localhost:81/';
+  url = 'http://localhost:81/auth/';
   jwt: string ;
   email: string;
   roles: Array<string> ;
   constructor(private http: HttpClient) { }
 
   authenticate(login: Login, isRemembered: boolean) {
-    return this.http.post(this.url + 'auth/login/' + isRemembered, login);
+    return this.http.post(this.url + 'login/' + isRemembered, login);
+  }
+
+  isTokenExpired() {
+    return this.http.get(this.url + 'isTokenExpired/' + this.getToken());
   }
 
   getToken() {
