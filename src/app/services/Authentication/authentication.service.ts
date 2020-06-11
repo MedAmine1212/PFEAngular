@@ -14,8 +14,8 @@ export class AuthenticationService  {
   roles: Array<string> ;
   constructor(private http: HttpClient) { }
 
-  authenticate(login: Login) {
-    return this.http.post(this.url + 'auth/login', login);
+  authenticate(login: Login, isRemembered: boolean) {
+    return this.http.post(this.url + 'auth/login/' + isRemembered, login);
   }
 
   getToken() {

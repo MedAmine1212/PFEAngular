@@ -48,7 +48,7 @@ import { AddPlanningComponent } from './dialogs/dialog-forms/add-planning/add-pl
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { DeletePlanningDialogComponent } from './dialogs/delete-planning-dialog/delete-planning-dialog.component';
-import {AuthenticationGuard} from "./guard/authentication.guard";
+import {AuthenticationGuard} from './guard/authentication.guard';
 import { SchedulesComponent } from './components/schedules/schedules.component';
 import { PlanningDetailsComponent } from './components/planning-details/planning-details.component';
 
@@ -112,6 +112,16 @@ import { PlanningDetailsComponent } from './components/planning-details/planning
     MatCheckboxModule,
   ],
   providers: [AuthenticationGuard],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    AddUserComponent,
+    AddDepartmentComponent,
+    DeleteDepDialogComponent,
+    EmployeeDetailsComponent,
+    DeleteUserDialogComponent,
+    AddPlanningComponent,
+    DeletePlanningDialogComponent,
+    PlanningDetailsComponent
+  ],
 })
 export class AppModule { }

@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
   signInForm: FormGroup;
   dialogComponent: MatDialogRef<DialogComponent>;
   showError: boolean;
+  isRemeberChecked : boolean;
 
 
 
@@ -35,6 +36,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.showError = false;
+    this.isRemeberChecked = false ;
     this.login = {cin: '', password: ''};
     this.createSignInForm();
   }
@@ -47,8 +49,8 @@ export class LoginComponent implements OnInit {
 
   submit() {
     this.reloadJs();
-    this.authService.authenticate(this.login).subscribe(res => {
-      console.log(res);
+    console.log('hhhhh');
+    this.authService.authenticate(this.login, this.isRemeberChecked).subscribe(res => {
       // @ts-ignore
       localStorage.token = res.token;
       this.userService.findUserWithToken().subscribe( res => {
@@ -57,6 +59,7 @@ export class LoginComponent implements OnInit {
       });
       this.router.navigateByUrl('/RemoteMonitoring').then(() => window.location.reload());
     }, error => {
+      console.log(error);
       this.showError = true;
       this.signInForm.controls.cin.setErrors({incorrect : true}) ;
       this.signInForm.controls.password.setErrors({incorrect : true}) ;
@@ -76,5 +79,9 @@ export class LoginComponent implements OnInit {
       cin: [this.login.cin, [Validators.required]],
       password: [this.login.password, [Validators.required]]
     });
+  }
+
+  rememberChecked(){
+    this.isRemeberChecked = !this.isRemeberChecked;
   }
 }
