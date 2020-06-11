@@ -9,18 +9,93 @@
           </div>
         </div>
       </div>
-     <div *ngIf="showBody">
-      <h2>
-       Description
-     </h2>
-      <span style="margin-left: 10px">
-        {{clickedPlanning.planningDescription}}
-      </span>
-       <h2>
-         Days
-       </h2>
-       <span style="margin-left: 10px">
 
-      </span>
+
+     <div *ngIf="showBody">
+       <table style="width: 90%">
+         <tr>
+           <td>
+             <div class="element">
+               <h2>
+                 Days
+               </h2>
+               <div class="elementDiv">
+                 <table class="daysTable">
+                   <tr>
+                     <td class="daysTd"><div matTooltip="Monday"  style="padding-left: 6px !important;"  class="btn-secondary days" [ngStyle]="{'background-color':clickedPlanning.scheduleDays.indexOf('Monday')> -1 ? 'cornflowerblue' :''}">Mo</div></td>
+                     <td class="daysTd"><div matTooltip="Tuesday" class="btn-secondary days" [ngStyle]="{'background-color':clickedPlanning.scheduleDays.indexOf('Tuesday')> -1 ? 'cornflowerblue' :''}">Tu</div></td>
+                     <td class="daysTd"><div matTooltip="Wednesday" style="padding-left: 6px !important;" class="btn-secondary days" [ngStyle]="{'background-color':clickedPlanning.scheduleDays.indexOf('Wednesday')> -1 ? 'cornflowerblue' :''}">We</div></td></tr><tr>
+                   <td class="daysTd"><div matTooltip="Thursday"  class="btn-secondary days" [ngStyle]="{'background-color':clickedPlanning.scheduleDays.indexOf('Thursday')> -1 ? 'cornflowerblue' :''}">Th</div></td>
+                   <td class="daysTd"><div matTooltip="Friday" style="padding-left: 10px" class="btn-secondary days" [ngStyle]="{'background-color':clickedPlanning.scheduleDays.indexOf('Friday')> -1 ? 'cornflowerblue' :''}">Fr</div></td>
+                   <td class="daysTd"><div matTooltip="Saturday" style="padding-left: 8px !important;" class="btn-secondary days" [ngStyle]="{'background-color':clickedPlanning.scheduleDays.indexOf('Saturday')> -1 ? 'cornflowerblue' :''}">Sa</div></td>
+                   <td class="daysTd"><div matTooltip="Sunday" style="padding-left: 8px !important;"  class="btn-secondary days" [ngStyle]="{'background-color':clickedPlanning.scheduleDays.indexOf('Sunday')> -1 ? 'cornflowerblue' :''}">Su</div></td>
+                 </tr>
+                 </table>
+               </div>
+             </div>
+           </td>
+           <td>
+             <div class="element" style="margin-top:-45px">
+               <h2>
+                 Color
+               </h2>
+               <div class="elementDiv" style="margin-left:20px ">
+                 <div matTooltip=""><div [ngClass]="clickedPlanning.color" class="colorsChecked"></div></div>
+               </div>
+             </div>
+
+           </td>
+         </tr>
+         <tr>
+           <td>
+             <div class="element">
+               <h2>
+                 Start date
+               </h2>
+               <div class="elementDiv">
+                 <span>{{clickedPlanning.startDate | date: 'dd MMMM yyyy '}}</span>
+               </div>
+             </div>
+           </td>
+           <td>
+             <div class="element">
+               <h2>
+                 End date
+               </h2>
+               <div class="elementDiv">
+
+                 <span>{{clickedPlanning.endDate | date: 'dd MMMM yyyy '}}</span>
+               </div>
+             </div>
+
+           </td>
+         </tr>
+         <tr>
+           <td>
+             <div class="element">
+               <h2>
+                 Repeat cycle
+               </h2>
+               <div class="elementDiv">
+
+                 <span>Every {{clickedPlanning.repeatCycle}} week<span *ngIf="clickedPlanning.repeatCycle > 1">s</span></span>
+               </div>
+             </div>
+
+           </td>
+           <td>
+           </td>
+         </tr>
+       </table>
+
+
+         <div *ngIf="onlySpace()" class="element">
+           <h2>
+             Description
+           </h2>
+           <div class="elementDiv">
+             {{clickedPlanning.planningDescription}}
+           </div>
+         </div>
     </div>
     </div>

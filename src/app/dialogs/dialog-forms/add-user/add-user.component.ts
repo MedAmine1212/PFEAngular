@@ -101,7 +101,7 @@ export class AddUserComponent implements  AfterViewInit  {
     this.createSecondFormGroup();
     this.createThirdFormGroup();
     this.createFourthFormGroup();
-    });
+    }, 600);
     this.postService.list().subscribe(posts => {
       for (const post of posts) {
         this.posts.push(post);

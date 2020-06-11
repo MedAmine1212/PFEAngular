@@ -22,20 +22,32 @@ import {Planning} from '../../models/Planning';
   styleUrls: ['./planning-details.component.css']
 })
 export class PlanningDetailsComponent implements OnInit {
-   showBody: boolean;
-   clickedPlanning: Planning ;
-  constructor() { }
+  showBody: boolean;
+  clickedPlanning: Planning;
+
+  constructor() {
+  }
 
   ngOnInit(): void {
     this.clickedPlanning = null;
     this.showBody = false;
 
   }
+
   public setClickedPl(pl: Planning) {
-      this.clickedPlanning = pl;
-      this.showBody = false;
-      setTimeout ( () => {
-        this.showBody = true;
-      }, 1000);
+    console.log(pl.planningName);
+    this.clickedPlanning = pl;
+    this.showBody = false;
+    setTimeout(() => {
+      this.showBody = true;
+    }, 1000);
+  }
+
+  onlySpace() {
+    if (this.clickedPlanning.planningDescription == null) {
+      return false;
+    } else {
+    return (this.clickedPlanning.planningDescription.replace(/\s/g, '').length !== 0);
+    }
   }
 }

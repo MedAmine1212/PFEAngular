@@ -1,3 +1,11 @@
+<div *ngIf="fourthFormGroup == null" style="padding-top: 15%;width:100%">
+  <div style="width:200px;margin:auto;padding-left: 70px">
+    <div class="spinner-container" style="">
+      <mat-spinner></mat-spinner>
+    </div>
+  </div>
+</div>
+
 <div *ngIf="fourthFormGroup !=null;">
 <form style="color:black;overflow: hidden">
   <mat-horizontal-stepper [linear]="isLinear" #stepper>
@@ -6,7 +14,7 @@
     <mat-step [stepControl]="firstFormGroup" >
       <div  class="main-card mb-3 card">
         <ng-template matStepLabel>Select department</ng-template>
-        <div *ngIf="router.url ==='/RemoteMonitoring' || '/RemoteMonitoring/(mainCon:Employees)' || router.url === '/RemoteMonitoring/(mainCon:Absences)'" >
+        <div *ngIf="router.url !=='/RemoteMonitoring/(mainCon:Departments)'" >
           <div class="card-header">
             <h1>Department</h1>
             <hr>

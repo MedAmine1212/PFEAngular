@@ -34,8 +34,11 @@
   </span>
 
         </li>
-
-        <li style="overflow: auto;max-height: 580px;">
+        <li class="noDepLi" *ngIf="this.data.length === 0">
+          No departments to show<br>
+          <button class="btn btn-info noDepButt" matTooltip="Add departement"  (click)="addDepartment()">Add</button>
+        </li>
+        <li *ngIf="this.data.length > 0" style="overflow: auto;max-height: 580px;">
           <div>
             <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
               <mat-tree-node  [@enterAnimation] *matTreeNodeDef="let node" matTreeNodePadding>

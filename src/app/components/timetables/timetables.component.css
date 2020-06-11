@@ -2,6 +2,7 @@
   margin-top: 50px;
 }
 .sideBar{
+  height: 100% !important;
   padding-left: 0;
   margin-left: -280px;
 }
@@ -60,107 +61,20 @@
   border: none;
 }
 .schIconSpan:hover{
-  color:lightgrey;
   background-color: transparent;
+  color: grey;
 }
-
-.buttons{
-  font-size: 15px;
-  margin-right: -20px;
-  width: 30px;
-}
-.showAll{
-  cursor:pointer;
-  font-size: 20px;
-}
-.hideAll{
-  color:red;
-}
-.wrapper{
-  margin-left: 40px;
-  width:180px;
-}
-.searchContainer{
-  position: absolute;
-  background-color: transparent;
-  margin-top: -15px;
-  margin-left: -35px;
-  width:170px;
-}
-.holder{
-  max-width:195px;
-}
-.searchInput{
-  width:160px;
-}
-.closeSearchButt{
-  margin-left:-100px;
-}
-.main{
-  margin-top: 50px;
-}
-.sideBar{
-  padding-left: 0;
-  margin-left: -280px;
-}
-.navMenu{
-  overflow-x:hidden;
-  overflow-y: auto;
-  height: 580px;
-}
-.sideBarHeading{
-  font-size: 18px;
-  padding-top: 10px;
-  padding-bottom: 15px;
-}
-.fa-clock{
-  margin-right:7px;
-  color:grey;
-}
-.addSch{
-  border-radius: 15px;
-  margin-left:5px;
-  margin-right: 9px;
-}
-.time{
-  color: black;
-  margin-left: 80%;
-}
-.card-footer{
-  border-top: 0 !important;
-  color:black;
-  font-weight: bolder;
-  font-size: 17px;
-  width: 100%;
-}
-
-.schItem{
-  font-size: 15px;
-  text-decoration: none;
-  background-color:transparent;
-  display: block;
-  line-height: 2.4rem;
-  height: 2.4rem;
-  position: relative;
-  border-radius: .25rem;
-  color: #343a40;
-  white-space: nowrap;
-  transition: all .2s;
-  margin: .1rem 0;
-}
-.schItem:hover{
-  background-color:rgb(224,243,255);
-  cursor: pointer;
-}
-
-.schIconSpan{
+.schHiddenIconSpan{
   font-size: 16px;
   border: none;
-}
-.schIconSpan:hover{
   color:lightgrey;
-  background-color: transparent;
+  opacity: 0.5;
 }
+.schHiddenIconSpan:hover {
+  color:white;
+  opacity: 1;
+}
+
 
 .buttons{
   font-size: 15px;
@@ -211,9 +125,6 @@
   margin:auto;
 }
 
-.card{
-  border-radius: 10px;
-}
 .noSchContainer{
   padding-top: 50%;
   text-align: center;
@@ -225,11 +136,12 @@
 }
 .schCard{
   margin-top: -20px;
-  min-height:570px;
+  min-height:400px;
 }
+
 .schBody{
-  overflow:auto;
-  height:600px;
+  overflow:hidden;
+  min-height:400px;
   margin-bottom: 10px;
   font-size: 13px;
 }
@@ -295,7 +207,7 @@
   border-radius: 10px;
 }
 .descCard{
-  min-height:400px;
+  min-height:490px;
 }
 
 .buttonsDetails{

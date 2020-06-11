@@ -30,13 +30,21 @@ export class EmployeesComponent implements OnInit {
   private deleteId: number;
   constructor(public dialog: MatDialog, public router: Router,
               private departmentService: DepartmentService, private userService: UserService) {
+    if (this.router.url === '/RemoteMonitoring/(mainCon:Departments)') {
+      this.clickedDep = new Department();
+      this.clickedDep.depId = -1;
+      this.thisIsEmp = false;
+    } else {
+      this.clickedDep = null;
+      this.thisIsEmp = true;
+      this.users = [];
+    }
   }
 
   ngOnInit(): void {
+
     this.showHideInput = false;
-    this.clickedDep = null;
-    this.thisIsEmp = true;
-    this.users = [];
+    console.log('qsdqsdqsdqs' + this.thisIsEmp);
     if (this.router.url === '/RemoteMonitoring/(mainCon:Employees)'
         || this.router.url === '/RemoteMonitoring/(mainCon:Absences)' || this.router.url === '/RemoteMonitoring') {
       this.reloadData();
