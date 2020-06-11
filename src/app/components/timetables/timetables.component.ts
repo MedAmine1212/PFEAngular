@@ -8,6 +8,11 @@ import {PlanningService} from '../../services/planning/planning.service';
 import {Planning} from '../../models/Planning';
 import {DeletePlanningDialogComponent} from '../../dialogs/delete-planning-dialog/delete-planning-dialog.component';
 import {PlanningDetailsComponent} from '../planning-details/planning-details.component';
+import {UserConfig} from '../../models/UserConfig';
+import {UserConfigService} from '../../services/UserConfig/user-config.service';
+import {UserService} from '../../services/user/user.service';
+import {User} from '../../models/User';
+import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 
 
 @Component({
@@ -33,6 +38,7 @@ import {PlanningDetailsComponent} from '../planning-details/planning-details.com
 export class TimetablesComponent implements OnInit {
 
   @ViewChild(PlanningDetailsComponent) planningDetailsComp: PlanningDetailsComponent;
+  userConfig: UserConfig = new UserConfig();
   hours: number[];
   days: string[];
   searchText;
@@ -54,7 +60,12 @@ export class TimetablesComponent implements OnInit {
   menuTop: string;
   showTable: boolean;
   clickedPlanning: Planning;
-  constructor(public dialog: MatDialog, private  scheduleService: ScheduleService, private  planningService: PlanningService) {
+  user: User = new User();
+  constructor(
+    private themeChanger: ThemeChangerService,
+    private userService: UserService,
+    private userConfigService: UserConfigService,
+    public dialog: MatDialog, private  scheduleService: ScheduleService, private  planningService: PlanningService) {
     this.clickedPlanning = null;
     this.hours = Array(24).fill(6).map((x, i) => i);
     this.days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -135,28 +146,30 @@ export class TimetablesComponent implements OnInit {
 
   showAll() {
     this.selectedCount = this.plannings.length;
+    this.userConfig.shownPlannings = [];
+    this.userConfig.shownPlannings = this.plannings;
     for (const pl of this.plannings) {
       if (!pl.showPl) {
         pl.showPl = true;
-        this.planningService.modify(pl, pl.planningId).subscribe(() => {
-          console.log('updated');
-        }, error => console.log(error));
       }
     }
-
+    this.userConfigService.update(this.userConfig.configId, this.userConfig).subscribe(() => {
+      console.log('updated');
+    }, error => console.log(error));
   }
 
 
   hideAll() {
+    this.userConfig.shownPlannings = [];
     this.selectedCount = 0;
     for (const pl of this.plannings) {
       if (pl.showPl) {
         pl.showPl = false;
-        this.planningService.modify(pl, pl.planningId).subscribe( () => {
-          console.log('updated');
-        }, error => console.log(error));
       }
     }
+    this.userConfigService.update(this.userConfig.configId, this.userConfig).subscribe(() => {
+      console.log('updated');
+    }, error => console.log(error));
   }
 
   showHideSch(pl: Planning) {
@@ -164,10 +177,12 @@ export class TimetablesComponent implements OnInit {
     pl.showPl = !pl.showPl;
     if (pl.showPl) {
       this.selectedCount++;
+      this.userConfig.shownPlannings.push(pl);
     } else {
+      this.userConfig.shownPlannings.splice(this.userConfig.shownPlannings.indexOf(pl), 1);
       this.selectedCount--;
     }
-    this.planningService.modify(pl, pl.planningId).subscribe( () => {
+    this.userConfigService.update(this.userConfig.configId, this.userConfig).subscribe( () => {
       console.log('updated');
     }, error => console.log(error));
     }
@@ -187,22 +202,34 @@ export class TimetablesComponent implements OnInit {
   }
 
   private reloadData() {
-    this.selectedCount = 0;
-    this.planningService.list().subscribe(list => {
-      this.plannings = list;
-      for (const pl of this.plannings) {
-        if (pl.showPl) {
-          this.selectedCount++;
-        }
-        if (this.clickedPlanning != null) {
-          if (pl.planningId === this.clickedPlanning.planningId) {
-            this.clickedPlanning = null;
-            this.planningDetailsComp.setClickedPl(pl);
-            this.setClickedPl(pl);
+    this.userConfig = new UserConfig();
+    this.userService.findUserWithToken().subscribe(user => {
+      console.log(user);
+      // @ts-ignore
+      this.user = user;
+      this.selectedCount = 0;
+      this.userConfigService.findByUser(this.user).subscribe(conf => {
+        // @ts-ignore
+        this.userConfig = conf;
+        this.planningService.list().subscribe(list => {
+          this.plannings = list;
+          for (const pl of this.plannings) {
+            pl.showPl = (this.userConfig.shownPlannings.indexOf(pl) > -1);
+            if (pl.showPl) {
+              this.selectedCount++;
+            }
+            if (this.clickedPlanning != null) {
+              if (pl.planningId === this.clickedPlanning.planningId) {
+                this.clickedPlanning = null;
+                this.planningDetailsComp.setClickedPl(pl);
+                this.setClickedPl(pl);
+              }
+            }
           }
-        }
-      }
-    });
+        });
+      }, error => console.log(error));
+    }, error => console.log(error));
+
   }
 
   planningDaysDesc(pl: Planning) {
@@ -268,5 +295,8 @@ export class TimetablesComponent implements OnInit {
       this.clickedPlanning = pl;
       this.planningDetailsComp.setClickedPl(pl);
     }
+  }
+  getTheme() {
+    return this.themeChanger.getTheme();
   }
 }

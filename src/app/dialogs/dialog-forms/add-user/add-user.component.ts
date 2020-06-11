@@ -15,6 +15,10 @@ import {User} from '../../../models/User';
 import {NgbDate} from '@ng-bootstrap/ng-bootstrap';
 import {DialogComponent} from '../../dialog.component';
 import {Router} from '@angular/router';
+import {UserConfig} from '../../../models/UserConfig';
+import {UserConfigService} from '../../../services/UserConfig/user-config.service';
+import {PlanningService} from '../../../services/planning/planning.service';
+import {ThemeChangerService} from '../../../services/ThemeChanger/theme-changer.service';
 
 @Component({
   selector: 'app-add-user',
@@ -38,6 +42,7 @@ import {Router} from '@angular/router';
 export class AddUserComponent implements  AfterViewInit  {
   dialogComponent: MatDialogRef<DialogComponent>;
   @ViewChild('stepper') stepper: MatStepper;
+  userConfig: UserConfig;
   isLinear = false;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
@@ -78,7 +83,9 @@ export class AddUserComponent implements  AfterViewInit  {
     user: undefined,
     zipCode: null
   };
-  constructor(public dialogRef: MatDialogRef<AddUserComponent>,
+  constructor(private themeChanger: ThemeChangerService,
+              public dialogRef: MatDialogRef<AddUserComponent>,
+              private userConfigService: UserConfigService,
               @Inject(MAT_DIALOG_DATA) public data: Department,
               private formBuilder: FormBuilder,
               private departmentService: DepartmentService,
@@ -86,7 +93,9 @@ export class AddUserComponent implements  AfterViewInit  {
               public router: Router,
               public dialog: MatDialog,
               private addressService: AddressService,
-              private postService: PostService) {
+              private postService: PostService,
+              private planningService: PlanningService
+  ) {
     if (this.data != null ) {
       this.user.department = this.data;
     }
@@ -181,8 +190,14 @@ export class AddUserComponent implements  AfterViewInit  {
   }
 
   addUser() {
+    this.userConfig = new UserConfig();
+    this.userConfig.user = this.user;
+    this.userConfig.theme = false;
+    this.planningService.list().subscribe( r => {
+      this.userConfig.shownPlannings = r;
+      this.userConfigService.add(this.userConfig);
+    }, error => console.log(error));
     this.user.post = this.secondFormGroup.controls.post.value;
-
     this.user.addresses.push(this.address1);
     if (this.showOtherAddress) {
       this.user.addresses.push(this.address2);
@@ -399,6 +414,8 @@ export class AddUserComponent implements  AfterViewInit  {
     const finalDate = year + '-' + month + '-' + day;
     this.user.birthDate = finalDate;
   }
-
+  getTheme() {
+    return this.themeChanger.getTheme();
+  }
 
 }

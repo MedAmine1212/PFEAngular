@@ -1,5 +1,5 @@
 <div class="card" style="background: none;color:white">
-  <h3 class="card-header text-center font-weight-bold text-uppercase py-4" style="width: 100%">
+  <h3 [ngStyle]="{'color': getTheme()? 'white' :''}"  class="card-header text-center font-weight-bold text-uppercase py-4" style="width: 100%">
 
       Registered Reasons
 
@@ -7,7 +7,7 @@
   </h3>
   <div class="card-body" style="color: black">
     <div id="table" class="table-editable">
-      <table border="0"  style="color: black" class="table table-striped text-center">
+      <table [ngStyle]="{'color': getTheme()? 'white' :''}"  border="0"  style="color: black" class="table table-striped text-center">
         <thead class="thead-dark">
         <tr>
           <th class="text-center">Reason</th>

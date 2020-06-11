@@ -11,6 +11,9 @@
 .mat-checkbox  {
   transform: scale(1.2)  !important;
 }
+::ng-deep .mat-checkbox .mat-checkbox-frame{
+  border:1.5px solid white !important;
+}
 
 .bgImg{
     background-image: url('../../../assets/images/bgImg.jpg');
@@ -84,7 +87,7 @@ h1{
 }
 
 input:focus{
-  outline: 0 0 0 0  !important;
+  outline: none  !important;
   box-shadow: 0 0 0 0 !important;
 
 }

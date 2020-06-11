@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {animate, style, transition, trigger} from "@angular/animations";
+import {animate, style, transition, trigger} from '@angular/animations';
+import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 
 @Component({
   selector: 'app-schedules',
@@ -22,9 +23,11 @@ import {animate, style, transition, trigger} from "@angular/animations";
 })
 export class SchedulesComponent implements OnInit {
 
-  constructor() { }
+  constructor(private themeChanger: ThemeChangerService) { }
 
   ngOnInit(): void {
   }
-
+  getTheme() {
+    return this.themeChanger.getTheme();
+  }
 }

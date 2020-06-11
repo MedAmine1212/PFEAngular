@@ -1,7 +1,7 @@
 
-<div  class="main-card mb-3 card" style="margin-left:15px;border: none">
+<div  class="main-card mb-3 card" [ngStyle]="{'height': router.url === '/RemoteMonitoring/(mainCon:Absences)'? '100%' :''}"  [ngClass]="getTheme() ? 'bg-premium-dark' :''" style="margin-left:15px;border: none">
   <div class="card-header">
-    <div border="1" *ngIf="!thisIsEmp && clickedDep.depId!=-1" style="color:black;padding-bottom: 10px;width: 100%" >
+    <div border="1" *ngIf="!thisIsEmp && clickedDep.depId!=-1" [ngStyle]="{'color': getTheme()? 'white' :'black'}" style="padding-bottom: 10px;width: 100%" >
       <span> Department: {{clickedDep.depName}}</span>
       <div class="btn-actions-pane-right">
         <div role="group" class="btn-group-sm btn-group">
@@ -17,16 +17,16 @@
         <button mat-raised-button class="btn btn-danger" (click)="showDeleteDialog()" matTooltip="Delete departement"><span class="fas fa-trash-alt"></span></button>
       </div>
     </div>
-    <i *ngIf="thisIsEmp" style="color:grey;margin-right: 15px;margin-top: -15px" class="fa fa-user-friends"></i>
+    <i *ngIf="thisIsEmp"  [ngStyle]="{'color': getTheme()? 'white' :'grey'}" style="margin-right: 15px;margin-top: -15px" class="fa fa-user-friends"></i>
     <h2 *ngIf="thisIsEmp" class="app-sidebar__heading" style="font-weight: bolder">Employees
       <span style="margin-left: 30px">
-      <span style="cursor:pointer" title="add" (click)="showAddUserDialog()" class="fa fa-user-plus butts"></span>
-      <span title="open" [routerLink]="[{ outlets: {mainCon: ['Employees'] } }]" *ngIf="router.url != '/RemoteMonitoring/(mainCon:Employees)'" style="cursor:pointer;margin-left:15px" class="fa fa-external-link-alt butts"></span>
+      <span style="cursor:pointer" [ngStyle]="{'color': getTheme()? 'white' :'grey'}" title="add" (click)="showAddUserDialog()" class="fa fa-user-plus butts"></span>
+      <span title="open" [ngStyle]="{'color': getTheme()? 'white' :'grey'}" [routerLink]="[{ outlets: {mainCon: ['Employees'] } }]" *ngIf="router.url != '/RemoteMonitoring/(mainCon:Employees)'" style="cursor:pointer;margin-left:15px" class="fa fa-external-link-alt butts"></span>
     </span>
 
     </h2><br>
     <div style="width:100%">
-      <span title="close" routerLink="/RemoteMonitoring" *ngIf="router.url === '/RemoteMonitoring/(mainCon:Employees)'" style="font-size:35px;margin-top:-10px;cursor:pointer;float:right" class="fa fa-compress butts"></span>
+      <span title="close" routerLink="/RemoteMonitoring" *ngIf="router.url === '/RemoteMonitoring/(mainCon:Employees)'" style="font-size:35px;margin-top:-10px;cursor:pointer;float:right" [ngStyle]="{'color': getTheme()? 'white' :'grey'}" class="fa fa-compress butts"></span>
 
     </div>
   </div>
@@ -34,7 +34,7 @@
     <table>
       <tr>
         <td>
-          <h1 *ngIf="!thisIsEmp && clickedDep.depId != -1" style="margin-top: 20px;margin-right: 30px" class="empTitle">{{clickedDep.depName}} Employees </h1>
+          <h1 *ngIf="!thisIsEmp && clickedDep.depId != -1" [ngStyle]="{'color': getTheme()? 'white' :''}" style="margin-top: 20px;margin-right: 30px" class="empTitle">{{clickedDep.depName}} Employees </h1>
         </td>
         <td>
           <div class="search-wrapper">
@@ -50,14 +50,14 @@
       </tr>
     </table>
 
-    <div style="padding-top: 5%;text-align: center;color:black;font-weight:bolder;margin:0 auto;font-size:25px;width: 100%" *ngIf="!thisIsEmp && clickedDep.depId === -1">
-      <span style="font-size:30px;color:rgb(52,248,61)">Click a department to show details here</span><br><br><br><br>No Department Selected
+    <div [ngStyle]="{'color': getTheme()? 'white' :'rgb(52,248,61)'}" style="padding-top: 5%;text-align: center;font-weight:bolder;margin:0 auto;font-size:25px;width: 100%" *ngIf="!thisIsEmp && clickedDep.depId === -1">
+      <span style="font-size:30px;color:#3f6ad8">Click a department to show details here</span><br><br><br><br>No Department Selected
     </div>
 
-    <div style="width: 100%;text-align:center;margin:0;color: black;padding-top: 10%;font-weight: bolder;font-size: 20px" *ngIf="(thisIsEmp && users.length === 0) || (!thisIsEmp && clickedDep.depId!==-1 && (users==null || users.length === 0))"> No Employees to show</div>
+    <div [ngStyle]="{'color': getTheme()? 'white' :'black'}" style="width: 100%;text-align:center;margin:0;padding-top: 10%;font-weight: bolder;font-size: 20px" *ngIf="(thisIsEmp && users.length === 0) || (!thisIsEmp && clickedDep.depId!==-1 && (users==null || users.length === 0))"> No Employees to show</div>
     <div *ngIf="users!=null">
-      <div class="main-card mb-3 card" style="overflow: auto;max-height: 480px;margin-top: 40px;border-radius:0" *ngIf="(users.length !=0 && thisIsEmp) || (users.length !=0 && clickedDep.depId != -1)">
-          <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+      <div class="main-card mb-3 card" [ngClass]="getTheme() ? 'bg-premium-dark' :''" style="overflow: auto;max-height: 480px;margin-top: 40px;border-radius:0" *ngIf="(users.length !=0 && thisIsEmp) || (users.length !=0 && clickedDep.depId != -1)">
+          <table [ngClass]="getTheme() ? 'bg-premium-dark text-light' :''"  [ngStyle]="{'color': getTheme()? 'white' :''}" class="align-middle text-light mb-0 table table-borderless table-striped table-hover">
           <thead>
           <tr *ngIf="router.url === '/RemoteMonitoring/(mainCon:Employees)' || !thisIsEmp">
             <th class="text-center">N°</th>
@@ -69,9 +69,9 @@
           </tr>
           </thead>
           <tbody>
-          <tr class="emp" *ngFor="let emp of users | filter:searchText">
-            <td  *ngIf="router.url === '/RemoteMonitoring/(mainCon:Employees)' || !thisIsEmp" class="text-center text-muted" style="padding-top: 15px">{{emp.userId}}</td>
-            <td   *ngIf="router.url === '/RemoteMonitoring/(mainCon:Employees)' " class="text-muted" style="padding-top: 15px">{{emp.department.depName}}</td>
+          <tr [ngClass]="getTheme() ? 'lightText' :''" class="emp" *ngFor="let emp of users | filter:searchText">
+            <td *ngIf="router.url === '/RemoteMonitoring/(mainCon:Employees)' || !thisIsEmp" class="text-center text-muted" [ngStyle]="{'color': getTheme()? 'white' :''}" style="padding-top: 15px">{{emp.userId}}</td>
+            <td *ngIf="router.url === '/RemoteMonitoring/(mainCon:Employees)' " class="text-muted" style="padding-top: 15px" [ngStyle]="{'color': getTheme()? 'white' :'grey'}">{{emp.department.depName}}</td>
             <td>
               <div class="widget-content p-0">
                 <div class="widget-content-wrapper">

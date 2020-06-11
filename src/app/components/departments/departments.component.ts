@@ -8,7 +8,8 @@ import {Department} from '../../models/Department';
 import {DepartmentService} from '../../services/department/department.service';
 import {AddDepartmentComponent} from '../../dialogs/dialog-forms/add-department/add-department.component';
 import {MatDialog} from '@angular/material/dialog';
-import {animate, style, transition, trigger} from "@angular/animations";
+import {animate, style, transition, trigger} from '@angular/animations';
+import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 
 export class DynamicFlatNode {
   constructor(public item: Department, public level = 1, public expandable = false,
@@ -145,7 +146,8 @@ export class DepartmentsComponent implements  OnInit {
   treeControl: FlatTreeControl<DynamicFlatNode>;
 
   dataSource: DynamicDataSource;
-  constructor(public dialog: MatDialog, private database: DynamicDatabase, private departmentService: DepartmentService) {
+  constructor(private themeChanger: ThemeChangerService,
+              public dialog: MatDialog, private database: DynamicDatabase, private departmentService: DepartmentService) {
   }
   sendData(dep: Department) {
     if (dep.depId === -1) {
@@ -200,4 +202,7 @@ export class DepartmentsComponent implements  OnInit {
     });
   }
 
+  getTheme() {
+    return this.themeChanger.getTheme();
+  }
 }

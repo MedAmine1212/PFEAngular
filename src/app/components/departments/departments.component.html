@@ -1,4 +1,4 @@
-<div class="app-sidebar sidebar-shadow" style="padding-left:0px;margin-left: -280px;margin-top: 0px">
+<div class="app-sidebar sidebar-shadow" [ngClass]="getTheme() ? 'bg-premium-dark':  ''" style="padding-left:0px;margin-left: -280px;margin-top: 0px">
   <div class="app-header__logo">
     <div class="logo-src"></div>
     <div class="header__pane ml-auto">
@@ -26,15 +26,15 @@
 
 
         <li class="app-sidebar__heading" style="font-size: 15px;padding-top: 10px">
-          <i style="margin-right:7px;color:grey" class="fa fa-building"></i>
+          <i style="margin-right:7px;" [ngStyle]="{'color': getTheme() ? 'white' :'grey'}" class="fa fa-building"></i>
           Departments
           <span class="buttons">
       <button (click)="addDepartment()" mat-raised-button matTooltip="Add departement" class="btn btn-outline-primary" ><span class="fas fa-plus"></span></button>
-    <span (click)="unselectDep()" *ngIf="clickedDep.depId!=-1" mat-raised-button  matTooltip="Unselect departement" class="fas fa-check-circle"></span>
+    <span (click)="unselectDep()" [ngStyle]="{'color': getTheme() ? 'white' :''}" *ngIf="clickedDep.depId!=-1" mat-raised-button  matTooltip="Unselect departement" class="fas fa-check-circle"></span>
   </span>
 
         </li>
-        <li class="noDepLi" *ngIf="this.data.length === 0">
+        <li class="noDepLi" [ngStyle]="{'color': getTheme()? 'white' :''}" *ngIf="this.data.length === 0">
           No departments to show<br>
           <button class="btn btn-info noDepButt" matTooltip="Add departement"  (click)="addDepartment()">Add</button>
         </li>
@@ -43,21 +43,21 @@
             <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
               <mat-tree-node  [@enterAnimation] *matTreeNodeDef="let node" matTreeNodePadding>
                 <span class="dis" style="width:20px" disabled></span>
-                <span (click)="sendData(node.item)" class="item" style="margin-left: 22px">
+                <span [ngStyle]="{'color': getTheme() ? 'white' :''}" (click)="sendData(node.item)" class="item" style="margin-left: 22px">
 
      {{node.item.depName}}
 
     </span>
               </mat-tree-node>
               <mat-tree-node [@enterAnimation] *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
-    <span class="expandCollapse"
+    <span [ngStyle]="{'color': getTheme() ? 'white' :''}" class="expandCollapse"
           [attr.aria-label]="'toggle ' + node.filename" matTreeNodeToggle>
       <mat-icon class="mat-icon-rtl-mirror">
         {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
       </mat-icon>
     </span>
 
-                <span (click)="sendData(node.item)" class="item">{{node.item.depName}}
+                <span [ngStyle]="{'color': getTheme() ? 'white' :''}" (click)="sendData(node.item)" class="item">{{node.item.depName}}
                   <mat-progress-bar *ngIf="node.isLoading"
                                     mode="indeterminate"
                                     class="example-tree-progress-bar"></mat-progress-bar>

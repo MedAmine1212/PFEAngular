@@ -1,8 +1,8 @@
-<div class="app-main main" >
+<div class="app-main main">
   <div class="app-main__outer">
 
     <!-- side nav -->
-    <div class="app-sidebar sidebar-shadow sideBar">
+    <div class="app-sidebar sidebar-shadow sideBar"  [ngClass]="getTheme() ? 'bg-premium-dark' :''">
       <div class="app-header__logo">
         <div class="logo-src"></div>
         <div class="header__pane ml-auto">
@@ -52,7 +52,7 @@
             </li>
             <li class="schItem" *ngFor="let pl of plannings  | filter:searchText">
             <div style="float: left;width:20%">
-              <span (click)="showHideSch(pl)" *ngIf="pl.showPl" class="schIconSpan" [ngClass]="pl.colorIcon">
+              <span (click)="showHideSch(pl)" *ngIf="pl.showPl" class="schIconSpan" [ngClass]="(getTheme() && pl.color ==='btn btn-dark') ? 'btn btn-outline-light' :pl.colorIcon">
               <i class="fa fa-check-circle"></i>
               </span>
               <span (click)="showHideSch(pl)" *ngIf="!pl.showPl" class="schHiddenIconSpan" [ngClass]="pl.colorIcon">
@@ -69,9 +69,9 @@
 
     <!--body-->
     <div [@enterAnimation] *ngIf="showTable" class="bodyContainer">
-      <div *ngIf="plannings.length<=0" class="main-card mb-3 card bodyCard">
+      <div *ngIf="plannings.length<=0" class="main-card mb-3 card bodyCard"  [ngClass]="getTheme() ? 'bg-premium-dark' :''">
         <div class="card-body noSchBod">
-          <div class="noSchContainer">
+          <div [ngStyle]="{'color': getTheme()? 'white' :''}"  class="noSchContainer">
             No plannings to show<br><br>
             <button class="btn btn-primary" (click)="addPlanning()">Add Planning</button>
           </div>
@@ -81,8 +81,8 @@
         <div class="card-header">
           Time table
         </div>
-        <div class="card-body schBody">
-          <table class="table-hover mat-calendar-table-header tableHeader">
+        <div class="card-body schBody"  [ngClass]="getTheme() ? 'bg-premium-dark' :''">
+          <table  [ngClass]="getTheme() ? 'bg-premium-dark' :''" [ngStyle]="{'color': getTheme()? 'white' :'black'}" class="table-hover mat-calendar-table-header tableHeader">
             <thead>
             <tr class="d-table-row">
               <th class="emptyTh"></th>
@@ -100,7 +100,7 @@
                 <div  style="min-height:50px">
         <span *ngFor="let pl of plannings">
           {{checkSch(pl,day,hour)}}
-          <span matTooltip="{{showTip(hour,pl)}}" [ngStyle]="{'width': startHour == hour && startMinutes !== 0 ? returnWidth(startMinutes) : endHour == hour && endMinutes !== 0 ? returnWidth(endMinutes) : '100%' , 'float': startHour == hour ? 'right' : 'left'}" *ngIf="showSch" [ngClass]="pl.color" class="schSpan" (click)="setCliked(pl,day,hour)"></span>
+          <span matTooltip="{{showTip(hour,pl)}}" [ngStyle]="{'width': startHour == hour && startMinutes !== 0 ? returnWidth(startMinutes) : endHour == hour && endMinutes !== 0 ? returnWidth(endMinutes) : '100%' , 'float': startHour == hour ? 'right' : 'left'}" *ngIf="showSch"  [ngClass]="(getTheme() && pl.color ==='btn btn-dark') ? 'btn btn-light' :pl.color" class="schSpan" (click)="setCliked(pl,day,hour)"></span>
           <span *ngIf="!showSch && !showPause" class="btn btn-primary nothingSpan"></span>
           <span *ngIf="showPause" class="btn btn-secondary pauseSpan" matTooltip="Pause time"></span>
         </span>
@@ -123,7 +123,7 @@
       </div>
       <div style="width: 40%;float: right">
         <div [@enterAnimation] class="bodyContainer">
-          <div class="main-card mb-3 card descCard">
+          <div class="main-card mb-3 card descCard"  [ngClass]="getTheme() ? 'bg-premium-dark' :''" [ngStyle]="{'color': getTheme()? 'white' :'black'}">
             <div *ngIf="clickedPlanning != null" class="card-header" style="width: 100%">
               <div style="width: 60%">
                 {{clickedPlanning.planningName}}

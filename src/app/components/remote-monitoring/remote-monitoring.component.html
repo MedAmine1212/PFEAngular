@@ -1,4 +1,4 @@
-<div  class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header" style="overflow: hidden" >
+<div [ngClass]="getTheme() ? 'bg-dark' :''" class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header" style="overflow: hidden" >
 
   <app-nav></app-nav>
 
@@ -8,26 +8,27 @@
   <div *ngIf="router.url !== '/RemoteMonitoring/(mainCon:TimeTables)' && router.url !== '/RemoteMonitoring/(mainCon:Employees)'" class="app-main">
     <div class="app-main__outer">
       <!--Absences-->
-        <div [@enterAnimation] *ngIf="router.url === '/RemoteMonitoring' || router.url === '/RemoteMonitoring/(mainCon:Absences)'" class="app-sidebar sidebar-shadow" style="max-width: 380px;margin-top: 0px;margin-left: -300px">
+        <div [@enterAnimation] *ngIf="router.url === '/RemoteMonitoring' || router.url === '/RemoteMonitoring/(mainCon:Absences)'" class="app-sidebar sidebar-shadow" [ngClass]="getTheme() ? 'bg-premium-dark' :''" style="max-width: 380px;margin-top: -14px;margin-left: -300px">
 
           <app-employees></app-employees>
 
         </div>
 
-       <div [@enterSecondAnimation]  *ngIf="router.url === '/RemoteMonitoring' || router.url === '/RemoteMonitoring/(mainCon:Absences)'" class="card mainCard">
+       <div [@enterSecondAnimation] [ngClass]="getTheme() ? 'bg-premium-dark' :''" *ngIf="router.url === '/RemoteMonitoring' || router.url === '/RemoteMonitoring/(mainCon:Absences)'" class="card mainCard">
 
           <div class="card-body">
             <router-outlet  name="secCon"></router-outlet>
           </div>
-          <div class="card-footer">
-            {{time | date: 'dd MMMM yyyy '}} <span class="time">{{ time | date: 'HH:mm:ss a' }}</span></div>
+          <div [ngStyle]="{'color': getTheme()? 'white' :''}" class="card-footer">
+            {{time | date: 'dd MMMM yyyy '}} <span [ngStyle]="{'color': getTheme()? 'white' :''}" class="time">{{ time | date: 'HH:mm:ss a' }}</span></div>
 
         </div>
 
       <!--Departments-->
       <app-departments *ngIf="router.url === '/RemoteMonitoring/(mainCon:Departments)'" [@enterAnimation] (outPutData)="setClickedDep($event)"></app-departments>
-      <app-employees *ngIf="router.url === '/RemoteMonitoring/(mainCon:Departments)'" (outPutData)="reloadDep($event)" [@enterSecondAnimation]></app-employees>
-
+      <div style="margin-top: 20px !important;">
+        <app-employees *ngIf="router.url === '/RemoteMonitoring/(mainCon:Departments)'" (outPutData)="reloadDep($event)" [@enterSecondAnimation]></app-employees>
+      </div>
     </div>
   <!--the rest-->
     <router-outlet *ngIf="router.url !== '/RemoteMonitoring/(mainCon:TimeTables)' && router.url !== '/RemoteMonitoring' && router.url !== '/RemoteMonitoring/(mainCon:Employees)' && router.url !== '/RemoteMonitoring/(mainCon:Absences)' && router.url !== '/RemoteMonitoring/(mainCon:Departments)'" style="margin: 15px" name="mainCon"></router-outlet>

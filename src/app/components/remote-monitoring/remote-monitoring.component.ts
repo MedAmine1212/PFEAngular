@@ -6,6 +6,7 @@ import {EmployeesComponent} from '../employees/employees.component';
 import {DepartmentsComponent} from '../departments/departments.component';
 import {AuthenticationService} from '../../services/Authentication/authentication.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
+import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 @Component({
   selector: 'app-remmote-monitoring',
   animations: [
@@ -45,23 +46,24 @@ export class RemoteMonitoringComponent implements OnInit {
 
 
 
-
-  constructor(public router: Router, private authService: AuthenticationService) { }
+  constructor(public router: Router, private authService: AuthenticationService, private themeChanger: ThemeChangerService) {
+  }
   time = new Date();
   @ViewChild(EmployeesComponent) employeesComponent: EmployeesComponent;
   @ViewChild(DepartmentsComponent) departmentComponent: DepartmentsComponent;
   ngOnInit() {
 
-
-      if (this.jwt.isTokenExpired(this.authService.getToken())) {
+    this.themeChanger.setTheme(true);
+    if (this.jwt.isTokenExpired(this.authService.getToken())) {
         this.authService.loggedOut();
       }
 
 
-      console.log('log : ', this.authService.loggedIn());
-      setInterval(() => {
+    console.log('log : ', this.authService.loggedIn());
+    setInterval(() => {
       this.time = new Date();
     }, 1000);
+
 
   }
 
@@ -83,4 +85,7 @@ export class RemoteMonitoringComponent implements OnInit {
   }
 
 
+  getTheme() {
+    return this.themeChanger.getTheme();
+  }
 }
