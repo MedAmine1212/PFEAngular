@@ -1,4 +1,4 @@
-<div class="app-header header-shadow bg-dark sidebar-text-dark header-text-light">
+<div [ngClass]="getTheme() ? 'app-header header-shadow bg-premium-dark sidebar-text-dark header-text-light':  'app-header header-shadow bg-light sidebar-text-dark header-text-dark'">
   <div class="app-header__logo">
     <a style="cursor: pointer" routerLink="../RemoteMonitoring" class="navbar-brand">
       <div class="logo-src">Remote monitoring</div>
@@ -50,7 +50,7 @@
         </li>
 
         <li class="nav-item">
-          <a [routerLink]="[{ outlets: {mainCon: ['TimeTables'] } }]" class="nav-link">Schedules</a>
+          <a [routerLink]="[{ outlets: {mainCon: ['TimeTables'] } }]" class="nav-link">Time Table</a>
         </li>
       </ul>
     </div>
@@ -59,20 +59,34 @@
         <div class="widget-content p-0">
           <div class="widget-content-wrapper">
             <div class="widget-content-left">
-              <div class="btn-group">
+              <div *ngIf="getTheme()" class="btn-group">
                 <button mat-button [matMenuTriggerFor]="menu" class="p-0 btn">
                   <img width="42" class="rounded-circle" src="assets/images/avatars/0.png" alt="">
                   <i class="fa fa-angle-down ml-2 opacity-8"></i>
                 </button>
-                <mat-menu class="menu" #menu="matMenu">
+                <mat-menu  class="bg-dark" #menu="matMenu">
                   <div class="menuContent">
-                    <button class="dropdown-item" [routerLink]="[{ outlets: {mainCon: ['Profile'] } }]">User account</button>
+                    <button class="dropdown-item btnDark bg-dark" style="color:white" [routerLink]="[{ outlets: {mainCon: ['Profile'] } }]">User account</button>
                     <div tabindex="-1" class="dropdown-divider"></div>
-                    <button type="button" tabindex="0" (click)="logout()" class="dropdown-item">Log out</button>
+                    <button type="button" tabindex="0" (click)="logout()" class="dropdown-item btnDark bg-dark" style="color:white">Log out</button>
                   </div>
                 </mat-menu>
               </div>
+            <div *ngIf="!getTheme()" class="btn-group">
+              <button mat-button [matMenuTriggerFor]="menu2" class="p-0 btn">
+                <img width="42" class="rounded-circle" src="assets/images/avatars/0.png" alt="">
+                <i class="fa fa-angle-down ml-2 opacity-8"></i>
+              </button>
+
+              <mat-menu  #menu2="matMenu">
+                <div class="menuContent">
+                  <button class="dropdown-item" [routerLink]="[{ outlets: {mainCon: ['Profile'] } }]">User account</button>
+                  <div tabindex="-1" class="dropdown-divider"></div>
+                  <button type="button" tabindex="0" (click)="logout()" class="dropdown-item">Log out</button>
+                </div>
+              </mat-menu>
             </div>
+          </div>
             <div class="widget-content-left  ml-3 header-user-info">
               <div class="widget-heading">
                 {{this.user.name}} {{this.user.firstName}}
@@ -82,9 +96,9 @@
               </div>
             </div>
             <div style="margin-top: 4px;margin-left: 40px">
-              <div class="swatch-holder bg-light switch-header-cs-class" mat-raised-button matTooltip="Light mode" data-class="bg-light sidebar-text-dark header-text-dark">
+              <div class="swatch-holder bg-light switch-header-cs-class" mat-raised-button (click)="setTheme(false)" *ngIf="getTheme()" style="cursor: pointer" matTooltip="Light mode" data-class="bg-light sidebar-text-dark header-text-dark">
               </div>
-              <div class="swatch-holder bg-dark switch-header-cs-class"  mat-raised-button matTooltip="Dark mode" data-class="bg-dark sidebar-text-dark header-text-light">
+              <div class="swatch-holder bg-premium-dark switch-header-cs-class"  mat-raised-button (click)="setTheme(true)" *ngIf="!getTheme()"  style="cursor: pointer" matTooltip="Dark mode" data-class="bg-premium-dark sidebar-text-dark header-text-light">
               </div>
             </div>
           </div>

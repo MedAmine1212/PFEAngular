@@ -5,6 +5,7 @@ import {Department} from '../../models/Department';
 import {EmployeesComponent} from '../employees/employees.component';
 import {DepartmentsComponent} from '../departments/departments.component';
 import {AuthenticationService} from '../../services/Authentication/authentication.service';
+import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 @Component({
   selector: 'app-remmote-monitoring',
   animations: [
@@ -43,12 +44,13 @@ export class RemoteMonitoringComponent implements OnInit {
 
 
 
-
-  constructor(public router: Router, private authService: AuthenticationService) { }
+  constructor(public router: Router, private authService: AuthenticationService, private themeChanger: ThemeChangerService) {
+  }
   time = new Date();
   @ViewChild(EmployeesComponent) employeesComponent: EmployeesComponent;
   @ViewChild(DepartmentsComponent) departmentComponent: DepartmentsComponent;
   ngOnInit() {
+    this.themeChanger.setTheme(true);
     console.log('log : ', this.authService.loggedIn());
     setInterval(() => {
       this.time = new Date();
@@ -56,10 +58,6 @@ export class RemoteMonitoringComponent implements OnInit {
 
 
   }
-
-
-
-
 
   setClickedDep(dep: Department) {
     setTimeout (() => {
@@ -75,4 +73,7 @@ export class RemoteMonitoringComponent implements OnInit {
   }
 
 
+  getTheme() {
+    return this.themeChanger.getTheme();
+  }
 }

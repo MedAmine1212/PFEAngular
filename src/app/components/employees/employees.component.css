@@ -157,3 +157,6 @@ td{
 .btn{
   margin-left:10px;
 }
+.lightText:hover{
+  color:white !important;
+}

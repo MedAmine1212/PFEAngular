@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 
 @Component({
   selector: 'app-motifs-absences',
@@ -8,10 +9,13 @@ import { Component, OnInit } from '@angular/core';
 export class MotifsAbsencesComponent implements OnInit {
   show: boolean;
 
-  constructor() { }
+  constructor(private themeChanger: ThemeChangerService) { }
 
   ngOnInit(): void {
     this.show = false;
   }
 
+  getTheme() {
+    return this.themeChanger.getTheme();;
+  }
 }

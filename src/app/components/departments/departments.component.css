@@ -39,7 +39,7 @@ mat-tree{
   opacity: 0.7;
 }
 .fa-check-circle:hover{
-  color:red;
+  color:red !important;
   opacity: 1;
 }
 .fas{
