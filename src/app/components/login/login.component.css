@@ -8,6 +8,10 @@
   position: fixed;
   z-index: 1;
 }
+.mat-checkbox  {
+  transform: scale(1.2)  !important;
+}
+
 .bgImg{
     background-image: url('../../../assets/images/bgImg.jpg');
   background-size: cover;

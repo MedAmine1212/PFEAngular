@@ -77,7 +77,7 @@
               <div class="widget-heading">
                 {{this.user.name}} {{this.user.firstName}}
               </div>
-              <div class="widget-subheading">
+              <div *ngIf="this.user.post != null" class="widget-subheading">
                 {{this.user.post.postName}}
               </div>
             </div>

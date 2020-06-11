@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {Login} from '../../models/Login';
 import {AuthenticationService} from '../../services/Authentication/authentication.service';
 import {UserService} from '../../services/user/user.service';
@@ -6,6 +6,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DialogComponent} from '../../dialogs/dialog.component';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {JwtHelperService} from '@auth0/angular-jwt';
 
 
 @Component({
@@ -24,6 +25,7 @@ export class LoginComponent implements OnInit {
 
 
 
+
   constructor(              private authService: AuthenticationService,
                             private userService: UserService,
                             private formBuilder: FormBuilder,
@@ -33,6 +35,8 @@ export class LoginComponent implements OnInit {
 
   ) {
   }
+
+
 
   ngOnInit(): void {
     this.showError = false;
@@ -61,8 +65,6 @@ export class LoginComponent implements OnInit {
     }, error => {
       console.log(error);
       this.showError = true;
-      this.signInForm.controls.cin.setErrors({incorrect : true}) ;
-      this.signInForm.controls.password.setErrors({incorrect : true}) ;
       });
   }
   public loadScript() {

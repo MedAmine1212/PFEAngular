@@ -28,9 +28,7 @@
                 formControlName="cin"
               >
             </div>
-            <div style="height: 20px;margin-top: -15px;margin-bottom: 5px">
-              <mat-error style="margin-top: -100px" *ngIf="signInForm.get('cin').hasError('required') && signInForm.get('cin').touched">CIN is required</mat-error>
-            </div>
+
             <div class="input-group form-group">
               <div class="input-group-prepend">
                 <span style="padding-left: 18px;background-color: rgb(82,148,226);" class="input-group-text"><i class="fas fa-key"></i></span>
@@ -44,12 +42,9 @@
                 formControlName="password"
               >
             </div>
-
-            <div style="height: 20px;margin-top: -15px;margin-bottom: 5px">
-            <mat-error *ngIf="signInForm.get('password').hasError('required') && signInForm.get('password').touched">Password is required</mat-error>
-            </div>
-            <div class="row align-items-center remember">
-              <input type="checkbox" (click)="rememberChecked()" >Remember Me
+            
+            <div class="row align-items-center remember" style="padding-left: 40px">
+              <mat-checkbox color="primary"  (click)="rememberChecked()" >Remember Me</mat-checkbox>
             </div>
             <div class="form-group">
               <input type="submit" value="Login" (click)="submit()" [disabled]="!signInForm.valid"  class="btn float-right login_btn">            </div>

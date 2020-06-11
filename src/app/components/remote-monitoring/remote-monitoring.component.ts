@@ -1,4 +1,4 @@
-import {Component, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {Department} from '../../models/Department';
@@ -41,6 +41,9 @@ export class RemoteMonitoringComponent implements OnInit {
   clickedDeparment: Department;
 
 
+
+
+
   constructor(public router: Router, private authService: AuthenticationService) { }
   time = new Date();
   @ViewChild(EmployeesComponent) employeesComponent: EmployeesComponent;
@@ -50,7 +53,13 @@ export class RemoteMonitoringComponent implements OnInit {
     setInterval(() => {
       this.time = new Date();
     }, 1000);
+
+
   }
+
+
+
+
 
   setClickedDep(dep: Department) {
     setTimeout (() => {
@@ -64,4 +73,6 @@ export class RemoteMonitoringComponent implements OnInit {
   reloadDep($event: any) {
     this.departmentComponent.reloadData();
   }
+
+
 }
