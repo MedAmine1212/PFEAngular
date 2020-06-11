@@ -151,12 +151,11 @@ export class AddDepartmentComponent implements OnInit {
     // mimic http database access
     const departments = [];
     this.departmentService.list().subscribe(deps => {
-      for (const dep of deps) {
-        // @ts-ignore
-        if (dep.depName !== this.dep.depName) {
-        departments.push(dep.depName.toLowerCase());
+        for (const dep of deps) {
+          if (dep.depName !== this.dep.depName) {
+            departments.push(dep.depName.toLowerCase());
+          }
         }
-      }
     });
     return new Observable(observer => {
       setTimeout(() => {

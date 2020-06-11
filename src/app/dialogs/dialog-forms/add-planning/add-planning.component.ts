@@ -69,12 +69,25 @@ export class AddPlanningComponent implements AfterViewInit {
     this.minDate = new Date(currentYear , currentMonth, currentDay);
     this.noSch = true;
     if (this.pl !== null) {
+      // copying pl to planning
+      this.planning = new Planning();
+      this.planning.planningId = this.pl.planningId;
+      this.planning.planningName = this.pl.planningName;
+      this.planning.planningDescription = this.pl.planningDescription;
+      this.planning.startDate = this.pl.startDate;
+      this.planning.endDate = this.pl.endDate;
+      this.planning.schedule = this.pl.schedule;
+      this.planning.scheduleDays = this.pl.scheduleDays;
+      this.planning.color = this.pl.color;
+      this.planning.colorIcon = this.pl.colorIcon;
+      this.planning.showPl = this.pl.showPl;
+      this.planning.repeatCycle = this.pl.repeatCycle;
+
+      // rest
       this.newSch = false;
-      this.planning = this.pl;
-      this.schedule = this.pl.schedule;
-      this.startDate = pl.startDate;
-      this.endDate = pl.endDate;
-      console.log(this.planning);
+      this.schedule = this.planning.schedule;
+      this.startDate = this.planning.startDate;
+      this.endDate = this.planning.endDate;
     } else {
     this.newSch = false;
     this.schedule.plannings = [];
@@ -101,11 +114,11 @@ export class AddPlanningComponent implements AfterViewInit {
     this.FormGroup();
     this.FormGroup2();
     this.FormGroup3();
-    });
+    }, 600);
     if (this.pl !== null) {
       setTimeout(() => {
         this.stepper.selectedIndex = 1;
-      }, 600);
+      }, 1000);
     }
   }
 
@@ -119,6 +132,7 @@ export class AddPlanningComponent implements AfterViewInit {
       }
     });
   }
+
   // CLose dialog
   closeThis() {
     this.dialogRef.close(false);
@@ -178,6 +192,7 @@ export class AddPlanningComponent implements AfterViewInit {
   }
   // save planning to database
 saveModifiedPlanning() {
+  this.pl = this.planning;
   this.planningService.modify(this.planning, this.pl.planningId).subscribe(() => {
     this.dialogComponent = this.dialog.open(DialogComponent, {
       width: '400px',

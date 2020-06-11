@@ -63,3 +63,18 @@ mat-tree{
   margin-right: -20px;
   width: 60px;
 }
+
+.noDepLi {
+  font-weight: bolder;
+  padding-top: 150px;
+  font-size:17px;
+  padding-left: 25px;
+}
+
+.noDepButt {
+  width: 75px;
+  height:35px;
+  font-size: 15px;
+  margin-left: 50px;
+  margin-top: 10px;
+}

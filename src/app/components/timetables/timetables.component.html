@@ -32,10 +32,11 @@
               Plannings
               <span class="buttons">
                   <button (click)="addPlanning()" mat-raised-button matTooltip="Add Planning" class="btn btn-outline-primary addSch" ><span class="fas fa-plus"></span></button>
-             <span *ngIf="plannings.length>0">
+             <span *ngIf="plannings.length > 0">
                 <span *ngIf="selectedCount < plannings.length" (click)="showAll()" mat-raised-button matTooltip="Show all" class="fa fa-check-circle showAll"></span>
                 <span *ngIf="selectedCount === plannings.length" (click)="hideAll()" mat-raised-button matTooltip="Hide all" class="fa fa-times-circle showAll hideAll"></span>
               </span>
+
                 </span>
 
               <br><br><br>
@@ -49,13 +50,16 @@
                 </div>
               </div><br>
             </li>
-            <li (click)="showHideSch(pl)" class="schItem" *ngFor="let pl of plannings  | filter:searchText">
-            <span class="schIconSpan" [ngClass]="pl.colorIcon">
-                <i [ngStyle]="{'opacity':pl.showPl? '1' : '0' }" class="fa fa-check-circle">
-                </i>
-
+            <li class="schItem" *ngFor="let pl of plannings  | filter:searchText">
+            <div style="float: left;width:20%">
+              <span (click)="showHideSch(pl)" *ngIf="pl.showPl" class="schIconSpan" [ngClass]="pl.colorIcon">
+              <i class="fa fa-check-circle"></i>
               </span>
-              {{pl.planningName}}<span class="planDays" matTooltip="Planned days">{{planningDaysDesc(pl)}}</span>
+              <span (click)="showHideSch(pl)" *ngIf="!pl.showPl" class="schHiddenIconSpan" [ngClass]="pl.colorIcon">
+              <i class="fa fa-check-circle "></i>
+              </span>
+            </div>
+              <div style="width:80%;float: right" (click)="setClickedPl(pl)">{{pl.planningName}}<span class="planDays" matTooltip="Planned days">{{planningDaysDesc(pl)}}</span></div>
             </li>
           </ul>
         </div>
@@ -92,13 +96,15 @@
               <td class="dayTd">
                 {{day}}
               </td>
-              <td class="hrouTd" style="padding: 5px 0 5px 0" *ngFor="let hour of hours" >
+              <td class="hourTd" style="padding: 5px 0 5px 0" *ngFor="let hour of hours" >
+                <div  style="min-height:50px">
         <span *ngFor="let pl of plannings">
           {{checkSch(pl,day,hour)}}
           <span matTooltip="{{showTip(hour,pl)}}" [ngStyle]="{'width': startHour == hour && startMinutes !== 0 ? returnWidth(startMinutes) : endHour == hour && endMinutes !== 0 ? returnWidth(endMinutes) : '100%' , 'float': startHour == hour ? 'right' : 'left'}" *ngIf="showSch" [ngClass]="pl.color" class="schSpan" (click)="setCliked(pl,day,hour)"></span>
           <span *ngIf="!showSch && !showPause" class="btn btn-primary nothingSpan"></span>
           <span *ngIf="showPause" class="btn btn-secondary pauseSpan" matTooltip="Pause time"></span>
         </span>
+                  </div>
               </td>
             </tr>
             </tbody>

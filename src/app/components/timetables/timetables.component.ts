@@ -73,7 +73,7 @@ export class TimetablesComponent implements OnInit {
     this.showTable = false;
     setTimeout(() => {
       this.showTable = true;
-    }, 2000);
+    }, 1500);
     this.selectedCount = 0;
     this.showHideInput = false;
     this.showPause = false;
@@ -136,7 +136,12 @@ export class TimetablesComponent implements OnInit {
   showAll() {
     this.selectedCount = this.plannings.length;
     for (const pl of this.plannings) {
-      pl.showPl = true;
+      if (!pl.showPl) {
+        pl.showPl = true;
+        this.planningService.modify(pl, pl.planningId).subscribe(() => {
+          console.log('updated');
+        }, error => console.log(error));
+      }
     }
 
   }
@@ -145,19 +150,26 @@ export class TimetablesComponent implements OnInit {
   hideAll() {
     this.selectedCount = 0;
     for (const pl of this.plannings) {
-      pl.showPl = false;
+      if (pl.showPl) {
+        pl.showPl = false;
+        this.planningService.modify(pl, pl.planningId).subscribe( () => {
+          console.log('updated');
+        }, error => console.log(error));
+      }
     }
   }
 
   showHideSch(pl: Planning) {
-    this.clickedPlanning = pl;
-    this.planningDetailsComp.setClickedPl(pl);
+    if (this.showTable) {
     pl.showPl = !pl.showPl;
-
     if (pl.showPl) {
       this.selectedCount++;
     } else {
       this.selectedCount--;
+    }
+    this.planningService.modify(pl, pl.planningId).subscribe( () => {
+      console.log('updated');
+    }, error => console.log(error));
     }
   }
 
@@ -175,11 +187,19 @@ export class TimetablesComponent implements OnInit {
   }
 
   private reloadData() {
+    this.selectedCount = 0;
     this.planningService.list().subscribe(list => {
       this.plannings = list;
       for (const pl of this.plannings) {
         if (pl.showPl) {
           this.selectedCount++;
+        }
+        if (this.clickedPlanning != null) {
+          if (pl.planningId === this.clickedPlanning.planningId) {
+            this.clickedPlanning = null;
+            this.planningDetailsComp.setClickedPl(pl);
+            this.setClickedPl(pl);
+          }
         }
       }
     });
@@ -238,10 +258,15 @@ export class TimetablesComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-            console.log('Refreshing plannings..');
-            this.reloadData();
+          this.reloadData();
         }
+       });
+  }
 
-      });
+  setClickedPl(pl: any) {
+    if (this.showTable) {
+      this.clickedPlanning = pl;
+      this.planningDetailsComp.setClickedPl(pl);
+    }
   }
 }
