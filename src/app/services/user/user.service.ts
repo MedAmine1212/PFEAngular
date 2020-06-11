@@ -24,7 +24,7 @@ export class UserService {
   }
 
   list(): Observable<any> {
-    return this.http.get(this.baseurl + 'list');
+    return this.http.get(this.baseurl + 'list'); 
   }
 
   remove(id) {
