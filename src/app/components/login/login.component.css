@@ -87,7 +87,7 @@ h1{
 }
 
 input:focus{
-  outline: 0 0 0 0  !important;
+  outline: none  !important;
   box-shadow: 0 0 0 0 !important;
 
 }
