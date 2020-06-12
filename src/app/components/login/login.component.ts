@@ -6,7 +6,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DialogComponent} from '../../dialogs/dialog.component';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {ThemeChangerService} from "../../services/ThemeChanger/theme-changer.service";
+import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 
 @Component({
   selector: 'app-login',
@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
   dialogComponent: MatDialogRef<DialogComponent>;
   showError: boolean;
   isRemeberChecked: boolean;
+  passType: string;
 
 constructor(
             private themeChanger: ThemeChangerService,
@@ -29,7 +30,9 @@ constructor(
             private formBuilder: FormBuilder,
             private router: Router,
             public dialog: MatDialog,
-  ) {}
+  ) {
+  this.passType = 'password';
+}
   ngOnInit(): void {
     this.showError = false;
     this.isRemeberChecked = false ;
@@ -52,7 +55,6 @@ constructor(
       this.userService.findUserWithToken().subscribe( ress => {
       // @ts-ignore
         localStorage.cin = ress.cin;
-
         // @ts-ignore
         this.themeChanger.setTheme(ress.userConfig.theme);
       });
@@ -80,5 +82,13 @@ constructor(
 
   rememberChecked() {
     this.isRemeberChecked = !this.isRemeberChecked;
+  }
+
+  setPassType() {
+  if (this.passType === 'text') {
+    this.passType = 'password';
+  } else {
+    this.passType = 'text';
+  }
   }
 }

@@ -265,7 +265,6 @@ export class TimetablesComponent implements OnInit {
     this.pauseStartMinutes = pl.schedule.pauseStart % 60;
     this.pauseEnd = Math.floor(pl.schedule.pauseEnd / 60);
     this.pauseEndMinutes = pl.schedule.pauseEnd % 60;
-
   }
   openDeletePlanDialog() {
       const dialogRef = this.dialog.open(DeletePlanningDialogComponent, {

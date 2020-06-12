@@ -6,6 +6,7 @@ import {EmployeesComponent} from '../employees/employees.component';
 import {DepartmentsComponent} from '../departments/departments.component';
 import {AuthenticationService} from '../../services/Authentication/authentication.service';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
+import {UserService} from "../../services/user/user.service";
 @Component({
   selector: 'app-remmote-monitoring',
   animations: [
@@ -44,12 +45,20 @@ export class RemoteMonitoringComponent implements OnInit {
 
 
 
-  constructor(public router: Router, private authService: AuthenticationService, private themeChanger: ThemeChangerService) {
+  constructor(
+    private userService: UserService,
+    public router: Router, private authService: AuthenticationService, private themeChanger: ThemeChangerService) {
   }
   time = new Date();
   @ViewChild(EmployeesComponent) employeesComponent: EmployeesComponent;
   @ViewChild(DepartmentsComponent) departmentComponent: DepartmentsComponent;
   ngOnInit() {
+    this.userService.findUserWithToken().subscribe( ress => {
+      // @ts-ignore
+      localStorage.cin = ress.cin;
+      // @ts-ignore
+      this.themeChanger.setTheme(ress.userConfig.theme);
+    });
     console.log('log : ', this.authService.loggedIn());
     setInterval(() => {
       this.time = new Date();

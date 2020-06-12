@@ -12,20 +12,35 @@
       Schedules
     </div>
     <div  class="card-body schBody">
-      <table [ngStyle]="{'color': getTheme()? 'white' :'black'}" class="table-hover mat-calendar-table-header tableHeader">
+      <div  class="search-wrapper" style="margin-top: 20px;margin-bottom: 20px">
+        <div style="background-color: transparent" [ngClass]="{'search-wrapper active': showHideInput}">
+          <div  [ngClass]=" getTheme() && showHideInput? 'bg-dark' :''"  class="input-holder">
+            <input [ngStyle]="{'color': getTheme()? 'white' :''}" type="text" [(ngModel)]="searchText" class="search-input" placeholder="Search...">
+            <button (click)="showHideInput = true;" class="search-icon"><span></span></button>
+          </div>
+          <button (click)="showHideInput = false;" class="close"></button>
+        </div>
+      </div>
+      <table style="width: 100%;margin-top: 40px" [ngStyle]="{'color': getTheme()? 'white' :'black'}" class="table-hover mat-calendar-table-header tableHeader">
         <thead>
-        <tr class="d-table-row">
-          <th class="emptyTh"></th>
-          <th>
-            sdsd
-          </th>
+        <tr>
+          <th class="text-center">Id°</th>
+          <th  class="text-center">Start</th>
+          <th class="text-center">End</th>
+          <th class="text-center">Pause</th>
         </tr>
         </thead>
         <tbody>
-        <tr class="d-table-row">
-          <td class="dayTd">
+        <tr [ngClass]="getTheme() ? 'lightText' :''" *ngFor="let sch of shcedules | filter:searchText">
+          <td class="text-center" [ngStyle]="{'color': getTheme()? 'white' :''}" style="padding-top: 15px">{{sch.scheduleId}}</td>
+          <td  class="text-center" style="padding-top: 15px" [ngStyle]="{'color': getTheme()? 'white' :''}">{{getTime(sch.startHour)}}</td>
+          <td class="text-center" style="padding-top: 15px">{{getTime(sch.endHour)}}</td>
+          <td>
           </td>
-
+              <td style="float: right" class="text-center">
+                <button type="button" id="PopoverCustomT-1" style="margin-right:10px;border-radius: 12px" class="btn btn-primary btn-sm" matTooltip="Edit schedule"><span class="fa fa-pencil-alt"></span></button>
+                <button type="button" id="PopoverCustomT-2" style="border-radius: 12px" class="btn btn-danger btn-sm" matTooltip="Delete schedule"><span class="fa fa-trash-alt"></span></button>
+              </td>
         </tr>
         </tbody>
       </table>
