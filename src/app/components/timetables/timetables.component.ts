@@ -60,7 +60,7 @@ export class TimetablesComponent implements OnInit {
   menuTop: string;
   showTable: boolean;
   clickedPlanning: Planning;
-  user: User = new User();
+  user: User = null;
   constructor(
     private themeChanger: ThemeChangerService,
     private userService: UserService,
@@ -145,6 +145,7 @@ export class TimetablesComponent implements OnInit {
   }
 
   showAll() {
+    console.log(this.userConfig);
     this.selectedCount = this.plannings.length;
     this.userConfig.shownPlannings = [];
     this.userConfig.shownPlannings = this.plannings;
@@ -202,36 +203,44 @@ export class TimetablesComponent implements OnInit {
   }
 
   private reloadData() {
-    this.userConfig = new UserConfig();
+    if (this.user == null) {
     this.userService.findUserWithToken().subscribe(user => {
-      console.log(user);
       // @ts-ignore
       this.user = user;
-      this.selectedCount = 0;
-      this.userConfigService.findByUser(this.user).subscribe(conf => {
-        // @ts-ignore
-        this.userConfig = conf;
-        this.planningService.list().subscribe(list => {
-          this.plannings = list;
-          for (const pl of this.plannings) {
-            pl.showPl = (this.userConfig.shownPlannings.indexOf(pl) > -1);
-            if (pl.showPl) {
-              this.selectedCount++;
-            }
-            if (this.clickedPlanning != null) {
-              if (pl.planningId === this.clickedPlanning.planningId) {
-                this.clickedPlanning = null;
-                this.planningDetailsComp.setClickedPl(pl);
-                this.setClickedPl(pl);
-              }
-            }
-          }
-        });
-      }, error => console.log(error));
+      console.log(this.user);
+      this.userConfig = this.user.userConfig;
+      this.listPlannings();
     }, error => console.log(error));
-
+    } else {
+      this.listPlannings();
+    }
   }
-
+  listPlannings() {
+    this.planningService.list().subscribe(list => {
+      this.plannings = list;
+      this.selectedCount = 0;
+      for (const pl of this.plannings) {
+        pl.showPl = this.getShowPl(pl);
+        if (this.clickedPlanning != null) {
+          if (pl.planningId === this.clickedPlanning.planningId) {
+            this.clickedPlanning = null;
+            this.planningDetailsComp.setClickedPl(pl);
+            this.setClickedPl(pl);
+          }
+        }
+      }
+    });
+  }
+  getShowPl(pl: Planning) {
+    for (const shPl of this.userConfig.shownPlannings) {
+        if (shPl.planningId === pl.planningId) {
+           this.selectedCount ++;
+           console.log(this.selectedCount);
+           return true;
+        }
+    }
+    return false;
+}
   planningDaysDesc(pl: Planning) {
     this.desc = '[';
     for (const day of pl.scheduleDays) {

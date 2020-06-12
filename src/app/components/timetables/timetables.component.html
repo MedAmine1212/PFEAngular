@@ -77,11 +77,11 @@
           </div>
         </div>
       </div>
-      <div  *ngIf="plannings.length>0" class="main-card mb-3 card schCard">
-        <div class="card-header">
+      <div  *ngIf="plannings.length>0" class="main-card mb-3 card schCard" [ngClass]="getTheme() ? 'bg-premium-dark' :''">
+        <div [ngStyle]="{'color': getTheme()? 'white' :''}" class="card-header">
           Time table
         </div>
-        <div class="card-body schBody"  [ngClass]="getTheme() ? 'bg-premium-dark' :''">
+        <div class="card-body schBody" [ngClass]="getTheme() ? 'bg-premium-dark' :''">
           <table  [ngClass]="getTheme() ? 'bg-premium-dark' :''" [ngStyle]="{'color': getTheme()? 'white' :'black'}" class="table-hover mat-calendar-table-header tableHeader">
             <thead>
             <tr class="d-table-row">
@@ -110,8 +110,8 @@
             </tbody>
           </table>
         </div>
-        <div class="card-footer">
-          {{time | date: 'dd MMMM yyyy '}} <span class="time">{{ time | date: 'HH:mm:ss' }}</span>
+        <div [ngStyle]="{'color': getTheme()? 'white' :''}" class="card-footer">
+          {{time | date: 'dd MMMM yyyy '}} <span [ngStyle]="{'color': getTheme()? 'white' :''}" class="time">{{ time | date: 'HH:mm:ss' }}</span>
         </div>
 
       </div>
@@ -124,7 +124,7 @@
       <div style="width: 40%;float: right">
         <div [@enterAnimation] class="bodyContainer">
           <div class="main-card mb-3 card descCard"  [ngClass]="getTheme() ? 'bg-premium-dark' :''" [ngStyle]="{'color': getTheme()? 'white' :'black'}">
-            <div *ngIf="clickedPlanning != null" class="card-header" style="width: 100%">
+            <div [ngStyle]="{'color': getTheme()? 'white' :''}" *ngIf="clickedPlanning != null" class="card-header" style="width: 100%">
               <div style="width: 60%">
                 {{clickedPlanning.planningName}}
               </div>

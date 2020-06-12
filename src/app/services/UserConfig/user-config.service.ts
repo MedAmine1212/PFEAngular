@@ -13,10 +13,10 @@ export class UserConfigService {
 
   constructor(private http: HttpClient) {
   }
-  findByUser(user): Observable<User> {
+  findByUserId(id): Observable<User> {
     // this.headers = new HttpHeaders({Authorization: 'Bearer ' + localStorage.token});
     // @ts-ignore
-    return this.http.get(this.baseurl + 'config/' , user);
+    return this.http.get(this.baseurl + 'findByUserId/' + id);
   }
   add(config: UserConfig) {
       return this.http.post(this.baseurl + 'add', config );
