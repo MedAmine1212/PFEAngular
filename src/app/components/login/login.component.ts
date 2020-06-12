@@ -6,7 +6,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DialogComponent} from '../../dialogs/dialog.component';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {ThemeChangerService} from "../../services/ThemeChanger/theme-changer.service";
+import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 
 @Component({
   selector: 'app-login',
@@ -45,16 +45,18 @@ constructor(
 
   submit() {
     this.reloadJs();
-    console.log('hhhhh');
     this.authService.authenticate(this.login, this.isRemeberChecked).subscribe(res => {
+      console.log('asbaa');
       // @ts-ignore
       localStorage.token = res.token;
       this.userService.findUserWithToken().subscribe( ress => {
+        console.log(ress);
       // @ts-ignore
         localStorage.cin = ress.cin;
 
         // @ts-ignore
-        this.themeChanger.setTheme(ress.userConfig.theme);
+        // this.themeChanger.setTheme(ress.userConfig.theme);
+
       });
       this.router.navigateByUrl('/RemoteMonitoring').then(() => window.location.reload());
     }, error => {

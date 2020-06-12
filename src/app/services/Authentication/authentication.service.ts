@@ -27,9 +27,10 @@ export class AuthenticationService  {
   }
 
   saveToken(jwt: string) {
-    localStorage.setItem('token', jwt) ;
-    this.jwt = jwt ;
-    this.parseJWT();
+    localStorage.token = jwt ;
+
+    // this.jwt = jwt ;
+    // this.parseJWT();
   }
 
   private parseJWT() {

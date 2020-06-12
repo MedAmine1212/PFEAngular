@@ -6,6 +6,7 @@ import {EmployeesComponent} from '../employees/employees.component';
 import {DepartmentsComponent} from '../departments/departments.component';
 import {AuthenticationService} from '../../services/Authentication/authentication.service';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
+import {JwtHelperService} from "@auth0/angular-jwt";
 @Component({
   selector: 'app-remmote-monitoring',
   animations: [
@@ -40,6 +41,7 @@ import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.ser
 
 export class RemoteMonitoringComponent implements OnInit {
   clickedDeparment: Department;
+  private jwt = new JwtHelperService();
 
 
 
@@ -50,6 +52,10 @@ export class RemoteMonitoringComponent implements OnInit {
   @ViewChild(EmployeesComponent) employeesComponent: EmployeesComponent;
   @ViewChild(DepartmentsComponent) departmentComponent: DepartmentsComponent;
   ngOnInit() {
+    if(this.jwt.isTokenExpired(localStorage.getItem('token'))){
+      this.authService.loggedOut();
+      window.location.reload();
+    }
     console.log('log : ', this.authService.loggedIn());
     setInterval(() => {
       this.time = new Date();
@@ -59,6 +65,8 @@ export class RemoteMonitoringComponent implements OnInit {
   }
 
   setClickedDep(dep: Department) {
+
+
     setTimeout (() => {
     if (dep && this.employeesComponent != null) {
       this.clickedDeparment = dep;
