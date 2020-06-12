@@ -101,6 +101,9 @@ export class AddUserComponent implements  AfterViewInit  {
       this.user.department = this.data;
     }
     console.log(this.user.department);
+    this.userConfig = new UserConfig();
+    this.userConfig.theme = false;
+    this.userConfig.shownPlannings =  [];
   }
 
   ngAfterViewInit(): void {
@@ -191,16 +194,7 @@ export class AddUserComponent implements  AfterViewInit  {
   }
 
   addUser() {
-    // set user config
-    this.userConfig = new UserConfig();
-    this.userConfig.theme = false;
-    this.userConfig.shownPlannings =  [];
-    this.planningService.list().subscribe( r => {
-      for (const pl of r) {
-        this.userConfig.shownPlannings.push(pl.planningId);
-      }
-    }, error => console.log(error));
-    this.user.userConfig = this.userConfig;
+
     // set user
     this.user.post = this.secondFormGroup.controls.post.value;
     this.user.addresses.push(this.address1);
@@ -208,13 +202,24 @@ export class AddUserComponent implements  AfterViewInit  {
       this.user.addresses.push(this.address2);
     }
     this.userService.add(this.user).subscribe(user => {
-      this.dialogComponent = this.dialog.open(DialogComponent, {
-        width: '400px',
-        data : 'User added successfully ! '
-      });
-      this.dialogComponent.afterClosed().subscribe(() =>
-        this.dialogRef.close(true)
-      );
+      // set user config
+      this.planningService.list().subscribe( r => {
+        for (const pl of r) {
+          this.userConfig.shownPlannings.push(pl.planningId);
+        }
+        this.userConfig.user = this.user;
+        console.log(this.userConfig);
+        console.log(this.user);
+        this.userConfigService.add(this.userConfig).subscribe( () => {
+          this.dialogComponent = this.dialog.open(DialogComponent, {
+            width: '400px',
+            data : 'User added successfully ! '
+          });
+          this.dialogComponent.afterClosed().subscribe(() =>
+            this.dialogRef.close(true)
+          );
+        }, error => console.log(error) );
+      }, error => console.log(error));
     }, error1 => console.log(error1));
   }
 
