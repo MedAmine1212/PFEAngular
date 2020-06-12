@@ -219,3 +219,13 @@
   margin-left: 10px;
   font-size: 14px;
 }
+
+.lightText:hover{
+  color:white !important;
+}
+.lightPl{
+  color: white !important;
+}
+.lightPl:hover{
+  color: black !important;
+}

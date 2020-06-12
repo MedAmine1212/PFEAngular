@@ -5,6 +5,6 @@ export class UserConfig {
   configId: number;
   user: User;
   theme: boolean;
-  shownPlannings: Planning[];
+  shownPlannings: number[];
 }
 

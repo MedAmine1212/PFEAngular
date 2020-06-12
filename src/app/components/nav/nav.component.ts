@@ -3,9 +3,11 @@ import {RemoteMonitoringComponent} from '../remote-monitoring/remote-monitoring.
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../../services/Authentication/authentication.service';
 import {UserService} from '../../services/user/user.service';
-import {User} from '../../models/User';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
+import {UserConfig} from '../../models/UserConfig';
+import {UserConfigService} from '../../services/UserConfig/user-config.service';
+import {User} from '../../models/User';
 
 @Component({
   selector: 'app-nav',
@@ -13,11 +15,13 @@ import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.ser
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
+  user: User = new User();
   isLoggedIn;
-  user: User  = new User();
+  userConfig: UserConfig  = new UserConfig();
   jwt = new JwtHelperService();
 
   constructor(
+    private userConfigService: UserConfigService,
     private themeChanger: ThemeChangerService,
     private router: Router,
     private auth: AuthenticationService,
@@ -38,7 +42,6 @@ export class NavComponent implements OnInit {
   ngOnInit(): void {
     this.isLoggedIn = this.auth.loggedIn() ;
 
-
   }
 
   logout() {
@@ -52,7 +55,12 @@ export class NavComponent implements OnInit {
   }
 
   setTheme(theme: boolean) {
-      this.themeChanger.setTheme(theme);
+        this.themeChanger.setTheme(theme);
+        this.userConfig = this.user.userConfig;
+        this.userConfig.theme = theme;
+        this.userConfigService.update(this.userConfig.configId, this.userConfig).subscribe(() => {
+          console.log('updated');
+        }, error => console.log(error));
+    }
 
-  }
 }

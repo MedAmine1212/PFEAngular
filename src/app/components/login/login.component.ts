@@ -6,8 +6,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DialogComponent} from '../../dialogs/dialog.component';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {JwtHelperService} from '@auth0/angular-jwt';
-
+import {ThemeChangerService} from "../../services/ThemeChanger/theme-changer.service";
 
 @Component({
   selector: 'app-login',
@@ -21,23 +20,16 @@ export class LoginComponent implements OnInit {
   signInForm: FormGroup;
   dialogComponent: MatDialogRef<DialogComponent>;
   showError: boolean;
-  isRemeberChecked : boolean;
+  isRemeberChecked: boolean;
 
-
-
-
-  constructor(              private authService: AuthenticationService,
-                            private userService: UserService,
-                            private formBuilder: FormBuilder,
-                            private router: Router,
-                            public dialog: MatDialog,
-
-
-  ) {
-  }
-
-
-
+constructor(
+            private themeChanger: ThemeChangerService,
+            private authService: AuthenticationService,
+            private userService: UserService,
+            private formBuilder: FormBuilder,
+            private router: Router,
+            public dialog: MatDialog,
+  ) {}
   ngOnInit(): void {
     this.showError = false;
     this.isRemeberChecked = false ;
@@ -57,9 +49,12 @@ export class LoginComponent implements OnInit {
     this.authService.authenticate(this.login, this.isRemeberChecked).subscribe(res => {
       // @ts-ignore
       localStorage.token = res.token;
-      this.userService.findUserWithToken().subscribe( res => {
+      this.userService.findUserWithToken().subscribe( ress => {
       // @ts-ignore
-        localStorage.cin = res.cin;
+        localStorage.cin = ress.cin;
+
+        // @ts-ignore
+        this.themeChanger.setTheme(ress.userConfig.theme);
       });
       this.router.navigateByUrl('/RemoteMonitoring').then(() => window.location.reload());
     }, error => {
@@ -83,7 +78,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  rememberChecked(){
+  rememberChecked() {
     this.isRemeberChecked = !this.isRemeberChecked;
   }
 }

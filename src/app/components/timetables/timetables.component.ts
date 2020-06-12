@@ -81,6 +81,7 @@ export class TimetablesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userConfig.shownPlannings = [];
     this.showTable = false;
     setTimeout(() => {
       this.showTable = true;
@@ -145,15 +146,15 @@ export class TimetablesComponent implements OnInit {
   }
 
   showAll() {
-    console.log(this.userConfig);
     this.selectedCount = this.plannings.length;
     this.userConfig.shownPlannings = [];
-    this.userConfig.shownPlannings = this.plannings;
     for (const pl of this.plannings) {
+      this.userConfig.shownPlannings.push(pl.planningId);
       if (!pl.showPl) {
         pl.showPl = true;
       }
     }
+    console.log(this.userConfig);
     this.userConfigService.update(this.userConfig.configId, this.userConfig).subscribe(() => {
       console.log('updated');
     }, error => console.log(error));
@@ -178,9 +179,9 @@ export class TimetablesComponent implements OnInit {
     pl.showPl = !pl.showPl;
     if (pl.showPl) {
       this.selectedCount++;
-      this.userConfig.shownPlannings.push(pl);
+      this.userConfig.shownPlannings.push(pl.planningId);
     } else {
-      this.userConfig.shownPlannings.splice(this.userConfig.shownPlannings.indexOf(pl), 1);
+      this.userConfig.shownPlannings.splice(this.userConfig.shownPlannings.indexOf(pl.planningId), 1);
       this.selectedCount--;
     }
     this.userConfigService.update(this.userConfig.configId, this.userConfig).subscribe( () => {
@@ -203,7 +204,6 @@ export class TimetablesComponent implements OnInit {
   }
 
   private reloadData() {
-    if (this.user == null) {
     this.userService.findUserWithToken().subscribe(user => {
       // @ts-ignore
       this.user = user;
@@ -211,10 +211,7 @@ export class TimetablesComponent implements OnInit {
       this.userConfig = this.user.userConfig;
       this.listPlannings();
     }, error => console.log(error));
-    } else {
-      this.listPlannings();
     }
-  }
   listPlannings() {
     this.planningService.list().subscribe(list => {
       this.plannings = list;
@@ -232,12 +229,14 @@ export class TimetablesComponent implements OnInit {
     });
   }
   getShowPl(pl: Planning) {
-    for (const shPl of this.userConfig.shownPlannings) {
-        if (shPl.planningId === pl.planningId) {
+    if (this.userConfig != null) {
+    for (const plId of this.userConfig.shownPlannings) {
+        if (plId === pl.planningId) {
            this.selectedCount ++;
            console.log(this.selectedCount);
            return true;
         }
+    }
     }
     return false;
 }

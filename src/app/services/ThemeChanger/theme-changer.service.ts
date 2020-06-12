@@ -5,10 +5,12 @@ import { Injectable } from '@angular/core';
 })
 export class ThemeChangerService {
   private theme: boolean;
-  constructor() { }
+  constructor() {
+  }
 
   setTheme(theme) {
     this.theme = theme;
+    console.log(this.theme);
   }
   getTheme() {
     return this.theme;
