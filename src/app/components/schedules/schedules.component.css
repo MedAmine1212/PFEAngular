@@ -89,3 +89,7 @@
 .closeSearchButt{
   margin-left:-100px;
 }
+
+.lightText:hover{
+  color:white !important;
+}

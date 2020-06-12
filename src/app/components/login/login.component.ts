@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
   dialogComponent: MatDialogRef<DialogComponent>;
   showError: boolean;
   isRemeberChecked: boolean;
+  passType: string;
 
 constructor(
             private themeChanger: ThemeChangerService,
@@ -29,7 +30,9 @@ constructor(
             private formBuilder: FormBuilder,
             private router: Router,
             public dialog: MatDialog,
-  ) {}
+  ) {
+  this.passType = 'password';
+}
   ngOnInit(): void {
     this.showError = false;
     this.isRemeberChecked = false ;
@@ -53,7 +56,6 @@ constructor(
         console.log(ress);
       // @ts-ignore
         localStorage.cin = ress.cin;
-
         // @ts-ignore
         // this.themeChanger.setTheme(ress.userConfig.theme);
 
@@ -82,5 +84,13 @@ constructor(
 
   rememberChecked() {
     this.isRemeberChecked = !this.isRemeberChecked;
+  }
+
+  setPassType() {
+  if (this.passType === 'text') {
+    this.passType = 'password';
+  } else {
+    this.passType = 'text';
+  }
   }
 }

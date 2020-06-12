@@ -34,13 +34,20 @@
                 <span style="padding-left: 18px;background-color: rgb(82,148,226);" class="input-group-text"><i class="fas fa-key"></i></span>
               </div>
               <input
-                type="password"
+                style="border:none;"
+                [type]="passType"
                 class="form-control"
                 placeholder="password"
                 required
                 [(ngModel)]="login.password"
                 formControlName="password"
               >
+              <div class="input-group-append">
+                <span (mousedown)="passType = 'text'" (mouseup)="passType ='password'" style=";background-color: rgb(232,240,254);cursor:pointer;color:black" class="input-group-text">
+                  <i *ngIf="passType === 'text'" style="margin-right: -1px" class="fas fa-eye-slash"></i>
+                  <i *ngIf="passType === 'password'"  matTooltip="Peek" class="fas fa-eye"></i>
+                </span>
+              </div>
             </div>
 
             <div class="row align-items-center remember" style="padding-left: 35px;padding-top: 5px">

@@ -6,7 +6,8 @@ import {EmployeesComponent} from '../employees/employees.component';
 import {DepartmentsComponent} from '../departments/departments.component';
 import {AuthenticationService} from '../../services/Authentication/authentication.service';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
-import {JwtHelperService} from "@auth0/angular-jwt";
+import {JwtHelperService} from '@auth0/angular-jwt';
+import {UserService} from '../../services/user/user.service';
 @Component({
   selector: 'app-remmote-monitoring',
   animations: [
@@ -41,18 +42,27 @@ import {JwtHelperService} from "@auth0/angular-jwt";
 
 export class RemoteMonitoringComponent implements OnInit {
   clickedDeparment: Department;
-  private jwt = new JwtHelperService();
 
 
 
 
-  constructor(public router: Router, private authService: AuthenticationService, private themeChanger: ThemeChangerService) {
+  constructor(
+    private userService: UserService,
+    public router: Router, private authService: AuthenticationService, private themeChanger: ThemeChangerService) {
   }
   time = new Date();
+  private jwt = new JwtHelperService();
+
   @ViewChild(EmployeesComponent) employeesComponent: EmployeesComponent;
   @ViewChild(DepartmentsComponent) departmentComponent: DepartmentsComponent;
   ngOnInit() {
-    if(this.jwt.isTokenExpired(localStorage.getItem('token'))){
+    this.userService.findUserWithToken().subscribe( ress => {
+      // @ts-ignore
+      localStorage.cin = ress.cin;
+      // @ts-ignore
+      this.themeChanger.setTheme(ress.userConfig.theme);
+    });
+    if (this.jwt.isTokenExpired(localStorage.getItem('token'))) {
       this.authService.loggedOut();
       window.location.reload();
     }
@@ -65,8 +75,6 @@ export class RemoteMonitoringComponent implements OnInit {
   }
 
   setClickedDep(dep: Department) {
-
-
     setTimeout (() => {
     if (dep && this.employeesComponent != null) {
       this.clickedDeparment = dep;
