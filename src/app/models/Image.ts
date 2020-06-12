@@ -5,8 +5,7 @@ export class Image {
   picByte: FormData;
 
 
-  constructor(id: number, name: string, type: string, picByte: any) {
-    this.id = id;
+  constructor( name: string, type: string, picByte: any) {
     this.name = name;
     this.type = type;
     this.picByte = picByte;

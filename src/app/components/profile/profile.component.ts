@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {ImageService} from "../../services/image.service";
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {ImageService} from '../../services/image.service';
+import {Image} from '../../models/Image';
 
 @Component({
   selector: 'app-profile',
@@ -17,9 +18,13 @@ export class ProfileComponent implements OnInit {
   retrieveResonse: any;
   message: string;
   imageName: any;
+  image: Image;
+  private headers: HttpHeaders;
+
 
 
   ngOnInit(): void {
+
   }
   // Gets called when the user selects an image
   public onFileChanged(event) {
@@ -34,17 +39,15 @@ export class ProfileComponent implements OnInit {
     const uploadImageData = new FormData();
     uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
 
+
+
+
     // Make a call to the Spring Boot Application to save the image
     // this.imageService.add()
-    this.httpClient.post('http://localhost:81/image/upload', uploadImageData, { observe: 'response' })
-      .subscribe((response) => {
-          if (response.status === 200) {
-            this.message = 'Image uploaded successfully';
-          } else {
-            this.message = 'Image not uploaded successfully';
-          }
-        }
-      );
+    this.headers = new HttpHeaders({Authorization: 'Bearer ' + localStorage.token});
+
+    this.httpClient.post('http://localhost:81/image/upload', uploadImageData, {headers: this.headers})
+      .subscribe();
   }
   // Gets called when the user clicks on retieve image button to get the image from back end
   getImage() {

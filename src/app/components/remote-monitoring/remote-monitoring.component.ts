@@ -7,6 +7,7 @@ import {DepartmentsComponent} from '../departments/departments.component';
 import {AuthenticationService} from '../../services/Authentication/authentication.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
+import {UserService} from "../../services/user/user.service";
 @Component({
   selector: 'app-remmote-monitoring',
   animations: [
@@ -46,7 +47,7 @@ export class RemoteMonitoringComponent implements OnInit {
 
 
 
-  constructor(public router: Router, private authService: AuthenticationService, private themeChanger: ThemeChangerService) {
+  constructor(public router: Router, private authService: AuthenticationService, private themeChanger: ThemeChangerService, private userService : UserService) {
   }
   time = new Date();
   @ViewChild(EmployeesComponent) employeesComponent: EmployeesComponent;
@@ -60,6 +61,7 @@ export class RemoteMonitoringComponent implements OnInit {
 
 
     console.log('log : ', this.authService.loggedIn());
+    this.userService.findUserWithToken().subscribe(res=> console.log(res));
     setInterval(() => {
       this.time = new Date();
     }, 1000);

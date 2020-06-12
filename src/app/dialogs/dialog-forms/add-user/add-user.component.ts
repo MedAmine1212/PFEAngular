@@ -52,9 +52,9 @@ export class AddUserComponent implements  AfterViewInit  {
   posts: Post[] = [];
   showOtherAddress: boolean;
   user: User = {
-    cin: '',
     addresses: [],
-    birthDate: undefined,
+    birthDate: '',
+    cin: '',
     department: null,
     email: '',
     firstName: '',
@@ -63,6 +63,7 @@ export class AddUserComponent implements  AfterViewInit  {
     name: '',
     phone: '',
     post: undefined,
+    userConfig: undefined,
     userId: null
   };
   address1: Address = {
