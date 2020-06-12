@@ -63,7 +63,8 @@ export class AddUserComponent implements  AfterViewInit  {
     name: '',
     phone: '',
     post: undefined,
-    userId: null
+    userId: null,
+    userConfig: null
   };
   address1: Address = {
     addressId: null,
@@ -190,13 +191,17 @@ export class AddUserComponent implements  AfterViewInit  {
   }
 
   addUser() {
+    // set user config
     this.userConfig = new UserConfig();
-    this.userConfig.user = this.user;
     this.userConfig.theme = false;
+    this.userConfig.shownPlannings =  [];
     this.planningService.list().subscribe( r => {
-      this.userConfig.shownPlannings = r;
-      this.userConfigService.add(this.userConfig);
+      for (const pl of r) {
+        this.userConfig.shownPlannings.push(pl.planningId);
+      }
     }, error => console.log(error));
+    this.user.userConfig = this.userConfig;
+    // set user
     this.user.post = this.secondFormGroup.controls.post.value;
     this.user.addresses.push(this.address1);
     if (this.showOtherAddress) {

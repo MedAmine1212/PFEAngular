@@ -12,7 +12,7 @@ import {AddUserComponent} from '../../dialogs/dialog-forms/add-user/add-user.com
 import {UserService} from '../../services/user/user.service';
 import {EmployeeDetailsComponent} from '../../dialogs/employee-details/employee-details.component';
 import {DeleteUserDialogComponent} from '../../dialogs/delete-user-dialog/delete-user-dialog.component';
-import {ThemeChangerService} from "../../services/ThemeChanger/theme-changer.service";
+import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 @Component({
   selector: 'app-employees',
   templateUrl: './employees.component.html',

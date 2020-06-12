@@ -1,5 +1,5 @@
 
-<div  class="main-card mb-3 card" [ngStyle]="{'height': router.url === '/RemoteMonitoring/(mainCon:Absences)'? '100%' :''}"  [ngClass]="getTheme() ? 'bg-premium-dark' :''" style="margin-left:15px;border: none">
+<div  class="main-card mb-3 card" [ngStyle]="{'height': router.url === '/RemoteMonitoring/(mainCon:Absences)'  || router.url === '/RemoteMonitoring'? '100%' :''}"  [ngClass]="getTheme() ? 'bg-premium-dark' :''" style="margin-left:15px;border: none">
   <div class="card-header">
     <div border="1" *ngIf="!thisIsEmp && clickedDep.depId!=-1" [ngStyle]="{'color': getTheme()? 'white' :'black'}" style="padding-bottom: 10px;width: 100%" >
       <span> Department: {{clickedDep.depName}}</span>
@@ -17,14 +17,18 @@
         <button mat-raised-button class="btn btn-danger" (click)="showDeleteDialog()" matTooltip="Delete departement"><span class="fas fa-trash-alt"></span></button>
       </div>
     </div>
-    <i *ngIf="thisIsEmp"  [ngStyle]="{'color': getTheme()? 'white' :'grey'}" style="margin-right: 15px;margin-top: -15px" class="fa fa-user-friends"></i>
-    <h2 *ngIf="thisIsEmp" class="app-sidebar__heading" style="font-weight: bolder">Employees
-      <span style="margin-left: 30px">
+    <div [ngStyle]="{'margin-left': router.url === '/RemoteMonitoring/(mainCon:Absences)'  || router.url === '/RemoteMonitoring'? '-25px': ''}" *ngIf="thisIsEmp" style="width: 100%">
+    <h2 class="app-sidebar__heading" style="font-weight: bolder">
+      <i [ngStyle]="{'color': getTheme()? 'white' :'grey'}" style="margin-right: 15px;margin-top: -15px" class="fa fa-user-friends"></i>
+      Employees
+      <span [ngStyle]="{'margin-left': router.url === '/RemoteMonitoring/(mainCon:Absences)' || router.url === '/RemoteMonitoring' ? '5px' :'30px'}">
       <span style="cursor:pointer" [ngStyle]="{'color': getTheme()? 'white' :'grey'}" title="add" (click)="showAddUserDialog()" class="fa fa-user-plus butts"></span>
       <span title="open" [ngStyle]="{'color': getTheme()? 'white' :'grey'}" [routerLink]="[{ outlets: {mainCon: ['Employees'] } }]" *ngIf="router.url != '/RemoteMonitoring/(mainCon:Employees)'" style="cursor:pointer;margin-left:15px" class="fa fa-external-link-alt butts"></span>
     </span>
 
-    </h2><br>
+    </h2>
+    </div>
+      <br>
     <div style="width:100%">
       <span title="close" routerLink="/RemoteMonitoring" *ngIf="router.url === '/RemoteMonitoring/(mainCon:Employees)'" style="font-size:35px;margin-top:-10px;cursor:pointer;float:right" [ngStyle]="{'color': getTheme()? 'white' :'grey'}" class="fa fa-compress butts"></span>
 
@@ -36,11 +40,24 @@
         <td>
           <h1 *ngIf="!thisIsEmp && clickedDep.depId != -1" [ngStyle]="{'color': getTheme()? 'white' :''}" style="margin-top: 20px;margin-right: 30px" class="empTitle">{{clickedDep.depName}} Employees </h1>
         </td>
-        <td>
-          <div class="search-wrapper">
+        <td *ngIf="router.url === '/RemoteMonitoring/(mainCon:Absences)' || router.url === '/RemoteMonitoring'">
+          <div style="margin-left: -50px">
+            <div  class="search-wrapper wrapper">
+              <div class="searchContainer" style="background-color: transparent" [ngClass]="{'search-wrapper active': showHideInput}">
+                <div  [ngClass]=" getTheme() && showHideInput? 'bg-dark' :''"  class="input-holder holder">
+                  <input [ngStyle]="{'color': getTheme()? 'white' :''}" type="text" [(ngModel)]="searchText" class="search-input searchInput" placeholder="Search...">
+                  <button (click)="showHideInput = true;" class="search-icon"><span></span></button>
+                </div>
+                <button (click)="showHideInput = false;" class="close closeSearchButt"></button>
+              </div>
+            </div>
+          </div>
+        </td>
+        <td *ngIf="router.url === '/RemoteMonitoring/(mainCon:Employees)' || router.url === '/RemoteMonitoring/(mainCon:Departments)'">
+          <div class="search-wrapper" [ngStyle]="{'margin-left': router.url === '/RemoteMonitoring/(mainCon:Employees)'? '40px' :''}">
             <div style="position: absolute;background-color: transparent;margin-top: -15px;margin-left: -35px;" [ngClass]="{'search-wrapper active': showHideInput}">
-              <div class="input-holder">
-                <input type="text" [(ngModel)]="searchText" style="width: 100%" class="search-input" placeholder="Search (name, Email, Phone,...)">
+              <div class="input-holder" [ngClass]=" getTheme() && showHideInput? 'bg-dark' :''">
+                <input [ngStyle]="{'color': getTheme()? 'white' :''}" type="text" [(ngModel)]="searchText" style="width: 100%" class="search-input" placeholder="Search (name, Email, Phone,...)">
                 <button [ngStyle]="{'opacity':thisIsEmp || clickedDep.depId!=-1 ? '1' : '0' }" (click)="showHideInput = true;" class="search-icon"><span></span></button>
               </div>
               <button (click)="showHideInput = false;" class="close"></button>
@@ -56,8 +73,8 @@
 
     <div [ngStyle]="{'color': getTheme()? 'white' :'black'}" style="width: 100%;text-align:center;margin:0;padding-top: 10%;font-weight: bolder;font-size: 20px" *ngIf="(thisIsEmp && users.length === 0) || (!thisIsEmp && clickedDep.depId!==-1 && (users==null || users.length === 0))"> No Employees to show</div>
     <div *ngIf="users!=null">
-      <div class="main-card mb-3 card" [ngClass]="getTheme() ? 'bg-premium-dark' :''" style="overflow: auto;max-height: 480px;margin-top: 40px;border-radius:0" *ngIf="(users.length !=0 && thisIsEmp) || (users.length !=0 && clickedDep.depId != -1)">
-          <table [ngClass]="getTheme() ? 'bg-premium-dark text-light' :''"  [ngStyle]="{'color': getTheme()? 'white' :''}" class="align-middle text-light mb-0 table table-borderless table-striped table-hover">
+      <div [ngStyle]="{'margin-left': router.url === '/RemoteMonitoring/(mainCon:Absences)'  || router.url === '/RemoteMonitoring'? '-25px' :''}" class="main-card mb-3 card" [ngClass]="getTheme() ? 'bg-premium-dark' :''" style="overflow: auto;max-height: 480px;margin-top: 40px;border-radius:0" *ngIf="(users.length !=0 && thisIsEmp) || (users.length !=0 && clickedDep.depId != -1)">
+          <table  [ngClass]="getTheme() ? 'bg-premium-dark text-light' :''"  [ngStyle]="{'color': getTheme()? 'white' :''}" class="align-middle text-light mb-0 table table-borderless table-striped table-hover">
           <thead>
           <tr *ngIf="router.url === '/RemoteMonitoring/(mainCon:Employees)' || !thisIsEmp">
             <th class="text-center">N°</th>

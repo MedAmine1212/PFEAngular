@@ -2310,7 +2310,6 @@ a,button,.btn{outline:none !important }
 .closed-sidebar .app-sidebar .app-sidebar__inner ul::before{display:none }
 .closed-sidebar .app-sidebar .app-sidebar__inner ul.mm-show{padding:0 }
 .closed-sidebar .app-sidebar .app-sidebar__inner ul.mm-show>li>a{height:0 }
-.closed-sidebar .app-sidebar:hover{flex:0 0 280px !important;width:280px !important }
 .closed-sidebar .app-sidebar:hover .app-sidebar__inner .app-sidebar__heading{text-indent:initial }
 .closed-sidebar .app-sidebar:hover .app-sidebar__inner .app-sidebar__heading::before{display:none }
 .closed-sidebar .app-sidebar:hover .app-sidebar__inner ul::before{display:block }
@@ -5343,7 +5342,7 @@ a.fc-more:hover{text-decoration:underline }
 }
 @media (max-width: 991.98px){.app-main{display:block }
   .dropdown-menu::before,.dropdown-menu::after{display:none }
-  .app-sidebar{flex:0 0 280px !important;width:280px !important;transform:translateX(-280px);position:fixed }
+  .app-sidebar{flex:0 0 280px !important;width:300px !important;margin-left:-20px !important;transform:translateX(-280px);position:fixed }
   .app-sidebar .app-header__logo{display:none }
   .sidebar-mobile-open .app-sidebar{transform:translateX(0) }
   .sidebar-mobile-open .app-sidebar .app-sidebar__inner .app-sidebar__heading{text-indent:initial }
@@ -5364,7 +5363,6 @@ a.fc-more:hover{text-decoration:underline }
   .app-header .app-header__logo{display:none;order:2;background:transparent !important;border:0 !important }
   .app-header .app-header__content{visibility:hidden;opacity:0;box-shadow:0 0.46875rem 2.1875rem rgba(4,9,20,0.03),0 0.9375rem 1.40625rem rgba(4,9,20,0.03),0 0.25rem 0.53125rem rgba(4,9,20,0.05),0 0.125rem 0.1875rem rgba(4,9,20,0.03);position:absolute;left:5%;width:90%;top:0;transition:all .2s;background:#fff;border-radius:50px;padding:0 10px;overflow:hidden }
   .app-header .app-header__content .header-btn-lg{margin-left:.5rem;padding:0 .5rem }
-  .app-header .app-header__content .app-header-left .nav{display:none }
   .app-header .app-header__content.header-mobile-open{visibility:visible;opacity:1;top:80px }
   .app-header .app-header__mobile-menu{display:flex;order:1 }
   .app-header .app-header__menu{display:flex;order:3 }

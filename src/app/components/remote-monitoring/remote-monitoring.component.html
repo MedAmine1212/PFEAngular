@@ -8,7 +8,7 @@
   <div *ngIf="router.url !== '/RemoteMonitoring/(mainCon:TimeTables)' && router.url !== '/RemoteMonitoring/(mainCon:Employees)'" class="app-main">
     <div class="app-main__outer">
       <!--Absences-->
-        <div [@enterAnimation] *ngIf="router.url === '/RemoteMonitoring' || router.url === '/RemoteMonitoring/(mainCon:Absences)'" class="app-sidebar sidebar-shadow" [ngClass]="getTheme() ? 'bg-premium-dark' :''" style="max-width: 380px;margin-top: -14px;margin-left: -300px">
+        <div [@enterAnimation] *ngIf="router.url === '/RemoteMonitoring' || router.url === '/RemoteMonitoring/(mainCon:Absences)'" class="app-sidebar sidebar-shadow" [ngClass]="getTheme() ? 'bg-premium-dark' :''" style="max-width: 320px;margin-top: -14px;margin-left: -300px">
 
           <app-employees></app-employees>
 
