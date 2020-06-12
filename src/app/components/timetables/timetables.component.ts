@@ -81,6 +81,7 @@ export class TimetablesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userConfig.shownPlannings = [];
     this.showTable = false;
     setTimeout(() => {
       this.showTable = true;
@@ -203,7 +204,6 @@ export class TimetablesComponent implements OnInit {
   }
 
   private reloadData() {
-    if (this.user == null) {
     this.userService.findUserWithToken().subscribe(user => {
       // @ts-ignore
       this.user = user;
@@ -211,10 +211,7 @@ export class TimetablesComponent implements OnInit {
       this.userConfig = this.user.userConfig;
       this.listPlannings();
     }, error => console.log(error));
-    } else {
-      this.listPlannings();
     }
-  }
   listPlannings() {
     this.planningService.list().subscribe(list => {
       this.plannings = list;
@@ -232,12 +229,14 @@ export class TimetablesComponent implements OnInit {
     });
   }
   getShowPl(pl: Planning) {
+    if (this.userConfig != null) {
     for (const plId of this.userConfig.shownPlannings) {
         if (plId === pl.planningId) {
            this.selectedCount ++;
            console.log(this.selectedCount);
            return true;
         }
+    }
     }
     return false;
 }

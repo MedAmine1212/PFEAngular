@@ -50,7 +50,6 @@ export class RemoteMonitoringComponent implements OnInit {
   @ViewChild(EmployeesComponent) employeesComponent: EmployeesComponent;
   @ViewChild(DepartmentsComponent) departmentComponent: DepartmentsComponent;
   ngOnInit() {
-    this.themeChanger.setTheme(true);
     console.log('log : ', this.authService.loggedIn());
     setInterval(() => {
       this.time = new Date();

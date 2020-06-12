@@ -10,6 +10,7 @@ export class ThemeChangerService {
 
   setTheme(theme) {
     this.theme = theme;
+    console.log(this.theme);
   }
   getTheme() {
     return this.theme;
