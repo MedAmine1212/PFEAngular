@@ -18,7 +18,8 @@ import {Router} from '@angular/router';
 import {UserConfigs} from '../../../models/UserConfigs';
 import {PlanningService} from '../../../services/planning/planning.service';
 import {ThemeChangerService} from '../../../services/ThemeChanger/theme-changer.service';
-import {UserConfigsService} from "../../../services/UserConfigs/user-configs.service";
+import {UserConfigsService} from '../../../services/UserConfigs/user-configs.service';
+import {ImageService} from '../../../services/image.service';
 
 @Component({
   selector: 'app-add-user',
@@ -41,6 +42,15 @@ import {UserConfigsService} from "../../../services/UserConfigs/user-configs.ser
 })
 export class AddUserComponent implements  AfterViewInit  {
   dialogComponent: MatDialogRef<DialogComponent>;
+  selectedFile: File;
+  imageName: string;
+  retrievedImage: any;
+  retrieveResonse: any;
+  base64Data: any;
+  uploadImageData: FormData;
+
+
+
   @ViewChild('stepper') stepper: MatStepper;
   userConfigs: UserConfigs;
   isLinear = false;
@@ -95,7 +105,8 @@ export class AddUserComponent implements  AfterViewInit  {
               public dialog: MatDialog,
               private addressService: AddressService,
               private postService: PostService,
-              private planningService: PlanningService
+              private planningService: PlanningService,
+              private imageService: ImageService
   ) {
     console.log(this.userConfigs);
     if (this.data != null ) {
@@ -204,20 +215,20 @@ export class AddUserComponent implements  AfterViewInit  {
       this.user.addresses.push(this.address2);
     }
 
-    //set shown plannings
+    // set shown plannings
     this.planningService.list().subscribe( r => {
       for (const pl of r) {
         this.userConfigs.shownPlannings.push(pl.planningId);
       }
     }, error => console.log(error));
 
-    //add user
+    // add user
     this.userService.add(this.user).subscribe(user => {
         this.userAddedSuccessfully();
         }, error1 => console.log('erreur user add ' + error1));
   }
 
-  userAddedSuccessfully(){
+  userAddedSuccessfully() {
     this.dialogComponent = this.dialog.open(DialogComponent, {
       width: '400px',
       data : 'User added successfully ! '
@@ -432,4 +443,35 @@ export class AddUserComponent implements  AfterViewInit  {
     return this.themeChanger.getTheme();
   }
 
+  onFileChanged(event) {
+    this.selectedFile = event.target.files[0];
+  }
+
+  getImage() {
+      this.imageService.getImage(this.imageName)
+        .subscribe(
+          res => {
+            this.retrieveResonse = res;
+            this.base64Data = this.retrieveResonse.picByte;
+            this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
+          }
+          , error => console.log(error)
+        );
+
+  }
+
+  onUpload() {
+    console.log(this.selectedFile);
+    this.uploadImageData = new FormData();
+    this.uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
+
+    this.imageService.uploadImage(this.uploadImageData)
+      .subscribe((response) => {
+          if (response.status === 200) {
+            this.getImage();
+          }
+        }
+        , error => console.log(error)
+      );
+  }
 }
