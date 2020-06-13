@@ -15,10 +15,10 @@ import {User} from '../../../models/User';
 import {NgbDate} from '@ng-bootstrap/ng-bootstrap';
 import {DialogComponent} from '../../dialog.component';
 import {Router} from '@angular/router';
-import {UserConfig} from '../../../models/UserConfig';
-import {UserConfigService} from '../../../services/UserConfig/user-config.service';
+import {UserConfigs} from '../../../models/UserConfigs';
 import {PlanningService} from '../../../services/planning/planning.service';
 import {ThemeChangerService} from '../../../services/ThemeChanger/theme-changer.service';
+import {UserConfigsService} from "../../../services/UserConfigs/user-configs.service";
 
 @Component({
   selector: 'app-add-user',
@@ -42,7 +42,7 @@ import {ThemeChangerService} from '../../../services/ThemeChanger/theme-changer.
 export class AddUserComponent implements  AfterViewInit  {
   dialogComponent: MatDialogRef<DialogComponent>;
   @ViewChild('stepper') stepper: MatStepper;
-  userConfig: UserConfig;
+  userConfigs: UserConfigs;
   isLinear = false;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
@@ -64,7 +64,7 @@ export class AddUserComponent implements  AfterViewInit  {
     phone: '',
     post: undefined,
     userId: null,
-    userConfig: null
+    userConfigs: []
   };
   address1: Address = {
     addressId: null,
@@ -86,7 +86,7 @@ export class AddUserComponent implements  AfterViewInit  {
   };
   constructor(private themeChanger: ThemeChangerService,
               public dialogRef: MatDialogRef<AddUserComponent>,
-              private userConfigService: UserConfigService,
+              private userConfigService: UserConfigsService,
               @Inject(MAT_DIALOG_DATA) public data: Department,
               private formBuilder: FormBuilder,
               private departmentService: DepartmentService,
@@ -97,13 +97,14 @@ export class AddUserComponent implements  AfterViewInit  {
               private postService: PostService,
               private planningService: PlanningService
   ) {
+    console.log(this.userConfigs);
     if (this.data != null ) {
       this.user.department = this.data;
     }
     console.log(this.user.department);
-    this.userConfig = new UserConfig();
-    this.userConfig.theme = false;
-    this.userConfig.shownPlannings =  [];
+    this.userConfigs = new UserConfigs();
+    this.userConfigs.theme = false;
+    this.userConfigs.shownPlannings =  [];
   }
 
   ngAfterViewInit(): void {
@@ -198,29 +199,32 @@ export class AddUserComponent implements  AfterViewInit  {
     // set user
     this.user.post = this.secondFormGroup.controls.post.value;
     this.user.addresses.push(this.address1);
+    this.user.userConfigs.push(this.userConfigs);
     if (this.showOtherAddress) {
       this.user.addresses.push(this.address2);
     }
+
+    //set shown plannings
+    this.planningService.list().subscribe( r => {
+      for (const pl of r) {
+        this.userConfigs.shownPlannings.push(pl.planningId);
+      }
+    }, error => console.log(error));
+
+    //add user
     this.userService.add(this.user).subscribe(user => {
-      // set user config
-      this.planningService.list().subscribe( r => {
-        for (const pl of r) {
-          this.userConfig.shownPlannings.push(pl.planningId);
-        }
-        this.userConfig.user = this.user;
-        console.log(this.userConfig);
-        console.log(this.user);
-        this.userConfigService.add(this.userConfig).subscribe( () => {
-          this.dialogComponent = this.dialog.open(DialogComponent, {
-            width: '400px',
-            data : 'User added successfully ! '
-          });
-          this.dialogComponent.afterClosed().subscribe(() =>
-            this.dialogRef.close(true)
-          );
-        }, error => console.log(error) );
-      }, error => console.log(error));
-    }, error1 => console.log(error1));
+        this.userAddedSuccessfully();
+        }, error1 => console.log('erreur user add ' + error1));
+  }
+
+  userAddedSuccessfully(){
+    this.dialogComponent = this.dialog.open(DialogComponent, {
+      width: '400px',
+      data : 'User added successfully ! '
+    });
+    this.dialogComponent.afterClosed().subscribe(() =>
+      this.dialogRef.close(true)
+    );
   }
 
   // CHECK IN USE

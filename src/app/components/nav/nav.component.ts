@@ -5,8 +5,8 @@ import {AuthenticationService} from '../../services/Authentication/authenticatio
 import {UserService} from '../../services/user/user.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
-import {UserConfig} from '../../models/UserConfig';
-import {UserConfigService} from '../../services/UserConfig/user-config.service';
+import {UserConfigs} from '../../models/UserConfigs';
+import {UserConfigsService} from '../../services/UserConfigs/user-configs.service';
 import {User} from '../../models/User';
 
 @Component({
@@ -17,11 +17,11 @@ import {User} from '../../models/User';
 export class NavComponent implements OnInit {
   user: User = new User();
   isLoggedIn;
-  userConfig: UserConfig  = new UserConfig();
+  userConfigs: UserConfigs  = new UserConfigs();
   jwt = new JwtHelperService();
 
   constructor(
-    private userConfigService: UserConfigService,
+    private userConfigsService: UserConfigsService,
     private themeChanger: ThemeChangerService,
     private router: Router,
     private auth: AuthenticationService,
@@ -56,9 +56,9 @@ export class NavComponent implements OnInit {
 
   setTheme(theme: boolean) {
         this.themeChanger.setTheme(theme);
-        this.userConfig = this.user.userConfig;
-        this.userConfig.theme = theme;
-        this.userConfigService.update(this.userConfig.configId, this.userConfig).subscribe(() => {
+        this.userConfigs = this.user.userConfigs[0];
+        this.userConfigs.theme = theme;
+        this.userConfigsService.update(this.userConfigs.configId, this.userConfigs).subscribe(() => {
           console.log('updated');
         }, error => console.log(error));
     }

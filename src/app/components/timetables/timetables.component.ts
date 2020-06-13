@@ -8,8 +8,8 @@ import {PlanningService} from '../../services/planning/planning.service';
 import {Planning} from '../../models/Planning';
 import {DeletePlanningDialogComponent} from '../../dialogs/delete-planning-dialog/delete-planning-dialog.component';
 import {PlanningDetailsComponent} from '../planning-details/planning-details.component';
-import {UserConfig} from '../../models/UserConfig';
-import {UserConfigService} from '../../services/UserConfig/user-config.service';
+import {UserConfigs} from '../../models/UserConfigs';
+import {UserConfigsService} from '../../services/UserConfigs/user-configs.service';
 import {UserService} from '../../services/user/user.service';
 import {User} from '../../models/User';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
@@ -38,7 +38,7 @@ import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.ser
 export class TimetablesComponent implements OnInit {
 
   @ViewChild(PlanningDetailsComponent) planningDetailsComp: PlanningDetailsComponent;
-  userConfig: UserConfig = new UserConfig();
+  userConfig: UserConfigs = new UserConfigs();
   hours: number[];
   days: string[];
   searchText;
@@ -64,7 +64,7 @@ export class TimetablesComponent implements OnInit {
   constructor(
     private themeChanger: ThemeChangerService,
     private userService: UserService,
-    private userConfigService: UserConfigService,
+    private userConfigService: UserConfigsService,
     public dialog: MatDialog, private  scheduleService: ScheduleService, private  planningService: PlanningService) {
     this.clickedPlanning = null;
     this.hours = Array(24).fill(6).map((x, i) => i);
@@ -208,7 +208,7 @@ export class TimetablesComponent implements OnInit {
       // @ts-ignore
       this.user = user;
       console.log(this.user);
-      this.userConfig = this.user.userConfig;
+      this.userConfig = this.user.userConfigs[0];
       this.listPlannings();
     }, error => console.log(error));
     }

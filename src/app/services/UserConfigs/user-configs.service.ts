@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {User} from '../../models/User';
-import {UserConfig} from '../../models/UserConfig';
+import {UserConfigs} from '../../models/UserConfigs';
 import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserConfigService {
+export class UserConfigsService {
 
   private baseurl = 'http://localhost:81/userConfig/';
 
@@ -18,7 +18,7 @@ export class UserConfigService {
     // @ts-ignore
     return this.http.get(this.baseurl + 'findByUserId/' + id);
   }
-  add(config: UserConfig) {
+  add(config: UserConfigs) {
       return this.http.post(this.baseurl + 'add', config );
     }
     update(id, config) {

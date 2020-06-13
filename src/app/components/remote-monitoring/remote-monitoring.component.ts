@@ -8,6 +8,7 @@ import {AuthenticationService} from '../../services/Authentication/authenticatio
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {UserService} from '../../services/user/user.service';
+import {UserConfigsService} from '../../services/UserConfigs/user-configs.service';
 @Component({
   selector: 'app-remmote-monitoring',
   animations: [
@@ -48,7 +49,7 @@ export class RemoteMonitoringComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    public router: Router, private authService: AuthenticationService, private themeChanger: ThemeChangerService) {
+    public router: Router, private authService: AuthenticationService, private themeChanger: ThemeChangerService, private userConfigService: UserConfigsService) {
   }
   time = new Date();
   private jwt = new JwtHelperService();
@@ -56,11 +57,16 @@ export class RemoteMonitoringComponent implements OnInit {
   @ViewChild(EmployeesComponent) employeesComponent: EmployeesComponent;
   @ViewChild(DepartmentsComponent) departmentComponent: DepartmentsComponent;
   ngOnInit() {
+    this.userService.list().subscribe(r => {
+      console.log(r);
+    });
+
     this.userService.findUserWithToken().subscribe( ress => {
+
       // @ts-ignore
       localStorage.cin = ress.cin;
       // @ts-ignore
-      this.themeChanger.setTheme(ress.userConfig.theme);
+      this.themeChanger.setTheme(ress.userConfigs[0].theme);
     });
     if (this.jwt.isTokenExpired(localStorage.getItem('token'))) {
       this.authService.loggedOut();
