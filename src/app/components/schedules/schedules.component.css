@@ -14,13 +14,22 @@
 .noSchBod{
   margin:auto;
 }
+.noDescBod{
+  font-weight: bolder;
+  font-size: 20px;
+  margin:auto;
+  height:250px !important;
+  text-align: center !important;
+  padding-top: 20%;
+  padding-bottom: 50px;
+}
 .noSchContainer{
-  padding-top: 50%;
+  padding-top: 30%;
   text-align: center;
   color:black;
   font-weight:bolder;
-  margin:0 auto;
   font-size:25px;
+  margin: 0 auto 0 -10px;
   width: 100%;
 }
 .schCard{
@@ -28,7 +37,7 @@
 }
 .schBody{
   overflow:hidden;
-  height:100%;
+  height:100% !important;
   margin-bottom: 10px;
   font-size: 13px;
 }
@@ -92,4 +101,12 @@
 
 .lightText:hover{
   color:white !important;
+}
+
+.tableTh {
+  font-size: 16px;
+  padding-bottom: 10px
+}
+.tableTd{
+  padding-bottom: 10px;padding-top: 15px
 }

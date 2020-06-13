@@ -1,5 +1,4 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Schedule} from '../../models/Schedule';
 import {ScheduleService} from '../../services/schedule/schedule.service';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {AddPlanningComponent} from '../../dialogs/dialog-forms/add-planning/add-planning.component';
@@ -13,6 +12,7 @@ import {UserConfigService} from '../../services/UserConfig/user-config.service';
 import {UserService} from '../../services/user/user.service';
 import {User} from '../../models/User';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
+import {SchedulesComponent} from '../schedules/schedules.component';
 
 
 @Component({
@@ -38,6 +38,7 @@ import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.ser
 export class TimetablesComponent implements OnInit {
 
   @ViewChild(PlanningDetailsComponent) planningDetailsComp: PlanningDetailsComponent;
+  @ViewChild(SchedulesComponent) schComp: SchedulesComponent;
   userConfig: UserConfig = new UserConfig();
   hours: number[];
   days: string[];
@@ -81,6 +82,7 @@ export class TimetablesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.userConfig.shownPlannings = [];
     this.showTable = false;
     setTimeout(() => {
@@ -207,7 +209,6 @@ export class TimetablesComponent implements OnInit {
     this.userService.findUserWithToken().subscribe(user => {
       // @ts-ignore
       this.user = user;
-      console.log(this.user);
       this.userConfig = this.user.userConfig;
       this.listPlannings();
     }, error => console.log(error));
@@ -222,6 +223,7 @@ export class TimetablesComponent implements OnInit {
           if (pl.planningId === this.clickedPlanning.planningId) {
             this.clickedPlanning = null;
             this.planningDetailsComp.setClickedPl(pl);
+            this.schComp.setClickedPl(pl);
             this.setClickedPl(pl);
           }
         }
@@ -233,7 +235,6 @@ export class TimetablesComponent implements OnInit {
     for (const plId of this.userConfig.shownPlannings) {
         if (plId === pl.planningId) {
            this.selectedCount ++;
-           console.log(this.selectedCount);
            return true;
         }
     }
@@ -275,6 +276,8 @@ export class TimetablesComponent implements OnInit {
         if (result) {
           this.planningService.remove(this.clickedPlanning.planningId).subscribe(() => {
             this.clickedPlanning = null;
+            this.schComp.setClickedPl(new Planning());
+            this.planningDetailsComp.setClickedPl(null);
             console.log('Refreshing plannings..');
             this.reloadData();
           }, error1 => console.log(error1));
@@ -293,6 +296,7 @@ export class TimetablesComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
           this.reloadData();
+          this.schComp.reloadData();
         }
        });
   }
@@ -301,6 +305,7 @@ export class TimetablesComponent implements OnInit {
     if (this.showTable) {
       this.clickedPlanning = pl;
       this.planningDetailsComp.setClickedPl(pl);
+      this.schComp.setClickedPl(pl);
     }
   }
   getTheme() {

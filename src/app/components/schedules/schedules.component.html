@@ -1,49 +1,97 @@
 <div [@enterAnimation] class="bodyContainer">
-<!--  <div *ngIf="false === true" class="main-card mb-3 card bodyCard">-->
-<!--    <div class="card-body noSchBod">-->
-<!--      <div class="noSchContainer">-->
-<!--        No schedules to show<br><br>-->
-<!--        <button class="btn btn-primary">Add Schedule</button>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-  <div class="main-card mb-3 card schCard" [ngClass]="getTheme() ? 'bg-premium-dark' :''">
-    <div [ngStyle]="{'color': getTheme()? 'white' :'black'}" class="card-header">
+  <div *ngIf="schedules.length == 0" [ngClass]="getTheme() ? 'bg-premium-dark' :''" style="margin-top:0;" class="main-card mb-3 card bodyCard">
+    <div class="card-body noSchBod" style="width: 90%">
+      <div [ngStyle]="{'color': getTheme()? 'white' :'black'}" class="noSchContainer">
+        No schedules to show<br><br>
+        <button class="btn btn-primary">Add Schedule</button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="schedules.length > 0" class="main-card mb-3 card schCard" [ngClass]="getTheme() ? 'bg-premium-dark' :''">
+    <div [@enterAnimation] [ngStyle]="{'color': getTheme()? 'white' :'black'}" class="card-header">
       Schedules
     </div>
-    <div  class="card-body schBody">
-      <div  class="search-wrapper" style="margin-top: 20px;margin-bottom: 20px">
-        <div style="background-color: transparent" [ngClass]="{'search-wrapper active': showHideInput}">
-          <div  [ngClass]=" getTheme() && showHideInput? 'bg-dark' :''"  class="input-holder">
-            <input [ngStyle]="{'color': getTheme()? 'white' :''}" type="text" [(ngModel)]="searchText" class="search-input" placeholder="Search...">
-            <button (click)="showHideInput = true;" class="search-icon"><span></span></button>
+      <div *ngIf="clickedPlanning.schedule == null && !loading" [ngStyle]="{'color': getTheme()? 'white' :'black'}" class="noDescBod">
+        Click a planning to show it's schedule here
+    </div>
+      <div *ngIf="loading" style="height:250px;padding-top: 7%;width:100%">
+        <div style="width: 40px;margin:auto">
+          <div class="spinner-container" style="font-size:12px !important;margin-left: -20px">
+            <mat-spinner></mat-spinner>
           </div>
-          <button (click)="showHideInput = false;" class="close"></button>
         </div>
       </div>
-      <table style="width: 100%;margin-top: 40px" [ngStyle]="{'color': getTheme()? 'white' :'black'}" class="table-hover mat-calendar-table-header tableHeader">
+    <div [@enterAnimation]  *ngIf="clickedPlanning.schedule != null && !loading" class="main-card mb-3 card" style="margin: 15px;min-height: 50px" [ngClass]="getTheme() ? 'bg-premium-dark' :''">
+      <div class="card-header">
+      <h2 [ngStyle]="{'color': getTheme()? 'white' :'black'}"> {{clickedPlanning.planningName}} schedule</h2>
+      </div>
+      <div class="card-body" style="padding-left: 10px;;padding-right: 10px;">
+      <table style="width: 100%;font-size:14px;margin-bottom: 20px;margin-top: 5px" [ngStyle]="{'color': getTheme()? 'white' :'black'}" class="table-hover mat-calendar-table-header table-striped tableHeader">
         <thead>
         <tr>
-          <th class="text-center">Id°</th>
-          <th  class="text-center">Start</th>
-          <th class="text-center">End</th>
-          <th class="text-center">Pause</th>
+          <th class="text-center tableTh">Id°</th>
+          <th  class="text-center tableTh">Start</th>
+          <th class="text-center tableTh">End</th>
+          <th class="text-center tableTh">Pause</th>
         </tr>
         </thead>
         <tbody>
-        <tr [ngClass]="getTheme() ? 'lightText' :''" *ngFor="let sch of shcedules | filter:searchText">
-          <td class="text-center" [ngStyle]="{'color': getTheme()? 'white' :''}" style="padding-top: 15px">{{sch.scheduleId}}</td>
-          <td  class="text-center" style="padding-top: 15px" [ngStyle]="{'color': getTheme()? 'white' :''}">{{getTime(sch.startHour)}}</td>
-          <td class="text-center" style="padding-top: 15px">{{getTime(sch.endHour)}}</td>
-          <td>
+        <tr [ngClass]="getTheme() ? 'lightText' :''">
+          <td class="text-center tableTd">{{clickedPlanning.schedule.scheduleId}}</td>
+          <td  class="text-center tableTd" >{{getTime(clickedPlanning.schedule.startHour)}}</td>
+          <td class="text-center tableTd">{{getTime(clickedPlanning.schedule.endHour)}}</td>
+          <td class="text-center tableTd" style="width:30%;color: grey" *ngIf="!clickedPlanning.schedule.pauseTime">
+            No pause time
           </td>
-              <td style="float: right" class="text-center">
+          <td class="text-center tableTd" style="width:30%;" *ngIf="clickedPlanning.schedule.pauseTime">
+            From: {{getTime(clickedPlanning.schedule.pauseStart)}} To: {{getTime(clickedPlanning.schedule.pauseEnd)}}
+          </td>
+          <td class="tableTd" style="padding: 10px;float: right"class="text-center">
+            <button type="button" id="PopoverCustomT-3" style="margin-right:10px;border-radius: 12px" class="btn btn-primary btn-sm" matTooltip="Edit schedule"><span class="fa fa-pencil-alt"></span></button>
+            <button type="button" id="PopoverCustomT-4" style="border-radius: 12px" class="btn btn-danger btn-sm" matTooltip="Delete schedule"><span class="fa fa-trash-alt"></span></button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+    <div class="card-body schBody">
+
+      <div class="main-card mb-3 card schCard" style="min-height: 200px" [ngClass]="getTheme() ? 'bg-premium-dark' :''">
+        <div class="card-header" style="padding-top: 10px">
+         <h2 *ngIf="clickedPlanning.schedule == null" style="padding-top: 15px;margin-right: 20px" [ngStyle]="{'color': getTheme()? 'white' :'black'}">Schedules</h2>
+         <h2 *ngIf="clickedPlanning.schedule != null" style="padding-top: 15px;margin-right: 20px" [ngStyle]="{'color': getTheme()? 'white' :'black'}">Other schedules</h2>
+        </div>
+        <div class="card-body" style="padding-left: 10px;;padding-right: 10px;">
+        <table style="width: 100%;font-size:14px;margin-top: 40px" [ngStyle]="{'color': getTheme()? 'white' :'black'}" class="table-hover mat-calendar-table-header table-striped tableHeader">
+        <thead>
+        <tr>
+          <th class="text-center tableTh">Id°</th>
+          <th  class="text-center tableTh">Start</th>
+          <th class="text-center tableTh">End</th>
+          <th class="text-center tableTh">Pause</th>
+        </tr>
+        </thead>
+        <tbody *ngFor="let sch of schedules">
+        <tr [ngClass]="getTheme() ? 'lightText' :''" [@enterAnimation] *ngIf="clickedPlanning.schedule == null || sch.scheduleId != clickedPlanning.schedule.scheduleId ">
+          <td class="text-center tableTd">{{sch.scheduleId}}</td>
+          <td  class="text-center tableTd" >{{getTime(sch.startHour)}}</td>
+          <td class="text-center tableTd">{{getTime(sch.endHour)}}</td>
+          <td class="text-center tableTd" style="width:30%;color: grey" *ngIf="!sch.pauseTime">
+            No pause time
+          </td>
+          <td class="text-center tableTd" style="width:30%;" *ngIf="sch.pauseTime">
+            From: {{getTime(sch.pauseStart)}} To: {{getTime(sch.pauseEnd)}}
+          </td>
+              <td class="tableTd" style="padding: 10px;float: right"class="text-center">
                 <button type="button" id="PopoverCustomT-1" style="margin-right:10px;border-radius: 12px" class="btn btn-primary btn-sm" matTooltip="Edit schedule"><span class="fa fa-pencil-alt"></span></button>
                 <button type="button" id="PopoverCustomT-2" style="border-radius: 12px" class="btn btn-danger btn-sm" matTooltip="Delete schedule"><span class="fa fa-trash-alt"></span></button>
               </td>
         </tr>
         </tbody>
       </table>
+        </div>
+      </div>
     </div>
   </div>
 </div>

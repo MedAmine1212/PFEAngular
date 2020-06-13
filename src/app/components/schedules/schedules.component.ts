@@ -3,6 +3,7 @@ import {animate, style, transition, trigger} from '@angular/animations';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 import {Schedule} from '../../models/Schedule';
 import {ScheduleService} from '../../services/schedule/schedule.service';
+import {Planning} from '../../models/Planning';
 
 @Component({
   selector: 'app-schedules',
@@ -10,12 +11,12 @@ import {ScheduleService} from '../../services/schedule/schedule.service';
     trigger(
       'enterAnimation', [
         transition(':enter', [
-          style({transform: 'translateX(-100%)', opacity: 0}),
-          animate('500ms', style({transform: 'translateX(0)', opacity: 1}))
+          style({opacity: 0}),
+          animate('500ms', style({opacity: 1}))
         ]),
         transition(':leave', [
-          style({transform: 'translateX(0)', opacity: 1}),
-          animate('0ms', style({transform: 'translateX(-100%)', opacity: 0}))
+          style({opacity: 1}),
+          animate('0ms', style({opacity: 0}))
         ])
       ]
     ),
@@ -25,16 +26,30 @@ import {ScheduleService} from '../../services/schedule/schedule.service';
 })
 export class SchedulesComponent implements OnInit {
   showHideInput: boolean;
-  searchText;
-  shcedules: Schedule[] = [];
+  schedules: Schedule[] = [];
+  clickedPlanning: Planning = new Planning();
+  loading: boolean;
 
   constructor(
     private scheduleService: ScheduleService,
-    private themeChanger: ThemeChangerService) { }
+    private themeChanger: ThemeChangerService) {
+    this.clickedPlanning.schedule = null;
+  }
 
   ngOnInit(): void {
+    this.loading = false;
     this.reloadData();
     this.showHideInput = false;
+  }
+
+  public setClickedPl(pl: Planning) {
+    this.clickedPlanning = pl;
+    if (pl.schedule != null) {
+      this.loading = true;
+      setTimeout(() => {
+        this.loading = false;
+      }, 1000);
+    }
   }
   getTheme() {
     return this.themeChanger.getTheme();
@@ -42,7 +57,7 @@ export class SchedulesComponent implements OnInit {
 
   reloadData() {
     this.scheduleService.list().subscribe(r => {
-      this.shcedules = r;
+      this.schedules = r;
     }, error => console.log(error));
   }
 
