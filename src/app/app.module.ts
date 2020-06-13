@@ -51,6 +51,7 @@ import { DeletePlanningDialogComponent } from './dialogs/delete-planning-dialog/
 import {AuthenticationGuard} from './guard/authentication.guard';
 import { SchedulesComponent } from './components/schedules/schedules.component';
 import { PlanningDetailsComponent } from './components/planning-details/planning-details.component';
+import { AddScheduleComponent } from './dialogs/dialog-forms/add-schedule/add-schedule.component';
 
 
 @NgModule({
@@ -76,6 +77,7 @@ import { PlanningDetailsComponent } from './components/planning-details/planning
     DeletePlanningDialogComponent,
     SchedulesComponent,
     PlanningDetailsComponent,
+    AddScheduleComponent,
   ],
   imports: [
     BrowserModule,

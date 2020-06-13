@@ -26,7 +26,7 @@
       </div>
     <div [@enterAnimation]  *ngIf="clickedPlanning.schedule != null && !loading" class="main-card mb-3 card" style="margin: 15px;min-height: 50px" [ngClass]="getTheme() ? 'bg-premium-dark' :''">
       <div class="card-header">
-      <h2 [ngStyle]="{'color': getTheme()? 'white' :'black'}"> {{clickedPlanning.planningName}} schedule</h2>
+      <h2 [ngStyle]="{'color': getTheme()? 'white' :'black'}"> {{clickedPlanning.planningName}}'s schedule</h2>
       </div>
       <div class="card-body" style="padding-left: 10px;;padding-right: 10px;">
       <table style="width: 100%;font-size:14px;margin-bottom: 20px;margin-top: 5px" [ngStyle]="{'color': getTheme()? 'white' :'black'}" class="table-hover mat-calendar-table-header table-striped tableHeader">

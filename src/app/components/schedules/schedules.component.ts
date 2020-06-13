@@ -4,6 +4,8 @@ import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.ser
 import {Schedule} from '../../models/Schedule';
 import {ScheduleService} from '../../services/schedule/schedule.service';
 import {Planning} from '../../models/Planning';
+import {MatDialog} from '@angular/material/dialog';
+import {AddScheduleComponent} from '../../dialogs/dialog-forms/add-schedule/add-schedule.component';
 
 @Component({
   selector: 'app-schedules',
@@ -31,6 +33,7 @@ export class SchedulesComponent implements OnInit {
   loading: boolean;
 
   constructor(
+    public dialog: MatDialog,
     private scheduleService: ScheduleService,
     private themeChanger: ThemeChangerService) {
     this.clickedPlanning.schedule = null;
@@ -78,6 +81,16 @@ export class SchedulesComponent implements OnInit {
   }
 
   openAddScheduleDialog() {
-
+    const dialogRef = this.dialog.open(AddScheduleComponent, {
+      width: '550px',
+      height: '330px',
+      panelClass: 'matDialogClass2',
+      data: null
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.reloadData();
+      }
+    });
   }
 }
