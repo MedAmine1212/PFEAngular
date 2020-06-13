@@ -118,6 +118,7 @@ export class AddScheduleComponent implements OnInit {
       );
     }, error1 => console.log(error1));
   }
+
   modifySchedule() {
     this.setFinalSchedule();
     this.scheduleService.modify(this.schedule, this.schedule.scheduleId).subscribe(() => {
@@ -148,6 +149,4 @@ export class AddScheduleComponent implements OnInit {
   closeThis() {
     this.dialogRef.close(false);
   }
-
-
 }

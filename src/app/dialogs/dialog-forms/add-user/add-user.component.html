@@ -241,12 +241,38 @@
           </form>
         </div>
       </div>
+      <div style="margin-top: 40px">
+        <div class="container row">
+          <div class="col-md-12">
+            <h1>Upload Image</h1>
+          </div>
+        </div>
+        <div class="container row">
+          <div class="col-md-6">
+            <input type="file" (change)="onFileChanged($event)">
+          </div>
+          <div class="col-md-6">
+            <input type="button" (click)="onUpload()" value="upload">
+          </div>
+        </div>
+        <hr />
+        <div class="container row">
+        </div>
+        <div class="container row">
+          <div class="col-md-12">
+            <div *ngIf=retrievedImage>
+              <img [src]="retrievedImage">
+            </div>
+          </div>
+        </div>
+      </div>
       <div style="width:100%">
         <div style="float: right;margin-top: -25px;margin-bottom: -20px;padding-top: 5px">
           <button type="submit" mat-raised-button color="primary" [disabled]="!secondFormGroup.valid" (click)="test()" matStepperNext >Next</button>
           <button type="button" (click)="closeThis()" class="btn btn-light" style="margin-left: 20px;">Cancel</button>
         </div>
       </div>
+
     </mat-step>
 
     <!-- **********************************  3rd stepper  ***************************************-->
@@ -453,3 +479,4 @@
   </mat-horizontal-stepper>
 </form>
 </div>
+

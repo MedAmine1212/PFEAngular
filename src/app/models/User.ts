@@ -1,7 +1,7 @@
 import {Department} from './Department';
 import {Address} from './Address';
 import {Post} from './Post';
-import {UserConfig} from './UserConfig';
+import {UserConfigs} from './UserConfigs';
 export class User {
   userId: number;
   cin: string;
@@ -15,6 +15,6 @@ export class User {
   department: Department;
   addresses: Address[];
   post: Post;
-  userConfigs: UserConfig;
+  userConfigs: UserConfigs[];
 
   }

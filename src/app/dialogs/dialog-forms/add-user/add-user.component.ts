@@ -14,10 +14,11 @@ import {Address} from '../../../models/Address';
 import {User} from '../../../models/User';
 import {DialogComponent} from '../../dialog.component';
 import {Router} from '@angular/router';
-import {UserConfig} from '../../../models/UserConfig';
-import {UserConfigService} from '../../../services/UserConfig/user-config.service';
+import {UserConfigs} from '../../../models/UserConfigs';
 import {PlanningService} from '../../../services/planning/planning.service';
 import {ThemeChangerService} from '../../../services/ThemeChanger/theme-changer.service';
+import {UserConfigsService} from '../../../services/UserConfigs/user-configs.service';
+import {ImageService} from '../../../services/image.service';
 
 @Component({
   selector: 'app-add-user',
@@ -40,8 +41,17 @@ import {ThemeChangerService} from '../../../services/ThemeChanger/theme-changer.
 })
 export class AddUserComponent implements  AfterViewInit  {
   dialogComponent: MatDialogRef<DialogComponent>;
+  selectedFile: File;
+  imageName: string;
+  retrievedImage: any;
+  retrieveResonse: any;
+  base64Data: any;
+  uploadImageData: FormData;
+
+
+
   @ViewChild('stepper') stepper: MatStepper;
-  userConfig: UserConfig;
+  userConfigs: UserConfigs;
   isLinear = false;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
@@ -63,7 +73,7 @@ export class AddUserComponent implements  AfterViewInit  {
     phone: '',
     post: undefined,
     userId: null,
-    userConfig: null
+    userConfigs: []
   };
   address1: Address = {
     addressId: null,
@@ -85,7 +95,7 @@ export class AddUserComponent implements  AfterViewInit  {
   };
   constructor(private themeChanger: ThemeChangerService,
               public dialogRef: MatDialogRef<AddUserComponent>,
-              private userConfigService: UserConfigService,
+              private userConfigService: UserConfigsService,
               @Inject(MAT_DIALOG_DATA) public data: Department,
               private formBuilder: FormBuilder,
               private departmentService: DepartmentService,
@@ -94,15 +104,17 @@ export class AddUserComponent implements  AfterViewInit  {
               public dialog: MatDialog,
               private addressService: AddressService,
               private postService: PostService,
-              private planningService: PlanningService
+              private planningService: PlanningService,
+              private imageService: ImageService
   ) {
+    console.log(this.userConfigs);
     if (this.data != null ) {
       this.user.department = this.data;
     }
     console.log(this.user.department);
-    this.userConfig = new UserConfig();
-    this.userConfig.theme = false;
-    this.userConfig.shownPlannings =  [];
+    this.userConfigs = new UserConfigs();
+    this.userConfigs.theme = false;
+    this.userConfigs.shownPlannings =  [];
   }
 
   ngAfterViewInit(): void {
@@ -197,29 +209,32 @@ export class AddUserComponent implements  AfterViewInit  {
     // set user
     this.user.post = this.secondFormGroup.controls.post.value;
     this.user.addresses.push(this.address1);
+    this.user.userConfigs.push(this.userConfigs);
     if (this.showOtherAddress) {
       this.user.addresses.push(this.address2);
     }
+
+    // set shown plannings
+    this.planningService.list().subscribe( r => {
+      for (const pl of r) {
+        this.userConfigs.shownPlannings.push(pl.planningId);
+      }
+    }, error => console.log(error));
+
+    // add user
     this.userService.add(this.user).subscribe(user => {
-      // set user config
-      this.planningService.list().subscribe( r => {
-        for (const pl of r) {
-          this.userConfig.shownPlannings.push(pl.planningId);
-        }
-        this.userConfig.user = this.user;
-        console.log(this.userConfig);
-        console.log(this.user);
-        this.userConfigService.add(this.userConfig).subscribe( () => {
-          this.dialogComponent = this.dialog.open(DialogComponent, {
-            width: '400px',
-            data : 'User added successfully ! '
-          });
-          this.dialogComponent.afterClosed().subscribe(() =>
-            this.dialogRef.close(true)
-          );
-        }, error => console.log(error) );
-      }, error => console.log(error));
-    }, error1 => console.log(error1));
+        this.userAddedSuccessfully();
+        }, error1 => console.log('erreur user add ' + error1));
+  }
+
+  userAddedSuccessfully() {
+    this.dialogComponent = this.dialog.open(DialogComponent, {
+      width: '400px',
+      data : 'User added successfully ! '
+    });
+    this.dialogComponent.afterClosed().subscribe(() =>
+      this.dialogRef.close(true)
+    );
   }
 
   // CHECK IN USE
@@ -427,4 +442,35 @@ export class AddUserComponent implements  AfterViewInit  {
     return this.themeChanger.getTheme();
   }
 
+  onFileChanged(event) {
+    this.selectedFile = event.target.files[0];
+  }
+
+  getImage() {
+      this.imageService.getImage(this.imageName)
+        .subscribe(
+          res => {
+            this.retrieveResonse = res;
+            this.base64Data = this.retrieveResonse.picByte;
+            this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
+          }
+          , error => console.log(error)
+        );
+
+  }
+
+  onUpload() {
+    console.log(this.selectedFile);
+    this.uploadImageData = new FormData();
+    this.uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
+
+    this.imageService.uploadImage(this.uploadImageData)
+      .subscribe((response) => {
+          if (response.status === 200) {
+            this.getImage();
+          }
+        }
+        , error => console.log(error)
+      );
+  }
 }

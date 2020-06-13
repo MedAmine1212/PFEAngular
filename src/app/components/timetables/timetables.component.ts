@@ -1,4 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
+import {Schedule} from '../../models/Schedule';
 import {ScheduleService} from '../../services/schedule/schedule.service';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {AddPlanningComponent} from '../../dialogs/dialog-forms/add-planning/add-planning.component';
@@ -6,9 +7,9 @@ import {MatDialog} from '@angular/material/dialog';
 import {PlanningService} from '../../services/planning/planning.service';
 import {Planning} from '../../models/Planning';
 import {PlanningDetailsComponent} from '../planning-details/planning-details.component';
-import {UserConfig} from '../../models/UserConfig';
-import {UserConfigService} from '../../services/UserConfig/user-config.service';
 import {UserService} from '../../services/user/user.service';
+import {UserConfigs} from '../../models/UserConfigs';
+import {UserConfigsService} from '../../services/UserConfigs/user-configs.service';
 import {User} from '../../models/User';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 import {SchedulesComponent} from '../schedules/schedules.component';
@@ -39,7 +40,7 @@ export class TimetablesComponent implements OnInit {
 
   @ViewChild(PlanningDetailsComponent) planningDetailsComp: PlanningDetailsComponent;
   @ViewChild(SchedulesComponent) schComp: SchedulesComponent;
-  userConfig: UserConfig = new UserConfig();
+  userConfig: UserConfigs = new UserConfigs();
   hours: number[];
   days: string[];
   searchText;
@@ -65,7 +66,7 @@ export class TimetablesComponent implements OnInit {
   constructor(
     private themeChanger: ThemeChangerService,
     private userService: UserService,
-    private userConfigService: UserConfigService,
+    private userConfigService: UserConfigsService,
     public dialog: MatDialog, private  scheduleService: ScheduleService, private  planningService: PlanningService) {
     this.clickedPlanning = null;
     this.hours = Array(24).fill(6).map((x, i) => i);
@@ -82,7 +83,6 @@ export class TimetablesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.userConfig.shownPlannings = [];
     this.showTable = false;
     setTimeout(() => {
@@ -209,7 +209,8 @@ export class TimetablesComponent implements OnInit {
     this.userService.findUserWithToken().subscribe(user => {
       // @ts-ignore
       this.user = user;
-      this.userConfig = this.user.userConfig;
+      console.log(this.user);
+      this.userConfig = this.user.userConfigs[0];
       this.listPlannings();
     }, error => console.log(error));
     }
@@ -240,6 +241,7 @@ export class TimetablesComponent implements OnInit {
     for (const plId of this.userConfig.shownPlannings) {
         if (plId === pl.planningId) {
            this.selectedCount ++;
+           console.log(this.selectedCount);
            return true;
         }
     }

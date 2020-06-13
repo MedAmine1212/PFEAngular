@@ -8,9 +8,19 @@ import {Image} from '../models/Image';
 export class ImageService {
   private baseurl = 'http://localhost:81/image/';
   private headers: HttpHeaders;
+  message: string;
+
+
   constructor(private http: HttpClient) { }
 
-  add(image: Image) {
-    return this.http.post(this.baseurl + 'upload', image );
+
+  uploadImage(uploadImageData){
+    return this.http.post(this.baseurl + 'upload', uploadImageData, { observe: 'response' });
+
+  }
+
+  getImage(imageName) {
+    return this.http.get(this.baseurl + 'get/' + imageName);
+
   }
 }

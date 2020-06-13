@@ -936,6 +936,9 @@ input[type="submit"].btn-block,input[type="reset"].btn-block,input[type="button"
 .navbar-toggler-icon{display:inline-block;width:1.5em;height:1.5em;vertical-align:middle;content:"";background:no-repeat center center;background-size:100% 100% }
 @media (max-width: 575.98px){.navbar-expand-sm>.container,.navbar-expand-sm>.container-fluid{padding-right:0;padding-left:0 }
 }
+.navbar{
+  z-index: 1099 !important;
+}
 @media (min-width: 576px){.navbar-expand-sm{flex-flow:row nowrap;justify-content:flex-start }
   .navbar-expand-sm .navbar-nav{flex-direction:row }
   .navbar-expand-sm .navbar-nav .dropdown-menu{position:absolute }
