@@ -463,13 +463,13 @@ export class AddUserComponent implements  AfterViewInit  {
     console.log(this.selectedFile);
     this.uploadImageData = new FormData();
     this.uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
-
+    this.imageName = this.selectedFile.name;
     this.imageService.uploadImage(this.uploadImageData)
       .subscribe((response) => {
           if (response.status === 200) {
             this.getImage();
           }
-        }
+        } 
         , error => console.log(error)
       );
   }
