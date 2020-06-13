@@ -49,7 +49,7 @@ export class RemoteMonitoringComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    public router: Router, private authService: AuthenticationService, private themeChanger: ThemeChangerService, private userConfigService: UserConfigsService) {
+    public router: Router, private authService: AuthenticationService, private themeChanger: ThemeChangerService) {
   }
   time = new Date();
   private jwt = new JwtHelperService();
@@ -57,10 +57,6 @@ export class RemoteMonitoringComponent implements OnInit {
   @ViewChild(EmployeesComponent) employeesComponent: EmployeesComponent;
   @ViewChild(DepartmentsComponent) departmentComponent: DepartmentsComponent;
   ngOnInit() {
-    this.userService.list().subscribe(r => {
-      console.log(r);
-    });
-
     this.userService.findUserWithToken().subscribe( ress => {
 
       // @ts-ignore

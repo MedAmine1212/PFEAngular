@@ -1,0 +1,27 @@
+.card{
+  margin: -21px !important;
+}
+.choseTime{
+  border:none;
+  margin: 5px;
+  border-bottom: 1px solid grey;
+}
+
+.buttonsDiv{
+  margin-top: -15px;
+  float: right;
+}
+.cancelButt{
+  margin-left: 20px;
+}
+
+.main{
+  padding: 40px 40px 0;
+}
+.timePicker{
+  z-index: 1100;
+}
+
+.pauseTimeDiv{
+  height: 70px;
+}

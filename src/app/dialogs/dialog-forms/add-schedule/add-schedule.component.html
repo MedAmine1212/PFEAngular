@@ -1,0 +1,76 @@
+  <div  [@enterAnimation] *ngIf="formGroup != null && formGroup2 != null" style="height:324px" class="main-card mb-3 card">
+    <div class="card-header">
+      <h1><S></S>Schedule</h1>
+      <hr>
+    </div>
+
+      <div class="card-body main">
+        <form [formGroup]="formGroup">
+
+          <div class="timeLabel">
+            <mat-label>Daily cycle</mat-label>
+          </div>
+          <input
+            [format]="24"
+            class="choseTime"
+            placeholder="Begin hour"
+            formControlName="beginHour"
+            #pickerBeginHour
+            [ngxTimepicker]="picker3"
+            [(ngModel)]="beginHour"
+          >
+          <ngx-material-timepicker class="timePicker" #picker3></ngx-material-timepicker>
+          <input
+            [format]="24"
+            class="choseTime"
+            placeholder="End hour"
+            formControlName="endHour"
+            #pickerEndHour
+            [min]="pickerBeginHour.value"
+            [ngxTimepicker]="picker4"
+            [(ngModel)]="endHour"
+          >
+          <ngx-material-timepicker class="timePicker" #picker4></ngx-material-timepicker>
+
+        </form>
+        <br><br>
+        <form [formGroup]="formGroup2">
+          <mat-checkbox (change)="schedule.pauseTime = !schedule.pauseTime"> Pause time
+          </mat-checkbox><br>
+          <div class="pauseTimeDiv">
+            <table *ngIf="schedule.pauseTime">
+              <tr><td>
+                <input
+                  [format]="24"  readonly
+                  class="choseTime"
+                  placeholder="Pause begin hour"
+                  formControlName="pauseStartHour"
+                  [min]="pickerBeginHour.value"
+                  [max]="pickerEndHour.value"
+                  #pickerPauseBeginHour
+                  [ngxTimepicker]="picker5"
+                  [(ngModel)]="pauseStartHour"
+                >
+                <ngx-material-timepicker class="timePicker" #picker5></ngx-material-timepicker>
+              </td><td> <input
+                [format]="24"  readonly
+                class="choseTime"
+                formControlName="pauseEndHour"
+                placeholder="pause end hour"
+                [min]="pickerPauseBeginHour.value"
+                [max]="pickerEndHour.value"
+                [ngxTimepicker]="picker6"
+                [(ngModel)]="pauseEndHour"
+              >
+                <ngx-material-timepicker class="timePicker" #picker6></ngx-material-timepicker>
+              </td>  </tr>
+            </table>
+          </div>
+          <div class="buttonsDiv">
+            <button type="submit" mat-raised-button color="primary" [disabled]=" !formGroup.valid || (!formGroup2.valid && schedule.pauseTime)" (click)="addSchedule()">Add schedule</button>
+<!--            <button type="submit" *ngIf="pl != null" mat-raised-button color="primary" [disabled]="!formGroup.valid || (!formGroup3.valid && newSch) ||(!formGroup2.valid && schedule.pauseTime && newSch)" (click)="updatePlanning()">Update</button>-->
+            <button type="button" (click)="closeThis()" class="btn btn-light cancelButt">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>

@@ -31,7 +31,7 @@
               <i class="fa fa-clock"></i>
               Plannings
               <span class="buttons">
-                  <button (click)="addPlanning()" mat-raised-button matTooltip="Add Planning" class="btn btn-outline-primary addSch" ><span class="fas fa-plus"></span></button>
+                  <button (click)="addPlanning()" mat-raised-button matTooltip="Add Planning" [ngClass]="{'bg-premium-dark': getTheme()}" class="btn btn-outline-primary addSch" ><span class="fas fa-plus"></span></button>
              <span *ngIf="plannings.length > 0">
                 <span *ngIf="selectedCount < plannings.length" (click)="showAll()" mat-raised-button matTooltip="Show all" class="fa fa-check-circle showAll"></span>
                 <span *ngIf="selectedCount === plannings.length" (click)="hideAll()" mat-raised-button matTooltip="Hide all" class="fa fa-times-circle showAll hideAll"></span>

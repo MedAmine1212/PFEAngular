@@ -25,6 +25,10 @@
   margin-left:5px;
   margin-right: 9px;
 }
+
+.addSch:hover{
+  background:#007bff !important;
+}
 .time{
   color: black;
   margin-left: 80%;

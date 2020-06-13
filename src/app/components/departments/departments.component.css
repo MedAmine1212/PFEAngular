@@ -78,3 +78,9 @@ mat-tree{
   margin-left: 50px;
   margin-top: 10px;
 }
+.addButtForDark{
+  margin-left: 10px;
+}
+.addButtForDark:hover {
+  background:#007bff !important;
+}

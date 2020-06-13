@@ -8,11 +8,12 @@ import {PlanningService} from '../../services/planning/planning.service';
 import {Planning} from '../../models/Planning';
 import {DeletePlanningDialogComponent} from '../../dialogs/delete-planning-dialog/delete-planning-dialog.component';
 import {PlanningDetailsComponent} from '../planning-details/planning-details.component';
+import {UserService} from '../../services/user/user.service';
 import {UserConfigs} from '../../models/UserConfigs';
 import {UserConfigsService} from '../../services/UserConfigs/user-configs.service';
-import {UserService} from '../../services/user/user.service';
 import {User} from '../../models/User';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
+import {SchedulesComponent} from '../schedules/schedules.component';
 
 
 @Component({
@@ -38,6 +39,7 @@ import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.ser
 export class TimetablesComponent implements OnInit {
 
   @ViewChild(PlanningDetailsComponent) planningDetailsComp: PlanningDetailsComponent;
+  @ViewChild(SchedulesComponent) schComp: SchedulesComponent;
   userConfig: UserConfigs = new UserConfigs();
   hours: number[];
   days: string[];
@@ -222,6 +224,7 @@ export class TimetablesComponent implements OnInit {
           if (pl.planningId === this.clickedPlanning.planningId) {
             this.clickedPlanning = null;
             this.planningDetailsComp.setClickedPl(pl);
+            this.schComp.setClickedPl(pl);
             this.setClickedPl(pl);
           }
         }
@@ -275,6 +278,8 @@ export class TimetablesComponent implements OnInit {
         if (result) {
           this.planningService.remove(this.clickedPlanning.planningId).subscribe(() => {
             this.clickedPlanning = null;
+            this.schComp.setClickedPl(new Planning());
+            this.planningDetailsComp.setClickedPl(null);
             console.log('Refreshing plannings..');
             this.reloadData();
           }, error1 => console.log(error1));
@@ -293,6 +298,7 @@ export class TimetablesComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
           this.reloadData();
+          this.schComp.reloadData();
         }
        });
   }
@@ -301,6 +307,7 @@ export class TimetablesComponent implements OnInit {
     if (this.showTable) {
       this.clickedPlanning = pl;
       this.planningDetailsComp.setClickedPl(pl);
+      this.schComp.setClickedPl(pl);
     }
   }
   getTheme() {

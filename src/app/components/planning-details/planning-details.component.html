@@ -1,4 +1,4 @@
-    <div *ngIf="clickedPlanning == null" class="card-body noDescBod">
+    <div [@enterAnimation] *ngIf="clickedPlanning == null" class="card-body noDescBod">
       Click a planning to show details here
     </div>
     <div *ngIf="clickedPlanning != null" class="card-body descBody">
@@ -11,7 +11,7 @@
       </div>
 
 
-     <div *ngIf="showBody">
+     <div [@enterAnimation]  *ngIf="showBody">
        <table style="width: 90%">
          <tr>
            <td>
