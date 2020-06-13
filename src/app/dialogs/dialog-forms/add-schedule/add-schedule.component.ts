@@ -4,7 +4,7 @@ import {Schedule} from '../../../models/Schedule';
 import {ScheduleService} from '../../../services/schedule/schedule.service';
 import {DialogComponent} from '../../dialog.component';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {animate, style, transition, trigger} from "@angular/animations";
+import {animate, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-add-schedule',

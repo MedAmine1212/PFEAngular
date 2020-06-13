@@ -78,6 +78,7 @@ import { AddScheduleComponent } from './dialogs/dialog-forms/add-schedule/add-sc
     SchedulesComponent,
     PlanningDetailsComponent,
     AddScheduleComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

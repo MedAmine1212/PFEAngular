@@ -10,7 +10,5 @@ export class ImageService {
   private headers: HttpHeaders;
   constructor(private http: HttpClient) { }
 
-  add(image: Image) {
-    return this.http.post(this.baseurl + 'upload', image );
-  }
+
 }
