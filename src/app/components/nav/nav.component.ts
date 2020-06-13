@@ -8,7 +8,7 @@ import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.ser
 import {UserConfigs} from '../../models/UserConfigs';
 import {UserConfigsService} from '../../services/UserConfigs/user-configs.service';
 import {User} from '../../models/User';
-import {ImageService} from "../../services/image.service";
+import {ImageService} from '../../services/image.service';
 
 @Component({
   selector: 'app-nav',
@@ -22,6 +22,10 @@ export class NavComponent implements OnInit {
   jwt = new JwtHelperService();
   image: any;
 
+  retrievedImage: any;
+  retrieveResonse: any;
+  base64Data: any;
+
   constructor(
     private userConfigsService: UserConfigsService,
     private themeChanger: ThemeChangerService,
@@ -31,7 +35,6 @@ export class NavComponent implements OnInit {
     private imageService: ImageService
   ) {
     this.findUser();
-    this.imageService.getImage('uml.jpg').subscribe();
   }
 
 
@@ -46,6 +49,15 @@ export class NavComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoggedIn = this.auth.loggedIn() ;
+    this.imageService.getImage('miro.png').subscribe(
+
+      img => {
+        this.retrieveResonse = img;
+        this.base64Data = this.retrieveResonse.picByte;
+        this.image = 'data:image/jpeg;base64,' + this.base64Data
+        console.log(img);
+      }
+      , error =>  console.log(error));
 
   }
 

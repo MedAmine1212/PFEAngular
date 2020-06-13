@@ -464,6 +464,7 @@ export class AddUserComponent implements  AfterViewInit  {
     this.uploadImageData = new FormData();
     this.uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
     this.imageName = this.selectedFile.name;
+    console.log(this.imageName);
     this.imageService.uploadImage(this.uploadImageData)
       .subscribe((response) => {
           if (response.status === 200) {

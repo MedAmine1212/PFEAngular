@@ -20,6 +20,7 @@ export class ImageService {
   }
 
   getImage(imageName) {
+    console.log(imageName);
     return this.http.get(this.baseurl + 'get/' + imageName);
 
   }
