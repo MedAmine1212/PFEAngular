@@ -119,7 +119,7 @@
     <div *ngIf="showTable" style="padding:0;width: 100%">
 
       <div style="float: left;width: 60%">
-        <app-schedules></app-schedules>
+        <app-schedules (outPutData)="reloadData()"></app-schedules>
       </div>
       <div style="width: 40%;float: right">
         <div [@enterAnimation] class="bodyContainer">

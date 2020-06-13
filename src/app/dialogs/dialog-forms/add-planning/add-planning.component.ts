@@ -9,6 +9,9 @@ import {ScheduleService} from '../../../services/schedule/schedule.service';
 import {MatStepper} from '@angular/material/stepper';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {PlanningService} from '../../../services/planning/planning.service';
+import {UserService} from '../../../services/user/user.service';
+import {User} from '../../../models/User';
+import {UserConfigsService} from '../../../services/UserConfigs/user-configs.service';
 
 @Component({
   selector: 'app-add-planning',
@@ -56,8 +59,12 @@ export class AddPlanningComponent implements AfterViewInit {
   newSchPauseEndMinutes: number;
   newSchEndHour: number;
   noSch: boolean;
+  private user: User;
 
-  constructor(public dialogRef: MatDialogRef<AddPlanningComponent>,
+  constructor(
+              private userService: UserService,
+              private userConfigService: UserConfigsService,
+              public dialogRef: MatDialogRef<AddPlanningComponent>,
               private planningService: PlanningService,
               @Inject(MAT_DIALOG_DATA) public pl: Planning,
               private formBuilder: FormBuilder,
@@ -264,6 +271,15 @@ saveModifiedPlanning() {
     this.planning.showPl = true;
     this.planning.startDate = this.startDate;
     this.planning.endDate = this.endDate;
+    this.userService.findUserWithToken().subscribe(user => {
+      // @ts-ignore
+      this.user = user;
+      this.user.userConfigs[0].shownPlannings.push(this.planning.planningId);
+      // @ts-ignore
+      this.userConfigService.update(this.user.userConfigs[0].configId, this.user.userConfigs[0].configId).subscribe( () => {
+      }, error => console.log(error));
+    }, error => console.log(error));
+
     if (this.newSch) {
       this.setFinalSchedule();
       this.sendNewSchedule();

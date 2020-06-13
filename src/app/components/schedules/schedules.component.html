@@ -50,8 +50,8 @@
             From: {{getTime(clickedPlanning.schedule.pauseStart)}} To: {{getTime(clickedPlanning.schedule.pauseEnd)}}
           </td>
           <td class="tableTd" style="padding: 10px;float: right"class="text-center">
-            <button type="button" id="PopoverCustomT-3" style="margin-right:10px;border-radius: 12px" class="btn btn-primary btn-sm" matTooltip="Edit schedule"><span class="fa fa-pencil-alt"></span></button>
-            <button type="button" id="PopoverCustomT-4" style="border-radius: 12px" class="btn btn-danger btn-sm" matTooltip="Delete schedule"><span class="fa fa-trash-alt"></span></button>
+            <button type="button" id="PopoverCustomT-3" style="margin-right:10px;border-radius: 12px" class="btn btn-primary btn-sm" matTooltip="Edit schedule" (click)="sendScheduleToEdit(clickedPlanning.schedule)"><span class="fa fa-pencil-alt"></span></button>
+            <button type="button" id="PopoverCustomT-4" style="border-radius: 12px" class="btn btn-danger btn-sm" matTooltip="Delete schedule" (click)="openDeleteDialog(clickedPlanning.schedule)"><span class="fa fa-trash-alt"></span></button>
           </td>
         </tr>
         </tbody>
@@ -87,8 +87,8 @@
             From: {{getTime(sch.pauseStart)}} To: {{getTime(sch.pauseEnd)}}
           </td>
               <td class="tableTd" style="padding: 10px;float: right"class="text-center">
-                <button type="button" id="PopoverCustomT-1" style="margin-right:10px;border-radius: 12px" class="btn btn-primary btn-sm" matTooltip="Edit schedule"><span class="fa fa-pencil-alt"></span></button>
-                <button type="button" id="PopoverCustomT-2" style="border-radius: 12px" class="btn btn-danger btn-sm" matTooltip="Delete schedule"><span class="fa fa-trash-alt"></span></button>
+                <button type="button" id="PopoverCustomT-1" style="margin-right:10px;border-radius: 12px" class="btn btn-primary btn-sm" matTooltip="Edit schedule" (click)="openEditScheduleDialog(sch)"><span class="fa fa-pencil-alt"></span></button>
+                <button type="button" id="PopoverCustomT-2" style="border-radius: 12px" class="btn btn-danger btn-sm" matTooltip="Delete schedule" (click)="openDeleteDialog(sch)"><span class="fa fa-trash-alt"></span></button>
               </td>
         </tr>
         </tbody>
