@@ -51,53 +51,53 @@
               </div><br>
             </li>
             <li [ngStyle]="{'background-color': clickedPlanning == pl ? 'rgb(224,243,255)' :''}" [ngClass]="getTheme()? 'lightPl' :''" class="schItem" *ngFor="let pl of plannings  | filter:searchText">
-            <div style="float: left;width:20%">
+              <div style="float: left;width:20%">
               <span (click)="showHideSch(pl)" *ngIf="pl.showPl" class="schIconSpan" [ngClass]="(getTheme() && pl.color ==='btn btn-dark') ? 'btn btn-outline-light' :pl.colorIcon">
               <i class="fa fa-check-circle"></i>
               </span>
-              <span (click)="showHideSch(pl)" *ngIf="!pl.showPl" class="schHiddenIconSpan" [ngClass]="pl.colorIcon">
+                <span (click)="showHideSch(pl)" *ngIf="!pl.showPl" class="schHiddenIconSpan" [ngClass]="pl.colorIcon">
               <i class="fa fa-check-circle "></i>
               </span>
-            </div>
-                <div [ngStyle]="{'color':getTheme() && clickedPlanning == pl ? 'black' : ''}" style="width:80%;float: right" (click)="setClickedPl(pl)">{{pl.planningName}}<span class="planDays" matTooltip="Planned days">{{planningDaysDesc(pl)}}</span></div>
+              </div>
+              <div [ngStyle]="{'color':getTheme() && clickedPlanning == pl ? 'black' : ''}" style="width:80%;float: right" (click)="setClickedPl(pl)">{{pl.planningName}}<span class="planDays" matTooltip="Planned days">{{planningDaysDesc(pl)}}</span></div>
             </li>
           </ul>
         </div>
       </div>
 
     </div>
-<div>
-    <!--body-->
-    <div [@enterAnimation] *ngIf="showTable" class="bodyContainer">
-      <div *ngIf="plannings.length<=0" class="main-card mb-3 card bodyCard"  [ngClass]="getTheme() ? 'bg-premium-dark' :''">
-        <div class="card-body noSchBod">
-          <div [ngStyle]="{'color': getTheme()? 'white' :''}"  class="noSchContainer">
-            No plannings to show<br><br>
-            <button class="btn btn-primary" (click)="addPlanning()">Add Planning</button>
+    <div>
+      <!--body-->
+      <div [@enterAnimation] *ngIf="showTable" class="bodyContainer">
+        <div *ngIf="plannings.length<=0" class="main-card mb-3 card bodyCard"  [ngClass]="getTheme() ? 'bg-premium-dark' :''">
+          <div class="card-body noSchBod">
+            <div [ngStyle]="{'color': getTheme()? 'white' :''}"  class="noSchContainer">
+              No plannings to show<br><br>
+              <button class="btn btn-primary" (click)="addPlanning()">Add Planning</button>
+            </div>
           </div>
         </div>
-      </div>
-      <div  *ngIf="plannings.length>0" class="main-card mb-3 card schCard" [ngClass]="getTheme() ? 'bg-premium-dark' :''">
-        <div [ngStyle]="{'color': getTheme()? 'white' :''}" class="card-header">
-          Time table
-        </div>
-        <div class="card-body schBody" [ngClass]="getTheme() ? 'bg-premium-dark' :''">
-          <table  [ngClass]="getTheme() ? 'bg-premium-dark' :''" [ngStyle]="{'color': getTheme()? 'white' :'black'}" class="table-hover mat-calendar-table-header tableHeader">
-            <thead>
-            <tr class="d-table-row">
-              <th class="emptyTh"></th>
-              <th style="width: 4%" *ngFor="let hour of hours">
-                <span *ngIf="hour<10">0</span>{{hour}}:00
-              </th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr [ngClass]="getTheme() ? 'lightText' :''" class="d-table-row" *ngFor="let day of days">
-              <td class="dayTd">
-                {{day}}
-              </td>
-              <td class="hourTd" style="padding: 5px 0 5px 0" *ngFor="let hour of hours" >
-                <div  style="min-height:50px">
+        <div  *ngIf="plannings.length>0" class="main-card mb-3 card schCard" [ngClass]="getTheme() ? 'bg-premium-dark' :''">
+          <div [ngStyle]="{'color': getTheme()? 'white' :''}" class="card-header">
+            Time table
+          </div>
+          <div class="card-body schBody" [ngClass]="getTheme() ? 'bg-premium-dark' :''">
+            <table  [ngClass]="getTheme() ? 'bg-premium-dark' :''" [ngStyle]="{'color': getTheme()? 'white' :'black'}" class="table-hover mat-calendar-table-header tableHeader">
+              <thead>
+              <tr class="d-table-row">
+                <th class="emptyTh"></th>
+                <th style="width: 4%" *ngFor="let hour of hours">
+                  <span *ngIf="hour<10">0</span>{{hour}}:00
+                </th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr [ngClass]="getTheme() ? 'lightText' :''" class="d-table-row" *ngFor="let day of days">
+                <td class="dayTd">
+                  {{day}}
+                </td>
+                <td class="hourTd" style="padding: 5px 0 5px 0" *ngFor="let hour of hours" >
+                  <div  style="min-height:50px">
         <span *ngFor="let pl of plannings">
           {{checkSch(pl,day,hour)}}
           <span matTooltip="{{showTip(hour,pl)}}" [ngStyle]="{'width': startHour == hour && startMinutes !== 0 ? returnWidth(startMinutes) : endHour == hour && endMinutes !== 0 ? returnWidth(endMinutes) : '100%' , 'float': startHour == hour ? 'right' : 'left'}" *ngIf="showSch"  [ngClass]="(getTheme() && pl.color ==='btn btn-dark') ? 'btn btn-light' :pl.color" class="schSpan" (click)="setCliked(pl,day,hour)"></span>
@@ -105,48 +105,48 @@
           <span *ngIf="showPause" class="btn btn-secondary pauseSpan" matTooltip="Pause time"></span>
         </span>
                   </div>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-        <div [ngStyle]="{'color': getTheme()? 'white' :''}" class="card-footer">
-          {{time | date: 'dd MMMM yyyy '}} <span [ngStyle]="{'color': getTheme()? 'white' :''}" class="time">{{ time | date: 'HH:mm:ss' }}</span>
-        </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div [ngStyle]="{'color': getTheme()? 'white' :''}" class="card-footer">
+            {{time | date: 'dd MMMM yyyy '}} <span [ngStyle]="{'color': getTheme()? 'white' :''}" class="time">{{ time | date: 'HH:mm:ss' }}</span>
+          </div>
 
+        </div>
       </div>
-    </div>
-    <div *ngIf="showTable" style="padding:0;width: 100%">
+      <div *ngIf="showTable" style="padding:0;width: 100%">
 
-      <div style="float: left;width: 60%">
-        <app-schedules (outPutData)="reloadData()"></app-schedules>
-      </div>
-      <div style="width: 40%;float: right">
-        <div [@enterAnimation] class="bodyContainer">
-          <div class="main-card mb-3 card descCard"  [ngClass]="getTheme() ? 'bg-premium-dark' :''" [ngStyle]="{'color': getTheme()? 'white' :'black'}">
-            <div [ngStyle]="{'color': getTheme()? 'white' :''}" *ngIf="clickedPlanning != null" class="card-header" style="width: 100%">
-              <div style="width: 60%">
-                {{clickedPlanning.planningName}}
-              </div>
-              <div style="width: 40%">
-                <div class="buttonsDetails">
-                  <button mat-raised-button class="btn btn-secondary btnDetails" (click)="openDetailsDialog()" matTooltip="Update planning"><span class="fas fa-pencil-alt"></span></button>
-                  <button mat-raised-button class="btn btn-danger btnDetails" (click)="openDeletePlanDialog()" matTooltip="Delete planning"><span class="fas fa-trash-alt"></span></button>
+        <div style="float: left;width: 60%">
+          <app-schedules (outPutData)="reloadData()"></app-schedules>
+        </div>
+        <div style="width: 40%;float: right">
+          <div [@enterAnimation] class="bodyContainer">
+            <div class="main-card mb-3 card descCard"  [ngClass]="getTheme() ? 'bg-premium-dark' :''" [ngStyle]="{'color': getTheme()? 'white' :'black'}">
+              <div [ngStyle]="{'color': getTheme()? 'white' :''}" *ngIf="clickedPlanning != null" class="card-header" style="width: 100%">
+                <div style="width: 60%">
+                  {{clickedPlanning.planningName}}
+                </div>
+                <div style="width: 40%">
+                  <div class="buttonsDetails">
+                    <button mat-raised-button class="btn btn-secondary btnDetails" (click)="openDetailsDialog()" matTooltip="Update planning"><span class="fas fa-pencil-alt"></span></button>
+                    <button mat-raised-button class="btn btn-danger btnDetails" (click)="openDeletePlanDialog()" matTooltip="Delete planning"><span class="fas fa-trash-alt"></span></button>
+                  </div>
                 </div>
               </div>
+              <app-planning-details></app-planning-details>
             </div>
-            <app-planning-details></app-planning-details>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!showTable" style="padding-top: 15%;width:100%">
+        <div style="width:200px;margin:auto">
+          <div class="spinner-container" style="">
+            <mat-spinner></mat-spinner>
           </div>
         </div>
       </div>
     </div>
-    <div *ngIf="!showTable" style="padding-top: 15%;width:100%">
-      <div style="width:200px;margin:auto">
-        <div class="spinner-container" style="">
-          <mat-spinner></mat-spinner>
-        </div>
-      </div>
-    </div>
-</div>
   </div>
 </div>
