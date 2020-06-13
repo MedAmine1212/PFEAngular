@@ -57,7 +57,7 @@ constructor(
       // @ts-ignore
         localStorage.cin = ress.cin;
        // @ts-ignore
-        this.themeChanger.setTheme(ress.userConfig.theme);
+        this.themeChanger.setTheme(ress.userConfigs[0].theme);
 
       });
       this.router.navigateByUrl('/RemoteMonitoring').then(() => window.location.reload());

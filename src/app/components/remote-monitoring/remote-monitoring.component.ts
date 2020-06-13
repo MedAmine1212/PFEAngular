@@ -58,7 +58,6 @@ export class RemoteMonitoringComponent implements OnInit {
   @ViewChild(DepartmentsComponent) departmentComponent: DepartmentsComponent;
   ngOnInit() {
     this.userService.findUserWithToken().subscribe( ress => {
-
       // @ts-ignore
       localStorage.cin = ress.cin;
       // @ts-ignore

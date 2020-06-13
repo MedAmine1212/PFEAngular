@@ -220,8 +220,13 @@ export class TimetablesComponent implements OnInit {
       this.selectedCount = 0;
       let changed: boolean;
       changed = false;
-      this.planningDetailsComp.setClickedPl(null)
-      this.schComp.setClickedPl(new Planning());
+      if (this.planningDetailsComp != null) {
+      this.planningDetailsComp.setClickedPl(null);
+      }
+
+      if (this.schComp != null) {
+        this.schComp.setClickedPl(new Planning());
+      }
       for (const pl of this.plannings) {
         pl.showPl = this.getShowPl(pl);
         if (this.clickedPlanning != null) {
