@@ -21,8 +21,6 @@ export class NavComponent implements OnInit {
   userConfigs: UserConfigs  = new UserConfigs();
   jwt = new JwtHelperService();
   image: any;
-
-  retrievedImage: any;
   retrieveResonse: any;
   base64Data: any;
 
