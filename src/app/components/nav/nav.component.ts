@@ -8,6 +8,7 @@ import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.ser
 import {UserConfigs} from '../../models/UserConfigs';
 import {UserConfigsService} from '../../services/UserConfigs/user-configs.service';
 import {User} from '../../models/User';
+import {ImageService} from "../../services/image.service";
 
 @Component({
   selector: 'app-nav',
@@ -19,16 +20,20 @@ export class NavComponent implements OnInit {
   isLoggedIn;
   userConfigs: UserConfigs  = new UserConfigs();
   jwt = new JwtHelperService();
+  image: any;
 
   constructor(
     private userConfigsService: UserConfigsService,
     private themeChanger: ThemeChangerService,
     private router: Router,
     private auth: AuthenticationService,
-    private userService: UserService
+    private userService: UserService,
+    private imageService: ImageService
   ) {
     this.findUser();
+    this.imageService.getImage('uml.jpg').subscribe();
   }
+
 
     findUser() {
     this.userService.findUserWithToken().subscribe(res => { // @ts-ignore
