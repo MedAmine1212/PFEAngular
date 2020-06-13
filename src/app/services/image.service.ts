@@ -24,4 +24,8 @@ export class ImageService {
     return this.http.get(this.baseurl + 'get/' + imageName);
 
   }
+
+  finById(id){
+    return this.http.get(this.baseurl + 'findById/' + id );
+  }
 }

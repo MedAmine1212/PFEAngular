@@ -9,6 +9,7 @@ import {UserConfigs} from '../../models/UserConfigs';
 import {UserConfigsService} from '../../services/UserConfigs/user-configs.service';
 import {User} from '../../models/User';
 import {ImageService} from '../../services/image.service';
+import {Image} from '../../models/Image';
 
 @Component({
   selector: 'app-nav',
@@ -20,7 +21,10 @@ export class NavComponent implements OnInit {
   isLoggedIn;
   userConfigs: UserConfigs  = new UserConfigs();
   jwt = new JwtHelperService();
-  image: any;
+  image: string;
+  imageModel : Image = new Image();
+
+
 
   retrievedImage: any;
   retrieveResonse: any;
@@ -49,15 +53,19 @@ export class NavComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoggedIn = this.auth.loggedIn() ;
-    this.imageService.getImage('miro.png').subscribe(
+    this.imageService.finById(1).subscribe(
 
       img => {
-        this.retrieveResonse = img;
-        this.base64Data = this.retrieveResonse.picByte;
-        this.image = 'data:image/jpeg;base64,' + this.base64Data;
-        console.log(img);
+        // @ts-ignore
+        this.imageModel.type = img.type;
+        // @ts-ignore
+        this.imageModel.name = img.name;
+        // @ts-ignore
+        this.imageModel.picByte = img.picByte;
+        this.image = 'data:image/png;base64,' + this.imageModel.picByte;
+        console.log(this.imageModel);
       }
-      , error =>  console.log(error));
+      );
 
   }
 
