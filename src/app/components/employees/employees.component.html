@@ -71,7 +71,7 @@
       <span style="font-size:30px;color:#3f6ad8">Click a department to show details here</span><br><br><br><br>No Department Selected
     </div>
 
-    <div [ngStyle]="{'color': getTheme()? 'white' :'black'}" style="width: 100%;text-align:center;margin:0;padding-top: 10%;font-weight: bolder;font-size: 20px" *ngIf="(thisIsEmp && users.length === 0) || (!thisIsEmp && clickedDep.depId!==-1 && (users==null || users.length === 0))"> No Employees to show</div>
+    <div style="width: 100%;text-align:center;margin:0;padding-top: 10%;font-weight: bolder;font-size: 20px" *ngIf="(thisIsEmp && users.length === 0) || (!thisIsEmp && clickedDep.depId!==-1 && (users==null || users.length === 0))" [ngStyle]="{'margin-top': router.url === '/RemoteMonitoring/(mainCon:Absences)'  || router.url === '/RemoteMonitoring'? '40%' : '', 'color': getTheme()? 'white' :'black'}"> No Employees to show</div>
     <div *ngIf="users!=null">
       <div [ngStyle]="{'margin-left': router.url === '/RemoteMonitoring/(mainCon:Absences)'  || router.url === '/RemoteMonitoring'? '-25px' :''}" class="main-card mb-3 card" [ngClass]="getTheme() ? 'bg-premium-dark' :''" style="overflow: auto;max-height: 480px;margin-top: 40px;border-radius:0" *ngIf="(users.length !=0 && thisIsEmp) || (users.length !=0 && clickedDep.depId != -1)">
           <table  [ngClass]="getTheme() ? 'bg-premium-dark text-light' :'text-dark'"  [ngStyle]="{'color': getTheme()? 'white' :''}" class="align-middle text-light mb-0 table table-borderless table-striped table-hover">

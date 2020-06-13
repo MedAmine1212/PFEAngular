@@ -33,7 +33,7 @@
   margin-left:-100px;
 }
 .butts:hover{
-  color: rgb(82,148,226);
+  color: rgb(82,148,226) !important;
 }
 .contacts_body{
   padding:  0.75rem 0 !important;

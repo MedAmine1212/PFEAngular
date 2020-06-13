@@ -76,4 +76,8 @@ export class SchedulesComponent implements OnInit {
     returnTime = returnTime + m.toString();
     return returnTime;
   }
+
+  openAddScheduleDialog() {
+
+  }
 }

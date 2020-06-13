@@ -75,8 +75,18 @@
 }
 .buttons{
   font-size: 15px;
+  width: 90%;
   margin-right: -20px;
-  width: 30px;
+}
+
+.addSch{
+  border-radius: 15px;
+  margin-left:5px;
+  margin-right: 9px;
+  float: right;
+}
+.addSch:hover{
+  background:#007bff !important;
 }
 .wrapper{
   margin-left: 40px;

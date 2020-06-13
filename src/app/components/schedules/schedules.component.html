@@ -3,13 +3,16 @@
     <div class="card-body noSchBod" style="width: 90%">
       <div [ngStyle]="{'color': getTheme()? 'white' :'black'}" class="noSchContainer">
         No schedules to show<br><br>
-        <button class="btn btn-primary">Add Schedule</button>
+        <button class="btn btn-primary" (click)="openAddScheduleDialog()">Add Schedule</button>
       </div>
     </div>
   </div>
   <div *ngIf="schedules.length > 0" class="main-card mb-3 card schCard" [ngClass]="getTheme() ? 'bg-premium-dark' :''">
     <div [@enterAnimation] [ngStyle]="{'color': getTheme()? 'white' :'black'}" class="card-header">
       Schedules
+      <span class="buttons">
+          <button (click)="openAddScheduleDialog()" mat-raised-button matTooltip="Add Schedule" [ngClass]="{'bg-premium-dark': getTheme()}" class="btn btn-outline-primary addSch" ><span class="fas fa-plus"></span></button>
+      </span>
     </div>
       <div *ngIf="clickedPlanning.schedule == null && !loading" [ngStyle]="{'color': getTheme()? 'white' :'black'}" class="noDescBod">
         Click a planning to show it's schedule here

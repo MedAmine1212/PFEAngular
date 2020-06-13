@@ -29,14 +29,14 @@
           <i style="margin-right:7px;" [ngStyle]="{'color': getTheme() ? 'white' :'grey'}" class="fa fa-building"></i>
           Departments
           <span class="buttons">
-      <button (click)="addDepartment()" mat-raised-button matTooltip="Add departement" class="btn btn-outline-primary" ><span class="fas fa-plus"></span></button>
+      <button (click)="addDepartment()" mat-raised-button matTooltip="Add departement" [ngClass]="{'bg-premium-dark': getTheme()}" class="btn btn-outline-primary addButtForDark" ><span class="fas fa-plus"></span></button>
     <span (click)="unselectDep()" [ngStyle]="{'color': getTheme() ? 'white' :''}" *ngIf="clickedDep.depId!=-1" mat-raised-button  matTooltip="Unselect departement" class="fas fa-check-circle"></span>
   </span>
 
         </li>
         <li class="noDepLi" [ngStyle]="{'color': getTheme()? 'white' :''}" *ngIf="this.data.length === 0">
           No departments to show<br>
-          <button class="btn btn-info noDepButt" matTooltip="Add departement"  (click)="addDepartment()">Add</button>
+          <button class="btn btn-info noDepButt" matTooltip="Add departement" (click)="addDepartment()">Add</button>
         </li>
         <li *ngIf="this.data.length > 0" style="overflow: auto;max-height: 580px;">
           <div>
