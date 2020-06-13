@@ -15,6 +15,6 @@ export class User {
   department: Department;
   addresses: Address[];
   post: Post;
-  userConfig: UserConfig;
+  userConfigs: UserConfig;
 
   }

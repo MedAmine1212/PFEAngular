@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 import {Schedule} from '../../models/Schedule';
@@ -6,6 +6,7 @@ import {ScheduleService} from '../../services/schedule/schedule.service';
 import {Planning} from '../../models/Planning';
 import {MatDialog} from '@angular/material/dialog';
 import {AddScheduleComponent} from '../../dialogs/dialog-forms/add-schedule/add-schedule.component';
+import {DeleteDialogComponent} from "../../dialogs/delete-dialog/delete-dialog.component";
 
 @Component({
   selector: 'app-schedules',
@@ -27,6 +28,7 @@ import {AddScheduleComponent} from '../../dialogs/dialog-forms/add-schedule/add-
   styleUrls: ['./schedules.component.css']
 })
 export class SchedulesComponent implements OnInit {
+  @Output() outPutData = new EventEmitter<any>();
   showHideInput: boolean;
   schedules: Schedule[] = [];
   clickedPlanning: Planning = new Planning();
@@ -91,6 +93,49 @@ export class SchedulesComponent implements OnInit {
       if (result) {
         this.reloadData();
       }
+    });
+  }
+
+  openEditScheduleDialog(sch) {
+    const dialogRef = this.dialog.open(AddScheduleComponent, {
+      width: '550px',
+      height: '330px',
+      panelClass: 'matDialogClass2',
+      data: sch
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.reloadData();
+        this.outPutData.emit();
+      }
+    });
+  }
+
+  sendScheduleToEdit(schh: Schedule) {
+    for (const sch of this.schedules) {
+      if (sch.scheduleId === schh.scheduleId) {
+        this.openEditScheduleDialog(sch);
+        break;
+      }
+    }
+  }
+
+  openDeleteDialog(sch) {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      width: '400px',
+      height: '380',
+      data: [null, 'schedule']
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.scheduleService.remove(sch.scheduleId).subscribe(() => {
+          console.log('Refreshing schedules..');
+          this.reloadData();
+          console.log('Refreshing plannings..');
+          this.outPutData.emit();
+        }, error1 => console.log(error1));
+      }
+
     });
   }
 }

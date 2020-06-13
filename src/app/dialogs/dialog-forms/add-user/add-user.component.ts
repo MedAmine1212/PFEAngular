@@ -12,7 +12,6 @@ import {PostService} from '../../../services/post/post.service';
 import {AddressService} from '../../../services/address/address.service';
 import {Address} from '../../../models/Address';
 import {User} from '../../../models/User';
-import {NgbDate} from '@ng-bootstrap/ng-bootstrap';
 import {DialogComponent} from '../../dialog.component';
 import {Router} from '@angular/router';
 import {UserConfig} from '../../../models/UserConfig';

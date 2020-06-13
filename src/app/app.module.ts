@@ -33,7 +33,6 @@ import {MatStepperModule} from '@angular/material/stepper';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { AddDepartmentComponent } from './dialogs/dialog-forms/add-department/add-department.component';
 import {MatDialogModule} from '@angular/material/dialog';
-import { DeleteDepDialogComponent } from './dialogs/delete-dep-dialog/delete-dep-dialog.component';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
@@ -41,13 +40,12 @@ import {MatSelectModule} from '@angular/material/select';
 import {DialogComponent} from './dialogs/dialog.component';
 import {EmployeeDetailsComponent} from './dialogs/employee-details/employee-details.component';
 import {MatNativeDateModule} from '@angular/material/core';
-import {DeleteUserDialogComponent} from './dialogs/delete-user-dialog/delete-user-dialog.component';
+import {DeleteDialogComponent} from './dialogs/delete-dialog/delete-dialog.component';
 import {CalendarModule} from 'angular-calendar';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { AddPlanningComponent } from './dialogs/dialog-forms/add-planning/add-planning.component';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import { DeletePlanningDialogComponent } from './dialogs/delete-planning-dialog/delete-planning-dialog.component';
 import {AuthenticationGuard} from './guard/authentication.guard';
 import { SchedulesComponent } from './components/schedules/schedules.component';
 import { PlanningDetailsComponent } from './components/planning-details/planning-details.component';
@@ -69,12 +67,10 @@ import { AddScheduleComponent } from './dialogs/dialog-forms/add-schedule/add-sc
     MotifsAbsencesComponent,
     AddUserComponent,
     AddDepartmentComponent,
-    DeleteDepDialogComponent,
     DialogComponent,
     EmployeeDetailsComponent,
-    DeleteUserDialogComponent,
+    DeleteDialogComponent,
     AddPlanningComponent,
-    DeletePlanningDialogComponent,
     SchedulesComponent,
     PlanningDetailsComponent,
     AddScheduleComponent,
@@ -118,11 +114,9 @@ import { AddScheduleComponent } from './dialogs/dialog-forms/add-schedule/add-sc
   entryComponents: [
     AddUserComponent,
     AddDepartmentComponent,
-    DeleteDepDialogComponent,
     EmployeeDetailsComponent,
-    DeleteUserDialogComponent,
+    DeleteDialogComponent,
     AddPlanningComponent,
-    DeletePlanningDialogComponent,
     PlanningDetailsComponent
   ],
 })

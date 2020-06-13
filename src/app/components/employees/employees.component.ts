@@ -1,17 +1,14 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Router} from '@angular/router';
-import {Observable} from 'rxjs';
-import {newArray} from '@angular/compiler/src/util';
 import {Department} from '../../models/Department';
 import {User} from '../../models/User';
 import {DepartmentService} from '../../services/department/department.service';
-import {DeleteDepDialogComponent} from '../../dialogs/delete-dep-dialog/delete-dep-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {AddDepartmentComponent} from '../../dialogs/dialog-forms/add-department/add-department.component';
 import {AddUserComponent} from '../../dialogs/dialog-forms/add-user/add-user.component';
 import {UserService} from '../../services/user/user.service';
 import {EmployeeDetailsComponent} from '../../dialogs/employee-details/employee-details.component';
-import {DeleteUserDialogComponent} from '../../dialogs/delete-user-dialog/delete-user-dialog.component';
+import {DeleteDialogComponent} from '../../dialogs/delete-dialog/delete-dialog.component';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 @Component({
   selector: 'app-employees',
@@ -68,10 +65,10 @@ export class EmployeesComponent implements OnInit {
   }
 
   showDeleteDialog(): void {
-    const dialogRef = this.dialog.open(DeleteDepDialogComponent, {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
       width: '400px',
       height: '380',
-      data: {depName: this.clickedDep.depName}
+      data: [this.clickedDep, 'department']
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -180,10 +177,10 @@ export class EmployeesComponent implements OnInit {
     });
   }
   openDeleteEmpDialog(emp: User) {
-    const dialogRef = this.dialog.open(DeleteUserDialogComponent, {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
       width: '400px',
       height: '380',
-      data: emp
+      data: [emp, 'employee']
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

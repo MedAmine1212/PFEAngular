@@ -5,7 +5,6 @@ import {AddPlanningComponent} from '../../dialogs/dialog-forms/add-planning/add-
 import {MatDialog} from '@angular/material/dialog';
 import {PlanningService} from '../../services/planning/planning.service';
 import {Planning} from '../../models/Planning';
-import {DeletePlanningDialogComponent} from '../../dialogs/delete-planning-dialog/delete-planning-dialog.component';
 import {PlanningDetailsComponent} from '../planning-details/planning-details.component';
 import {UserConfig} from '../../models/UserConfig';
 import {UserConfigService} from '../../services/UserConfig/user-config.service';
@@ -13,6 +12,7 @@ import {UserService} from '../../services/user/user.service';
 import {User} from '../../models/User';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 import {SchedulesComponent} from '../schedules/schedules.component';
+import {DeleteDialogComponent} from '../../dialogs/delete-dialog/delete-dialog.component';
 
 
 @Component({
@@ -205,7 +205,7 @@ export class TimetablesComponent implements OnInit {
     });
   }
 
-  private reloadData() {
+   reloadData() {
     this.userService.findUserWithToken().subscribe(user => {
       // @ts-ignore
       this.user = user;
@@ -217,16 +217,21 @@ export class TimetablesComponent implements OnInit {
     this.planningService.list().subscribe(list => {
       this.plannings = list;
       this.selectedCount = 0;
+      let changed: boolean;
+      changed = false;
+      this.planningDetailsComp.setClickedPl(null)
+      this.schComp.setClickedPl(new Planning());
       for (const pl of this.plannings) {
         pl.showPl = this.getShowPl(pl);
         if (this.clickedPlanning != null) {
           if (pl.planningId === this.clickedPlanning.planningId) {
-            this.clickedPlanning = null;
-            this.planningDetailsComp.setClickedPl(pl);
-            this.schComp.setClickedPl(pl);
+            changed = true;
             this.setClickedPl(pl);
           }
         }
+      }
+      if (!changed) {
+        this.clickedPlanning = null;
       }
     });
   }
@@ -268,9 +273,10 @@ export class TimetablesComponent implements OnInit {
     this.pauseEndMinutes = pl.schedule.pauseEnd % 60;
   }
   openDeletePlanDialog() {
-      const dialogRef = this.dialog.open(DeletePlanningDialogComponent, {
+      const dialogRef = this.dialog.open(DeleteDialogComponent, {
         width: '400px',
         height: '380',
+        data: [this.clickedPlanning, 'planning']
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
