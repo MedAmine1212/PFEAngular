@@ -9,7 +9,7 @@ import {Observable} from 'rxjs';
 })
 export class UserConfigsService {
 
-  private baseurl = 'http://localhost:81/userConfig/';
+  private baseurl = 'http://localhost:81/userConfigs/';
 
   constructor(private http: HttpClient) {
   }
