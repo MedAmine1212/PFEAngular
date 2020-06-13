@@ -228,8 +228,9 @@
   color:white !important;
 }
 .lightPl{
-  color: white !important;
+  color: black !important;
 }
 .lightPl:hover{
   color: black !important;
 }
+

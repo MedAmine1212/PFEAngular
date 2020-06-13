@@ -54,7 +54,7 @@ export class NavComponent implements OnInit {
       img => {
         this.retrieveResonse = img;
         this.base64Data = this.retrieveResonse.picByte;
-        this.image = 'data:image/jpeg;base64,' + this.base64Data
+        this.image = 'data:image/jpeg;base64,' + this.base64Data;
         console.log(img);
       }
       , error =>  console.log(error));

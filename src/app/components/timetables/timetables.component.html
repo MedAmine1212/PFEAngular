@@ -50,7 +50,7 @@
                 </div>
               </div><br>
             </li>
-            <li [ngClass]="getTheme()? 'lightPl' :''" class="schItem" *ngFor="let pl of plannings  | filter:searchText">
+            <li [ngStyle]="{'background-color':clickedPlanning === pl ? ' rgb(224,243,255)' :''}"  [ngClass]="getTheme()? 'lightPl' :''" class="schItem" *ngFor="let pl of plannings  | filter:searchText">
             <div style="float: left;width:20%">
               <span (click)="showHideSch(pl)" *ngIf="pl.showPl" class="schIconSpan" [ngClass]="(getTheme() && pl.color ==='btn btn-dark') ? 'btn btn-outline-light' :pl.colorIcon">
               <i class="fa fa-check-circle"></i>
@@ -59,7 +59,7 @@
               <i class="fa fa-check-circle "></i>
               </span>
             </div>
-                <div style="width:80%;float: right" (click)="setClickedPl(pl)">{{pl.planningName}}<span class="planDays" matTooltip="Planned days">{{planningDaysDesc(pl)}}</span></div>
+                <div style="width:80%;float: right;"  (click)="setClickedPl(pl)"><span [ngStyle]="{'color':getTheme() && clickedPlanning === pl? 'black': getTheme()? 'white' : '' }" style="color:white">{{pl.planningName}}</span><span class="planDays" matTooltip="Planned days">{{planningDaysDesc(pl)}}</span></div>
             </li>
           </ul>
         </div>

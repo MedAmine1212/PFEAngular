@@ -63,6 +63,7 @@ export class TimetablesComponent implements OnInit {
   showTable: boolean;
   clickedPlanning: Planning;
   user: User = null;
+   selectedPlanning: boolean;
   constructor(
     private themeChanger: ThemeChangerService,
     private userService: UserService,
@@ -83,6 +84,7 @@ export class TimetablesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.selectedPlanning = false;
     this.userConfig.shownPlannings = [];
     this.showTable = false;
     setTimeout(() => {
@@ -316,6 +318,7 @@ export class TimetablesComponent implements OnInit {
 
   setClickedPl(pl: any) {
     if (this.showTable) {
+      // this.selectedPlanning = !this.selectedPlanning;
       this.clickedPlanning = pl;
       this.planningDetailsComp.setClickedPl(pl);
       this.schComp.setClickedPl(pl);
