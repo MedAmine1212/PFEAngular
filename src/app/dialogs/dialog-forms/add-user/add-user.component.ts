@@ -469,7 +469,7 @@ export class AddUserComponent implements  AfterViewInit  {
           if (response.status === 200) {
             this.getImage();
           }
-        } 
+        }
         , error => console.log(error)
       );
   }
