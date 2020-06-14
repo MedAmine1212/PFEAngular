@@ -242,29 +242,34 @@
         </div>
       </div>
       <div style="margin-top: 40px">
-        <div class="container row">
-          <div class="col-md-12">
-            <h1>Upload Image</h1>
-          </div>
-        </div>
-        <div class="container row">
-          <div class="col-md-6">
-            <input type="file" (change)="onFileChanged($event)">
-          </div>
-          <div class="col-md-6">
-            <input type="button" (click)="onUpload()" value="upload">
-          </div>
-        </div>
-        <hr />
-        <div class="container row">
-        </div>
-        <div class="container row">
-          <div class="col-md-12">
-            <div *ngIf=retrievedImage>
-              <img [src]="retrievedImage">
-            </div>
-          </div>
-        </div>
+        <input style="display: none" #file type="file" accept='image/*' (change)="onSelectFile(file.files)" formControlName="image" />
+        <button mat-raised-button color="accent" type="button" (click)="file.click()" class="inputfile" >Pick file</button>
+        <mat-error *ngIf="message">{{message}}</mat-error>
+        <img [src]="imgURL" height="200" *ngIf="imgURL">
+
+        <!--        <div class="container row">-->
+<!--          <div class="col-md-12">-->
+<!--            <h1>Upload Image</h1>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="container row">-->
+<!--          <div class="col-md-6">-->
+<!--            <input type="file" (change)="onFileChanged($event)">-->
+<!--          </div>-->
+<!--          <div class="col-md-6">-->
+<!--            <input type="button" (click)="onUpload()" value="upload">-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <hr />-->
+<!--        <div class="container row">-->
+<!--        </div>-->
+<!--        <div class="container row">-->
+<!--          <div class="col-md-12">-->
+<!--            <div *ngIf=retrievedImage>-->
+<!--              <img [src]="retrievedImage">-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
       </div>
       <div style="width:100%">
         <div style="float: right;margin-top: -25px;margin-bottom: -20px;padding-top: 5px">

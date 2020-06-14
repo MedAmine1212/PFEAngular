@@ -24,7 +24,7 @@ export class NavComponent implements OnInit {
   image: any;
   retrieveResonse: any;
   base64Data: any;
-
+  imageModel : Image;
   constructor(
     private userConfigsService: UserConfigsService,
     private themeChanger: ThemeChangerService,

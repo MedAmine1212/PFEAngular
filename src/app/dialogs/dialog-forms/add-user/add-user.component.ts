@@ -93,6 +93,9 @@ export class AddUserComponent implements  AfterViewInit  {
     user: undefined,
     zipCode: null
   };
+  imgURL: any;
+   imagePath: FileList;
+   message: string;
   constructor(private themeChanger: ThemeChangerService,
               public dialogRef: MatDialogRef<AddUserComponent>,
               private userConfigService: UserConfigsService,
@@ -482,5 +485,28 @@ export class AddUserComponent implements  AfterViewInit  {
         }
         , error => console.log(error)
       );
+  }
+
+  onSelectFile(files: FileList) {
+    if (files.length === 0) {
+      return;
+    }
+
+    const mimeType = files[0].type;
+    if (mimeType.match(/image\/*/) == null) {
+      this.message = 'Only images are supported.';
+      return;
+    } else {
+      this.selectedFile = files[0] as File;
+    }
+
+    const reader = new FileReader();
+    this.imagePath = files;
+    reader.readAsDataURL(files[0]);
+    reader.onload = (event) => {
+      this.imgURL = reader.result;
+      console.log(this.imagePath);
+      console.log(this.imgURL);
+    };
   }
 }
