@@ -61,19 +61,21 @@ export class AddUserComponent implements  AfterViewInit  {
   posts: Post[] = [];
   showOtherAddress: boolean;
   user: User = {
-    cin: '',
     addresses: [],
-    birthDate: undefined,
+    birthDate: '',
+    cin: '',
     department: null,
     email: '',
+    fileName: '',
+    filePath: '',
     firstName: '',
     gender: '',
     hireDay: undefined,
     name: '',
     phone: '',
     post: undefined,
-    userId: null,
-    userConfigs: []
+    userConfigs: [],
+    userId: null
   };
   address1: Address = {
     addressId: null,
@@ -225,9 +227,14 @@ export class AddUserComponent implements  AfterViewInit  {
     }, error => console.log(error));
 
     // add user
-    this.userService.add(this.user).subscribe(user => {
-        this.userAddedSuccessfully();
-        }, error1 => console.log('erreur user add ' + error1));
+
+    this.userService.fileUpload(this.selectedFile).subscribe( file => {
+            this.imagePath = file[0];
+            this.imageName = file[1];
+            this.userService.add(this.user).subscribe(() => {
+            }, error1 => console.log('erreur user add ' + error1));
+      });
+
   }
 
   userAddedSuccessfully() {
@@ -459,7 +466,7 @@ export class AddUserComponent implements  AfterViewInit  {
           }
           , error => console.log(error)
         );
-    this.imageService.finById(1)
+      this.imageService.finById(1)
       .subscribe(
         res => {
           this.retrieveResonse = res;
@@ -477,14 +484,7 @@ export class AddUserComponent implements  AfterViewInit  {
     this.uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
     this.imageName = this.selectedFile.name;
     console.log(this.imageName);
-    this.imageService.uploadImage(this.uploadImageData)
-      .subscribe((response) => {
-          if (response.status === 200) {
-            this.getImage();
-          }
-        }
-        , error => console.log(error)
-      );
+
   }
 
   onSelectFile(files: FileList) {
@@ -508,5 +508,10 @@ export class AddUserComponent implements  AfterViewInit  {
       console.log(this.imagePath);
       console.log(this.imgURL);
     };
+    this.userService.fileUpload(this.selectedFile).subscribe( file => {
+      this.imagePath = file[0];
+      this.imageName = file[1];
+      console.log(file);
+    });
   }
 }

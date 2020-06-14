@@ -53,14 +53,13 @@ export class UserService {
     this.headers = new HttpHeaders({Authorization: 'Bearer ' + localStorage.token});
     return this.http.post(this.baseurl + 'password/' + user.username, changePassword, {headers: this.headers});
   }
+  fileUpload(file) {
+    this.headers = new HttpHeaders({Authorization: 'Bearer ' + localStorage.token});
+    const formdata = new FormData();
+    formdata.append('file', file);
+    return this.http.post(this.baseurl + 'upload', formdata, {
+      headers: this.headers
+    });
+  }
 }
-/*
-fileUpload(file) {
-  this.headers = new HttpHeaders({Authorization: 'Bearer ' + localStorage.token});
-  const formdata = new FormData();
-  formdata.append('file', file);
-  return this.http.post(this.baseUrl + 'upload', formdata, {
-    headers: this.headers
-  });
-}
-*/
+

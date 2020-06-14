@@ -10,6 +10,7 @@ import {UserService} from '../../services/user/user.service';
 import {EmployeeDetailsComponent} from '../../dialogs/employee-details/employee-details.component';
 import {DeleteDialogComponent} from '../../dialogs/delete-dialog/delete-dialog.component';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
+import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 @Component({
   selector: 'app-employees',
   templateUrl: './employees.component.html',
@@ -27,7 +28,7 @@ export class EmployeesComponent implements OnInit {
   usersForDep: User[];
   private deleteId: number;
   constructor(private themeChanger: ThemeChangerService, public dialog: MatDialog, public router: Router,
-              private departmentService: DepartmentService, private userService: UserService) {
+              private departmentService: DepartmentService, private userService: UserService, private sanitizer: DomSanitizer) {
     if (this.router.url === '/RemoteMonitoring/(mainCon:Departments)') {
       this.clickedDep = new Department();
       this.clickedDep.depId = -1;
@@ -38,9 +39,14 @@ export class EmployeesComponent implements OnInit {
       this.users = [];
     }
   }
+  sanitizeImageUrl(imageUrl: string): SafeUrl {
+    return this.sanitizer.bypassSecurityTrustUrl(imageUrl);
+  }
 
   ngOnInit(): void {
-
+    this.userService.list().subscribe(users => {
+      console.log(users);
+    })
     this.showHideInput = false;
     console.log('qsdqsdqsdqs' + this.thisIsEmp);
     if (this.router.url === '/RemoteMonitoring/(mainCon:Employees)'
@@ -149,6 +155,7 @@ export class EmployeesComponent implements OnInit {
         }
         this.clickedDep.users = [];
         this.clickedDep.users = this.users;
+        console.log(this.users);
         this.outPutData.emit();
       } else {
         this.users = r;
@@ -193,6 +200,10 @@ export class EmployeesComponent implements OnInit {
   }
 
   getTheme() {
-    return this.themeChanger.getTheme();;
+    return this.themeChanger.getTheme();
+  }
+
+  showImage() {
+    return this.sanitizeImageUrl("C:\\Users\\Bassem's PC\\Desktop\\1.png");
   }
 }
