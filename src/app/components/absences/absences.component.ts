@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {NgbDateStruct, NgbCalendar} from '@ng-bootstrap/ng-bootstrap/';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 @Component({
@@ -30,7 +29,7 @@ export class AbsencesComponent implements OnInit {
   showPoint: boolean;
   showAbsences: boolean;
 
-  constructor(private themeChanger: ThemeChangerService, private calendar: NgbCalendar) {
+  constructor(private themeChanger: ThemeChangerService) {
   }
 
   ngOnInit(): void {

@@ -4,7 +4,7 @@ import {AuthenticationService} from '../../services/Authentication/authenticatio
 import {UserService} from '../../services/user/user.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {DialogComponent} from '../../dialogs/dialog.component';
+import {DialogComponent} from '../../dialogs/message-dialog/dialog.component';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 

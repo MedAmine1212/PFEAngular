@@ -12,7 +12,7 @@ import {PostService} from '../../../services/post/post.service';
 import {AddressService} from '../../../services/address/address.service';
 import {Address} from '../../../models/Address';
 import {User} from '../../../models/User';
-import {DialogComponent} from '../../dialog.component';
+import {DialogComponent} from '../../message-dialog/dialog.component';
 import {Router} from '@angular/router';
 import {UserConfigs} from '../../../models/UserConfigs';
 import {PlanningService} from '../../../services/planning/planning.service';
