@@ -25,12 +25,12 @@
       <ul  class="vertical-nav-menu">
 
 
-        <li class="app-sidebar__heading" style="font-size: 15px;padding-top: 10px">
+        <li class="app-sidebar__heading" style="font-size: 15px;padding-top: 10px"  style="border:1px solid transparent">
           <i style="margin-right:7px;" [ngStyle]="{'color': getTheme() ? 'white' :'grey'}" class="fa fa-building"></i>
           Departments
-          <span class="buttons">
+          <span class="buttons" style="border:1px solid transparent">
       <button (click)="addDepartment()" mat-raised-button matTooltip="Add departement" [ngClass]="{'bg-premium-dark': getTheme()}" class="btn btn-outline-primary addButtForDark" ><span class="fas fa-plus"></span></button>
-    <span (click)="unselectDep()" [ngStyle]="{'color': getTheme() ? 'white' :''}" *ngIf="clickedDep.depId!=-1" mat-raised-button  matTooltip="Unselect departement" class="fas fa-check-circle"></span>
+    <span (click)="unselectDep()" [ngStyle]="{'color': getTheme() ? 'white' :''}" *ngIf="clickedDep.depId!=-1" matTooltip="Unselect departement" class="fa fa-check-circle"></span>
   </span>
 
         </li>
