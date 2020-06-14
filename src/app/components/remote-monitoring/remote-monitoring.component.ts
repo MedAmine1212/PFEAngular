@@ -8,7 +8,7 @@ import {AuthenticationService} from '../../services/Authentication/authenticatio
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {UserService} from '../../services/user/user.service';
-import {UserConfigsService} from '../../services/UserConfigs/user-configs.service';
+import {WebSocketAPIService} from '../../services/webSocketAPI/web-socket-api.service';
 @Component({
   selector: 'app-remmote-monitoring',
   animations: [
@@ -43,8 +43,6 @@ import {UserConfigsService} from '../../services/UserConfigs/user-configs.servic
 
 export class RemoteMonitoringComponent implements OnInit {
   clickedDeparment: Department;
-
-
 
 
   constructor(

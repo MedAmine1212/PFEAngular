@@ -18,7 +18,7 @@ import {UserConfigs} from '../../../models/UserConfigs';
 import {PlanningService} from '../../../services/planning/planning.service';
 import {ThemeChangerService} from '../../../services/ThemeChanger/theme-changer.service';
 import {UserConfigsService} from '../../../services/UserConfigs/user-configs.service';
-import {ImageService} from '../../../services/image.service';
+import {ImageService} from '../../../services/image/image.service';
 
 @Component({
   selector: 'app-add-user',

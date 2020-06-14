@@ -8,7 +8,7 @@ import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.ser
 import {UserConfigs} from '../../models/UserConfigs';
 import {UserConfigsService} from '../../services/UserConfigs/user-configs.service';
 import {User} from '../../models/User';
-import {ImageService} from '../../services/image.service';
+import {ImageService} from '../../services/image/image.service';
 
 @Component({
   selector: 'app-nav',
