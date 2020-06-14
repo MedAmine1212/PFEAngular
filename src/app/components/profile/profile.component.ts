@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {ImageService} from '../../services/image.service';
-import {Image} from '../../models/Image';
+import {ImageService} from '../../services/image/image.service';
 
 @Component({
   selector: 'app-profile',
