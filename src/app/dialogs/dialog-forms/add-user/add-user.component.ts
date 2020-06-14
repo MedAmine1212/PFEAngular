@@ -447,15 +447,15 @@ export class AddUserComponent implements  AfterViewInit  {
   }
 
   getImage() {
-      // this.imageService.getImage(this.imageName)
-      //   .subscribe(
-      //     res => {
-      //       this.retrieveResonse = res;
-      //       this.base64Data = this.retrieveResonse.picByte;
-      //       this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
-      //     }
-      //     , error => console.log(error)
-      //   );
+      this.imageService.getImage(this.imageName)
+        .subscribe(
+          res => {
+            this.retrieveResonse = res;
+            this.base64Data = this.retrieveResonse.picByte;
+            this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
+          }
+          , error => console.log(error)
+        );
     this.imageService.finById(1)
       .subscribe(
         res => {

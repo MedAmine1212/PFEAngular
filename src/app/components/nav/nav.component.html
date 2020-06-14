@@ -62,10 +62,10 @@
             <div class="widget-content-left">
               <div *ngIf="getTheme()" class="btn-group">
                 <button mat-button [matMenuTriggerFor]="menu" class="p-0 btn">
-                  <img width="42" class="rounded-circle" [src]="image" alt="">
+                  <img width="48" height="45" class="rounded-circle" [src]="this.imageModel.picByte" alt="">
                   <i class="fa fa-angle-down ml-2 opacity-8"></i>
                 </button>
-                <mat-menu  class="bg-dark" #menu="matMenu">
+                <mat-menu  class="bg-dark" #menu="matMenu">T
                   <div class="menuContent">
                     <button class="dropdown-item btnDark bg-dark" style="color:white" [routerLink]="[{ outlets: {mainCon: ['Profile'] } }]">User account</button>
                     <div tabindex="-1" class="dropdown-divider"></div>
@@ -73,9 +73,9 @@
                   </div>
                 </mat-menu>
               </div>
-            <div *ngIf="!getTheme()" class="btn-group">
-              <button mat-button [matMenuTriggerFor]="menu2" class="p-0 btn">
-                <img width="42" class="rounded-circle" [src]="this.imageModel.picByte" alt="">
+            <div *ngIf="!getTheme()" style="margin-right: -16px" class="btn-group">
+              <button mat-button [matMenuTriggerFor]="menu2" class="pT-0 btn">
+                <img width="48" height="45" class="rounded-circle" [src]="this.imageModel.picByte" alt="">
                 <i class="fa fa-angle-down ml-2 opacity-8"></i>
               </button>
 

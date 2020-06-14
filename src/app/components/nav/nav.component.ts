@@ -57,12 +57,10 @@ export class NavComponent implements OnInit {
 
       img => {
         // @ts-ignore
-        this.imageModel.type = img.type;
-        // @ts-ignore
         this.imageModel.name = img.name;
         // @ts-ignore
-        this.imageModel.picByte = img.picByte;
-        this.image = 'data:image/png;base64,' + this.imageModel.picByte;
+        this.imageModel.picByte = 'data:image/jpg;base64,' + img.picByte;
+        // this.image = 'data:image/jpg;base64,' + this.imageModel.picByte;
         console.log(this.imageModel);
       }
       );
