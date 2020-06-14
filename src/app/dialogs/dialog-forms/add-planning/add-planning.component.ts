@@ -4,7 +4,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Schedule} from '../../../models/Schedule';
 import {Planning} from '../../../models/Planning';
 import {Observable} from 'rxjs';
-import {DialogComponent} from '../../dialog.component';
+import {DialogComponent} from '../../message-dialog/dialog.component';
 import {ScheduleService} from '../../../services/schedule/schedule.service';
 import {MatStepper} from '@angular/material/stepper';
 import {animate, style, transition, trigger} from '@angular/animations';

@@ -2,7 +2,7 @@ import {AfterViewInit, Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Schedule} from '../../../models/Schedule';
 import {ScheduleService} from '../../../services/schedule/schedule.service';
-import {DialogComponent} from '../../dialog.component';
+import {DialogComponent} from '../../message-dialog/dialog.component';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {animate, style, transition, trigger} from '@angular/animations';
 

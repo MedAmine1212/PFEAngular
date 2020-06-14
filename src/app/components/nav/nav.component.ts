@@ -21,12 +21,7 @@ export class NavComponent implements OnInit {
   isLoggedIn;
   userConfigs: UserConfigs  = new UserConfigs();
   jwt = new JwtHelperService();
-  image: string;
-  imageModel : Image = new Image();
-
-
-
-  retrievedImage: any;
+  image: any;
   retrieveResonse: any;
   base64Data: any;
 
@@ -53,7 +48,7 @@ export class NavComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoggedIn = this.auth.loggedIn() ;
-    this.imageService.finById(1).subscribe(
+    this.imageService.getImage('miro.png').subscribe(
 
       img => {
         // @ts-ignore

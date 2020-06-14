@@ -37,11 +37,10 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatSelectModule} from '@angular/material/select';
-import {DialogComponent} from './dialogs/dialog.component';
+import {DialogComponent} from './dialogs/message-dialog/dialog.component';
 import {EmployeeDetailsComponent} from './dialogs/employee-details/employee-details.component';
 import {MatNativeDateModule} from '@angular/material/core';
 import {DeleteDialogComponent} from './dialogs/delete-dialog/delete-dialog.component';
-import {CalendarModule} from 'angular-calendar';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { AddPlanningComponent } from './dialogs/dialog-forms/add-planning/add-planning.component';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
@@ -104,7 +103,6 @@ import { AddScheduleComponent } from './dialogs/dialog-forms/add-schedule/add-sc
     MatButtonToggleModule,
     MatSelectModule,
     MatNativeDateModule,
-    CalendarModule,
     MatProgressSpinnerModule,
     MatFormFieldModule,
     NgxMaterialTimepickerModule,
