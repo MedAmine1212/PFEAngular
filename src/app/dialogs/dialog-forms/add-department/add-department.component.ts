@@ -146,6 +146,7 @@ export class AddDepartmentComponent implements OnInit {
     });
   }
   checkInUseDepartmentEdit(control) {
+    if (this.dep != null) {
     // mimic http database access
     const departments = [];
     this.departmentService.list().subscribe(deps => {
@@ -162,6 +163,9 @@ export class AddDepartmentComponent implements OnInit {
         observer.complete();
       }, 500);
     });
+  } else {
+      return new Observable<any>();
+    }
   }
 }
 
