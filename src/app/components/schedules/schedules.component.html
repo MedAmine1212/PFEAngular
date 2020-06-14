@@ -59,8 +59,15 @@
       </div>
     </div>
     <div class="card-body schBody">
-
-      <div class="main-card mb-3 card schCard" style="min-height: 200px" [ngClass]="getTheme() ? 'bg-premium-dark' :''">
+      <div [@enterAnimation] *ngIf="schedules.length == 1 && clickedPlanning.schedule != null" [ngClass]="getTheme() ? 'bg-premium-dark' :''" style="min-height: 250px">
+        <div style="width: 90%" *ngIf="!loading">
+          <div [ngStyle]="{'color': getTheme()? 'white' :'black'}" class="noOtherSch">
+            No other schedules to show<br><br>
+            <button class="btn btn-primary" (click)="openAddScheduleDialog()">Add Schedule</button>
+          </div>
+        </div>
+      </div>
+      <div class="main-card mb-3 card schCard" style="min-height: 220px" *ngIf="!(schedules.length == 1 && clickedPlanning.schedule != null)" [ngClass]="getTheme() ? 'bg-premium-dark' :''">
         <div class="card-header" style="padding-top: 10px">
          <h2 *ngIf="clickedPlanning.schedule == null" style="padding-top: 15px;margin-right: 20px" [ngStyle]="{'color': getTheme()? 'white' :'black'}">Schedules</h2>
          <h2 *ngIf="clickedPlanning.schedule != null" style="padding-top: 15px;margin-right: 20px" [ngStyle]="{'color': getTheme()? 'white' :'black'}">Other schedules</h2>
