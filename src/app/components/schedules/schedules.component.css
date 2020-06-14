@@ -23,6 +23,15 @@
   padding-top: 20%;
   padding-bottom: 50px;
 }
+.noOtherSch{
+  padding-top: 10%;
+  text-align: center;
+  color:black;
+  font-weight:bolder;
+  font-size:25px;
+  margin: 0 auto 0 10px;
+  width: 100%;
+}
 .noSchContainer{
   padding-top: 30%;
   text-align: center;
