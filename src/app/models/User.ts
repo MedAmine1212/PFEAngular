@@ -16,7 +16,6 @@ export class User {
   addresses: Address[];
   post: Post;
   userConfigs: UserConfigs[];
-   fileName: string;
-  filePath: string;
+  image: string[];
 
   }

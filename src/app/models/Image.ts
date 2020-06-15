@@ -2,9 +2,8 @@ export class Image {
   id: number;
   name: string;
   type: string;
-  picByte: string
+  picByte: string;
   imageFile: string ;
-  ;
 
 
   // constructor( name: string, type: string, picByte: any) {

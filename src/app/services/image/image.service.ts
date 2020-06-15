@@ -14,18 +14,17 @@ export class ImageService {
   constructor(private http: HttpClient) { }
 
 
-  uploadImage(uploadImageData){
-    return this.http.post(this.baseurl + 'upload', uploadImageData, { observe: 'response' });
+  uploadImage(uploadImageData, id) {
+    return this.http.post(this.baseurl + 'upload/' + id , uploadImageData, { observe: 'response' });
 
   }
 
-  getImage(imageName) {
-    console.log(imageName);
-    return this.http.get(this.baseurl + 'get/' + imageName);
+  findImageById(id) {
+    return this.http.get(this.baseurl + 'get/' + id);
 
   }
 
-  finById(id){
-    return this.http.get(this.baseurl + 'findById/' + id );
+  findByCin(cin) {
+    return this.http.get(this.baseurl + 'findByCin/' + cin );
   }
 }

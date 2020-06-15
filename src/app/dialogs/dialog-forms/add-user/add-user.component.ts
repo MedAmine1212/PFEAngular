@@ -61,21 +61,20 @@ export class AddUserComponent implements  AfterViewInit  {
   posts: Post[] = [];
   showOtherAddress: boolean;
   user: User = {
+    cin: '',
     addresses: [],
     birthDate: '',
-    cin: '',
     department: null,
     email: '',
-    fileName: '',
-    filePath: '',
     firstName: '',
     gender: '',
-    hireDay: undefined,
+    hireDay: null,
     name: '',
     phone: '',
     post: undefined,
+    userId: null,
     userConfigs: [],
-    userId: null
+    image: []
   };
   address1: Address = {
     addressId: null,
@@ -96,8 +95,8 @@ export class AddUserComponent implements  AfterViewInit  {
     zipCode: null
   };
   imgURL: any;
-   imagePath: FileList;
-   message: string;
+  imagePath: FileList;
+  message: string;
   constructor(private themeChanger: ThemeChangerService,
               public dialogRef: MatDialogRef<AddUserComponent>,
               private userConfigService: UserConfigsService,
@@ -126,10 +125,10 @@ export class AddUserComponent implements  AfterViewInit  {
     this.showOtherAddress = false;
     this.user.gender = 'male';
     setTimeout(() => {
-    this.createFirstFormGroup();
-    this.createSecondFormGroup();
-    this.createThirdFormGroup();
-    this.createFourthFormGroup();
+      this.createFirstFormGroup();
+      this.createSecondFormGroup();
+      this.createThirdFormGroup();
+      this.createFourthFormGroup();
     }, 600);
     this.postService.list().subscribe(posts => {
       for (const post of posts) {
@@ -227,14 +226,12 @@ export class AddUserComponent implements  AfterViewInit  {
     }, error => console.log(error));
 
     // add user
-
-    this.userService.fileUpload(this.selectedFile).subscribe( file => {
-            this.imagePath = file[0];
-            this.imageName = file[1];
-            this.userService.add(this.user).subscribe(() => {
-            }, error1 => console.log('erreur user add ' + error1));
-      });
-
+    console.log(this.user);
+    this.userService.add(this.user).subscribe(user => {
+      // @ts-ignore
+      this.upload(user.userId);
+      this.userAddedSuccessfully();
+    }, error1 => console.log('erreur user add ' + error1));
   }
 
   userAddedSuccessfully() {
@@ -456,34 +453,33 @@ export class AddUserComponent implements  AfterViewInit  {
     this.selectedFile = event.target.files[0];
   }
 
-  getImage() {
-      this.imageService.getImage(this.imageName)
-        .subscribe(
-          res => {
-            this.retrieveResonse = res;
-            this.base64Data = this.retrieveResonse.picByte;
-            this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
+
+
+  upload(id) {
+    console.log(this.selectedFile);
+    this.uploadImageData = new FormData();
+    this.uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
+    this.imageName = this.selectedFile.name;
+    this.imageService.uploadImage(this.uploadImageData, id)
+      .subscribe((response) => {
+          if (response.status === 200) {
+            this.getImage(id);
           }
-          , error => console.log(error)
-        );
-      this.imageService.finById(1)
+        }
+        , error => console.log(error)
+      );
+  }
+  getImage(id) {
+    this.imageService.findImageById(id)
       .subscribe(
         res => {
+          console.log(res);
           this.retrieveResonse = res;
           this.base64Data = this.retrieveResonse.picByte;
           this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
         }
         , error => console.log(error)
       );
-
-  }
-
-  onUpload() {
-    console.log(this.selectedFile);
-    this.uploadImageData = new FormData();
-    this.uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
-    this.imageName = this.selectedFile.name;
-    console.log(this.imageName);
 
   }
 
@@ -508,10 +504,5 @@ export class AddUserComponent implements  AfterViewInit  {
       console.log(this.imagePath);
       console.log(this.imgURL);
     };
-    this.userService.fileUpload(this.selectedFile).subscribe( file => {
-      this.imagePath = file[0];
-      this.imageName = file[1];
-      console.log(file);
-    });
   }
 }

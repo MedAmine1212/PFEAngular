@@ -8,14 +8,17 @@ import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.ser
 import {UserConfigs} from '../../models/UserConfigs';
 import {UserConfigsService} from '../../services/UserConfigs/user-configs.service';
 import {User} from '../../models/User';
-import {ImageService} from '../../services/image.service';
 import {Image} from '../../models/Image';
+import {ImageService} from '../../services/image/image.service';
+
 
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css']
 })
+
+
 export class NavComponent implements OnInit {
   user: User = new User();
   isLoggedIn;
@@ -24,7 +27,8 @@ export class NavComponent implements OnInit {
   image: any;
   retrieveResonse: any;
   base64Data: any;
-  imageModel : Image;
+  imageModel ;
+   retrievedImage: any;
   constructor(
     private userConfigsService: UserConfigsService,
     private themeChanger: ThemeChangerService,
@@ -48,17 +52,21 @@ export class NavComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoggedIn = this.auth.loggedIn() ;
-    this.imageService.getImage('miro.png').subscribe(
 
-      img => {
-        // @ts-ignore
-        this.imageModel.name = img.name;
-        // @ts-ignore
-        this.imageModel.picByte = 'data:image/jpg;base64,' + img.picByte;
-        // this.image = 'data:image/jpg;base64,' + this.imageModel.picByte;
-        console.log(this.imageModel);
-      }
+    this.userService.findUserWithToken().subscribe(user => {
+      // @ts-ignore
+      this.imageService.findImageById(user.userId).subscribe(
+
+        img => {
+          // @ts-ignore
+          this.retrieveResonse = img;
+          this.base64Data = this.retrieveResonse.picByte;
+          this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
+
+        }
       );
+    });
+
 
   }
 

@@ -11,6 +11,7 @@ import {EmployeeDetailsComponent} from '../../dialogs/employee-details/employee-
 import {DeleteDialogComponent} from '../../dialogs/delete-dialog/delete-dialog.component';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
+import {ImageService} from '../../services/image/image.service';
 @Component({
   selector: 'app-employees',
   templateUrl: './employees.component.html',
@@ -26,9 +27,10 @@ export class EmployeesComponent implements OnInit {
   chefDep: User;
   users: User[];
   usersForDep: User[];
+  usersId;
   private deleteId: number;
   constructor(private themeChanger: ThemeChangerService, public dialog: MatDialog, public router: Router,
-              private departmentService: DepartmentService, private userService: UserService, private sanitizer: DomSanitizer) {
+              private departmentService: DepartmentService, private userService: UserService, private imageService: ImageService) {
     if (this.router.url === '/RemoteMonitoring/(mainCon:Departments)') {
       this.clickedDep = new Department();
       this.clickedDep.depId = -1;
@@ -39,16 +41,17 @@ export class EmployeesComponent implements OnInit {
       this.users = [];
     }
   }
-  sanitizeImageUrl(imageUrl: string): SafeUrl {
-    return this.sanitizer.bypassSecurityTrustUrl(imageUrl);
-  }
+
 
   ngOnInit(): void {
+    this.usersId = [];
+
+
+
     this.userService.list().subscribe(users => {
       console.log(users);
-    })
+    });
     this.showHideInput = false;
-    console.log('qsdqsdqsdqs' + this.thisIsEmp);
     if (this.router.url === '/RemoteMonitoring/(mainCon:Employees)'
         || this.router.url === '/RemoteMonitoring/(mainCon:Absences)' || this.router.url === '/RemoteMonitoring') {
       this.reloadData();
@@ -159,6 +162,18 @@ export class EmployeesComponent implements OnInit {
         this.outPutData.emit();
       } else {
         this.users = r;
+
+        for (const emp of this.users) {
+          this.imageService.findImageById(emp.userId).subscribe(
+            img => {
+              const retrieveResonse = img;
+              // @ts-ignore
+              const base64Data = retrieveResonse.picByte;
+              const userImage = 'data:image/jpeg;base64,' + base64Data;
+              this.usersId.push(userImage);
+            });
+        }
+        console.log(this.usersId);
       }
     });
   }
@@ -202,8 +217,15 @@ export class EmployeesComponent implements OnInit {
   getTheme() {
     return this.themeChanger.getTheme();
   }
-
-  showImage() {
-    return this.sanitizeImageUrl("C:\\Users\\Bassem's PC\\Desktop\\1.png");
+  showImage(id: number) {
+    // this.imageService.findImageById(id).subscribe(
+    //   img => {
+    //     const retrieveResonse = img;
+    //     // @ts-ignore
+    //     const base64Data = retrieveResonse.picByte;
+    //     const userImage = 'data:image/jpeg;base64,' + base64Data;
+    //     return userImage;
+    //   });
   }
+
 }

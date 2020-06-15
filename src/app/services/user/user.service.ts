@@ -20,7 +20,7 @@ export class UserService {
   }
 
   add(user: User) {
-    return this.http.post(this.baseurl + 'add', user );
+    return this.http.post(this.baseurl + 'add', user);
   }
 
   list(): Observable<any> {
@@ -54,12 +54,10 @@ export class UserService {
     return this.http.post(this.baseurl + 'password/' + user.username, changePassword, {headers: this.headers});
   }
   fileUpload(file) {
-    this.headers = new HttpHeaders({Authorization: 'Bearer ' + localStorage.token});
+    // this.headers = new HttpHeaders({Authorization: 'Bearer ' + localStorage.token});
     const formdata = new FormData();
     formdata.append('file', file);
-    return this.http.post(this.baseurl + 'upload', formdata, {
-      headers: this.headers
-    });
+    return this.http.post(this.baseurl + 'upload', formdata);
   }
 }
 
