@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Schedule} from '../../models/Schedule';
 import {Observable} from 'rxjs';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ScheduleService {
 
-  private baseUrl = 'http://localhost:81/schedule/';
+  private baseUrl = environment.ipAddress + environment.port + '/schedule/';
   private headers: HttpHeaders;
   constructor(private http: HttpClient) { }
 

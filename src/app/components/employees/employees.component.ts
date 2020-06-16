@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {Department} from '../../models/Department';
 import {User} from '../../models/User';
@@ -16,7 +16,6 @@ import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.ser
   styleUrls: ['./employees.component.css'],
 })
 export class EmployeesComponent implements OnInit {
-
   @Output() outPutData = new EventEmitter<any>();
   clickedDep: Department;
   thisIsEmp: boolean;
@@ -26,7 +25,9 @@ export class EmployeesComponent implements OnInit {
   users: User[];
   usersForDep: User[];
   private deleteId: number;
-  constructor(private themeChanger: ThemeChangerService, public dialog: MatDialog, public router: Router,
+  showUsers: boolean;
+  constructor(
+              private themeChanger: ThemeChangerService, public dialog: MatDialog, public router: Router,
               private departmentService: DepartmentService, private userService: UserService) {
     if (this.router.url === '/RemoteMonitoring/(mainCon:Departments)') {
       this.clickedDep = new Department();
@@ -40,7 +41,7 @@ export class EmployeesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.showUsers = true;
     this.showHideInput = false;
     console.log('qsdqsdqsdqs' + this.thisIsEmp);
     if (this.router.url === '/RemoteMonitoring/(mainCon:Employees)'
@@ -48,6 +49,7 @@ export class EmployeesComponent implements OnInit {
       this.reloadData();
     }
   }
+
   setDepartment(dep: Department) {
     this.users = [];
     this.chefDep = null;
@@ -135,13 +137,13 @@ export class EmployeesComponent implements OnInit {
   }
 
   private reloadData() {
-    this.users = [];
-
+    console.log('reloading employees..');
     this.userService.list().subscribe(r => {
       if (this.router.url === '/RemoteMonitoring/(mainCon:Departments)' && this.clickedDep.depId !== -1) {
         this.chefDep = null;
         this.setChefDep(this.clickedDep.depId);
         this.usersForDep = r;
+        this.users = [];
         for (const emp of this.usersForDep) {
           if (emp.department.depId === this.clickedDep.depId) {
             this.users.push(emp);
@@ -151,7 +153,16 @@ export class EmployeesComponent implements OnInit {
         this.clickedDep.users = this.users;
         this.outPutData.emit();
       } else {
-        this.users = r;
+        this.userService.findUserWithToken().subscribe(us => {
+          this.users = [];
+          for (const emp of r) {
+            // @ts-ignore
+            if (emp.userId !== us.userId) {
+              this.users.push(emp);
+            }
+          }
+        });
+
       }
     });
   }
@@ -193,6 +204,11 @@ export class EmployeesComponent implements OnInit {
   }
 
   getTheme() {
-    return this.themeChanger.getTheme();;
+    return this.themeChanger.getTheme();
+  }
+
+  reloadFromSocket() {
+    console.log('Reloading users from');
+    this.reloadData();
   }
 }

@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {Login} from '../../models/Login';
+import {environment} from '../../../environments/environment';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService  {
-  url = 'http://localhost:81/auth/';
+  url = environment.ipAddress + environment.port + '/auth/';
   jwt: string ;
   email: string;
   roles: Array<string> ;

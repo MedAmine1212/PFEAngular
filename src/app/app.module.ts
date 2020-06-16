@@ -21,7 +21,7 @@ import { MotifsAbsencesComponent } from './components/motifs-absences/motifs-abs
 import {HttpClientModule} from '@angular/common/http';
 import {MatTreeModule} from '@angular/material/tree';
 import {MatIconModule} from '@angular/material/icon';
-import {MatProgressBar, MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatButtonModule} from '@angular/material/button';
 import { AddUserComponent } from './dialogs/dialog-forms/add-user/add-user.component';
@@ -49,6 +49,9 @@ import {AuthenticationGuard} from './guard/authentication.guard';
 import { SchedulesComponent } from './components/schedules/schedules.component';
 import { PlanningDetailsComponent } from './components/planning-details/planning-details.component';
 import { AddScheduleComponent } from './dialogs/dialog-forms/add-schedule/add-schedule.component';
+import {MatTableModule} from "@angular/material/table";
+import {WebSocketAPIService} from "./services/webSocketAPI/web-socket-api.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 
 @NgModule({
@@ -107,10 +110,11 @@ import { AddScheduleComponent } from './dialogs/dialog-forms/add-schedule/add-sc
     MatFormFieldModule,
     NgxMaterialTimepickerModule,
     MatCheckboxModule,
+    MatTableModule,
 
 
   ],
-  providers: [AuthenticationGuard],
+  providers: [AuthenticationGuard, MatSnackBar],
   bootstrap: [AppComponent],
   entryComponents: [
     AddUserComponent,

@@ -1,15 +1,21 @@
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
-import {AppComponent} from '../../app.component';
+import {Injectable} from '@angular/core';
+import {Subject} from 'rxjs';
+import {environment} from '../../../environments/environment';
 
+@Injectable({
+  providedIn: 'root'
+})
 
 export class WebSocketAPIService {
-  webSocketEndPoint = 'http://localhost:81/ws';
+  private remoteMonitoringCompSource = new Subject<any>();
+  // Observable string streams
+  remoteMonitoringComp = this.remoteMonitoringCompSource.asObservable();
+  webSocketEndPoint = environment.ipAddress + environment.port + '/ws';
   topic = '/topic/greetings';
   stompClient: any;
-  appComponent: AppComponent;
-  constructor(appComponent: AppComponent) {
-    this.appComponent = appComponent;
+  constructor() {
   }
   _connect() {
     console.log('Initialize WebSocket Connection');
@@ -47,6 +53,8 @@ export class WebSocketAPIService {
 
   onMessageReceived(message) {
     console.log('Message Recieved from Server :: ' + message);
-    this.appComponent.handleMessage(JSON.stringify(message.body));
+    this.remoteMonitoringCompSource.next(message);
   }
+
+
 }

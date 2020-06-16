@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Image} from '../../models/Image';
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ImageService {
-  private baseurl = 'http://localhost:81/image/';
+  private baseurl = environment.ipAddress + environment.port + '/image/';
   private headers: HttpHeaders;
   message: string;
 

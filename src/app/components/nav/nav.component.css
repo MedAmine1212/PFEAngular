@@ -12,3 +12,13 @@
   background-color:rgb(72,78,83) !important;
 }
 
+.notifBell{
+  cursor: pointer;
+  margin-left: 20px;
+  margin-right: -20px;
+  font-size: 20px;
+  color: grey !important;
+}
+.fa-bell:hover{
+  color: #007bff !important;
+}
