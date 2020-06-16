@@ -133,17 +133,17 @@ public reloadFromWebSocket(message) {
       this.openSnackBar('Departments updated', null);
       this.departmentComponent.reloadData();
     } else if (webSocketMessage === 'userConfig') {
-      this.openSnackBar('Theme updated', null);
       this.userService.findUserWithToken().subscribe(r => {
         // @ts-ignore
         const user: User = r;
         if (user.userId === Number.parseInt(JSON.parse(message.body).senderId, 0)) {
+          this.openSnackBar('Theme updated', null);
           // tslint:disable-next-line:triple-equals
           let theme: boolean;
           theme = (/true/i).test(JSON.parse(message.body).theme);
           // tslint:disable-next-line:triple-equals
           if (theme != this.themeChanger.getTheme()) {
-            this.themeChanger.setTheme(theme);
+            this.themeChanger.setTheme(!this.themeChanger.getTheme());
           }
         }
       }, error => console.log(error));
@@ -151,13 +151,16 @@ public reloadFromWebSocket(message) {
   }
 }
   openSnackBar(message: string, action) {
-    const config = new MatSnackBarConfig();
-    if (!this.themeChanger.getTheme()) {
-       config.panelClass = ['snackBarDark'];
-    } else {
-      config.panelClass = ['snackBar'];
+    setTimeout(() => {
+      const config = new MatSnackBarConfig();
+      if (this.themeChanger.getTheme()) {
+        config.panelClass = ['snackBar'];
+      } else {
+        config.panelClass = ['snackBarDark'];
+      }
+      config.duration = 3000;
+      this.snackBar.open(message, action, config);
+
+    }, 500);
     }
-    config.duration = 3000;
-    this.snackBar.open(message, action, config);
-  }
 }

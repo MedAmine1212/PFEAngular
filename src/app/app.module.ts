@@ -49,9 +49,9 @@ import {AuthenticationGuard} from './guard/authentication.guard';
 import { SchedulesComponent } from './components/schedules/schedules.component';
 import { PlanningDetailsComponent } from './components/planning-details/planning-details.component';
 import { AddScheduleComponent } from './dialogs/dialog-forms/add-schedule/add-schedule.component';
-import {MatTableModule} from "@angular/material/table";
-import {WebSocketAPIService} from "./services/webSocketAPI/web-socket-api.service";
-import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatTableModule} from '@angular/material/table';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatBadgeModule} from "@angular/material/badge";
 
 
 @NgModule({
@@ -76,7 +76,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
     SchedulesComponent,
     PlanningDetailsComponent,
     AddScheduleComponent,
-    ProfileComponent
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -111,6 +111,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
     NgxMaterialTimepickerModule,
     MatCheckboxModule,
     MatTableModule,
+    MatBadgeModule,
 
 
   ],

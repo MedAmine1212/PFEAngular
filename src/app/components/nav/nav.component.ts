@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {RemoteMonitoringComponent} from '../remote-monitoring/remote-monitoring.component';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../../services/Authentication/authentication.service';
@@ -23,6 +23,8 @@ export class NavComponent implements OnInit {
   image: any;
   retrieveResonse: any;
   base64Data: any;
+  notifs: number[];
+  notViewdNotifs: number;
 
   constructor(
     private userConfigsService: UserConfigsService,
@@ -32,6 +34,9 @@ export class NavComponent implements OnInit {
     private userService: UserService,
     private imageService: ImageService
   ) {
+    this.notifs = [];
+    this.notifs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    this.notViewdNotifs = this.notifs.length;
     this.findUser();
   }
 
@@ -52,7 +57,7 @@ export class NavComponent implements OnInit {
       img => {
         this.retrieveResonse = img;
         this.base64Data = this.retrieveResonse.picByte;
-        this.image = 'data:image/jpeg;base64,' + this.base64Data
+        this.image = 'data:image/jpeg;base64,' + this.base64Data;
         console.log(img);
       }
       , error =>  console.log(error));
@@ -77,5 +82,4 @@ export class NavComponent implements OnInit {
           console.log('updated');
         }, error => console.log(error));
     }
-
 }
