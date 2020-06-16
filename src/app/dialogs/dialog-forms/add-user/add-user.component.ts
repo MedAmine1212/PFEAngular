@@ -74,7 +74,7 @@ export class AddUserComponent implements  AfterViewInit  {
     post: undefined,
     userId: null,
     userConfigs: [],
-    image: []
+    image: ''
   };
   address1: Address = {
     addressId: null,
@@ -232,6 +232,34 @@ export class AddUserComponent implements  AfterViewInit  {
       this.upload(user.userId);
       this.userAddedSuccessfully();
     }, error1 => console.log('erreur user add ' + error1));
+  }
+
+  upload(id) {
+    console.log(this.selectedFile);
+    this.uploadImageData = new FormData();
+    this.uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
+    this.imageName = this.selectedFile.name;
+    this.imageService.uploadImage(this.uploadImageData, id)
+      .subscribe((response) => {
+          if (response.status === 200) {
+            // this.getImage(id);
+          }
+        }
+        , error => console.log(error)
+      );
+  }
+  getImage(id) {
+    this.imageService.findImageById(id)
+      .subscribe(
+        res => {
+          console.log(res);
+          this.retrieveResonse = res;
+          this.base64Data = this.retrieveResonse.picByte;
+          this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
+        }
+        , error => console.log(error)
+      );
+
   }
 
   userAddedSuccessfully() {
@@ -455,33 +483,7 @@ export class AddUserComponent implements  AfterViewInit  {
 
 
 
-  upload(id) {
-    console.log(this.selectedFile);
-    this.uploadImageData = new FormData();
-    this.uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
-    this.imageName = this.selectedFile.name;
-    this.imageService.uploadImage(this.uploadImageData, id)
-      .subscribe((response) => {
-          if (response.status === 200) {
-            this.getImage(id);
-          }
-        }
-        , error => console.log(error)
-      );
-  }
-  getImage(id) {
-    this.imageService.findImageById(id)
-      .subscribe(
-        res => {
-          console.log(res);
-          this.retrieveResonse = res;
-          this.base64Data = this.retrieveResonse.picByte;
-          this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
-        }
-        , error => console.log(error)
-      );
 
-  }
 
   onSelectFile(files: FileList) {
     if (files.length === 0) {

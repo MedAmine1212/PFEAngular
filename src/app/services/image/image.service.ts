@@ -27,4 +27,8 @@ export class ImageService {
   findByCin(cin) {
     return this.http.get(this.baseurl + 'findByCin/' + cin );
   }
+
+  load(name){
+    return this.http.get(this.baseurl + 'load/' + name);
+  }
 }

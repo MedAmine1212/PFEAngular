@@ -55,7 +55,7 @@ export class NavComponent implements OnInit {
 
     this.userService.findUserWithToken().subscribe(user => {
       // @ts-ignore
-      this.imageService.findImageById(user.userId).subscribe(
+      this.imageService.load(user.image).subscribe(
 
         img => {
           // @ts-ignore

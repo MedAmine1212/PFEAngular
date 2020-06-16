@@ -12,6 +12,21 @@ import {DeleteDialogComponent} from '../../dialogs/delete-dialog/delete-dialog.c
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 import {ImageService} from '../../services/image/image.service';
+import {forkJoin, from, Observable} from 'rxjs';
+
+
+export class Image {
+  constructor(imageName: string, imageFile: any) {
+    this.imageName = imageName;
+    this.imageFile = imageFile;
+  }
+
+  imageName ;
+  imageFile: any;
+}
+
+
+
 @Component({
   selector: 'app-employees',
   templateUrl: './employees.component.html',
@@ -27,8 +42,10 @@ export class EmployeesComponent implements OnInit {
   chefDep: User;
   users: User[];
   usersForDep: User[];
-  usersId;
+  images: Image[] = [];
+  image: Image ;
   private deleteId: number;
+   img: any ;
   constructor(private themeChanger: ThemeChangerService, public dialog: MatDialog, public router: Router,
               private departmentService: DepartmentService, private userService: UserService, private imageService: ImageService) {
     if (this.router.url === '/RemoteMonitoring/(mainCon:Departments)') {
@@ -44,19 +61,33 @@ export class EmployeesComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.usersId = [];
-
-
-
-    this.userService.list().subscribe(users => {
-      console.log(users);
-    });
     this.showHideInput = false;
     if (this.router.url === '/RemoteMonitoring/(mainCon:Employees)'
         || this.router.url === '/RemoteMonitoring/(mainCon:Absences)' || this.router.url === '/RemoteMonitoring') {
       this.reloadData();
     }
   }
+  getImages(users: User[]) {
+    const img: Image[] = [];
+    for (const emp of users) {
+      const imageName = emp.image;
+      const image = null;
+      img.push(new Image(imageName, image));
+    }
+    this.images = img;
+    for (const emp of this.images) {
+      this.imageService.load(emp.imageName).subscribe(
+        // tslint:disable-next-line:no-shadowed-variable
+        img  => {
+          // @ts-ignore
+          const base64Data = img.picByte;
+          this.images.forEach(imageuser => {
+            if (imageuser.imageName === emp.imageName) { imageuser.imageFile =  'data:image/jpeg;base64,' + base64Data; }
+          });
+        });
+    }
+  }
+
   setDepartment(dep: Department) {
     this.users = [];
     this.chefDep = null;
@@ -65,6 +96,7 @@ export class EmployeesComponent implements OnInit {
     if (this.clickedDep.depId !== -1) {
       this.setChefDep(this.clickedDep.depId);
       this.users = this.clickedDep.users;
+      this.getImages(this.clickedDep.users);
     }
   }
   setChefDep(cDepId: number) {
@@ -144,7 +176,7 @@ export class EmployeesComponent implements OnInit {
   }
 
   private reloadData() {
-    this.users = [];
+
 
     this.userService.list().subscribe(r => {
       if (this.router.url === '/RemoteMonitoring/(mainCon:Departments)' && this.clickedDep.depId !== -1) {
@@ -158,24 +190,15 @@ export class EmployeesComponent implements OnInit {
         }
         this.clickedDep.users = [];
         this.clickedDep.users = this.users;
+
+        console.log(this.users);
         console.log(this.users);
         this.outPutData.emit();
       } else {
         this.users = r;
-
-        for (const emp of this.users) {
-          this.imageService.findImageById(emp.userId).subscribe(
-            img => {
-              const retrieveResonse = img;
-              // @ts-ignore
-              const base64Data = retrieveResonse.picByte;
-              const userImage = 'data:image/jpeg;base64,' + base64Data;
-              this.usersId.push(userImage);
-            });
-        }
-        console.log(this.usersId);
-      }
-    });
+        this.getImages(this.users);
+    }
+  });
   }
 
   openDetailsDialog(emp: User) {
@@ -217,15 +240,12 @@ export class EmployeesComponent implements OnInit {
   getTheme() {
     return this.themeChanger.getTheme();
   }
-  showImage(id: number) {
-    // this.imageService.findImageById(id).subscribe(
-    //   img => {
-    //     const retrieveResonse = img;
-    //     // @ts-ignore
-    //     const base64Data = retrieveResonse.picByte;
-    //     const userImage = 'data:image/jpeg;base64,' + base64Data;
-    //     return userImage;
-    //   });
+  showImage(name) {
+      for (const img of this.images) {
+        if (img.imageName === name ) {
+          return img.imageFile;
+        }
+      }
   }
 
 }
