@@ -39,9 +39,11 @@ input:focus, textarea , button, select{
   outline: none !important;
 }
 .cdk-overlay-container {
+  margin-top:13px !important;
   z-index: 500 !important;
 }
 .mat-dialog-container {
+  z-index: 1090 !important;
   margin-top: 28px !important;
 }
 /*!
@@ -929,7 +931,7 @@ input[type="submit"].btn-block,input[type="reset"].btn-block,input[type="button"
 @media (max-width: 575.98px){.navbar-expand-sm>.container,.navbar-expand-sm>.container-fluid{padding-right:0;padding-left:0 }
 }
 .navbar{
-  z-index: 1099 !important;
+  z-index: 500 !important;
 }
 @media (min-width: 576px){.navbar-expand-sm{flex-flow:row nowrap;justify-content:flex-start }
   .navbar-expand-sm .navbar-nav{flex-direction:row }
