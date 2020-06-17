@@ -1,6 +1,6 @@
 .menuContent{
   width: 280px;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 .toggle{
   font-size: 12px;
@@ -11,12 +11,13 @@
   background-color:rgb(72,78,83) !important;
 }
 .notifDiv{
-  width: 280px;
-  margin-top: 40px;
+  width: 290px;
+  margin-top: 10px;
   min-height: 300px;
 }
 .noNotifMessage {
   padding-top: 95px;
+  padding-left: 20px;
   font-size: 16px;
 }
 
@@ -28,4 +29,15 @@
 }
 .fa-bell:hover{
   color: #007bff !important;
+}
+::ng-deep .notifMenu {
+  min-width: 320px !important;
+  max-height: 600px !important;
+}
+.notifContainer{
+  width: 96%;
+  float: left;
+  margin-top: -20px !important;
+  padding:15px ;
+  border-radius: 10px;
 }

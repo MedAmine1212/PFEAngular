@@ -12,6 +12,7 @@ import {WebSocketAPIService} from '../../services/webSocketAPI/web-socket-api.se
 import {User} from '../../models/User';
 import {TimetablesComponent} from '../timetables/timetables.component';
 import {MatSnackBar, MatSnackBarConfig} from '@angular/material/snack-bar';
+import {NavComponent} from '../nav/nav.component';
 @Component({
   selector: 'app-remmote-monitoring',
   animations: [
@@ -62,6 +63,7 @@ export class RemoteMonitoringComponent implements OnInit {
   @ViewChild(EmployeesComponent) employeesComponent: EmployeesComponent;
   @ViewChild(DepartmentsComponent) departmentComponent: DepartmentsComponent;
   @ViewChild(TimetablesComponent) timetablesComponent: TimetablesComponent;
+  @ViewChild(NavComponent) navComponent: NavComponent;
 
   ngOnInit() {
     this.userService.findUserWithToken().subscribe( ress => {
@@ -114,41 +116,43 @@ sendMessage() {
 
 
 public reloadFromWebSocket(message) {
-
-  const webSocketMessage = JSON.parse(message.body).socketMessage;
-  console.log('remote monitoring: refreshing...');
-  console.log('-----');
-  console.log('-------------');
-  console.log('---------------------');
-  if (webSocketMessage == null) {
-    console.log('ERROR MESSAGE');
-  } else {
-    if (webSocketMessage === 'employee') {
-    this.openSnackBar('Employees updated', null);
-    this.employeesComponent.reloadFromSocket();
-    } else if (webSocketMessage === 'timetable') {
-      this.openSnackBar('Time table updated', null);
-      this.timetablesComponent.reloadFromSocket();
-    } else if (webSocketMessage === 'department') {
-      this.openSnackBar('Departments updated', null);
-      this.departmentComponent.reloadData();
-    } else if (webSocketMessage === 'userConfig') {
-      this.userService.findUserWithToken().subscribe(r => {
-        // @ts-ignore
-        const user: User = r;
-        if (user.userId === Number.parseInt(JSON.parse(message.body).senderId, 0)) {
-          this.openSnackBar('Theme updated', null);
-          // tslint:disable-next-line:triple-equals
-          let theme: boolean;
-          theme = (/true/i).test(JSON.parse(message.body).theme);
-          // tslint:disable-next-line:triple-equals
-          if (theme != this.themeChanger.getTheme()) {
-            this.themeChanger.setTheme(!this.themeChanger.getTheme());
+  this.userService.findUserWithToken().subscribe(r => {
+    // @ts-ignore
+    const user: User = r;
+    const webSocketMessage = JSON.parse(message.body).socketMessage;
+    console.log('remote monitoring: refreshing...');
+    console.log('-----');
+    console.log('-------------');
+    console.log('---------------------');
+    if (webSocketMessage == null) {
+      console.log('ERROR MESSAGE');
+    } else {
+      if (webSocketMessage === 'employee') {
+        this.openSnackBar('Employees updated', null);
+        this.employeesComponent.reloadFromSocket();
+      } else if (webSocketMessage === 'timetable') {
+        this.openSnackBar('Time table updated', null);
+        this.timetablesComponent.reloadFromSocket();
+      } else if (webSocketMessage === 'department') {
+        this.openSnackBar('Departments updated', null);
+        this.departmentComponent.reloadData();
+      } else if (webSocketMessage === 'userConfig') {
+         if (user.userId === Number.parseInt(JSON.parse(message.body).senderId, 0)) {
+            this.openSnackBar('Theme updated', null);
+            // tslint:disable-next-line:triple-equals
+            let theme: boolean;
+            theme = (/true/i).test(JSON.parse(message.body).theme);
+            // tslint:disable-next-line:triple-equals
+            if (theme != this.themeChanger.getTheme()) {
+              this.themeChanger.setTheme(!this.themeChanger.getTheme());
+            }
           }
         }
-      }, error => console.log(error));
-    }
-  }
+      if (webSocketMessage !== 'userConfig') {
+        this.navComponent.findUser();
+      }
+      }
+    }, error => console.log(error));
 }
   openSnackBar(message: string, action) {
     setTimeout(() => {
