@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {Department} from '../../models/Department';
 import {User} from '../../models/User';
@@ -33,7 +33,6 @@ export class Image {
   styleUrls: ['./employees.component.css'],
 })
 export class EmployeesComponent implements OnInit {
-
   @Output() outPutData = new EventEmitter<any>();
   clickedDep: Department;
   thisIsEmp: boolean;
@@ -45,9 +44,11 @@ export class EmployeesComponent implements OnInit {
   images: Image[] = [];
   image: Image ;
   private deleteId: number;
-   img: any ;
-  constructor(private themeChanger: ThemeChangerService, public dialog: MatDialog, public router: Router,
-              private departmentService: DepartmentService, private userService: UserService, private imageService: ImageService) {
+  showUsers: boolean;
+  img: any ;
+  constructor(
+              private themeChanger: ThemeChangerService, public dialog: MatDialog, public router: Router,
+              private departmentService: DepartmentService, private userService: UserService,private imageService: ImageService) {
     if (this.router.url === '/RemoteMonitoring/(mainCon:Departments)') {
       this.clickedDep = new Department();
       this.clickedDep.depId = -1;
@@ -59,14 +60,16 @@ export class EmployeesComponent implements OnInit {
     }
   }
 
-
   ngOnInit(): void {
+    this.showUsers = true;
     this.showHideInput = false;
+    console.log('qsdqsdqsdqs' + this.thisIsEmp);
     if (this.router.url === '/RemoteMonitoring/(mainCon:Employees)'
         || this.router.url === '/RemoteMonitoring/(mainCon:Absences)' || this.router.url === '/RemoteMonitoring') {
       this.reloadData();
     }
   }
+
   getImages(users: User[]) {
     const img: Image[] = [];
     for (const emp of users) {
@@ -176,13 +179,13 @@ export class EmployeesComponent implements OnInit {
   }
 
   private reloadData() {
-
-
+    console.log('reloading employees..');
     this.userService.list().subscribe(r => {
       if (this.router.url === '/RemoteMonitoring/(mainCon:Departments)' && this.clickedDep.depId !== -1) {
         this.chefDep = null;
         this.setChefDep(this.clickedDep.depId);
         this.usersForDep = r;
+        this.users = [];
         for (const emp of this.usersForDep) {
           if (emp.department.depId === this.clickedDep.depId) {
             this.users.push(emp);
@@ -190,13 +193,18 @@ export class EmployeesComponent implements OnInit {
         }
         this.clickedDep.users = [];
         this.clickedDep.users = this.users;
-
-        console.log(this.users);
-        console.log(this.users);
         this.outPutData.emit();
       } else {
-        this.users = r;
-        this.getImages(this.users);
+        this.userService.findUserWithToken().subscribe(us => {
+          this.users = [];
+          for (const emp of r) {
+            // @ts-ignore
+            if (emp.userId !== us.userId) {
+              this.users.push(emp);
+            }
+          }
+          this.getImages(this.users);
+        });
     }
   });
   }
@@ -239,6 +247,11 @@ export class EmployeesComponent implements OnInit {
 
   getTheme() {
     return this.themeChanger.getTheme();
+  }
+
+  reloadFromSocket() {
+    console.log('Reloading users from');
+    this.reloadData();
   }
   showImage(name) {
       for (const img of this.images) {

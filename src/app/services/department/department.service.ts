@@ -3,13 +3,14 @@ import {HttpClient} from '@angular/common/http';
 import {Department} from '../../models/Department';
 import {Observable} from 'rxjs';
 import {User} from '../../models/User';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DepartmentService {
 
-  private baseUrl = 'http://localhost:81/department/';
+  private baseUrl = environment.ipAddress + environment.port + '/department/';
   constructor(private http: HttpClient) { }
 
   add(department: Department) {

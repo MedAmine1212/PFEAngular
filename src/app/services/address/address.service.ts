@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Address} from '../../models/Address';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AddressService {
-
-  private baseUrl = 'http://localhost:81/address/';
+  private baseUrl = environment.ipAddress + environment.port + '/address/';
   private headers: HttpHeaders;
   constructor(private http: HttpClient) { }
 

@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {User} from '../../models/User';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private baseurl = 'http://localhost:81/user/';
+  private baseurl = environment.ipAddress + environment.port + '/user/';
   private headers: HttpHeaders;
 
   constructor(private http: HttpClient) {
@@ -29,6 +30,7 @@ export class UserService {
 
   remove(id) {
     // this.headers = new HttpHeaders({Authorization: 'Bearer ' + localStorage.token});
+
     return this.http.delete(this.baseurl + 'delete/' + id);
   }
 

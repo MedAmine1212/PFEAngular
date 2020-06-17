@@ -3,13 +3,14 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {User} from '../../models/User';
 import {UserConfigs} from '../../models/UserConfigs';
 import {Observable} from 'rxjs';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserConfigsService {
 
-  private baseurl = 'http://localhost:81/userConfigs/';
+  private baseurl = environment.ipAddress + environment.port + '/userConfigs/';
 
   constructor(private http: HttpClient) {
   }

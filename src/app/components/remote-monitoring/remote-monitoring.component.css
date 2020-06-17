@@ -138,3 +138,20 @@ body {
 }
 
 
+mat-form-field {
+  margin-right: 12px;
+}
+::ng-deep snack-bar-container.snackBar {
+  background: #f8f9fa !important;
+}
+
+::ng-deep .snackBar .mat-simple-snackbar {
+  color: #343a40;
+}
+::ng-deep snack-bar-container.snackBarDark {
+  background: #343a40 !important;
+}
+
+::ng-deep .snackBar .mat-simple-snackbarDark {
+  color: #f8f9fa;
+}

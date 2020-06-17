@@ -327,4 +327,9 @@ export class TimetablesComponent implements OnInit {
   getTheme() {
     return this.themeChanger.getTheme();
   }
+
+  reloadFromSocket() {
+    this.schComp.reloadData();
+    this.reloadData();
+  }
 }

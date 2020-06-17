@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Planning  } from '../../models/Planning';
 import {Observable} from 'rxjs';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlanningService {
 
-  private baseUrl = 'http://localhost:81/planning/';
+  private baseUrl = environment.ipAddress + environment.port + '/planning/';
   private headers: HttpHeaders;
   constructor(private http: HttpClient) { }
 

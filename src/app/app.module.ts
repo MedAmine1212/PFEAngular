@@ -107,10 +107,12 @@ import { AddScheduleComponent } from './dialogs/dialog-forms/add-schedule/add-sc
     MatFormFieldModule,
     NgxMaterialTimepickerModule,
     MatCheckboxModule,
+    MatTableModule,
+    MatBadgeModule,
 
 
   ],
-  providers: [AuthenticationGuard],
+  providers: [AuthenticationGuard, MatSnackBar],
   bootstrap: [AppComponent],
   entryComponents: [
     AddUserComponent,

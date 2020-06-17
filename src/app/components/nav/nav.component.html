@@ -54,39 +54,28 @@
           <li class="nav-item">
             <a [routerLink]="[{ outlets: {mainCon: ['TimeTables'] } }]" class="nav-link">Time Table</a>
           </li>
+          <li>
+            <mat-icon (click)="notViewdNotifs = notifs.length">autorenew</mat-icon>
+          </li>
         </ul>
       </div>
       <div class="header-btn-lg pr-0" style="float: right !important;">
         <div class="widget-content p-0" style="float: right">
           <div class="widget-content-wrapper">
             <div class="widget-content-left">
-              <div *ngIf="getTheme()" class="btn-group">
-                <button mat-button [matMenuTriggerFor]="menu" class="p-0 btn">
-                  <img width="48" height="45" class="rounded-circle" [src]="retrievedImage" alt="">
+              <div class="btn-group">
+                <button mat-button [matMenuTriggerFor]="menu" class="p-0 btn" >
+                  <img width="42" class="rounded-circle" [src]="retrievedImage" alt="">
                   <i class="fa fa-angle-down ml-2 opacity-8"></i>
                 </button>
-                <mat-menu  class="bg-dark" #menu="matMenu">
+                <mat-menu [class]="getTheme() ? 'bg-dark': ''" xPosition="before" #menu="matMenu">
                   <div class="menuContent">
-                    <button class="dropdown-item btnDark bg-dark" style="color:white" [routerLink]="[{ outlets: {mainCon: ['Profile'] } }]">User account</button>
+                    <button [ngClass]="getTheme() ? 'dropdown-item btnDark bg-dark': 'dropdown-item'" [ngStyle]="{'color': getTheme()? 'white' :''}" [routerLink]="[{ outlets: {mainCon: ['Profile'] } }]">User account</button>
                     <div tabindex="-1" class="dropdown-divider"></div>
-                    <button type="button" tabindex="0" (click)="logout()" class="dropdown-item btnDark bg-dark" style="color:white">Log out</button>
+                    <button type="button" tabindex="0" (click)="logout()" [class]="getTheme() ? 'btnDark': ''" [ngClass]="getTheme() ? 'dropdown-item bg-dark': 'dropdown-item'" [ngStyle]="{'color': getTheme()? 'white' :''}">Log out</button>
                   </div>
                 </mat-menu>
               </div>
-            <div *ngIf="!getTheme()" class="btn-group">
-              <button mat-button [matMenuTriggerFor]="menu2" class="p-0 btn">
-                <img width="48" height="45" class="rounded-circle" [src]="retrievedImage"  alt="">
-                <i class="fa fa-angle-down ml-2 opacity-8"></i>
-              </button>
-
-              <mat-menu  #menu2="matMenu">
-                <div class="menuContent">
-                  <button class="dropdown-item" [routerLink]="[{ outlets: {mainCon: ['Profile'] } }]">User account</button>
-                  <div tabindex="-1" class="dropdown-divider"></div>
-                  <button type="button" tabindex="0" (click)="logout()" class="dropdown-item">Log out</button>
-                </div>
-              </mat-menu>
-            </div>
           </div>
             <div class="widget-content-left  ml-3 header-user-info">
               <div class="widget-heading">
@@ -95,6 +84,28 @@
               <div *ngIf="this.user.post != null" class="widget-subheading">
                 {{this.user.post.postName}}
               </div>
+            </div>
+            <div>
+              <mat-icon matBadge="{{notViewdNotifs}}" matBadgeColor="warn" (click)="notViewdNotifs = null" [matMenuTriggerFor]="menu2" [ngStyle]="{'color': getTheme()? 'white' :'dimgrey'}" class="fa fa-bell notifBell"></mat-icon>
+              <mat-menu [class]="getTheme() ? 'notifMenu bg-dark': 'notifMenu'" #menu2="matMenu" xPosition="after">
+                <div class="notifDiv" style="text-align: center" *ngIf="notifs.length == 0">
+                  <div [ngStyle]="{'color': getTheme()? 'white' :'dimgrey'}" class="noNotifMessage"> No notifications to show</div>
+                </div>
+                <div class="notifDiv" *ngIf="notifs.length > 0">
+                  <h2 style="margin-left: 15px">
+                   <span [ngStyle]="{'color': getTheme()? 'white' :'dimgrey'}"> Notifications</span>
+                  </h2>
+                  <table style="width: 100%;" class="mb-0 table table-borderless table-hover " [ngClass]="getTheme()? 'table-dark': ''">
+                    <tbody>
+                    <tr *ngFor="let x of notifs">
+                  <td>
+                    <span [routerLink]="[{ outlets: {mainCon: ['Profile'] } }]">Notif</span>
+                  </td>
+                  </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </mat-menu>
             </div>
             <div style="margin-top: 4px;margin-left: 40px">
               <div class="swatch-holder bg-light switch-header-cs-class" mat-raised-button (click)="setTheme(false)" *ngIf="getTheme()" style="cursor: pointer" matTooltip="Light mode" data-class="bg-light sidebar-text-dark header-text-dark">
