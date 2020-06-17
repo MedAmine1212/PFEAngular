@@ -22,6 +22,7 @@ export class UserConfigsService {
   add(config: UserConfigs) {
       return this.http.post(this.baseurl + 'add', config );
     }
+
     update(id, config) {
       // this.headers = new HttpHeaders({Authorization: 'Bearer ' + localStorage.token});
       return this.http.put(this.baseurl + 'update/' + id, config);

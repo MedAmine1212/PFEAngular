@@ -10,6 +10,7 @@ import {UserConfigsService} from '../../services/UserConfigs/user-configs.servic
 import {User} from '../../models/User';
 import {Image} from '../../models/Image';
 import {ImageService} from '../../services/image/image.service';
+import {getSortHeaderNotContainedWithinSortError} from "@angular/material/sort/sort-errors";
 
 
 @Component({
@@ -38,7 +39,6 @@ export class NavComponent implements OnInit {
     private userService: UserService,
     private imageService: ImageService
   ) {
-    this.notifs = [];
     this.notifs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     this.notViewdNotifs = this.notifs.length;
     this.findUser();
@@ -49,6 +49,7 @@ export class NavComponent implements OnInit {
     this.userService.findUserWithToken().subscribe(res => { // @ts-ignore
       // @ts-ignore
       this.user = res ;
+      console.log(res);
     });
 
     console.log(this.jwt.getTokenExpirationDate(localStorage.token));
@@ -58,6 +59,7 @@ export class NavComponent implements OnInit {
     this.isLoggedIn = this.auth.loggedIn() ;
 
     this.userService.findUserWithToken().subscribe(user => {
+      console.log(user);
       // @ts-ignore
       this.imageService.load(user.image).subscribe(
 

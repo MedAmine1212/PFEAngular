@@ -1,7 +1,7 @@
 export class Notification {
   notifId: number;
-  notifName: number;
-  notifDesc: number;
+  notifName: string;
+  notifDesc: string;
   notifDate: string;
   isViewed: boolean;
 

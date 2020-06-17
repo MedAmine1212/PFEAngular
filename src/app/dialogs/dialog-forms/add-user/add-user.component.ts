@@ -74,7 +74,8 @@ export class AddUserComponent implements  AfterViewInit  {
     post: undefined,
     userId: null,
     userConfigs: [],
-    image: ''
+    image: '',
+    notifications: []
   };
   address1: Address = {
     addressId: null,
@@ -242,14 +243,14 @@ export class AddUserComponent implements  AfterViewInit  {
     this.imageService.uploadImage(this.uploadImageData, id)
       .subscribe((response) => {
           if (response.status === 200) {
-            // this.getImage(id);
+            console.log('Image uploaded successsfully');
           }
         }
         , error => console.log(error)
       );
   }
-  getImage(id) {
-    this.imageService.findImageById(id)
+  getImage(name) {
+    this.imageService.load(name)
       .subscribe(
         res => {
           console.log(res);

@@ -17,5 +17,6 @@ export class User {
   post: Post;
   userConfigs: UserConfigs[];
   image: string;
+  notifications: Notification[];
 
   }

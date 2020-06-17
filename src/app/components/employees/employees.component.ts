@@ -48,7 +48,7 @@ export class EmployeesComponent implements OnInit {
   img: any ;
   constructor(
               private themeChanger: ThemeChangerService, public dialog: MatDialog, public router: Router,
-              private departmentService: DepartmentService, private userService: UserService,private imageService: ImageService) {
+              private departmentService: DepartmentService, private userService: UserService, private imageService: ImageService) {
     if (this.router.url === '/RemoteMonitoring/(mainCon:Departments)') {
       this.clickedDep = new Department();
       this.clickedDep.depId = -1;
