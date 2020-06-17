@@ -46,9 +46,11 @@ export class EmployeesComponent implements OnInit {
   private deleteId: number;
   showUsers: boolean;
   img: any ;
+  loading: boolean;
   constructor(
               private themeChanger: ThemeChangerService, public dialog: MatDialog, public router: Router,
               private departmentService: DepartmentService, private userService: UserService, private imageService: ImageService) {
+    this.loading = true;
     if (this.router.url === '/RemoteMonitoring/(mainCon:Departments)') {
       this.clickedDep = new Department();
       this.clickedDep.depId = -1;
@@ -100,6 +102,9 @@ export class EmployeesComponent implements OnInit {
       this.setChefDep(this.clickedDep.depId);
       this.users = this.clickedDep.users;
       this.getImages(this.clickedDep.users);
+      setTimeout(() => {
+        this.loading = false;
+      }, 500);
     }
   }
   setChefDep(cDepId: number) {
@@ -194,6 +199,9 @@ export class EmployeesComponent implements OnInit {
         this.clickedDep.users = [];
         this.clickedDep.users = this.users;
         this.outPutData.emit();
+        setTimeout(() => {
+          this.loading = false;
+        }, 500);
       } else {
         this.userService.findUserWithToken().subscribe(us => {
           this.users = [];
@@ -204,6 +212,9 @@ export class EmployeesComponent implements OnInit {
             }
           }
           this.getImages(this.users);
+          setTimeout(() => {
+            this.loading = false;
+          }, 500);
         });
     }
   });

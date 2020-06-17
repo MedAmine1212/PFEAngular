@@ -1,5 +1,4 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {RemoteMonitoringComponent} from '../remote-monitoring/remote-monitoring.component';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../../services/Authentication/authentication.service';
 import {UserService} from '../../services/user/user.service';
@@ -10,8 +9,8 @@ import {UserConfigsService} from '../../services/UserConfigs/user-configs.servic
 import {User} from '../../models/User';
 import {Image} from '../../models/Image';
 import {ImageService} from '../../services/image/image.service';
-import {NotificationMessage} from '../../models/NotificationMessage';
 import {NotificationService} from '../../services/notification/notification.service';
+import {NotificationMessage} from "../../models/NotificationMessage";
 
 
 @Component({
@@ -27,11 +26,12 @@ export class NavComponent implements OnInit {
   image: any;
   retrieveResonse: any;
   base64Data: any;
-  notifs: NotificationMessage[];
+  notifs: NotificationMessage[] = [];
   notViewdNotifs: number;
 
-  imageModel ;
    retrievedImage: any;
+  openedNotif: boolean;
+  openedMenu: any;
   constructor(
     private notifService: NotificationService,
     private userConfigsService: UserConfigsService,
@@ -41,18 +41,38 @@ export class NavComponent implements OnInit {
     private userService: UserService,
     private imageService: ImageService
   ) {
-    this.notifs = [];
-
+    this.openedMenu = false;
+    this.openedNotif = false;
   }
 
-
-
+  reloadNotifs() {
+    this.userService.findUserWithToken().subscribe(user => {
+      this.notifs = [];
+      this.notViewdNotifs = null;
+      // @ts-ignore
+      this.notifs = user.notificationMessages;
+      for (const ntf of this.notifs) {
+        if (!ntf.isViewed) {
+          if (this.notViewdNotifs != null) {
+            this.notViewdNotifs++;
+          } else {
+            this.notViewdNotifs = 1;
+          }
+        }
+      }
+    }, error => console.log(error));
+    }
 
   ngOnInit(): void {
-    this.findUser();
+    this.notifs = [];
+    this.reloadNotifs();
+    console.log(this.notifs);
+    this.notViewdNotifs = null;
     this.isLoggedIn = this.auth.loggedIn() ;
 
     this.userService.findUserWithToken().subscribe(user => {
+      // @ts-ignore
+      this.user = user ;
       console.log(user);
       // @ts-ignore
       this.imageService.load(user.image).subscribe(
@@ -69,24 +89,9 @@ export class NavComponent implements OnInit {
 
 
   }
-  findUser() {
-    this.userService.findUserWithToken().subscribe(res => { // @ts-ignore
-      // @ts-ignore
-      this.user = res ;
-      this.notifs = this.user.notifications;
-      this.notViewdNotifs = 0;
-      for (const ntf of this.notifs) {
-        if (ntf.isViewed) {
-          this.notViewdNotifs++;
-        }
-      }
-    }, error => console.log(error));
 
-    console.log(this.jwt.getTokenExpirationDate(localStorage.token));
-  }
   logout() {
   this.auth.loggedOut();
-  this.ngOnInit();
   this.router.navigateByUrl('');
   }
 
@@ -104,12 +109,15 @@ export class NavComponent implements OnInit {
     }
 
   viewAll() {
+    this.openedNotif = true;
+    if (this.notifs != null) {
     this.notViewdNotifs = null;
     for (const ntf of this.notifs) {
       if (!ntf.isViewed) {
       ntf.isViewed = true;
       this.notifService.modify(ntf, ntf.notifId).subscribe();
       }
+    }
     }
   }
 
@@ -118,5 +126,21 @@ export class NavComponent implements OnInit {
       ntf.isHovered = true;
       this.notifService.modify(ntf, ntf.notifId).subscribe();
     }
+  }
+
+  clearAllNotifications(event) {
+    event.stopPropagation();
+    this.user.notificationMessages = [];
+    this.notViewdNotifs = null;
+    for (const ntf of this.notifs) {
+      this.notifService.remove(ntf.notifId).subscribe();
+    }
+    this.notifs = [];
+  }
+
+  deleteNotif(event: MouseEvent, ntf: NotificationMessage) {
+    event.stopPropagation();
+    this.notifs.splice(this.notifs.indexOf(ntf), 1);
+    this.notifService.remove(ntf.notifId).subscribe();
   }
 }

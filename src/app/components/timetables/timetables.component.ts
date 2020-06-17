@@ -87,9 +87,6 @@ export class TimetablesComponent implements OnInit {
     this.selectedPlanning = false;
     this.userConfig.shownPlannings = [];
     this.showTable = false;
-    setTimeout(() => {
-      this.showTable = true;
-    }, 1500);
     this.selectedCount = 0;
     this.showHideInput = false;
     this.showPause = false;
@@ -241,6 +238,10 @@ export class TimetablesComponent implements OnInit {
       if (!changed) {
         this.clickedPlanning = null;
       }
+
+      setTimeout(() => {
+        this.showTable = true;
+      }, 500);
     });
   }
   getShowPl(pl: Planning) {

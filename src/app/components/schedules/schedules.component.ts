@@ -6,7 +6,7 @@ import {ScheduleService} from '../../services/schedule/schedule.service';
 import {Planning} from '../../models/Planning';
 import {MatDialog} from '@angular/material/dialog';
 import {AddScheduleComponent} from '../../dialogs/dialog-forms/add-schedule/add-schedule.component';
-import {DeleteDialogComponent} from "../../dialogs/delete-dialog/delete-dialog.component";
+import {DeleteDialogComponent} from '../../dialogs/delete-dialog/delete-dialog.component';
 
 @Component({
   selector: 'app-schedules',

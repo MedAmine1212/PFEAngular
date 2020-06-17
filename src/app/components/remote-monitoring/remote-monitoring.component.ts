@@ -150,7 +150,7 @@ public reloadFromWebSocket(message) {
           }
         }
       if (webSocketMessage !== 'userConfig') {
-        this.navComponent.findUser();
+        this.navComponent.reloadNotifs();
       }
       }
     }, error => console.log(error));

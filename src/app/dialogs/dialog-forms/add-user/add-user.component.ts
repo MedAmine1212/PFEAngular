@@ -75,7 +75,7 @@ export class AddUserComponent implements  AfterViewInit  {
     userId: null,
     userConfigs: [],
     image: '',
-    notifications: []
+    notificationMessages: []
   };
   address1: Address = {
     addressId: null,

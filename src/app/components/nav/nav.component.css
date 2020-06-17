@@ -27,17 +27,51 @@
   margin-right: -20px;
   font-size: 23px;
 }
-.fa-bell:hover{
+.openMenuButt:hover{
   color: #007bff !important;
 }
+::ng-deep .userMenu{
+  margin-top: 7px;
+}
 ::ng-deep .notifMenu {
-  min-width: 320px !important;
+  margin-top: 19px;
+  position: fixed;
+  margin-left: -320px;
   max-height: 600px !important;
+  min-width: 320px !important;
 }
 .notifContainer{
-  width: 96%;
+  width: 94%;
   float: left;
   margin-top: -20px !important;
   padding:15px ;
   border-radius: 10px;
+}
+.notifContainerLight:hover{
+  background-color: #454d55;
+}
+
+.notifContainerDark:hover{
+  background-color: #dee2e6;
+}
+
+.notifContainerNotHoveredLight{
+  background-color: #454d55;
+}
+.notifContainerNotHoveredDark{
+  background-color: #454d55;
+}
+.notifContainerNotHovered:hover{
+  opacity: 0.8;
+}
+
+.deleteNotif {
+  cursor: pointer;
+  float:right;
+  font-size: 17px;
+  opacity: .7;
+}
+.deleteNotif:hover{
+  opacity: 1;
+  color:red !important;
 }
