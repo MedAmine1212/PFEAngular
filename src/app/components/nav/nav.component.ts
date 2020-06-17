@@ -42,27 +42,14 @@ export class NavComponent implements OnInit {
     private imageService: ImageService
   ) {
     this.notifs = [];
-    this.findUser();
+
   }
 
 
-    findUser() {
-    this.userService.findUserWithToken().subscribe(res => { // @ts-ignore
-      // @ts-ignore
-      this.user = res ;
-      this.notifs = this.user.notifications;
-      this.notViewdNotifs = 0;
-      for (const ntf of this.notifs) {
-        if (ntf.isViewed) {
-          this.notViewdNotifs++;
-        }
-      }
-    }, error => console.log(error));
 
-    console.log(this.jwt.getTokenExpirationDate(localStorage.token));
-  }
 
   ngOnInit(): void {
+    this.findUser();
     this.isLoggedIn = this.auth.loggedIn() ;
 
     this.userService.findUserWithToken().subscribe(user => {
@@ -82,7 +69,21 @@ export class NavComponent implements OnInit {
 
 
   }
+  findUser() {
+    this.userService.findUserWithToken().subscribe(res => { // @ts-ignore
+      // @ts-ignore
+      this.user = res ;
+      this.notifs = this.user.notifications;
+      this.notViewdNotifs = 0;
+      for (const ntf of this.notifs) {
+        if (ntf.isViewed) {
+          this.notViewdNotifs++;
+        }
+      }
+    }, error => console.log(error));
 
+    console.log(this.jwt.getTokenExpirationDate(localStorage.token));
+  }
   logout() {
   this.auth.loggedOut();
   this.ngOnInit();
