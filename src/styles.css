@@ -40,7 +40,7 @@ input:focus, textarea , button, select{
 }
 .cdk-overlay-container {
   margin-top:13px !important;
-  z-index: 500 !important;
+  z-index: 600 !important;
 }
 .mat-dialog-container {
   z-index: 1090 !important;

@@ -10,7 +10,8 @@ import {UserConfigsService} from '../../services/UserConfigs/user-configs.servic
 import {User} from '../../models/User';
 import {Image} from '../../models/Image';
 import {ImageService} from '../../services/image/image.service';
-import {getSortHeaderNotContainedWithinSortError} from "@angular/material/sort/sort-errors";
+import {NotificationMessage} from '../../models/NotificationMessage';
+import {NotificationService} from '../../services/notification/notification.service';
 
 
 @Component({
@@ -26,12 +27,13 @@ export class NavComponent implements OnInit {
   image: any;
   retrieveResonse: any;
   base64Data: any;
-  notifs: number[];
+  notifs: NotificationMessage[];
   notViewdNotifs: number;
 
   imageModel ;
    retrievedImage: any;
   constructor(
+    private notifService: NotificationService,
     private userConfigsService: UserConfigsService,
     private themeChanger: ThemeChangerService,
     private router: Router,
@@ -39,8 +41,7 @@ export class NavComponent implements OnInit {
     private userService: UserService,
     private imageService: ImageService
   ) {
-    this.notifs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    this.notViewdNotifs = this.notifs.length;
+    this.notifs = [];
     this.findUser();
   }
 
@@ -49,8 +50,14 @@ export class NavComponent implements OnInit {
     this.userService.findUserWithToken().subscribe(res => { // @ts-ignore
       // @ts-ignore
       this.user = res ;
-      console.log(res);
-    });
+      this.notifs = this.user.notifications;
+      this.notViewdNotifs = 0;
+      for (const ntf of this.notifs) {
+        if (ntf.isViewed) {
+          this.notViewdNotifs++;
+        }
+      }
+    }, error => console.log(error));
 
     console.log(this.jwt.getTokenExpirationDate(localStorage.token));
   }
@@ -94,4 +101,21 @@ export class NavComponent implements OnInit {
           console.log('updated');
         }, error => console.log(error));
     }
+
+  viewAll() {
+    this.notViewdNotifs = null;
+    for (const ntf of this.notifs) {
+      if (!ntf.isViewed) {
+      ntf.isViewed = true;
+      this.notifService.modify(ntf, ntf.notifId).subscribe();
+      }
+    }
+  }
+
+  viewOne(ntf: NotificationMessage) {
+    if (!ntf.isHovered) {
+      ntf.isHovered = true;
+      this.notifService.modify(ntf, ntf.notifId).subscribe();
+    }
+  }
 }

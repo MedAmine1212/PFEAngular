@@ -12,6 +12,8 @@ import {PlanningService} from '../../../services/planning/planning.service';
 import {UserService} from '../../../services/user/user.service';
 import {User} from '../../../models/User';
 import {UserConfigsService} from '../../../services/UserConfigs/user-configs.service';
+import {NotificationService} from '../../../services/notification/notification.service';
+import {NotificationMessage} from '../../../models/NotificationMessage';
 
 @Component({
   selector: 'app-add-planning',
@@ -62,6 +64,7 @@ export class AddPlanningComponent implements AfterViewInit {
   private user: User;
 
   constructor(
+              private notificationService: NotificationService,
               private userService: UserService,
               private userConfigService: UserConfigsService,
               public dialogRef: MatDialogRef<AddPlanningComponent>,

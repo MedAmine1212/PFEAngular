@@ -289,7 +289,7 @@ export class TimetablesComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          this.planningService.remove(this.clickedPlanning.planningId).subscribe(() => {
+          this.planningService.remove(this.clickedPlanning, this.clickedPlanning.planningId).subscribe(() => {
             this.clickedPlanning = null;
             this.schComp.setClickedPl(new Planning());
             this.planningDetailsComp.setClickedPl(null);
