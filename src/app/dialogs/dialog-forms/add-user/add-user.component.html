@@ -1,4 +1,11 @@
-<div *ngIf="fourthFormGroup == null" style="padding-top: 15%;width:100%">
+<div *ngIf="subscribingUser" style="padding-top: 15%;width:100%">
+  <div style="width:200px;margin:auto;padding-top:80px ">
+    <div class="savingMessage" [@enterSecondAnimation] *ngIf="savingUser">Saving user data...</div>
+    <div class="savingMessage" style="margin-left: 10px" [@enterSecondAnimation] *ngIf="allDone">Finishing up...</div>
+  </div>
+</div>
+<div *ngIf="!subscribingUser">
+<div *ngIf="loading" style="padding-top: 15%;width:100%">
   <div style="width:200px;margin:auto;padding-left: 55px">
     <div class="spinner-container" style="">
       <mat-spinner></mat-spinner>
@@ -6,7 +13,7 @@
   </div>
 </div>
 
-<div *ngIf="fourthFormGroup !=null;">
+<div *ngIf="!loading">
   <form style="color:black;overflow: hidden">
     <mat-horizontal-stepper [linear]="isLinear" #stepper>
 
@@ -475,4 +482,5 @@
       </mat-step>
     </mat-horizontal-stepper>
   </form>
+</div>
 </div>

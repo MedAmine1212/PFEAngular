@@ -91,6 +91,9 @@ export class EmployeesComponent implements OnInit {
           });
         });
     }
+    setTimeout(() => {
+      this.loading = false;
+    }, 500);
   }
 
   setDepartment(dep: Department) {
@@ -212,9 +215,6 @@ export class EmployeesComponent implements OnInit {
             }
           }
           this.getImages(this.users);
-          setTimeout(() => {
-            this.loading = false;
-          }, 500);
         });
     }
   });

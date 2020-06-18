@@ -7,11 +7,10 @@ import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.ser
 import {UserConfigs} from '../../models/UserConfigs';
 import {UserConfigsService} from '../../services/UserConfigs/user-configs.service';
 import {User} from '../../models/User';
-import {Image} from '../../models/Image';
 import {ImageService} from '../../services/image/image.service';
 import {NotificationService} from '../../services/notification/notification.service';
-import {NotificationMessage} from "../../models/NotificationMessage";
-
+import {NotificationMessage} from '../../models/NotificationMessage';
+import {Howl} from 'howler';
 
 @Component({
   selector: 'app-nav',
@@ -32,6 +31,10 @@ export class NavComponent implements OnInit {
    retrievedImage: any;
   openedNotif: boolean;
   openedMenu: any;
+  playNotifSound: boolean;
+  notifSound = new Howl({
+    src: ['assets\\sounds\\notification.mp3']
+  });
   constructor(
     private notifService: NotificationService,
     private userConfigsService: UserConfigsService,
@@ -47,10 +50,14 @@ export class NavComponent implements OnInit {
 
   reloadNotifs() {
     this.userService.findUserWithToken().subscribe(user => {
-      this.notifs = [];
-      this.notViewdNotifs = null;
+      if (this.notifs == null) {
+        this.notifs = [];
+      }
+      let tempNotifs: NotificationMessage[];
       // @ts-ignore
-      this.notifs = user.notificationMessages;
+      tempNotifs = user.notificationMessages;
+      if (tempNotifs.length > this.notifs.length) {
+      this.notifs = tempNotifs;
       for (const ntf of this.notifs) {
         if (!ntf.isViewed) {
           if (this.notViewdNotifs != null) {
@@ -60,14 +67,21 @@ export class NavComponent implements OnInit {
           }
         }
       }
+      if (this.playNotifSound) {
+      this.notifSound.play();
+      }
+
+      }
+      this.playNotifSound = true;
     }, error => console.log(error));
     }
 
   ngOnInit(): void {
     this.notifs = [];
+    this.notViewdNotifs = null;
+    this.playNotifSound = false;
     this.reloadNotifs();
     console.log(this.notifs);
-    this.notViewdNotifs = null;
     this.isLoggedIn = this.auth.loggedIn() ;
 
     this.userService.findUserWithToken().subscribe(user => {

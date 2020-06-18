@@ -43,3 +43,10 @@ input[type=number] {
   margin-top: 10px;
   margin-bottom: -40px;
 }
+.savingMessage{
+  color:#3f6ad8;
+  margin: 38px 10px 10px -14px;
+  width: 300px;
+  font-weight: bold;
+  font-size: 25px;
+}

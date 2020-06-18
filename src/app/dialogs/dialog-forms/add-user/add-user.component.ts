@@ -34,12 +34,24 @@ import {ImageService} from '../../../services/image/image.service';
           animate('300ms', style({transform: 'translateY(100%)', opacity: 0}))
         ])
       ]
+    ),
+    trigger(
+      'enterSecondAnimation', [
+        transition(':enter', [
+          style({opacity: 0}),
+          animate('300ms', style({opacity: 1}))
+        ]),
+        transition(':leave', [
+          style({opacity: 1}),
+          animate('300ms', style({opacity: 0}))
+        ])
+      ]
     )
   ],
   templateUrl: './add-user.component.html',
   styleUrls: ['./add-user.component.css']
 })
-export class AddUserComponent implements  AfterViewInit  {
+export class AddUserComponent implements  OnInit  {
   dialogComponent: MatDialogRef<DialogComponent>;
   selectedFile: File;
   imageName: string;
@@ -47,8 +59,10 @@ export class AddUserComponent implements  AfterViewInit  {
   retrieveResonse: any;
   base64Data: any;
   uploadImageData: FormData;
-
-
+  subscribingUser: boolean;
+  savingUser: boolean;
+  allDone: boolean;
+  loading: boolean;
 
   @ViewChild('stepper') stepper: MatStepper;
   userConfigs: UserConfigs;
@@ -112,43 +126,43 @@ export class AddUserComponent implements  AfterViewInit  {
               private planningService: PlanningService,
               private imageService: ImageService
   ) {
-    console.log(this.userConfigs);
     if (this.data != null ) {
       this.user.department = this.data;
     }
-    console.log(this.user.department);
     this.userConfigs = new UserConfigs();
     this.userConfigs.theme = false;
     this.userConfigs.shownPlannings =  [];
   }
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
+    this.loading = true;
+    this.savingUser = false;
+    this.subscribingUser = false;
+    this.allDone = false;
     this.showOtherAddress = false;
     this.user.gender = 'male';
-    setTimeout(() => {
-      this.createFirstFormGroup();
-      this.createSecondFormGroup();
-      this.createThirdFormGroup();
-      this.createFourthFormGroup();
-    }, 600);
+    this.createFirstFormGroup();
+    this.createSecondFormGroup();
+    this.createThirdFormGroup();
+    this.createFourthFormGroup();
     this.postService.list().subscribe(posts => {
       for (const post of posts) {
         this.posts.push(post);
+        this.departmentService.list().subscribe(r => {
+          this.departments = r;
+          for (const depp of this.departments) {
+            if (depp === this.user.department) {
+            }
+          }
+          if (this.user.department !== null) {
+            setTimeout(() => {
+              this.stepper.selectedIndex = 1;
+            }, 900);
+          }
+          this.loading = false;
+        });
       }
     });
-    this.departmentService.list().subscribe(r => {
-      this.departments = r;
-      for (const depp of this.departments) {
-        if (depp === this.user.department) {
-          console.log(depp);
-        }
-      }
-    });
-    if (this.user.department !== null) {
-      setTimeout(() => {
-        this.stepper.selectedIndex = 1;
-      }, 900);
-    }
   }
   createFirstFormGroup() {
     this.firstFormGroup = this.formBuilder.group({
@@ -210,7 +224,8 @@ export class AddUserComponent implements  AfterViewInit  {
   }
 
   addUser() {
-
+    this.subscribingUser = true;
+    this.savingUser = true;
     // set user
     this.user.post = this.secondFormGroup.controls.post.value;
     this.user.addresses.push(this.address1);
@@ -227,23 +242,35 @@ export class AddUserComponent implements  AfterViewInit  {
     }, error => console.log(error));
 
     // add user
-    console.log(this.user);
     this.userService.add(this.user).subscribe(user => {
-      // @ts-ignore
-      this.upload(user.userId);
-      this.userAddedSuccessfully();
+
+      setTimeout(() => {
+        this.savingUser = false;
+        // @ts-ignore
+        this.upload(user.userId);
+      }, 200);
     }, error1 => console.log('erreur user add ' + error1));
   }
 
   upload(id) {
-    console.log(this.selectedFile);
+    setTimeout(() => {
+      this.allDone = true;
+    }, 400);
     this.uploadImageData = new FormData();
     this.uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
     this.imageName = this.selectedFile.name;
     this.imageService.uploadImage(this.uploadImageData, id)
       .subscribe((response) => {
-          if (response.status === 200) {
-            console.log('Image uploaded successsfully');
+          if (response.status !== 200) {
+            console.log('Image uploaded error');
+          } else {
+            setTimeout(() => {
+              this.allDone = false;
+              setTimeout(() => {
+              this.userAddedSuccessfully();
+              }, 400);
+            }, 1500);
+
           }
         }
         , error => console.log(error)
@@ -253,7 +280,6 @@ export class AddUserComponent implements  AfterViewInit  {
     this.imageService.load(name)
       .subscribe(
         res => {
-          console.log(res);
           this.retrieveResonse = res;
           this.base64Data = this.retrieveResonse.picByte;
           this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
@@ -282,7 +308,6 @@ export class AddUserComponent implements  AfterViewInit  {
         emails.push(user.email);
       }
     });
-    console.log(emails);
     return new Observable(observer => {
       setTimeout(() => {
         const result = (emails.indexOf(control.value) !== -1) ? { alreadyInUse: true } : null;
@@ -300,7 +325,6 @@ export class AddUserComponent implements  AfterViewInit  {
         cins.push(user.cin);
       }
     });
-    console.log(cins);
     return new Observable(observer => {
       setTimeout(() => {
         const result = (cins.indexOf(control.value) !== -1) ? { alreadyInUse: true } : null;
@@ -319,7 +343,6 @@ export class AddUserComponent implements  AfterViewInit  {
         phoneNumbers.push(user.phone);
       }
     });
-    console.log(phoneNumbers);
     return new Observable(observer => {
       setTimeout(() => {
         const result = (phoneNumbers.indexOf(control.value) !== -1) ? { alreadyInUse: true } : null;
@@ -457,15 +480,9 @@ export class AddUserComponent implements  AfterViewInit  {
     const controls = this.secondFormGroup.controls;
     for (const name in controls) {
       if (controls[name].invalid) {
-        console.log(name);
       }
     }
   }
-
-  teste() {
-    console.log(this.user.post);
-  }
-
 
   onDateSelect(event) {
     const year = event.year;
@@ -504,8 +521,6 @@ export class AddUserComponent implements  AfterViewInit  {
     reader.readAsDataURL(files[0]);
     reader.onload = (event) => {
       this.imgURL = reader.result;
-      console.log(this.imagePath);
-      console.log(this.imgURL);
     };
   }
 }
