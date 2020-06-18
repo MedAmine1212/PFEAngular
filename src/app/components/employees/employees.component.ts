@@ -217,7 +217,11 @@ export class EmployeesComponent implements OnInit {
           this.getImages(this.users);
         });
     }
-  });
+  }, () => {
+      setTimeout(() => {
+        this.loading = false;
+      }, 500);
+    });
   }
 
   openDetailsDialog(emp: User) {

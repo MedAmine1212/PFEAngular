@@ -69,7 +69,7 @@
     <div>
       <!--body-->
       <div [@enterAnimation] *ngIf="showTable" class="bodyContainer">
-        <div *ngIf="plannings.length<=0" class="main-card mb-3 card bodyCard"  [ngClass]="getTheme() ? 'bg-premium-dark' :''">
+        <div *ngIf="plannings.length == 0 || plannings == null" class="main-card mb-3 card bodyCard"  [ngClass]="getTheme() ? 'bg-premium-dark' :''">
           <div class="card-body noSchBod">
             <div [ngStyle]="{'color': getTheme()? 'white' :''}"  class="noSchContainer">
               No plannings to show<br><br>
