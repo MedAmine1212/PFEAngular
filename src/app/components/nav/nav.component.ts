@@ -22,7 +22,6 @@ export class NavComponent implements OnInit {
   isLoggedIn;
   userConfigs: UserConfigs  = new UserConfigs();
   jwt = new JwtHelperService();
-  image: any;
   retrieveResonse: any;
   base64Data: any;
   notifs: NotificationMessage[] = [];
@@ -61,6 +60,7 @@ export class NavComponent implements OnInit {
           this.notifSound.play();
         }
         this.notifs = tempNotifs;
+        this.notViewdNotifs = null;
         for (const ntf of this.notifs) {
           if (!ntf.isViewed) {
             if (this.notViewdNotifs != null) {
@@ -88,16 +88,18 @@ export class NavComponent implements OnInit {
       this.user = user ;
       console.log(user);
       // @ts-ignore
-      this.imageService.load(user.image).subscribe(
-
-        img => {
-          if(img !== null){
-            this.retrieveResonse = img;
-            this.base64Data = this.retrieveResonse.picByte;
-            this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
-          } else {this.retrievedImage = null ; }
-        }
-      );
+      if (this.user.image !== '') {
+        // @ts-ignore
+        this.imageService.load(user.image).subscribe(
+          img => {
+            if (img !== null) {
+              this.retrieveResonse = img;
+              this.base64Data = this.retrieveResonse.picByte;
+              this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
+            } else {this.retrievedImage = null ; }
+          }
+        );
+      }
     });
 
 

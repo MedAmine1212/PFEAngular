@@ -85,7 +85,7 @@ export class EmployeesComponent implements OnInit {
       this.imageService.load(emp.imageName).subscribe(
         // tslint:disable-next-line:no-shadowed-variable
         img  => {
-          if(img != null ){
+          if (img != null ) {
             // @ts-ignore
             const base64Data = img.picByte;
             this.images.forEach(imageuser => {
@@ -212,16 +212,15 @@ export class EmployeesComponent implements OnInit {
       } else {
         this.userService.findUserWithToken().subscribe(us => {
           this.users = [];
-          for (const emp of r) {
-            // @ts-ignore
-            if (emp.userId !== this.user.userId) {
-              this.users.push(emp);
-            }
-          }
+          this.users = r;
           this.getImages(this.users);
         });
     }
-  });
+  }, error => {
+      setTimeout(() => {
+        this.loading = false;
+      }, 500);
+    });
   }
 
   getConnectedUser(){
@@ -276,16 +275,12 @@ export class EmployeesComponent implements OnInit {
     this.reloadData();
   }
   showImage(name) {
-      for (const img of this.images) {
-        if(img.imageFile !== null){
-          if (img.imageName === name   ) {
-            return img.imageFile;
-          }
-        }else {
-          return null;
-        }
-
+    for (const img of this.images) {
+      if (img.imageName === name) {
+        return img.imageFile;
       }
+    }
+    return null;
   }
 
 }

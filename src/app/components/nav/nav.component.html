@@ -62,8 +62,8 @@
             <div class="widget-content-left">
               <div class="btn-group">
                 <div mat-button style="width: 70px" [matMenuTriggerFor]="menu" (click)="openedMenu = true" class="p-0 btn openMenuButt" >
-                  <img width="48" height="45" class="rounded-circle" *ngIf="retrievedImage === null"  src="../../assets/images/avatars/0.png"  alt="">
-                  <img width="48" height="45" class="rounded-circle" *ngIf="retrievedImage !== null" [src]="retrievedImage" alt="">
+                  <img width="50" height="51" class="rounded-circle" *ngIf="this.user.image === '' ||  retrievedImage === null"  src="../../assets/images/avatars/0.png"  alt="">
+                  <img width="48" height="45" class="rounded-circle" *ngIf="this.user.image !== '' &&  retrievedImage !== null" [src]="retrievedImage" alt="">
                   <i [ngStyle]="{'color': openedMenu ? '#007bff' : ''}" class="fa fa-angle-down ml-2 opacity-8"></i>
                 </div>
                 <mat-menu (close)="openedMenu = false" [class]="getTheme() ? 'bg-dark': ''" class="userMenu" xPosition="before" #menu="matMenu">
