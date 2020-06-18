@@ -109,7 +109,6 @@ export class AddUserComponent implements  OnInit  {
     user: undefined,
     zipCode: null
   };
-  imgURL: any;
   imagePath: FileList;
   message: string;
   constructor(private themeChanger: ThemeChangerService,
@@ -246,8 +245,14 @@ export class AddUserComponent implements  OnInit  {
 
       setTimeout(() => {
         this.savingUser = false;
-        // @ts-ignore
-        this.upload(user.userId);
+        if (this.selectedFile !== undefined) {
+          // @ts-ignore
+          this.upload(user.userId);
+        } else {
+          setTimeout(() => {
+            this.userAddedSuccessfully();
+          }, 400);
+        }
       }, 200);
     }, error1 => console.log('erreur user add ' + error1));
   }
@@ -275,18 +280,6 @@ export class AddUserComponent implements  OnInit  {
         }
         , error => console.log(error)
       );
-  }
-  getImage(name) {
-    this.imageService.load(name)
-      .subscribe(
-        res => {
-          this.retrieveResonse = res;
-          this.base64Data = this.retrieveResonse.picByte;
-          this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
-        }
-        , error => console.log(error)
-      );
-
   }
 
   userAddedSuccessfully() {
@@ -520,7 +513,7 @@ export class AddUserComponent implements  OnInit  {
     this.imagePath = files;
     reader.readAsDataURL(files[0]);
     reader.onload = (event) => {
-      this.imgURL = reader.result;
+      this.retrievedImage = reader.result;
     };
   }
 }

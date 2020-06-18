@@ -10,9 +10,7 @@ import {UserService} from '../../services/user/user.service';
 import {EmployeeDetailsComponent} from '../../dialogs/employee-details/employee-details.component';
 import {DeleteDialogComponent} from '../../dialogs/delete-dialog/delete-dialog.component';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
-import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 import {ImageService} from '../../services/image/image.service';
-import {forkJoin, from, Observable} from 'rxjs';
 
 
 export class Image {
@@ -169,7 +167,7 @@ export class EmployeesComponent implements OnInit {
 
   showAddUserDialog() {
     const dialogRef = this.dialog.open(AddUserComponent, {
-      width: '850px',
+      width: '900px',
       height: '615px',
       panelClass: 'matDialogClass',
       data: this.clickedDep
@@ -208,12 +206,7 @@ export class EmployeesComponent implements OnInit {
       } else {
         this.userService.findUserWithToken().subscribe(us => {
           this.users = [];
-          for (const emp of r) {
-            // @ts-ignore
-            if (emp.userId !== us.userId) {
-              this.users.push(emp);
-            }
-          }
+          this.users = r;
           this.getImages(this.users);
         });
     }
