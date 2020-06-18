@@ -10,9 +10,7 @@ import {UserService} from '../../services/user/user.service';
 import {EmployeeDetailsComponent} from '../../dialogs/employee-details/employee-details.component';
 import {DeleteDialogComponent} from '../../dialogs/delete-dialog/delete-dialog.component';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
-import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 import {ImageService} from '../../services/image/image.service';
-import {forkJoin, from, Observable} from 'rxjs';
 
 
 export class Image {
@@ -172,7 +170,7 @@ export class EmployeesComponent implements OnInit {
 
   showAddUserDialog() {
     const dialogRef = this.dialog.open(AddUserComponent, {
-      width: '850px',
+      width: '900px',
       height: '615px',
       panelClass: 'matDialogClass',
       data: this.clickedDep
@@ -190,7 +188,6 @@ export class EmployeesComponent implements OnInit {
   }
 
   private reloadData() {
-    this.getConnectedUser();
     console.log('reloading employees..');
     this.userService.list().subscribe(r => {
       if (this.router.url === '/RemoteMonitoring/(mainCon:Departments)' && this.clickedDep.depId !== -1) {
@@ -199,7 +196,7 @@ export class EmployeesComponent implements OnInit {
         this.usersForDep = r;
         this.users = [];
         for (const emp of this.usersForDep) {
-          if (emp.department.depId === this.clickedDep.depId && emp.userId !== this.user.userId) {
+          if (emp.department.depId === this.clickedDep.depId) {
             this.users.push(emp);
           }
         }
@@ -216,17 +213,10 @@ export class EmployeesComponent implements OnInit {
           this.getImages(this.users);
         });
     }
-  }, error => {
+  }, () => {
       setTimeout(() => {
         this.loading = false;
       }, 500);
-    });
-  }
-
-  getConnectedUser(){
-    this.userService.findUserWithToken().subscribe(user => {
-      // @ts-ignore
-      this.user = user;
     });
   }
 

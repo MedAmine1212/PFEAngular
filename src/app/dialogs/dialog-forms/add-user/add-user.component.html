@@ -81,7 +81,7 @@
           <div class="card-body" style="padding-bottom: 40px">
             <form [formGroup]="secondFormGroup" >
               <div class="form-row">
-                <div class="form-group col-md-5">
+                <div class="form-group col-md-4">
                   <mat-form-field  appearance="outline">
                     <mat-label>First Name</mat-label>
                     <input
@@ -100,7 +100,7 @@
                     </mat-error>
                   </mat-form-field>
                 </div>
-                <div class="form-group col-md-5">
+                <div class="form-group col-md-4">
                   <mat-form-field appearance="outline">
                     <mat-label>Name</mat-label>
                     <input
@@ -119,10 +119,20 @@
                     </mat-error>
                   </mat-form-field>
                 </div>
+
+<!--                Image-->
+                <div class="form-group col-md-4">
+                  <div style="margin-top: 10px;position:fixed;margin-left: 50px">
+                    <span class="material-icons"*ngIf="retrievedImage" (click)="retrievedImage = null" style="color:grey;opacity: .8;cursor: pointer;float: right;margin-left: -80px;margin-bottom:-10px ">cancel</span>
+                    <img width="123" height="120" class="rounded-circle" *ngIf="retrievedImage == null"  src="assets/images/avatars/0.png" alt="">
+                    <img width="123" height="120" class="rounded-circle" *ngIf="retrievedImage" [src]="retrievedImage" alt="">
+                    <input accept='image/*' alt="" title="" type="file" matTooltip="Employee image" style="opacity:0;position:fixed;margin-top: 8px;margin-left:-115px;cursor:pointer;height:106px;width:107px;border-radius:120px" #file (change)="onSelectFile(file.files)">
+                  </div>
+                </div>
               </div>
 
               <div class="form-row">
-                <div class="form-group col-md-5">
+                <div class="form-group col-md-4">
                   <mat-form-field appearance="outline">
                     <mat-label>CIN</mat-label>
                     <input
@@ -247,28 +257,6 @@
               </div>
             </form>
           </div>
-        </div>
-        <div style="margin-top: 40px">
-                  <div class="container row">
-                    <div class="col-md-12">
-                      <h1>Upload Image</h1>
-                    </div>
-                  </div>
-                  <div class="container row">
-                    <div class="col-md-6">
-                      <input type="file" (change)="onFileChanged($event)">
-                    </div>
-                  </div>
-                  <hr />
-                  <div class="container row">
-                  </div>
-                  <div class="container row">
-                    <div class="col-md-12">
-                      <div *ngIf=retrievedImage>
-                        <img [src]="retrievedImage">
-                      </div>
-                    </div>
-                  </div>
         </div>
         <div style="width:100%">
           <div style="float: right;margin-top: -25px;margin-bottom: -20px;padding-top: 5px">

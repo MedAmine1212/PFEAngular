@@ -210,7 +210,12 @@ export class TimetablesComponent implements OnInit {
       console.log(this.user);
       this.userConfig = this.user.userConfigs[0];
       this.listPlannings();
-    }, error => console.log(error));
+    }, error => {
+      setTimeout(() => {
+        this.showTable = true;
+      }, 500);
+      console.log(error);
+    });
     }
   listPlannings() {
     this.planningService.list().subscribe(list => {
@@ -237,7 +242,11 @@ export class TimetablesComponent implements OnInit {
       if (!changed) {
         this.clickedPlanning = null;
       }
-
+      setTimeout(() => {
+        this.showTable = true;
+      }, 500);
+    }, error => {
+      console.log(error);
       setTimeout(() => {
         this.showTable = true;
       }, 500);
