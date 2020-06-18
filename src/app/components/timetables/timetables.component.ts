@@ -99,8 +99,7 @@ export class TimetablesComponent implements OnInit {
   }
 
   setCliked(pl: Planning, day: string, hour: number) {
-    console.log(pl.planningName + ': ' + pl.scheduleDays.indexOf(day));
-    console.log(day + ' ' + hour);
+    // click planning span
   }
 
   checkSch(pl: Planning, day: string, hour: number) {
@@ -249,7 +248,6 @@ export class TimetablesComponent implements OnInit {
     for (const plId of this.userConfig.shownPlannings) {
         if (plId === pl.planningId) {
            this.selectedCount ++;
-           console.log(this.selectedCount);
            return true;
         }
     }

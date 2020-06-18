@@ -193,7 +193,6 @@ export class AddPlanningComponent implements AfterViewInit {
           // @ts-ignore
           this.planning.schedule = r;
           this.saveModifiedPlanning();
-          console.log('added new schedule');
         }, error => console.log(error));
     } else {
     this.planning.schedule = this.schedule;

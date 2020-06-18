@@ -31,6 +31,6 @@ export class ScheduleService {
   }
 
   findById(id): Observable<any> {
-    return this.http.get(this.baseUrl + 'findById/'  + id);
+    return this.http.get(this.baseUrl + 'findById/' + id);
   }
 }
