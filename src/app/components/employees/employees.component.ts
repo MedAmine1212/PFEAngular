@@ -107,7 +107,7 @@ export class EmployeesComponent implements OnInit {
         this.loading = false;
       }, 500);
     }
-  } 
+  }
   setChefDep(cDepId: number) {
     this.departmentService.getChefDep(cDepId).subscribe(user => {
       this.chefDep = user;
