@@ -47,6 +47,7 @@ export class EmployeesComponent implements OnInit {
   showUsers: boolean;
   img: any ;
   loading: boolean;
+   user: User;
   constructor(
               private themeChanger: ThemeChangerService, public dialog: MatDialog, public router: Router,
               private departmentService: DepartmentService, private userService: UserService, private imageService: ImageService) {
@@ -84,11 +85,13 @@ export class EmployeesComponent implements OnInit {
       this.imageService.load(emp.imageName).subscribe(
         // tslint:disable-next-line:no-shadowed-variable
         img  => {
-          // @ts-ignore
-          const base64Data = img.picByte;
-          this.images.forEach(imageuser => {
-            if (imageuser.imageName === emp.imageName) { imageuser.imageFile =  'data:image/jpeg;base64,' + base64Data; }
-          });
+          if(img != null ){
+            // @ts-ignore
+            const base64Data = img.picByte;
+            this.images.forEach(imageuser => {
+              if (imageuser.imageName === emp.imageName) { imageuser.imageFile =  'data:image/jpeg;base64,' + base64Data; }
+            });
+          }
         });
     }
     setTimeout(() => {
@@ -187,6 +190,7 @@ export class EmployeesComponent implements OnInit {
   }
 
   private reloadData() {
+    this.getConnectedUser();
     console.log('reloading employees..');
     this.userService.list().subscribe(r => {
       if (this.router.url === '/RemoteMonitoring/(mainCon:Departments)' && this.clickedDep.depId !== -1) {
@@ -195,7 +199,7 @@ export class EmployeesComponent implements OnInit {
         this.usersForDep = r;
         this.users = [];
         for (const emp of this.usersForDep) {
-          if (emp.department.depId === this.clickedDep.depId) {
+          if (emp.department.depId === this.clickedDep.depId && emp.userId !== this.user.userId) {
             this.users.push(emp);
           }
         }
@@ -210,7 +214,7 @@ export class EmployeesComponent implements OnInit {
           this.users = [];
           for (const emp of r) {
             // @ts-ignore
-            if (emp.userId !== us.userId) {
+            if (emp.userId !== this.user.userId) {
               this.users.push(emp);
             }
           }
@@ -218,6 +222,13 @@ export class EmployeesComponent implements OnInit {
         });
     }
   });
+  }
+
+  getConnectedUser(){
+    this.userService.findUserWithToken().subscribe(user => {
+      // @ts-ignore
+      this.user = user;
+    });
   }
 
   openDetailsDialog(emp: User) {
@@ -266,9 +277,14 @@ export class EmployeesComponent implements OnInit {
   }
   showImage(name) {
       for (const img of this.images) {
-        if (img.imageName === name ) {
-          return img.imageFile;
+        if(img.imageFile !== null){
+          if (img.imageName === name   ) {
+            return img.imageFile;
+          }
+        }else {
+          return null;
         }
+
       }
   }
 

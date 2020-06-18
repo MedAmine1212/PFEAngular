@@ -55,7 +55,7 @@ export class NavComponent implements OnInit {
       }
       let tempNotifs: NotificationMessage[];
       // @ts-ignore
-      tempNotifs = user.notificationMessages;
+      tempNotifs = user.notificationMessages.reverse();
       if (tempNotifs.length > this.notifs.length) {
         if (this.playNotifSound) {
           this.notifSound.play();
@@ -91,11 +91,11 @@ export class NavComponent implements OnInit {
       this.imageService.load(user.image).subscribe(
 
         img => {
-          // @ts-ignore
-          this.retrieveResonse = img;
-          this.base64Data = this.retrieveResonse.picByte;
-          this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
-
+          if(img !== null){
+            this.retrieveResonse = img;
+            this.base64Data = this.retrieveResonse.picByte;
+            this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
+          } else {this.retrievedImage = null ; }
         }
       );
     });
