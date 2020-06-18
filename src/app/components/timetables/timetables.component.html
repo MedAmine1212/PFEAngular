@@ -59,7 +59,7 @@
               <i class="fa fa-check-circle "></i>
               </span>
               </div>
-              <div [ngStyle]="{'color':getTheme() && clickedPlanning == pl ? 'black' : ''}" style="width:80%;float: right" (click)="setClickedPl(pl)">{{pl.planningName}}<span class="planDays" matTooltip="Planned days">{{planningDaysDesc(pl)}}</span></div>
+              <div [ngClass]="getTheme() ? 'hoveredInDark': ''" [ngStyle]="{'color':getTheme() && clickedPlanning == pl ? 'black': ''}" style="width:80%;float: right" (click)="setClickedPl(pl)">{{pl.planningName}}<span class="planDays" matTooltip="Planned days">{{planningDaysDesc(pl)}}</span></div>
             </li>
           </ul>
         </div>

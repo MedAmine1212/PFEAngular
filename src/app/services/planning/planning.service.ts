@@ -54,11 +54,14 @@ export class PlanningService {
       notif.notifDate = new Date();
       notif.isViewed = false;
       notif.isHovered = false;
+      // @ts-ignore
+      user.notifications.push(notif);
+      this.userService.modify(user.userId, user).subscribe();
       for (const dep of planning.departments) {
         for (const emp of dep.users) {
           if (emp.userId !== user.userId) {
             emp.notifications.push(notif);
-            this.userService.modify(emp.userId, notif).subscribe();
+            this.userService.modify(emp.userId, emp).subscribe();
           }
         }
       }
