@@ -1,7 +1,17 @@
-<div>
+<div [ngClass]="getTheme() ? 'bg-dark' :''" style="height:100vh;width: 100%;text-align: center" *ngIf="loading">
+  <div style="position: fixed;margin-left: 360px">
+  <img style="margin-top: 20vh" *ngIf="!getTheme()" src="../../../assets/loading/loadinglight.gif">
+  <img style="margin-top: 20vh" *ngIf="getTheme()" src="../../../assets/loading/loadingdark.gif"><br>
+    <span [@enterLoadingAnimation] *ngIf="showLoadingText" [ngStyle]="{'color': getTheme() ? 'grey' : 'grey'}" style="margin-left:40px;font-size: 30px;font-weight: bolder">Loading...</span>
+  </div>
+</div>
+<div *ngIf="showSite">
 <div [ngClass]="getTheme() ? 'bg-dark' :''" class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header" style="overflow: hidden" >
 
-  <app-nav></app-nav>
+  <app-nav [connectedUser]="connectedUser"></app-nav>
+
+  <!--the rest-->
+  <app-profile [connectedUser]="connectedUser" *ngIf="router.url === '/RemoteMonitoring/(mainCon:Profile)'" style="margin: 15px;padding: 0" name="mainCon"></app-profile>
 
   <!--time tables-->
   <app-timetables *ngIf="router.url === '/RemoteMonitoring/(mainCon:TimeTables)'"></app-timetables>
@@ -31,8 +41,6 @@
         <app-employees *ngIf="router.url === '/RemoteMonitoring/(mainCon:Departments)'" (outPutData)="reloadDep($event)" [@enterSecondAnimation]></app-employees>
       </div>
     </div>
-  <!--the rest-->
-    <router-outlet *ngIf="router.url !== '/RemoteMonitoring/(mainCon:TimeTables)' && router.url !== '/RemoteMonitoring' && router.url !== '/RemoteMonitoring/(mainCon:Employees)' && router.url !== '/RemoteMonitoring/(mainCon:Absences)' && router.url !== '/RemoteMonitoring/(mainCon:Departments)'" style="margin: 15px" name="mainCon"></router-outlet>
 
   </div>
 

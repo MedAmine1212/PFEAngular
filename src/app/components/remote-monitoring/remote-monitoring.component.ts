@@ -17,6 +17,18 @@ import {NavComponent} from '../nav/nav.component';
   selector: 'app-remmote-monitoring',
   animations: [
     trigger(
+      'enterLoadingAnimation', [
+        transition(':enter', [
+          style({opacity: 0}),
+          animate('200ms', style({opacity: 1}))
+        ]),
+        transition(':leave', [
+          style({opacity: 1}),
+          animate('0ms', style({opacity: 0}))
+        ])
+      ]
+    ),
+    trigger(
       'enterAnimation', [
         transition(':enter', [
           style({transform: 'translateX(-100%)', opacity: 0}),
@@ -47,9 +59,11 @@ import {NavComponent} from '../nav/nav.component';
 
 export class RemoteMonitoringComponent implements OnInit {
   clickedDeparment: Department;
-
+  private loadAPI: any;
 
   name: string;
+  connectedUser: User;
+  loading: boolean;
   constructor(
     private snackBar: MatSnackBar,
     private userService: UserService,
@@ -65,25 +79,51 @@ export class RemoteMonitoringComponent implements OnInit {
   @ViewChild(DepartmentsComponent) departmentComponent: DepartmentsComponent;
   @ViewChild(TimetablesComponent) timetablesComponent: TimetablesComponent;
   @ViewChild(NavComponent) navComponent: NavComponent;
+  showLoadingText: boolean;
+  showSite: boolean;
 
   ngOnInit() {
+    this.showSite = false;
     this.userService.findUserWithToken().subscribe( ress => {
       // @ts-ignore
-      localStorage.cin = ress.cin;
+      this.connectedUser = ress;
       // @ts-ignore
       this.themeChanger.setTheme(ress.userConfigs[0].theme);
-    });
+      this.loading = true;
+      setTimeout (() => {
+        this.showLoadingText = true;
+      }, 200);
+      localStorage.cin = this.connectedUser.cin;
+      setInterval(() => {
+        this.time = new Date();
+      }, 1000);
+      setTimeout( () => {
+        this.connect();
+      });
+      setTimeout( () => {
+      this.loading = false;
+      this.showLoadingText = false;
+      this.showSite = true;
+      this.reloadJs();
+      }, 1500);
+    }, error => console.log(error));
     if (this.jwt.isTokenExpired(localStorage.getItem('token'))) {
       this.authService.loggedOut();
       window.location.reload();
     }
-    console.log('log : ', this.authService.loggedIn());
-    setInterval(() => {
-      this.time = new Date();
-    }, 1000);
-    setTimeout( () => {
-      this.connect();
-    }, 500);
+  }
+  reloadJs() {
+    this.loadAPI = new Promise(resolve => {
+      this.loadScript();
+    });
+  }
+  public loadScript() {
+    const node = document.createElement('script');
+    node.src = '../../../assets/scripts/temp.js';
+    node.type = 'text/javascript';
+    node.async = true;
+    node.charset = 'utf-8';
+    document.getElementsByTagName('head')[0].appendChild(node);
   }
   setClickedDep(dep: Department) {
     setTimeout (() => {
@@ -107,24 +147,9 @@ connect() {
   this.webSocketAPI._connect();
 }
 
-disconnect() {
-  this.webSocketAPI._disconnect();
-}
-
-sendMessage() {
-  this.webSocketAPI._send(this.name);
-}
-
-
 public reloadFromWebSocket(message) {
-  this.userService.findUserWithToken().subscribe(r => {
-    // @ts-ignore
-    const user: User = r;
+  if (this.connectedUser != null) {
     const webSocketMessage = JSON.parse(message.body).socketMessage;
-    console.log('remote monitoring: refreshing...');
-    console.log('-----');
-    console.log('-------------');
-    console.log('---------------------');
     if (webSocketMessage == null) {
       console.log('ERROR MESSAGE');
     } else {
@@ -138,7 +163,7 @@ public reloadFromWebSocket(message) {
         this.openSnackBar('Departments updated', null);
         this.departmentComponent.reloadData();
       } else if (webSocketMessage === 'userConfig') {
-         if (user.userId === Number.parseInt(JSON.parse(message.body).senderId, 0)) {
+         if (this.connectedUser.userId === Number.parseInt(JSON.parse(message.body).senderId, 0)) {
             this.openSnackBar('Theme updated', null);
             // tslint:disable-next-line:triple-equals
             let theme: boolean;
@@ -153,7 +178,7 @@ public reloadFromWebSocket(message) {
         this.navComponent.reloadNotifs();
       }
       }
-    }, error => console.log(error));
+    }
 }
   openSnackBar(message: string, action) {
     setTimeout(() => {

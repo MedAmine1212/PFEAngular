@@ -1,37 +1,27 @@
-<!--<div style="margin-top: 40px">-->
-<!--  <div class="container row">-->
-<!--    <div class="col-md-12">-->
-<!--      <h1>Upload Image</h1>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--  <div class="container row">-->
-<!--    <div class="col-md-6">-->
-<!--      <input type="file" (change)="onFileChanged($event)">-->
-<!--    </div>-->
-<!--    <div class="col-md-6">-->
-<!--      <input type="button" (click)="onUpload()" value="upload">-->
-<!--    </div>-->
-<!--  </div>-->
-<!--  <hr />-->
-<!--  <div class="container row">-->
-<!--    <div class="col-md-12">-->
-<!--      <div *ngIf=message>{{message}}</div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--  <div class="container row">-->
-<!--    <div class="col-md-6">-->
-<!--      <input type="text" class="form-control" id="name" placeholder="image name" [(ngModel)]="imageName"-->
-<!--             name="name" />-->
-<!--    </div>-->
-<!--    <div class="col-md-6">-->
-<!--      <input type="button" (click)="getImage()" value="Get Image">-->
-<!--    </div>-->
-<!--  </div>-->
-<!--  <div class="container row">-->
-<!--    <div class="col-md-12">-->
-<!--      <div *ngIf=retrievedImage>-->
-<!--        <img [src]="retrievedImage">-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
+<div *ngIf="loading" style="padding-top: 15%;width:100%">
+  <div style="width:200px;margin:auto">
+    <div class="spinner-container">
+      <mat-spinner></mat-spinner>
+    </div>
+  </div>
+</div>
+<div *ngIf="!loading" class="container" style="margin-top: 140px">
+<div class="main-card mb-3 card" [ngClass]="getTheme() ? 'bg-premium-dark' : ''">
+<div class="card-body">
+  <div class="avatar-container">
+    <img width="160" height="160" class="avatar" *ngIf="retrievedImage == null"  src="../../assets/images/avatars/0.png">
+    <img width="160" height="160" class="avatar" *ngIf="retrievedImage != null" [src]="retrievedImage"  >
+  </div>
+  <div class="info">
+    <div class="title">
+      <span>{{connectedUser.name}} {{connectedUser.firstName}}</span>
+    </div>
+    <div [ngStyle]="{'color': getTheme() ? 'white' : ''}">
+    <div class="desc">Passionate designer</div>
+    <div class="desc">Curious developer</div>
+    <div class="desc">Tech geek</div>
+    </div>
+  </div>
+</div>
+</div>
+</div>

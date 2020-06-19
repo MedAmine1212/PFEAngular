@@ -18,9 +18,9 @@ export class WebSocketAPIService {
   constructor() {
   }
   _connect() {
-    console.log('Initialize WebSocket Connection');
     const ws = new SockJS(this.webSocketEndPoint);
     this.stompClient = Stomp.over(ws);
+    this.stompClient.debug = null;
     const thisService = this;
     // tslint:disable-next-line:only-arrow-functions
     thisService.stompClient.connect({}, function(frame) {
@@ -47,12 +47,10 @@ export class WebSocketAPIService {
     }, 5000);
   }
   _send(message) {
-    console.log('calling logout api via web socket');
     this.stompClient.send('/app/hello', {}, JSON.stringify(message));
   }
 
   onMessageReceived(message) {
-    console.log('Message Recieved from Server :: ' + message);
     this.remoteMonitoringCompSource.next(message);
   }
 
