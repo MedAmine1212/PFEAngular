@@ -57,13 +57,14 @@ export class AddUserComponent implements  OnInit  {
   imageName: string;
   retrievedImage: any;
   retrieveResonse: any;
+  tempPost: string;
   base64Data: any;
   uploadImageData: FormData;
   subscribingUser: boolean;
   savingUser: boolean;
   allDone: boolean;
   loading: boolean;
-
+  tempDep: string;
   @ViewChild('stepper') stepper: MatStepper;
   userConfigs: UserConfigs;
   isLinear = false;
@@ -80,6 +81,7 @@ export class AddUserComponent implements  OnInit  {
     birthDate: '',
     department: null,
     email: '',
+    password: '',
     firstName: '',
     gender: '',
     hireDay: null,
@@ -111,10 +113,13 @@ export class AddUserComponent implements  OnInit  {
   };
   imagePath: FileList;
   message: string;
+  userPost: Post;
+  postFormGroup: FormGroup;
+  sameImage: any;
   constructor(private themeChanger: ThemeChangerService,
               public dialogRef: MatDialogRef<AddUserComponent>,
               private userConfigService: UserConfigsService,
-              @Inject(MAT_DIALOG_DATA) public data: Department,
+              @Inject(MAT_DIALOG_DATA) public data: any[],
               private formBuilder: FormBuilder,
               private departmentService: DepartmentService,
               private userService: UserService,
@@ -125,23 +130,62 @@ export class AddUserComponent implements  OnInit  {
               private planningService: PlanningService,
               private imageService: ImageService
   ) {
+    this.userPost = null;
     if (this.data != null ) {
-      this.user.department = this.data;
+      if (this.data[1] === 1) {
+        this.user.department = this.data[0];
+      } else {
+        // clone user
+        this.user.department = this.data[0].department;
+        this.user.userConfigs = this.data[0].userConfigs;
+        this.user.gender = this.data[0].gender;
+        this.user.post = this.data[0].post;
+        this.user.phone = this.data[0].phone;
+        this.user.cin = this.data[0].cin;
+        this.user.email = this.data[0].email;
+        this.user.birthDate = this.data[0].birthDate;
+        this.user.image = this.data[0].image;
+        this.user.addresses = this.data[0].addresses;
+        this.user.password = this.data[0].password;
+        this.user.userId = this.data[0].userId;
+        this.user.notificationMessages = this.data[0].notificationMessages;
+        this.user.firstName = this.data[0].firstName;
+        this.user.name = this.data[0].name;
+        this.user.hireDay = this.data[0].hireDay;
+        this.tempDep = this.user.department.depName;
+        this.tempPost = this.user.post.postName;
+        if (this.user.addresses != null) {
+        this.address1 = this.user.addresses[0];
+        if (this.user.addresses[1] != null) {
+          this.showOtherAddress = true;
+          this.address2 = this.user.addresses[1];
+        }
+        }
+        // end clone user
+      }
     }
+    if (this.user.userId == null) {
     this.userConfigs = new UserConfigs();
     this.userConfigs.theme = false;
     this.userConfigs.shownPlannings =  [];
+    }
   }
 
   ngOnInit(): void {
+    if (this.user.image != null) {
+    this.showImage(this.user.image);
+    }
     this.loading = true;
     this.savingUser = false;
     this.subscribingUser = false;
     this.allDone = false;
+    if (this.data[1] === 1) {
     this.showOtherAddress = false;
     this.user.gender = 'male';
+    }
     this.createFirstFormGroup();
     this.createSecondFormGroup();
+    this.createPostFormGroup();
     this.createThirdFormGroup();
     this.createFourthFormGroup();
     this.postService.list().subscribe(posts => {
@@ -149,11 +193,7 @@ export class AddUserComponent implements  OnInit  {
         this.posts.push(post);
         this.departmentService.list().subscribe(r => {
           this.departments = r;
-          for (const depp of this.departments) {
-            if (depp === this.user.department) {
-            }
-          }
-          if (this.user.department !== null) {
+          if (this.user.department !== null && this.data[1] === 1) {
             setTimeout(() => {
               this.stepper.selectedIndex = 1;
             }, 900);
@@ -171,7 +211,7 @@ export class AddUserComponent implements  OnInit  {
   createSecondFormGroup() {
     // tslint:disable-next-line:max-line-length
     const emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const name: RegExp = /^[a-zA-Z]*$/;
+    const name: RegExp = /^[a-zA-Z\s]*$/;
     this.secondFormGroup = this.formBuilder.group({
       firstName: [this.user.firstName, [Validators.required, Validators.pattern(name),  Validators.minLength(3)]],
       name: [this.user.name, [Validators.required, Validators.pattern(name), Validators.minLength(3)]],
@@ -180,10 +220,13 @@ export class AddUserComponent implements  OnInit  {
       phoneNumber: [this.user.phone, [Validators.required], this.checkInUsePhoneNumber.bind(this)],
       birthDate: [this.user.birthDate, [Validators.required]],
       // gender: [this.user.gender, [Validators.required]],
-      post: [this.user.post, [Validators.required]]
     });
   }
-
+  createPostFormGroup() {
+    this.postFormGroup = this.formBuilder.group({
+    post: [this.user.post, [Validators.required]]
+    });
+  }
   createThirdFormGroup() {
     this.thirdFormGroup = this.formBuilder.group({
       streetName: [this.address1.streetName, Validators.required],
@@ -226,7 +269,7 @@ export class AddUserComponent implements  OnInit  {
     this.subscribingUser = true;
     this.savingUser = true;
     // set user
-    this.user.post = this.secondFormGroup.controls.post.value;
+    this.user.post = this.userPost;
     this.user.addresses.push(this.address1);
     this.user.userConfigs.push(this.userConfigs);
     if (this.showOtherAddress) {
@@ -247,17 +290,17 @@ export class AddUserComponent implements  OnInit  {
         this.savingUser = false;
         if (this.selectedFile !== undefined) {
           // @ts-ignore
-          this.upload(user.userId);
+          this.upload(user.userId, 'added');
         } else {
           setTimeout(() => {
-            this.userAddedSuccessfully();
+            this.userAddedSuccessfully('added');
           }, 400);
         }
       }, 200);
     }, error1 => console.log('erreur user add ' + error1));
   }
 
-  upload(id) {
+  upload(id, message) {
     setTimeout(() => {
       this.allDone = true;
     }, 400);
@@ -272,20 +315,19 @@ export class AddUserComponent implements  OnInit  {
             setTimeout(() => {
               this.allDone = false;
               setTimeout(() => {
-              this.userAddedSuccessfully();
+              this.userAddedSuccessfully(message);
               }, 400);
             }, 1500);
 
           }
-        }
-        , error => console.log(error)
+        }, error => console.log(error)
       );
   }
 
-  userAddedSuccessfully() {
+  userAddedSuccessfully(message) {
     this.dialogComponent = this.dialog.open(DialogComponent, {
       width: '400px',
-      data : 'User added successfully ! '
+      data : 'User ' + message + ' successfully ! '
     });
     this.dialogComponent.afterClosed().subscribe(() =>
       this.dialogRef.close(true)
@@ -298,7 +340,9 @@ export class AddUserComponent implements  OnInit  {
     this.userService.list().subscribe(users => {
       for (const user of users) {
         // @ts-ignore
-        emails.push(user.email);
+        if (this.user.email !== user.email) {
+          emails.push(user.email);
+        }
       }
     });
     return new Observable(observer => {
@@ -314,8 +358,10 @@ export class AddUserComponent implements  OnInit  {
     const cins = [];
     this.userService.list().subscribe(users => {
       for (const user of users) {
+        if (this.user.cin !== user.cin) {
         // @ts-ignore
         cins.push(user.cin);
+        }
       }
     });
     return new Observable(observer => {
@@ -331,9 +377,10 @@ export class AddUserComponent implements  OnInit  {
     const phoneNumbers = [];
     this.userService.list().subscribe(users => {
       for (const user of users) {
+        if (this.user.phone !== user.phone) {
         // @ts-ignore
-        // console.log(user.name);
         phoneNumbers.push(user.phone);
+        }
       }
     });
     return new Observable(observer => {
@@ -436,7 +483,7 @@ export class AddUserComponent implements  OnInit  {
   //   return this.secondFormGroup.get('gender') as FormControl;
   // }
   get post() {
-    return this.secondFormGroup.get('post') as FormControl;
+    return this.postFormGroup.get('post') as FormControl;
   }
   get streetName() {
     return this.thirdFormGroup.get('streetName') as FormControl;
@@ -476,14 +523,6 @@ export class AddUserComponent implements  OnInit  {
       }
     }
   }
-
-  onDateSelect(event) {
-    const year = event.year;
-    const month = event.month <= 9 ? '0' + event.month : event.month;
-    const day = event.day <= 9 ? '0' + event.day : event.day;
-    const finalDate = year + '-' + month + '-' + day;
-    this.user.birthDate = finalDate;
-  }
   getTheme() {
     return this.themeChanger.getTheme();
   }
@@ -515,5 +554,49 @@ export class AddUserComponent implements  OnInit  {
     reader.onload = (event) => {
       this.retrievedImage = reader.result;
     };
+  }
+
+  updateUser() {
+    this.subscribingUser = true;
+    this.savingUser = true;
+    if (this.userPost != null) {
+      this.user.post = this.userPost;
+    }
+    if (this.address2 != null && this.user.addresses.length === 1 && this.showOtherAddress) {
+      this.user.addresses.push(this.address2);
+    }
+    if (!this.showOtherAddress && this.user.addresses.length === 2) {
+      this.user.addresses.splice(1, 1);
+    }
+    if (this.retrievedImage == null || this.selectedFile != null) {
+      this.user.image = null;
+    }
+    this.userService.modify(this.user.userId, this.user).subscribe(() => {
+      setTimeout(() => {
+        this.savingUser = false;
+        // tslint:disable-next-line:triple-equals
+        if (this.selectedFile != null) {
+          this.upload(this.user.userId, 'updated');
+        } else if (this.selectedFile == null && this.retrievedImage == null) {
+          // fasa5 l image mel back !!!!!
+          setTimeout(() => {
+            this.userAddedSuccessfully('updated');
+          }, 400);
+        }
+      }, 200);
+    }, error => console.log(error));
+  }
+
+  showImage(name) {
+    if (name != null) {
+    this.imageService.load(name).subscribe( img => {
+      if (img !== null) {
+        this.retrieveResonse = img;
+        this.base64Data = this.retrieveResonse.picByte;
+        this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
+        this.sameImage = 'data:image/jpeg;base64,' + this.base64Data;
+      } else {this.retrievedImage = null ; }
+    });
+    }
   }
 }

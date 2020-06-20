@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {User} from '../../models/User';
 import {Department} from '../../models/Department';
@@ -6,6 +6,7 @@ import {DepartmentService} from '../../services/department/department.service';
 import {Address} from '../../models/Address';
 import {UserService} from '../../services/user/user.service';
 import {AddressService} from '../../services/address/address.service';
+import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 
 @Component({
   selector: 'app-employee-details',
@@ -14,9 +15,11 @@ import {AddressService} from '../../services/address/address.service';
 })
 export class EmployeeDetailsComponent implements OnInit {
   constructor(
-  @Inject(MAT_DIALOG_DATA) public emp: User, private departmentService: DepartmentService, private  userService: UserService,
+  private themeChanger: ThemeChangerService,
+  private departmentService: DepartmentService, private  userService: UserService,
   private addressService: AddressService) {}
   static refreshEmp: boolean;
+  @Input() emp: User;
   showUpdateForm: boolean;
   showAddressUpdateForm: boolean;
   departments: Department[];
@@ -24,6 +27,7 @@ export class EmployeeDetailsComponent implements OnInit {
   newEmpAddresses: Address [];
   selectedDep: number;
   ngOnInit(): void {
+    console.log(this.emp);
     EmployeeDetailsComponent.refreshEmp = false;
     this.selectedDep = this.emp.department.depId;
     this.duplicateUser();
@@ -85,5 +89,9 @@ export class EmployeeDetailsComponent implements OnInit {
   undoAddressesChanges() {
     this.duplicateAddresses();
     this.showAddressUpdateForm = false;
+  }
+
+  getTheme() {
+    return this.themeChanger.getTheme();
   }
 }

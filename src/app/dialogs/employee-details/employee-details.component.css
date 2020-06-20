@@ -4,10 +4,17 @@
   font-weight: bolder;
 }
 .data{
-  height:28px;
+  height:42px;
+}
+.dataDark:hover{
+  color:white !important;
 }
 table{
   font-size: 13px;
+}
+.darkInput {
+  background: transparent !important;
+color: white;
 }
 .buttonsContainer{
   font-size: 25px;

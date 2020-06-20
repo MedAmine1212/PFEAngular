@@ -13,6 +13,7 @@ export class User {
   hireDay: Date;
   phone: string;
   email: string;
+  password: string;
   department: Department;
   addresses: Address[];
   post: Post;
