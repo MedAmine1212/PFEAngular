@@ -1,5 +1,5 @@
-<div [ngClass]="getTheme() ? 'bg-dark' :''" style="height:100vh;width: 100%;text-align: center" *ngIf="loading">
-  <div style="position: fixed;margin-left: 360px">
+  <div [ngClass]="getTheme() ? 'bg-dark' :''" style="height:100vh;width: 100%;text-align: center" *ngIf="loading">
+  <div>
   <img style="margin-top: 20vh" *ngIf="!getTheme()" src="../../../assets/loading/loadinglight.gif">
   <img style="margin-top: 20vh" *ngIf="getTheme()" src="../../../assets/loading/loadingdark.gif"><br>
     <span [@enterLoadingAnimation] *ngIf="showLoadingText" [ngStyle]="{'color': getTheme() ? 'grey' : 'grey'}" style="margin-left:40px;font-size: 30px;font-weight: bolder">Loading...</span>
