@@ -10,11 +10,11 @@ import {environment} from '../../../environments/environment';
 export class UserService {
   private baseurl = environment.ipAddress + environment.port + '/user/';
   private headers: HttpHeaders;
-   userConnected : User;
+   sender : User;
 
   constructor(private http: HttpClient) {
     // @ts-ignore
-    this.findUserWithToken().subscribe(user => this.userConnected = user);
+    this.findUserWithToken().subscribe(user => this.sender = user);
   }
 
 
@@ -34,8 +34,8 @@ export class UserService {
   remove(id) {
     // this.headers = new HttpHeaders({Authorization: 'Bearer ' + localStorage.token});
     // @ts-ignore
-    console.log(this.userConnected.userId);
-    return this.http.delete(this.baseurl + 'delete/' + id + '/' + this.userConnected.userId);
+    console.log(this.sender.userId);
+    return this.http.delete(this.baseurl + 'delete/' + id + '/' + this.sender.userId);
   }
 
   modify(id, user) {
