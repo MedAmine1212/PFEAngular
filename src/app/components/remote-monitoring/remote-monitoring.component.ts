@@ -174,6 +174,7 @@ public reloadFromWebSocket(message) {
             }
           }
         }
+      console.log(webSocketMessage);
       if (webSocketMessage !== 'userConfig') {
         this.navComponent.reloadNotifs();
       }
