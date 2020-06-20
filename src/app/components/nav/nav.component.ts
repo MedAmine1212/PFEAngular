@@ -54,24 +54,28 @@ export class NavComponent implements OnInit {
         this.notifs = [];
       }
       let tempNotifs: NotificationMessage[];
-      tempNotifs = this.connectedUser.notificationMessages.reverse();
-      if (tempNotifs.length > this.notifs.length) {
-        if (this.playNotifSound) {
-          this.notifSound.play();
-        }
-        this.notifs = tempNotifs;
-        this.notViewdNotifs = null;
-        for (const ntf of this.notifs) {
-          if (!ntf.isViewed) {
-            if (this.notViewdNotifs != null) {
-              this.notViewdNotifs++;
-            } else {
-              this.notViewdNotifs = 1;
+      this.userService.findUserWithToken().subscribe(res => {
+          // @ts-ignore
+          tempNotifs = res.notificationMessages.reverse();
+
+          if (tempNotifs.length > this.notifs.length) {
+            if (this.playNotifSound) {
+              this.notifSound.play();
+            }
+            this.notifs = tempNotifs;
+            this.notViewdNotifs = null;
+            for (const ntf of this.notifs) {
+              if (!ntf.isViewed) {
+                if (this.notViewdNotifs != null) {
+                  this.notViewdNotifs++;
+                } else {
+                  this.notViewdNotifs = 1;
+                }
+              }
             }
           }
-        }
-      }
-      this.playNotifSound = true;
+          this.playNotifSound = true;
+        }, error => console.log(error));
     }
     }
 
