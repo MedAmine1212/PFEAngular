@@ -9,7 +9,9 @@ export class ThemeChangerService {
   }
 
   setTheme(theme) {
-    this.theme = theme;;
+    if (this.theme !== theme) {
+    this.theme = theme;
+    }
   }
   getTheme() {
     return this.theme;

@@ -81,7 +81,7 @@
           <div class="card-body" style="padding-bottom: 40px">
             <form [formGroup]="secondFormGroup" >
               <div class="form-row">
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-5">
                   <mat-form-field  appearance="outline">
                     <mat-label>First Name</mat-label>
                     <input
@@ -121,7 +121,7 @@
                 </div>
 
 <!--                Image-->
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-3">
                   <div style="margin-top: 10px;position:fixed;margin-left: 50px">
                     <span class="material-icons"*ngIf="retrievedImage" (click)="retrievedImage = null" style="color:grey;opacity: .8;cursor: pointer;float: right;margin-left: -80px;margin-bottom:-10px ">cancel</span>
                     <img width="123" height="120" class="rounded-circle" *ngIf="retrievedImage == null"  src="assets/images/avatars/0.png" alt="">
@@ -132,7 +132,7 @@
               </div>
 
               <div class="form-row">
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-5">
                   <mat-form-field appearance="outline">
                     <mat-label>CIN</mat-label>
                     <input

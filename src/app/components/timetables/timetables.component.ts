@@ -154,9 +154,7 @@ export class TimetablesComponent implements OnInit {
         pl.showPl = true;
       }
     }
-    console.log(this.userConfig);
     this.userConfigService.update(this.userConfig.configId, this.userConfig).subscribe(() => {
-      console.log('updated');
     }, error => console.log(error));
   }
 
@@ -170,7 +168,6 @@ export class TimetablesComponent implements OnInit {
       }
     }
     this.userConfigService.update(this.userConfig.configId, this.userConfig).subscribe(() => {
-      console.log('updated');
     }, error => console.log(error));
   }
 
@@ -185,7 +182,6 @@ export class TimetablesComponent implements OnInit {
       this.selectedCount--;
     }
     this.userConfigService.update(this.userConfig.configId, this.userConfig).subscribe( () => {
-      console.log('updated');
     }, error => console.log(error));
     }
   }
@@ -207,7 +203,6 @@ export class TimetablesComponent implements OnInit {
     this.userService.findUserWithToken().subscribe(user => {
       // @ts-ignore
       this.user = user;
-      console.log(this.user);
       this.userConfig = this.user.userConfigs[0];
       this.listPlannings();
     }, error => {
@@ -301,7 +296,6 @@ export class TimetablesComponent implements OnInit {
             this.clickedPlanning = null;
             this.schComp.setClickedPl(new Planning());
             this.planningDetailsComp.setClickedPl(null);
-            console.log('Refreshing plannings..');
             this.reloadData();
           }, error1 => console.log(error1));
         }

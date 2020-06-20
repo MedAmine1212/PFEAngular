@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../../services/Authentication/authentication.service';
 import {UserService} from '../../services/user/user.service';
@@ -18,7 +18,7 @@ import {Howl} from 'howler';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
-  user: User = new User();
+  @Input() connectedUser: User;
   isLoggedIn;
   userConfigs: UserConfigs  = new UserConfigs();
   jwt = new JwtHelperService();
@@ -49,13 +49,12 @@ export class NavComponent implements OnInit {
    }
 
   reloadNotifs() {
-    this.userService.findUserWithToken().subscribe(user => {
+    if (this.connectedUser != null) {
       if (this.notifs == null) {
         this.notifs = [];
       }
       let tempNotifs: NotificationMessage[];
-      // @ts-ignore
-      tempNotifs = user.notificationMessages.reverse();
+      tempNotifs = this.connectedUser.notificationMessages.reverse();
       if (tempNotifs.length > this.notifs.length) {
         if (this.playNotifSound) {
           this.notifSound.play();
@@ -73,7 +72,7 @@ export class NavComponent implements OnInit {
         }
       }
       this.playNotifSound = true;
-    }, error => console.log(error));
+    }
     }
 
   ngOnInit(): void {
@@ -81,17 +80,11 @@ export class NavComponent implements OnInit {
     this.notViewdNotifs = null;
     this.playNotifSound = false;
     this.reloadNotifs();
-    console.log(this.notifs);
     this.isLoggedIn = this.auth.loggedIn() ;
 
-    this.userService.findUserWithToken().subscribe(user => {
-      // @ts-ignore
-      this.user = user ;
-      console.log(user);
-      // @ts-ignore
-      if (this.user.image !== '') {
-        // @ts-ignore
-        this.imageService.load(user.image).subscribe(
+    if (this.connectedUser != null) {
+      if (this.connectedUser.image !== '') {
+        this.imageService.load(this.connectedUser.image).subscribe(
           img => {
             if (img !== null) {
               this.retrieveResonse = img;
@@ -101,7 +94,7 @@ export class NavComponent implements OnInit {
           }
         );
       }
-    });
+    }
 
 
   }
@@ -117,10 +110,9 @@ export class NavComponent implements OnInit {
 
   setTheme(theme: boolean) {
         this.themeChanger.setTheme(theme);
-        this.userConfigs = this.user.userConfigs[0];
+        this.userConfigs = this.connectedUser.userConfigs[0];
         this.userConfigs.theme = theme;
         this.userConfigsService.update(this.userConfigs.configId, this.userConfigs).subscribe(() => {
-          console.log('updated');
         }, error => console.log(error));
     }
 
@@ -146,7 +138,7 @@ export class NavComponent implements OnInit {
 
   clearAllNotifications(event) {
     event.stopPropagation();
-    this.user.notificationMessages = [];
+    this.connectedUser.notificationMessages = [];
     this.notViewdNotifs = null;
     for (const ntf of this.notifs) {
       this.notifService.remove(ntf.notifId).subscribe();

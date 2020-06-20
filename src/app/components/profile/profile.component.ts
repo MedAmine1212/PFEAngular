@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {ImageService} from '../../services/image/image.service';
+import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
+import {User} from '../../models/User';
 
 @Component({
   selector: 'app-profile',
@@ -8,44 +10,52 @@ import {ImageService} from '../../services/image/image.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+  @Input() connectedUser: User;
+  retrievedImage: any;
+  retrieveResonse: any;
+  base64Data: any;
+  loading: boolean;
   constructor(private httpClient: HttpClient,
+              private themeChanger: ThemeChangerService,
               private imageService: ImageService
   ) { }
 
-  selectedFile: File;
-  imgURL: any;
-
-  imageName: any;
-
-  public onFileChanged(event) {
-    // Select File
-    this.selectedFile = event.target.files[0];
+  ngOnInit(): void {
+    this.loading = true;
+    console.log(this.connectedUser);
+    this.retrievedImage = null;
+    if (this.connectedUser != null) {
+      if (this.connectedUser.image !== '') {
+        this.imageService.load(this.connectedUser.image).subscribe(
+          img => {
+            if (img !== null) {
+              this.retrieveResonse = img;
+              this.base64Data = this.retrieveResonse.picByte;
+              this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
+            } else {this.retrievedImage = null ; }
+            setTimeout(() => {
+              this.loading = false;
+            }, 500);
+          }, error => {
+            setTimeout(() => {
+              this.loading = false;
+            }, 500);
+          }
+        );
+      } else {
+      setTimeout(() => {
+        this.loading = false;
+      }, 500);
+      }
+    } else {
+      setTimeout(() => {
+        this.loading = false;
+      }, 500);
+    }
   }
 
 
-  // onUpload() {
-  //   console.log(this.selectedFile);
-  //   const uploadImageData = new FormData();
-  //   uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
-  //   this.imageService.uploadImage(uploadImageData)
-  //     .subscribe((response) => {
-  //         if (response.status === 200) {
-  //           this.getImage();
-  //         }
-  //       }
-  //       , error => console.log(error)
-  //     );
-
-
-
-
-  // }
-
-  // getImage() {
-  //   this.imageService.getImage(this.imageName);
-  //
-  // }
-
-  ngOnInit(): void {
+  getTheme() {
+    return this.themeChanger.getTheme();
   }
 }

@@ -64,7 +64,6 @@ export class EmployeesComponent implements OnInit {
   ngOnInit(): void {
     this.showUsers = true;
     this.showHideInput = false;
-    console.log('qsdqsdqsdqs' + this.thisIsEmp);
     if (this.router.url === '/RemoteMonitoring/(mainCon:Employees)'
         || this.router.url === '/RemoteMonitoring/(mainCon:Absences)' || this.router.url === '/RemoteMonitoring') {
       this.reloadData();
@@ -130,7 +129,6 @@ export class EmployeesComponent implements OnInit {
           this.clickedDep = new Department();
           this.clickedDep.depId = -1;
           this.outPutData.emit();
-          console.log('Refreshing departments..');
         }, error1 => console.log(error1));
       }
     });
@@ -145,7 +143,6 @@ export class EmployeesComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-      console.log('Refreshing departments..');
       this.outPutData.emit();
       }
     });
@@ -160,9 +157,7 @@ export class EmployeesComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('Refreshing departments..');
         this.outPutData.emit();
-        console.log('Refreshing Employees..');
         this.setChefDep(this.clickedDep.depId);
       }
     });
@@ -188,7 +183,6 @@ export class EmployeesComponent implements OnInit {
   }
 
   private reloadData() {
-    console.log('reloading employees..');
     this.userService.list().subscribe(r => {
       if (this.router.url === '/RemoteMonitoring/(mainCon:Departments)' && this.clickedDep.depId !== -1) {
         this.chefDep = null;
@@ -207,11 +201,9 @@ export class EmployeesComponent implements OnInit {
           this.loading = false;
         }, 500);
       } else {
-        this.userService.findUserWithToken().subscribe(us => {
           this.users = [];
           this.users = r;
           this.getImages(this.users);
-        });
     }
   }, () => {
       setTimeout(() => {
@@ -232,7 +224,6 @@ export class EmployeesComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (EmployeeDetailsComponent.refreshEmp) {
-        console.log('Refreshing employees..');
         this.reloadData();
         if (this.router.url === '/RemoteMonitoring/(mainCon:Departments)') {
           this.outPutData.emit();
@@ -248,8 +239,8 @@ export class EmployeesComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+          this.loading = true;
           this.userService.remove(emp.userId).subscribe(() => {
-          console.log('Refreshing employees..');
           this.reloadData();
         }, error1 => console.log(error1));
       }
@@ -261,7 +252,6 @@ export class EmployeesComponent implements OnInit {
   }
 
   reloadFromSocket() {
-    console.log('Reloading users from');
     this.reloadData();
   }
   showImage(name) {

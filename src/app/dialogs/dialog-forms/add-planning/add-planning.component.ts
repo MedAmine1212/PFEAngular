@@ -369,6 +369,7 @@ saveModifiedPlanning() {
       if (sch.scheduleId === Number.parseInt(e.target.value, 0)) {
           this.schedule = sch;
           this.noSch = false;
+          console.log(this.schedule);
           break;
       }
     }

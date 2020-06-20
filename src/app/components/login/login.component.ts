@@ -15,7 +15,6 @@ import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.ser
 
 })
 export class LoginComponent implements OnInit {
-  private loadAPI: any;
   login: Login ;
   signInForm: FormGroup;
   dialogComponent: MatDialogRef<DialogComponent>;
@@ -39,42 +38,27 @@ constructor(
     this.login = {cin: '', password: ''};
     this.createSignInForm();
   }
-  reloadJs() {
-    this.loadAPI = new Promise(resolve => {
-      console.log('resolving promise...');
-      this.loadScript();
-    });
-  }
+
 
   submit() {
-    this.reloadJs();
     this.authService.authenticate(this.login, this.isRemeberChecked).subscribe(res => {
-      console.log('asbaa');
       // @ts-ignore
       localStorage.token = res.token;
       this.userService.findUserWithToken().subscribe( ress => {
-        console.log(ress);
       // @ts-ignore
         localStorage.cin = ress.cin;
-       // @ts-ignore
+        // @ts-ignore
         this.themeChanger.setTheme(ress.userConfigs[0].theme);
-
-      });
-      this.router.navigateByUrl('/RemoteMonitoring').then(() => window.location.reload());
+        setTimeout(() => {
+          this.router.navigateByUrl('/RemoteMonitoring').then(() => window.location.reload());
+        }, 100);
+      }, error => console.log(error));
     }, error => {
       console.log(error);
       this.showError = true;
       });
   }
-  public loadScript() {
-    console.log('preparing to load...');
-    const node = document.createElement('script');
-    node.src = '../../../assets/scripts/temp.js';
-    node.type = 'text/javascript';
-    node.async = true;
-    node.charset = 'utf-8';
-    document.getElementsByTagName('head')[0].appendChild(node);
-  }
+
   createSignInForm() {
     this.signInForm = this.formBuilder.group({
       cin: [this.login.cin, [Validators.required]],
@@ -84,13 +68,5 @@ constructor(
 
   rememberChecked() {
     this.isRemeberChecked = !this.isRemeberChecked;
-  }
-
-  setPassType() {
-  if (this.passType === 'text') {
-    this.passType = 'password';
-  } else {
-    this.passType = 'text';
-  }
   }
 }

@@ -5361,7 +5361,7 @@ a.fc-more:hover{text-decoration:underline }
 .jvectormap-legend-tick-text{font-size:12px }
 .jvectormap-legend-cnt-h .jvectormap-legend-tick-text{text-align:center }
 .jvectormap-legend-cnt-v .jvectormap-legend-tick-text{display:inline-block;vertical-align:middle;line-height:20px;padding-left:3px }
-@media only screen and (max-width: 1320px){.header-user-info{display:none }
+@media only screen and (max-width: 1320px){.header-user-info{display:block }
 }
 @media (max-width: 991.98px){.app-main{display:block }
   .dropdown-menu::before,.dropdown-menu::after{display:none }
