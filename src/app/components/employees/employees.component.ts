@@ -166,9 +166,9 @@ export class EmployeesComponent implements OnInit {
   showAddUserDialog() {
     const dialogRef = this.dialog.open(AddUserComponent, {
       width: '900px',
-      height: '615px',
+      height: '625px',
       panelClass: 'matDialogClass',
-      data: this.clickedDep
+      data: [this.clickedDep, 1]
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -216,15 +216,17 @@ export class EmployeesComponent implements OnInit {
     if (this.router.url === '/RemoteMonitoring/(mainCon:Departments)') {
       emp.department = this.clickedDep;
     }
-    const dialogRef = this.dialog.open(EmployeeDetailsComponent, {
+    const dialogRef = this.dialog.open(AddUserComponent, {
       width: '900px',
       height: '625px',
       panelClass: 'matDialogClass',
-      data: emp
+      data: [emp, 2]
     });
     dialogRef.afterClosed().subscribe(result => {
       if (EmployeeDetailsComponent.refreshEmp) {
-        this.reloadData();
+        setTimeout(() => {
+          this.reloadData();
+        }, 100);
         if (this.router.url === '/RemoteMonitoring/(mainCon:Departments)') {
           this.outPutData.emit();
         }

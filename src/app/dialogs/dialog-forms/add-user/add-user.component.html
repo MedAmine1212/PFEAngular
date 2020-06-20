@@ -27,17 +27,20 @@
               <hr>
             </div>
             <div class="card-body">
-              <select
+              <div *ngIf="this.data[1] == 2" style="margin-bottom: 40px">
+              <h3>Current department</h3>
+              <input  type="text" class="form-control" id="inputDep2" value="{{tempDep}}" disabled="true">
+              </div>
+                <select
                 required
                 class="custom-select"
                 id="inputGroupSelect01"
                 [(ngModel)]="user.department"
                 [ngModelOptions]="{standalone: true}"
               >
-                <!--          [disabled]="router.url === '/RemoteMonitoring/(mainCon:Departments)'"-->
-
-                <option style="color: grey;" disabled [selected]="user.department === null" value="null">Choose a department: </option>
-                <option *ngFor="let depp of departments"  [ngValue]="depp">
+                <option style="color: grey;" disabled [selected]="user.department === null" *ngIf="this.data[1] == 1" value="null">Choose a department: </option>
+                <option style="color: blue;" *ngIf="this.data[1] == 2" >Unchanged</option>
+                <option *ngFor="let depp of departments" [ngValue]="depp">
                   <span>{{depp.depName}}</span>
                 </option>
               </select>
@@ -74,8 +77,9 @@
         <div  class="main-card mb-3 card">
           <div class="card-header">
 
-            <h1 *ngIf="user.department != null">Add a user to <b>{{user.department.depName}}</b> department</h1>
-            <h1 *ngIf="user.department == null">User info</h1>
+            <h1 *ngIf="user.department != null && data[1] == 1">Add a user to <b>{{user.department.depName}}</b> department</h1>
+            <h1 *ngIf="data[1] == 2"><b>Edit user</b></h1>
+            <h1 *ngIf="user.department == null && data[1] == 1">User info</h1>
             <hr>
           </div>
           <div class="card-body" style="padding-bottom: 40px">
@@ -122,7 +126,7 @@
 
 <!--                Image-->
                 <div class="form-group col-md-3">
-                  <div style="margin-top: 10px;position:fixed;margin-left: 50px">
+                  <div style="margin-top: 10px;position:relative;margin-left: 50px">
                     <span class="material-icons"*ngIf="retrievedImage" (click)="retrievedImage = null" style="color:grey;opacity: .8;cursor: pointer;float: right;margin-left: -80px;margin-bottom:-10px ">cancel</span>
                     <img width="123" height="120" class="rounded-circle" *ngIf="retrievedImage == null"  src="assets/images/avatars/0.png" alt="">
                     <img width="123" height="120" class="rounded-circle" *ngIf="retrievedImage" [src]="retrievedImage" alt="">
@@ -131,7 +135,7 @@
                 </div>
               </div>
 
-              <div class="form-row">
+              <div style="margin-top: -55px" class="form-row">
                 <div class="form-group col-md-5">
                   <mat-form-field appearance="outline">
                     <mat-label>CIN</mat-label>
@@ -177,45 +181,38 @@
                 </div>
               </div>
               <div class="form-row">
-                <div class="form-group col-md-6">
-                  <div class="input-group">
+                <div class="form-group col-md-5">
+                    <mat-form-field class="birthDate" appearance="outline">
+                      <mat-label>Birth date</mat-label>
                     <input
+                      matInput
                       required
+                      [matDatepicker]="picker"
                       id="inputBirthDate"
-                      class="form-control"
                       placeholder="Birth date (yyyy-mm-dd)"
-                      name="dp"
-                      ngbDatepicker
-                      #d="ngbDatepicker"
+                      [(ngModel)]="user.birthDate"
                       formControlName="birthDate"
-                      (dateSelect)="onDateSelect($event)"
                     >
-                    <div class="input-group-append">
-                      <button class="btn btn-outline-info" (click)="d.toggle()" type="button">
-                        <span class="fas fa-calendar-alt"></span>
-                      </button>
-                    </div>
-                  </div>
-
-                  <div class="mat-errorContainer">
-                    <mat-error *ngIf="!birthDate.valid && birthDate.touched ">
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                      <mat-error *ngIf="!birthDate.valid && birthDate.touched ">
                       Birth Date is required !
                     </mat-error>
-                  </div>
+                    </mat-form-field>
                 </div>
-                <div class="form-group col-md-6">
-                  <div style="margin-left: 10px" class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <label style="width: 170px" class="btn btn-info active">
-                      <input type="radio" (focus)="user.gender = 'male'"  name="options" autocomplete="off" checked> Male
+                <div class="form-group col-md-7">
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label style="width: 170px" class="btn btn-info" [ngClass]="user.gender == 'male' ? 'active' :''">
+                      <input type="radio" (focus)="user.gender = 'male'" name="options" autocomplete="off"> Male
                     </label>
-                    <label style="width: 170px" class="btn btn-info">
-                      <input type="radio"  name="options" (focus)="user.gender = 'female'" autocomplete="off"> Female
+                    <label style="width: 170px" class="btn btn-info" [ngClass]="user.gender == 'female' ? 'active' :''">
+                      <input type="radio"  name="options" (focus)="user.gender = 'female'" checked autocomplete="off"> Female
                     </label>
                   </div>
                 </div>
               </div>
-              <div class="form-row">
-                <div class="form-group col-md-6">
+              <div class="form-row" style="padding-top: 20px">
+                <div class="form-group col-md-5">
                   <mat-form-field class="phoneInput" ><br><br>
                     <ngx-mat-intl-tel-input required
                                             placeholder="Phone number"
@@ -236,16 +233,20 @@
                   <!--                  -->
                   <!--                </div>-->
                 </div>
-                <div style="margin-bottom: -30px;padding-top:18px" class="form-group col-md-6">
-                  <!-- <label for="inputPost">Post*</label> --><br>
+                <div style="margin-bottom: -30px;padding-top:18px" class="form-group col-md-7">
+                  <label for="inputGroupSelect02">Post*</label><br>
+                    <input type="text" class="form-control" *ngIf="data[1] == 2" style="float: left;width: 45%" disabled value="{{tempPost}}"/>
                   <select
+                  [ngStyle]="{'float' : data[1] == 2 ? 'right': '', 'width': data[1] == 2 ? '50%' :''}"
                     required
                     class="custom-select"
-                    formControlName="post"
-                    id="inputPost"
+                    id="inputGroupSelect02"
+                    [(ngModel)]="userPost"
+                    [ngModelOptions]="{standalone: true}"
                   >
-                    <option style="color: grey;" disabled selected value="null"> Post: </option>
-                    <option *ngFor="let post of posts"  [ngValue]="post">
+                    <option style="color: grey;" disabled *ngIf="data[1] == 1" selected value="null"> Post: </option>
+                    <option style="color: blue;" *ngIf="data[1] == 2" selected value="null"> Unchanged</option>
+                    <option *ngFor="let post of posts" [ngValue]="post">
                       <span>{{post.postName}}</span>
                     </option>
                   </select>
@@ -257,10 +258,11 @@
               </div>
             </form>
           </div>
+
         </div>
         <div style="width:100%">
           <div style="float: right;margin-top: -25px;margin-bottom: -20px;padding-top: 5px">
-            <button type="submit" mat-raised-button color="primary" [disabled]="!secondFormGroup.valid" (click)="test()" matStepperNext >Next</button>
+            <button type="submit" mat-raised-button color="primary" [disabled]="!secondFormGroup.valid ||( userPost == null && data[1] == 1)" (click)="test()" matStepperNext >Next</button>
             <button type="button" (click)="closeThis()" class="btn btn-light" style="margin-left: 20px;">Cancel</button>
           </div>
         </div>
@@ -361,10 +363,12 @@
           </div>
           <div class="note">
             <button (click)="showFourthFormGroup()" *ngIf="!showOtherAddress" class="btn btn-info addAddressButton">
-              <span mat-raised-button matTooltip="Add second Address now" class="fas fa-plus-circle"></span>
+              <span mat-raised-button matTooltip="Add second Address now" *ngIf="data[1] == 1 || (data[1] == 2 && data[0].addresses[1] == null)" class="fas fa-plus-circle"></span>
+              <span mat-raised-button matTooltip="Restore second address" *ngIf="data[1] == 2 && data[0].addresses[1] != null" class="fas fa-plus-circle"></span>
             </button>
             <button (click)="hideFourthFormGroup()" *ngIf="showOtherAddress"  class="btn btn-info addAddressButton">
-              <span mat-raised-button matTooltip="Hide form"  class="fas fa-minus-circle"></span>
+              <span mat-raised-button matTooltip="Hide form" *ngIf="data[1] == 1 || (data[1] == 2 && data[0].addresses[1] == null)"  class="fas fa-minus-circle"></span>
+              <span mat-raised-button matTooltip="Delete second address" *ngIf="data[1] == 2 && data[0].addresses[1] != null"  class="fas fa-minus-circle"></span>
             </button>
             <span *ngIf="!showOtherAddress"> Note: Each user can have 2 addresses, you can add another address now, otherwise this user or the employer can add another address later.</span>
           </div><br>
@@ -462,7 +466,8 @@
         </div>
         <div class="buttons">
           <div style="float: right;">
-            <button type="submit" [disabled]="!thirdFormGroup.valid || (showOtherAddress && !fourthFormGroup.valid)" class="btn btn-primary"  (click)="addUser()">Add user</button>
+            <button type="submit" *ngIf="data[1] == 1" [disabled]="!thirdFormGroup.valid || (showOtherAddress && !fourthFormGroup.valid)" class="btn btn-primary"  (click)="addUser()">Add user</button>
+            <button type="submit" *ngIf="data[1] == 2" [disabled]="!thirdFormGroup.valid || (showOtherAddress && !fourthFormGroup.valid)" class="btn btn-primary"  (click)="updateUser()">Update user</button>
             <button type="button" (click)="closeThis()" class="btn btn-light" style="margin-left: 20px;">Cancel</button>
           </div>
         </div>

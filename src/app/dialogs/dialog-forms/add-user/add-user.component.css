@@ -50,3 +50,10 @@ input[type=number] {
   font-weight: bold;
   font-size: 25px;
 }
+
+::ng-deep .birthDate {
+  height: 15px !important;
+  margin-top: -10px;
+  margin-bottom: 30px;
+  width: 84%;
+}
