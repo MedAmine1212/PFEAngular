@@ -183,3 +183,10 @@ td{
 .lightText:hover{
   color:white !important;
 }
+.addUser{
+  border-radius: 15px;
+  margin-left:3px;
+}
+.addUser:hover{
+  background:#007bff !important;
+}

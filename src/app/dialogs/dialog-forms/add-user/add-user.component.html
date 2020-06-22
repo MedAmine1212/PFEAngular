@@ -235,7 +235,8 @@
                 </div>
                 <div style="margin-bottom: -30px;padding-top:18px" class="form-group col-md-7">
                   <label for="inputGroupSelect02">Post*</label><br>
-                    <input type="text" class="form-control" *ngIf="data[1] == 2" style="float: left;width: 45%" disabled value="{{tempPost}}"/>
+                    <input type="text" class="form-control" *ngIf="data[1] == 2 && tempPost != null" style="float: left;width: 45%" disabled value="{{tempPost}}"/>
+                    <input type="text" class="form-control" *ngIf="data[1] == 2 && tempPost == null" style="float: left;width: 45%" disabled value="No post assigned"/>
                   <select
                   [ngStyle]="{'float' : data[1] == 2 ? 'right': '', 'width': data[1] == 2 ? '50%' :''}"
                     required
@@ -244,8 +245,8 @@
                     [(ngModel)]="userPost"
                     [ngModelOptions]="{standalone: true}"
                   >
-                    <option style="color: grey;" disabled *ngIf="data[1] == 1" selected value="null"> Post: </option>
-                    <option style="color: blue;" *ngIf="data[1] == 2" selected value="null"> Unchanged</option>
+                    <option style="color: grey;" disabled *ngIf="data[1] == 1 || tempPost == null" selected value="null"> Post: </option>
+                    <option style="color: blue;" *ngIf="data[1] == 2 && tempPost != null" selected value="null"> Unchanged</option>
                     <option *ngFor="let post of posts" [ngValue]="post">
                       <span>{{post.postName}}</span>
                     </option>

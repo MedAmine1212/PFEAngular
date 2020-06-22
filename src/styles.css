@@ -45,6 +45,9 @@ input:focus, textarea , button, select{
   z-index: 1090 !important;
   margin-top: 28px !important;
 }
+.mat-bottom-sheet-container{
+  overflow-x: hidden !important;
+}
 /*!
  =========================================================
  * ArchitectUI HTML Theme Dashboard - v1.0.0

@@ -154,7 +154,7 @@ export class TimetablesComponent implements OnInit {
         pl.showPl = true;
       }
     }
-    this.userConfigService.update(this.userConfig.configId, this.userConfig).subscribe(() => {
+    this.userConfigService.update(this.userConfig.configId, this.userConfig, 1).subscribe(() => {
     }, error => console.log(error));
   }
 
@@ -167,7 +167,7 @@ export class TimetablesComponent implements OnInit {
         pl.showPl = false;
       }
     }
-    this.userConfigService.update(this.userConfig.configId, this.userConfig).subscribe(() => {
+    this.userConfigService.update(this.userConfig.configId, this.userConfig, 1).subscribe(() => {
     }, error => console.log(error));
   }
 
@@ -181,7 +181,7 @@ export class TimetablesComponent implements OnInit {
       this.userConfig.shownPlannings.splice(this.userConfig.shownPlannings.indexOf(pl.planningId), 1);
       this.selectedCount--;
     }
-    this.userConfigService.update(this.userConfig.configId, this.userConfig).subscribe( () => {
+    this.userConfigService.update(this.userConfig.configId, this.userConfig, 1).subscribe( () => {
     }, error => console.log(error));
     }
   }

@@ -25,14 +25,14 @@
       <ul  class="vertical-nav-menu">
 
 
-        <li class="app-sidebar__heading" style="font-size: 15px;padding-top: 10px"  style="border:1px solid transparent">
+        <li class="app-sidebar__heading" style="font-size: 15px;padding-top: 10px;margin-left: -15px;border:1px solid transparent">
+          <span style="font-size: 16px">
           <i style="margin-right:7px;" [ngStyle]="{'color': getTheme() ? 'white' :'grey'}" class="fa fa-building"></i>
-          Departments
+          Departments</span>
           <span class="buttons" style="border:1px solid transparent">
       <button (click)="addDepartment()" mat-raised-button matTooltip="Add departement" [ngClass]="{'bg-premium-dark': getTheme()}" class="btn btn-outline-primary addButtForDark" ><span class="fas fa-plus"></span></button>
-    <span (click)="unselectDep()" [ngStyle]="{'color': getTheme() ? 'white' :''}" *ngIf="clickedDep.depId!=-1" matTooltip="Unselect departement" class="fa fa-check-circle"></span>
+    <span (click)="unselectDep()" [ngClass]="getTheme() ? 'darkUnselect' :'lightUnselect'" *ngIf="clickedDep.depId!=-1" matTooltip="Unselect departement" class="fa fa-check-circle"></span>
   </span>
-
         </li>
         <li class="noDepLi" [ngStyle]="{'color': getTheme()? 'white' :''}" *ngIf="this.data.length === 0">
           No departments to show<br>

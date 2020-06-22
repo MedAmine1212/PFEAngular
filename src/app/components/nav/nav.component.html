@@ -37,23 +37,22 @@
       <div class="app-header-left" style="float: left;width: 100%">
         <ul class="header-menu nav">
           <li class="nav-item">
-            <a [routerLink]="[{ outlets: {mainCon: ['Absences'] } }]" class="nav-link" href="#">Absences</a>
-          </li>
-          <li class="btn-group nav-item">
-
-            <a [routerLink]="[{ outlets: {mainCon: ['Departments'] } }]" class="nav-link">Departments</a>
-          </li>
-          <li class="btn-group nav-item">
-
-            <a [routerLink]="[{ outlets: {mainCon: ['Employees'] } }]" class="nav-link">Employees</a>
+            <a [routerLink]="[{ outlets: {mainCon: ['Absences'] } }]" [ngClass]="router.url === '/RemoteMonitoring/(mainCon:Absences)' || router.url === '/RemoteMonitoring' ? 'current' : ''" class="nav-link">Absences</a>
           </li>
           <li class="nav-item">
-            <a [routerLink]="[{ outlets: {mainCon: ['Administrators'] } }]" class="nav-link">Administrators</a>
+
+            <a [routerLink]="[{ outlets: {mainCon: ['Departments'] } }]" [ngClass]="router.url === '/RemoteMonitoring/(mainCon:Departments)' ? 'current' : ''" class="nav-link active">Departments</a>
+          </li>
+          <li class="nav-item">
+            <a [routerLink]="[{ outlets: {mainCon: ['Employees'] } }]" [ngClass]="router.url === '/RemoteMonitoring/(mainCon:Employees)' ? 'current' : ''" class="nav-link">Employees</a>
+          </li>
+          <li class="nav-item">
+            <a [routerLink]="[{ outlets: {mainCon: ['TimeTables'] } }]" [ngClass]="router.url === '/RemoteMonitoring/(mainCon:TimeTables)' ? 'current' : ''" class="nav-link">Time Table</a>
+          </li>
+          <li class="nav-item">
+            <a [routerLink]="[{ outlets: {mainCon: ['Posts'] } }]" [ngClass]="router.url === '/RemoteMonitoring/(mainCon:Posts)' ? 'current' : ''" class="nav-link">Posts</a>
           </li>
 
-          <li class="nav-item">
-            <a [routerLink]="[{ outlets: {mainCon: ['TimeTables'] } }]" class="nav-link">Time Table</a>
-          </li>
         </ul>
       </div>
       <div class="header-btn-lg pr-0" style="float: right !important;">
@@ -68,13 +67,13 @@
                 </div>
                 <mat-menu (close)="openedMenu = false" [class]="getTheme() ? 'bg-dark': ''" class="userMenu" xPosition="before" #menu="matMenu">
                   <div class="menuContent">
-                    <button [ngClass]="getTheme() ? 'dropdown-item btnDark bg-dark': 'dropdown-item'" [ngStyle]="{'color': getTheme()? 'white' :''}" [routerLink]="[{ outlets: {mainCon: ['Profile'] } }]">User account</button>
+                    <button [class]="router.url === '/RemoteMonitoring/(mainCon:Profile)' ? 'current' : ''" [ngClass]="getTheme() ? 'dropdown-item btnDark bg-dark': 'dropdown-item'" [ngStyle]="{'color': getTheme()? 'white' :''}"  [routerLink]="[{ outlets: {mainCon: ['Profile'] } }]">User account</button>
                     <div tabindex="-1" class="dropdown-divider"></div>
                     <button type="button" tabindex="0" (click)="logout()" [class]="getTheme() ? 'btnDark': ''" [ngClass]="getTheme() ? 'dropdown-item bg-dark': 'dropdown-item'" [ngStyle]="{'color': getTheme()? 'white' :''}">Log out</button>
                   </div>
                 </mat-menu>
               </div>
-          </div>
+            </div>
             <div class="widget-content-left  ml-3 header-user-info">
               <div class="widget-heading">
                 {{connectedUser.name}} {{connectedUser.firstName}}
@@ -91,35 +90,35 @@
                 </div>
                 <div class="notifDiv" *ngIf="notifs.length > 0">
                   <h1 style="margin-left: 15px">
-                   <span [ngStyle]="{'color': getTheme()? 'white' :'dimgrey'}"> Notifications <button style="float: right;text-decoration: none" (click) = "clearAllNotifications($event)" class="btn btn-link">clear all</button></span>
+                    <span [ngStyle]="{'color': getTheme()? 'white' :'dimgrey'}"> Notifications <button style="float: right;text-decoration: none" (click) = "clearAllNotifications($event)" class="btn btn-link">clear all</button></span>
                   </h1>
                   <hr [ngStyle]="{'border-color': getTheme() ? 'grey': 'black'}" style="width: 80%;margin-left: 15px;margin-top: -5px;margin-bottom: 20px">
                   <table style="width: 100%;margin-left: 10px" class="mb-0 table table-borderless" [ngClass]="getTheme()? 'table-dark': ''">
                     <tbody>
                     <tr style="padding: 3px" *ngFor="let ntf of notifs">
                       <td (mouseleave)="viewOne(ntf)" style="border-radius: 10px">
-                    <div class="notifContainer"  [ngClass]="!ntf.isHovered && getTheme() ? 'notifContainerNotHovered notifContainerNotHoveredDark' : !ntf.isHovered && !getTheme() ? 'notifContainerNotHovered notifContainerNotHoveredLight' :
+                        <div class="notifContainer"  [ngClass]="!ntf.isHovered && getTheme() ? 'notifContainerNotHovered notifContainerNotHoveredDark' : !ntf.isHovered && !getTheme() ? 'notifContainerNotHovered notifContainerNotHoveredLight' :
                      !getTheme() ?  'notifContainerDark' : 'notifContainerLight'" [ngStyle]="{'background-color': !ntf.isHovered && getTheme()? '#454d55' : !ntf.isHovered && !getTheme()? '#dee2e6' : '' }">
-                     <h2 style="font-size: 20px !important;">
-                       {{ntf.notifTitle}}
-                     </h2>
-                    <div style="margin-left: 10px;margin-top: -10px">
-                      <span style="font-size: 14px">{{ntf.notifDesc}}</span><br>
-                      <span style="padding-top: 5px;float: right">
+                          <h2 style="font-size: 20px !important;">
+                            {{ntf.notifTitle}}
+                          </h2>
+                          <div style="margin-left: 10px;margin-top: -10px">
+                            <span style="font-size: 14px">{{ntf.notifDesc}}</span><br>
+                            <span style="padding-top: 5px;float: right">
                         <span style="font-size: 12px;color: grey !important;">{{ntf.notifDate  | date: 'dd MMMM yyyy '}}, {{ntf.notifDate | date: 'HH:mm'}}</span>
                       </span>
-                    </div>
-                    </div>
+                          </div>
+                        </div>
                         <div style="float: right;width: 6%;color:#3f6ad8;padding-right: 10px">
                           <div style="padding-left: 28px;margin-bottom: 30px">
-                          <span (click)="deleteNotif($event, ntf)" matTooltip="Delete" [ngStyle]="{'color': getTheme() ? 'white' :'grey'}" class="fa fa-trash-alt deleteNotif"></span>
+                            <span (click)="deleteNotif($event, ntf)" matTooltip="Delete" [ngStyle]="{'color': getTheme() ? 'white' :'grey'}" class="fa fa-trash-alt deleteNotif"></span>
                           </div>
-                        <div *ngIf="!ntf.isHovered" matTooltip="New">
-                          <span style="font-size: 20px;margin-left: 10px" class="fa fa-exclamation-circle"></span>
-                        </div>
+                          <div *ngIf="!ntf.isHovered" matTooltip="New">
+                            <span style="font-size: 20px;margin-left: 10px" class="fa fa-exclamation-circle"></span>
+                          </div>
                         </div>
                       </td>
-                  </tr>
+                    </tr>
                     </tbody>
                   </table>
                 </div>

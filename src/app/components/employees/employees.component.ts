@@ -45,7 +45,6 @@ export class Image {
 })
 export class EmployeesComponent implements OnInit {
   @Output() outPutData = new EventEmitter<any>();
-  @ViewChild('htmlData') htmlData: ElementRef;
   clickedDep: Department;
   thisIsEmp: boolean;
   searchText;
@@ -53,16 +52,12 @@ export class EmployeesComponent implements OnInit {
   chefDep: User;
   users: User[];
   usersForDep: User[];
-  images: Image[] = [];
-  image: Image ;
   private deleteId: number;
   showUsers: boolean;
   img: any ;
   loading: boolean;
    user: User;
-
   head = [['ID', 'Last name', 'Firstname', 'Gender', 'CIN', 'Email', 'Phone', 'Birthday', 'Hireday']];
-
   data = [];
   constructor(
               private themeChanger: ThemeChangerService, public dialog: MatDialog, public router: Router,
@@ -88,24 +83,15 @@ export class EmployeesComponent implements OnInit {
     }
   }
 
-  getImages(users: User[]) {
-    const img: Image[] = [];
-    for (const emp of users) {
-      const imageName = emp.image;
-      const image = null;
-      img.push(new Image(imageName, image));
-    }
-    this.images = img;
-    for (const emp of this.images) {
-      this.imageService.load(emp.imageName).subscribe(
+  getImages() {
+    for (const emp of this.users) {
+      this.imageService.load(emp.image).subscribe(
         // tslint:disable-next-line:no-shadowed-variable
         img  => {
           if (img != null ) {
             // @ts-ignore
             const base64Data = img.picByte;
-            this.images.forEach(imageuser => {
-              if (imageuser.imageName === emp.imageName) { imageuser.imageFile =  'data:image/jpeg;base64,' + base64Data; }
-            });
+            emp.fullImage =  'data:image/jpeg;base64,' + base64Data;
           }
         });
     }
@@ -123,7 +109,7 @@ export class EmployeesComponent implements OnInit {
       this.setChefDep(this.clickedDep.depId);
       this.users = this.clickedDep.users;
       this.fillBody(this.users);
-      this.getImages(this.clickedDep.users);
+      this.getImages();
       setTimeout(() => {
         this.loading = false;
       }, 500);
@@ -225,7 +211,7 @@ export class EmployeesComponent implements OnInit {
           this.users = r;
           this.head[0].push('Department');
           this.fillBody(this.users);
-          this.getImages(this.users);
+          this.getImages();
     }
   }, () => {
       setTimeout(() => {
@@ -278,14 +264,6 @@ export class EmployeesComponent implements OnInit {
   reloadFromSocket() {
     this.reloadData();
   }
-  showImage(name) {
-    for (const img of this.images) {
-      if (img.imageName === name) {
-        return img.imageFile;
-      }
-    }
-    return null;
-  }
   public openPDF(): void {
     const doc = new Jspdf('p', 'l', 'a4');
     if (this.router.url === '/RemoteMonitoring/(mainCon:Departments)') {
@@ -297,20 +275,13 @@ export class EmployeesComponent implements OnInit {
       // styles: { fillColor: [255, 0, 0] },
       // columnStyles: { 0: { halign: 'center', fillColor: [0, 255, 0] } }, // Cells in first column centered and green
       margin: { left: 10, right: 10 },
-      // fontSize : 10,
       head: this.head ,
       body: this.data,
       // didDrawCell: data => {
       //   console.log(data.fontsize());
       // }
     });
-    // console.log(doc.body);
     doc.output('dataurlnewwindow');
-  }
-
-
-  print() {
-
   }
 
   private fillBody(users: User[]) {

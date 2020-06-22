@@ -75,3 +75,7 @@
   opacity: 1;
   color:red !important;
 }
+.current{
+  font-weight: bold !important;
+  color: #3f6ad8 !important;
+}
