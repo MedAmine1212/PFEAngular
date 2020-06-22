@@ -12,8 +12,6 @@ export class NotificationService {
   private baseUrl = environment.ipAddress + environment.port + '/notification/';
   private headers: HttpHeaders;
   constructor(private http: HttpClient, private userService: UserService) {}
-
-
   add(notif: NotificationMessage) {
     return this.http.post(this.baseUrl + 'add', notif);
   }
@@ -24,5 +22,4 @@ export class NotificationService {
   modify( notif: NotificationMessage , id): Observable<any> {
     return this.http.put( this.baseUrl + 'update/' + id   , notif);
   }
-
 }
