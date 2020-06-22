@@ -1,42 +1,3 @@
-<div class="container" style="display: none">
-  <div class="row">
-<div class="col-md-8"  #htmlData *ngIf="router.url === '/RemoteMonitoring/(mainCon:Departments)'">
-  <span> Department: {{clickedDep.depName}}</span>
-  <div class="btn-actions-pane-right">
-    <div role="group" class="btn-group-sm btn-group">
-      <span *ngIf="chefDep!=null" style="float:right">Chef dep: {{chefDep.name}} {{chefDep.firstName}}</span>
-    </div>
-  </div>
-  <table class="table table-bordered" id="htmlData">
-    <thead>
-    <tr class="table-primary"  >
-      <th>Id</th>
-      <th>Last Name</th>
-      <th>Firs tName</th>
-      <th>CIN</th>
-      <th>Email</th>
-      <th>Phone</th>
-      <th>Birthday</th>
-      <th>Hire day</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let user of users"  >
-      <th>{{user.userId}}</th>
-      <td>{{user.name}}</td>
-      <td>{{user.firstName}}</td>
-      <td>{{user.cin}}</td>
-      <td>{{user.email}}</td>
-      <td>{{user.phone}}</td>
-      <td>{{user.birthDate}}</td>
-      <td>{{user.hireDay}}</td>
-    </tr>
-    </tbody>
-
-  </table>
-</div>
-  </div>
-</div>
 <div  class="main-card mb-3 card" [ngStyle]="{'height': router.url === '/RemoteMonitoring/(mainCon:Absences)'  || router.url === '/RemoteMonitoring'? '100%' :''}"  [ngClass]="getTheme() ? 'bg-premium-dark' :''" style="margin-left:15px;border: none">
   <div class="card-header">
     <div border="1" *ngIf="!thisIsEmp && clickedDep.depId!=-1" [ngStyle]="{'color': getTheme()? 'white' :'black'}" style="padding-bottom: 10px;width: 100%" >
@@ -118,6 +79,9 @@
     </div>
     <div style="width: 100%;text-align:center;margin:0;padding-top: 10%;font-weight: bolder;font-size: 20px" *ngIf="!loading && ((thisIsEmp && users.length === 0) || (!thisIsEmp && clickedDep.depId!==-1 && (users==null || users.length === 0)))" [ngStyle]="{'margin-top': router.url === '/RemoteMonitoring/(mainCon:Absences)'  || router.url === '/RemoteMonitoring'? '40%' : '', 'color': getTheme()? 'white' :'black'}"> No Employees to show</div>
     <div *ngIf="users!=null && !loading">
+<!--      <div class="buttons">-->
+        <button *ngIf="router.url === '/RemoteMonitoring/(mainCon:Employees)'" style="float: right ; margin-right: 15px; margin-bottom: 10px" mat-raised-button class="btn btn-secondary" (click)="openPDF()" matTooltip="print as PDF"><span class="fas fa-print"></span></button>
+<!--      </div>-->
       <div [ngStyle]="{'margin-left': router.url === '/RemoteMonitoring/(mainCon:Absences)'  || router.url === '/RemoteMonitoring'? '-25px' :''}" class="main-card mb-3 card" [ngClass]="getTheme() ? 'bg-premium-dark' :''" style="overflow: auto;max-height: 480px;margin-top: 40px;border-radius:0" *ngIf="(users.length !=0 && thisIsEmp) || (users.length !=0 && clickedDep.depId != -1)">
           <table [ngClass]="getTheme() ? 'bg-premium-dark text-light' :'text-dark'"  [ngStyle]="{'color': getTheme()? 'white' :''}" class="align-middle text-light mb-0 table table-borderless table-striped table-hover">
           <thead>

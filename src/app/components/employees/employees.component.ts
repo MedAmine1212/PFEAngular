@@ -61,11 +61,9 @@ export class EmployeesComponent implements OnInit {
   loading: boolean;
    user: User;
 
-  head = [['ID', 'Last name', 'Firstname', 'CIN', 'Email', 'Phone', 'Birthday', 'Hireday']];
+  head = [['ID', 'Last name', 'Firstname', 'Gender', 'CIN', 'Email', 'Phone', 'Birthday', 'Hireday']];
 
-  data = [
-
-  ];
+  data = [];
   constructor(
               private themeChanger: ThemeChangerService, public dialog: MatDialog, public router: Router,
               private departmentService: DepartmentService, private userService: UserService, private imageService: ImageService) {
@@ -124,11 +122,7 @@ export class EmployeesComponent implements OnInit {
     if (this.clickedDep.depId !== -1) {
       this.setChefDep(this.clickedDep.depId);
       this.users = this.clickedDep.users;
-      this.users.forEach(user => {
-        // tslint:disable-next-line:max-line-length
-        this.data.push([user.userId, user.name, user.firstName, user.cin, user.email, user.phone, user.birthDate, user.hireDay]);
-      });
-      console.log(this.data);
+      this.fillBody(this.users);
       this.getImages(this.clickedDep.users);
       setTimeout(() => {
         this.loading = false;
@@ -229,6 +223,8 @@ export class EmployeesComponent implements OnInit {
       } else {
           this.users = [];
           this.users = r;
+          this.head[0].push('Department');
+          this.fillBody(this.users);
           this.getImages(this.users);
     }
   }, () => {
@@ -291,38 +287,41 @@ export class EmployeesComponent implements OnInit {
     return null;
   }
   public openPDF(): void {
-    // const DATA = this.htmlData.nativeElement;
-    // const doc = new Jspdf('p', 'pt', 'a4');
-    // doc.fromHTML(DATA.innerHTML, 15, 15);
-    // doc.setFont('helvetica');
-    // doc.setFontType('bold');
-    // doc.setFontSize(9);
-    // doc.output('dataurlnewwindow');
-    const doc = new Jspdf();
-
-    doc.setFontSize(15);
-    doc.text(this.clickedDep.depName + ' employees', 8, 5);
-    doc.setFontSize(10);
-    doc.setTextColor(200);
-
+    const doc = new Jspdf('p', 'l', 'a4');
+    if (this.router.url === '/RemoteMonitoring/(mainCon:Departments)') {
+      doc.text(this.clickedDep.depName + ' Employees', 15, 13);
+    } else if (this.router.url === '/RemoteMonitoring/(mainCon:Employees)') {
+      doc.text('All  Employees', 15, 13);
+    }
     (doc as any).autoTable({
-      head: this.head,
+      // styles: { fillColor: [255, 0, 0] },
+      // columnStyles: { 0: { halign: 'center', fillColor: [0, 255, 0] } }, // Cells in first column centered and green
+      margin: { left: 10, right: 10 },
+      // fontSize : 10,
+      head: this.head ,
       body: this.data,
-      theme: 'plain',
-      didDrawCell: data => {
-        console.log(data.column.index);
-      }
+      // didDrawCell: data => {
+      //   console.log(data.fontsize());
+      // }
     });
-
-    // Open PDF document in new tab
+    // console.log(doc.body);
     doc.output('dataurlnewwindow');
-
-    // Download PDF document
-    // doc.save('table.pdf');
   }
 
 
   print() {
 
+  }
+
+  private fillBody(users: User[]) {
+    let i = 0;
+    users.forEach(user => {
+      // tslint:disable-next-line:max-line-length
+      this.data.push([user.userId, user.name, user.firstName, user.gender, user.cin, user.email, user.phone, user.birthDate, user.hireDay]);
+      if (this.router.url !== '/RemoteMonitoring/(mainCon:Departments)') {
+        this.data[i].push([user.department.depName]);
+      }
+      i++;
+    });
   }
 }
