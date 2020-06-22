@@ -45,7 +45,8 @@ export class NavComponent implements OnInit {
   ) {
     this.openedMenu = false;
     this.openedNotif = false;
-  }
+    this.userService.list().subscribe(u => console.log(u));
+   }
 
   reloadNotifs() {
     if (this.connectedUser != null) {

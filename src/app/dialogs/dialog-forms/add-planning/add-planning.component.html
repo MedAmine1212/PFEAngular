@@ -168,6 +168,7 @@
                 [matDatepicker]="picker"
                 formControlName="startDate"
                 [min]="minDate"
+                #beginDate
                 [(ngModel)]="startDate"
               >
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -181,6 +182,7 @@
                 matInput
                 [matDatepicker]="picker2"
                 formControlName="endDate"
+                [min]="beginDate.value"
                 [(ngModel)]="endDate"
               >
               <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>

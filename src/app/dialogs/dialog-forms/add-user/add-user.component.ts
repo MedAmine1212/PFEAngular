@@ -576,34 +576,42 @@ export class AddUserComponent implements  OnInit  {
     if (!this.showOtherAddress && this.user.addresses.length === 2) {
       this.user.addresses.splice(1, 1);
     }
-    if (this.retrievedImage == null || this.selectedFile != null) {
-      this.user.image = null;
-    }
-    this.userService.modify(this.user.userId, this.user, 1).subscribe(() => {
+    // if (this.retrievedImage == null || this.selectedFile != null) {
+    //   this.user.image = null;
+    // }
+    this.userService.modify(this.user.userId, this.user,1).subscribe(() => {
       setTimeout(() => {
         this.savingUser = false;
         // tslint:disable-next-line:triple-equals
         if (this.selectedFile != null) {
           this.upload(this.user.userId, 'updated');
         } else if (this.selectedFile == null && this.retrievedImage == null) {
-          // fasa5 l image mel back !!!!!
-          setTimeout(() => {
-            this.userAddedSuccessfully('updated');
-          }, 400);
+          this.imageService.delete(this.user.image).subscribe(isDeleted => {
+            console.log(isDeleted);
+            if (isDeleted) {
+              setTimeout(() => {
+                this.userAddedSuccessfully('updated');
+              }, 400);
+            } else if (!isDeleted) {
+              console.log('couldn\'t delete the file ');
+            } else {
+              console.log('image not found');
+            }
+          });
         }
       }, 200);
     }, error => console.log(error));
   }
 
   showImage(name) {
-    if (name != null) {
+    if (name != null &&  this.data[1] === 2 ) {
     this.imageService.load(name).subscribe( img => {
       if (img !== null) {
         this.retrieveResonse = img;
         this.base64Data = this.retrieveResonse.picByte;
         this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
         this.sameImage = 'data:image/jpeg;base64,' + this.base64Data;
-      } else {this.retrievedImage = null ; }
+      }
     });
     }
   }

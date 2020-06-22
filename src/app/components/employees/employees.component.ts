@@ -1,4 +1,14 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef, ViewChild} from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  TemplateRef,
+  ViewChild
+} from '@angular/core';
 import {Router} from '@angular/router';
 import {Department} from '../../models/Department';
 import {User} from '../../models/User';
@@ -7,10 +17,13 @@ import {MatDialog} from '@angular/material/dialog';
 import {AddDepartmentComponent} from '../../dialogs/dialog-forms/add-department/add-department.component';
 import {AddUserComponent} from '../../dialogs/dialog-forms/add-user/add-user.component';
 import {UserService} from '../../services/user/user.service';
-import {EmployeeDetailsComponent} from '../employee-details/employee-details.component';
 import {DeleteDialogComponent} from '../../dialogs/delete-dialog/delete-dialog.component';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 import {ImageService} from '../../services/image/image.service';
+import * as Jspdf from 'jspdf';
+import 'jspdf-autotable';
+import html2canvas from 'html2canvas';
+import {EmployeeDetailsComponent} from '../employee-details/employee-details.component';
 
 
 export class Image {
@@ -44,6 +57,8 @@ export class EmployeesComponent implements OnInit {
   img: any ;
   loading: boolean;
    user: User;
+  head = [['ID', 'Last name', 'Firstname', 'Gender', 'CIN', 'Email', 'Phone', 'Birthday', 'Hireday']];
+  data = [];
   constructor(
               private themeChanger: ThemeChangerService, public dialog: MatDialog, public router: Router,
               private departmentService: DepartmentService, private userService: UserService, private imageService: ImageService) {
@@ -95,6 +110,7 @@ export class EmployeesComponent implements OnInit {
     if (this.clickedDep.depId !== -1) {
       this.setChefDep(this.clickedDep.depId);
       this.users = this.clickedDep.users;
+      this.fillBody(this.users);
       this.getImages();
       setTimeout(() => {
         this.loading = false;
@@ -191,9 +207,12 @@ export class EmployeesComponent implements OnInit {
         setTimeout(() => {
           this.loading = false;
         }, 500);
+
       } else {
           this.users = [];
           this.users = r;
+          this.head[0].push('Department');
+          this.fillBody(this.users);
           this.getImages();
     }
   }, () => {
@@ -247,5 +266,39 @@ export class EmployeesComponent implements OnInit {
   reloadFromSocket() {
     this.reloadData();
   }
+  public openPDF(): void {
+    const doc = new Jspdf('l', 'pt', 'a4');
+    if (this.router.url === '/RemoteMonitoring/(mainCon:Departments)') {
+      doc.text(this.clickedDep.depName + ' Employees', 15, 25);
+    } else if (this.router.url === '/RemoteMonitoring/(mainCon:Employees)') {
+      doc.text('All  Employees', 15, 25);
+    }
+    (doc as any).autoTable({
+      margin: { left: 25, right: 25 },
+      head: this.head ,
+      body: this.data
+    });
+    if (this.router.url === '/RemoteMonitoring/(mainCon:Departments)') {
+      doc.setProperties({
+        title: this.clickedDep.depName + ' Employees'
+      }); } else if (this.router.url === '/RemoteMonitoring/(mainCon:Employees)') {
+      doc.setProperties({
+        title: ' Employees'
+      });
+    }
+    doc.output('dataurlnewwindow');
 
+  }
+
+  private fillBody(users: User[]) {
+    let i = 0;
+    users.forEach(user => {
+      // tslint:disable-next-line:max-line-length
+      this.data.push([user.userId, user.name, user.firstName, user.gender, user.cin, user.email, user.phone, user.birthDate, user.hireDay]);
+      if (this.router.url !== '/RemoteMonitoring/(mainCon:Departments)') {
+        this.data[i].push([user.department.depName]);
+      }
+      i++;
+    });
+  }
 }

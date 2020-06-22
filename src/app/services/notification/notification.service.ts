@@ -22,4 +22,8 @@ export class NotificationService {
   modify( notif: NotificationMessage , id): Observable<any> {
     return this.http.put( this.baseUrl + 'update/' + id   , notif);
   }
+  list(){
+    return this.http.get( this.baseUrl + 'list');
+  }
+
 }

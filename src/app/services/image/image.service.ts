@@ -24,4 +24,8 @@ export class ImageService {
     return this.http.get(this.baseurl + 'load/' + imageName);
 
   }
+
+  delete(imageName) {
+    return this.http.delete(this.baseurl + 'delete/' + imageName);
+  }
 }
