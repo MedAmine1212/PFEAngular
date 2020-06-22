@@ -576,7 +576,7 @@ export class AddUserComponent implements  OnInit  {
     // if (this.retrievedImage == null || this.selectedFile != null) {
     //   this.user.image = null;
     // }
-    this.userService.modify(this.user.userId, this.user).subscribe(() => {
+    this.userService.modify(this.user.userId, this.user,1).subscribe(() => {
       setTimeout(() => {
         this.savingUser = false;
         // tslint:disable-next-line:triple-equals

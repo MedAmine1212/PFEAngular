@@ -49,12 +49,12 @@ import {AuthenticationGuard} from './guard/authentication.guard';
 import { SchedulesComponent } from './components/schedules/schedules.component';
 import { PlanningDetailsComponent } from './components/planning-details/planning-details.component';
 import { AddScheduleComponent } from './dialogs/dialog-forms/add-schedule/add-schedule.component';
-import {MatTableModule} from "@angular/material/table";
-import {MatBadgeModule} from "@angular/material/badge";
-import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatTableModule} from '@angular/material/table';
+import {MatBadgeModule} from '@angular/material/badge';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import { AddUsersToPostComponent } from './sheets/add-users-to-post/add-users-to-post.component';
-import {MatListModule} from "@angular/material/list";
-import {MatBottomSheet} from "@angular/material/bottom-sheet";
+import {MatListModule} from '@angular/material/list';
+import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import { AddPostComponent } from './dialogs/dialog-forms/add-post/add-post.component';
 
 
@@ -74,7 +74,6 @@ import { AddPostComponent } from './dialogs/dialog-forms/add-post/add-post.compo
     AddUserComponent,
     AddDepartmentComponent,
     DialogComponent,
-    EmployeeDetailsComponent,
     DeleteDialogComponent,
     AddPlanningComponent,
     SchedulesComponent,
@@ -82,7 +81,9 @@ import { AddPostComponent } from './dialogs/dialog-forms/add-post/add-post.compo
     AddScheduleComponent,
     ProfileComponent,
     AddUsersToPostComponent,
-    AddPostComponent
+    AddPostComponent,
+    EmployeeDetailsComponent,
+
   ],
   imports: [
     BrowserModule,

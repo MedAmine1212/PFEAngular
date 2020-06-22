@@ -17,13 +17,13 @@ import {MatDialog} from '@angular/material/dialog';
 import {AddDepartmentComponent} from '../../dialogs/dialog-forms/add-department/add-department.component';
 import {AddUserComponent} from '../../dialogs/dialog-forms/add-user/add-user.component';
 import {UserService} from '../../services/user/user.service';
-import {EmployeeDetailsComponent} from '../../dialogs/employee-details/employee-details.component';
 import {DeleteDialogComponent} from '../../dialogs/delete-dialog/delete-dialog.component';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 import {ImageService} from '../../services/image/image.service';
 import * as Jspdf from 'jspdf';
 import 'jspdf-autotable';
 import html2canvas from 'html2canvas';
+import {EmployeeDetailsComponent} from '../employee-details/employee-details.component';
 
 
 export class Image {
@@ -92,6 +92,8 @@ export class EmployeesComponent implements OnInit {
             // @ts-ignore
             const base64Data = img.picByte;
             emp.fullImage =  'data:image/jpeg;base64,' + base64Data;
+          } else {
+            emp.fullImage = null;
           }
         });
     }
@@ -265,23 +267,27 @@ export class EmployeesComponent implements OnInit {
     this.reloadData();
   }
   public openPDF(): void {
-    const doc = new Jspdf('p', 'l', 'a4');
+    const doc = new Jspdf('l', 'pt', 'a4');
     if (this.router.url === '/RemoteMonitoring/(mainCon:Departments)') {
-      doc.text(this.clickedDep.depName + ' Employees', 15, 13);
+      doc.text(this.clickedDep.depName + ' Employees', 15, 25);
     } else if (this.router.url === '/RemoteMonitoring/(mainCon:Employees)') {
-      doc.text('All  Employees', 15, 13);
+      doc.text('All  Employees', 15, 25);
     }
     (doc as any).autoTable({
-      // styles: { fillColor: [255, 0, 0] },
-      // columnStyles: { 0: { halign: 'center', fillColor: [0, 255, 0] } }, // Cells in first column centered and green
-      margin: { left: 10, right: 10 },
+      margin: { left: 25, right: 25 },
       head: this.head ,
-      body: this.data,
-      // didDrawCell: data => {
-      //   console.log(data.fontsize());
-      // }
+      body: this.data
     });
+    if (this.router.url === '/RemoteMonitoring/(mainCon:Departments)') {
+      doc.setProperties({
+        title: this.clickedDep.depName + ' Employees'
+      }); } else if (this.router.url === '/RemoteMonitoring/(mainCon:Employees)') {
+      doc.setProperties({
+        title: ' Employees'
+      });
+    }
     doc.output('dataurlnewwindow');
+
   }
 
   private fillBody(users: User[]) {
