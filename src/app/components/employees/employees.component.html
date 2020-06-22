@@ -19,11 +19,12 @@
     </div>
     <div [ngStyle]="{'margin-left': router.url === '/RemoteMonitoring/(mainCon:Absences)'  || router.url === '/RemoteMonitoring'? '-25px': ''}" *ngIf="thisIsEmp" style="width: 100%">
     <h2 class="app-sidebar__heading" style="font-weight: bolder">
-      <i [ngStyle]="{'color': getTheme()? 'white' :'grey'}" style="margin-right: 15px;margin-top: -15px" class="fa fa-user-friends"></i>
+
+      <i [ngStyle]="{'color': getTheme()? 'white' :'grey'}" style="margin-right: 5px" class="fa fa-user-friends"></i>
       Employees
       <span [ngStyle]="{'margin-left': router.url === '/RemoteMonitoring/(mainCon:Absences)' || router.url === '/RemoteMonitoring' ? '5px' :'30px'}">
-      <span style="cursor:pointer" [ngStyle]="{'color': getTheme()? 'white' :'grey'}" title="add" (click)="showAddUserDialog()" class="fa fa-user-plus butts"></span>
-      <span title="open" [ngStyle]="{'color': getTheme()? 'white' :'grey'}" [routerLink]="[{ outlets: {mainCon: ['Employees'] } }]" *ngIf="router.url != '/RemoteMonitoring/(mainCon:Employees)'" style="cursor:pointer;margin-left:15px" class="fa fa-external-link-alt butts"></span>
+        <button mat-raised-button matTooltip="Add user" (click)="showAddUserDialog()" [ngClass]="{'bg-premium-dark': getTheme()}" class="btn btn-outline-primary addUser" ><span class="fas fa-user-plus"></span></button>
+      <span title="open" [ngStyle]="{'color': getTheme()? 'white' :'grey'}" [routerLink]="[{ outlets: {mainCon: ['Employees'] } }]" *ngIf="router.url != '/RemoteMonitoring/(mainCon:Employees)'" style="cursor:pointer;margin-left:10px;margin-top: 5px" class="fa fa-external-link-alt butts"></span>
     </span>
 
     </h2>
@@ -35,6 +36,7 @@
     </div>
   </div>
   <div class="card-body">
+    <br>
     <table>
       <tr>
         <td>
@@ -67,7 +69,7 @@
       </tr>
     </table>
 
-    <div [ngStyle]="{'color': getTheme()? 'white' :'rgb(52,248,61)'}" style="padding-top: 5%;text-align: center;font-weight:bolder;margin:0 auto;font-size:25px;width: 100%" *ngIf="!thisIsEmp && clickedDep.depId === -1">
+    <div [ngStyle]="{'color': getTheme()? 'white' :'grey'}" style="padding-top: 5%;text-align: center;font-weight:bolder;margin:0 auto;font-size:25px;width: 100%" *ngIf="!thisIsEmp && clickedDep.depId === -1">
       <span style="font-size:30px;color:#3f6ad8">Click a department to show details here</span><br><br><br><br>No Department Selected
     </div>
     <div *ngIf="loading && !(!thisIsEmp && clickedDep.depId === -1)" style="padding-top: 15%;width:100%">
@@ -100,13 +102,14 @@
                 <div class="widget-content-wrapper">
                   <div class="widget-content-left mr-3">
                     <div class="widget-content-left">
-                      <img width="48" height="49" class="rounded-circle" *ngIf=" showImage(emp.image) != null" [src]="showImage(emp.image)" alt="">
-                      <img width="53" height="53" class="rounded-circle" *ngIf=" showImage(emp.image) === null " src="../../assets/images/avatars/0.png" alt="">
+                      <img width="48" height="49" class="rounded-circle" *ngIf="emp.fullImage != null" [src]="emp.fullImage" alt="">
+                      <img width="53" height="53" class="rounded-circle" *ngIf=" emp.fullImage === null " src="../../assets/images/avatars/0.png" alt="">
                     </div>
                   </div>
                   <div class="widget-content-left flex2">
                     <div class="widget-heading">{{emp.name}} {{emp.firstName}}</div>
-                    <div [ngStyle]="{'color': getTheme()? 'grey !important' :''}"  class="text-muted">{{emp.post.postName}}</div>
+                    <div *ngIf="emp.post != null" [ngStyle]="{'color': getTheme()? 'grey !important' :''}"  class="text-muted">{{emp.post.postName}}</div>
+                    <div *ngIf="emp.post == null" [ngStyle]="{'color': getTheme()? 'grey !important' :''}"  class="text-muted">No post assigned</div>
                   </div>
                 </div>
               </div>

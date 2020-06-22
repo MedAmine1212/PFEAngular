@@ -38,7 +38,7 @@ export class NavComponent implements OnInit {
     private notifService: NotificationService,
     private userConfigsService: UserConfigsService,
     private themeChanger: ThemeChangerService,
-    private router: Router,
+    public router: Router,
     private auth: AuthenticationService,
     private userService: UserService,
     private imageService: ImageService
@@ -115,7 +115,7 @@ export class NavComponent implements OnInit {
         this.themeChanger.setTheme(theme);
         this.userConfigs = this.connectedUser.userConfigs[0];
         this.userConfigs.theme = theme;
-        this.userConfigsService.update(this.userConfigs.configId, this.userConfigs).subscribe(() => {
+        this.userConfigsService.update(this.userConfigs.configId, this.userConfigs, 2).subscribe(() => {
         }, error => console.log(error));
     }
 

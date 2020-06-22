@@ -1,0 +1,34 @@
+<br>
+
+<!--*ngIf="sender == 1"   (ngSubmit)="registerForm.valid"-->
+<form    style="color:black" [formGroup]="registerForm">
+  <div class="main-card mb-3 card">
+    <div class="card-header" style="text-align: left">
+<!--      <h1 *ngIf="dep!=null" style="padding:30px;">Add department to <b>{{dep.depName}}</b> department</h1>-->
+      <h1 style="padding:30px;">Add a new post</h1>
+    </div>
+    <div class="card-body">
+<!--      <div class="line" *ngIf="dep!=null" >-->
+<!--        <label for="supDep">Sup. Department</label>-->
+<!--        <input disabled type="text" class="form-control" id="supDep" value="{{dep.depName}}">-->
+<!--      </div>-->
+      <div class="line">
+        <label for="postName">Post name*</label>
+        <input required formControlName="postName" [(ngModel)]="newPost.postName" type="text" class="form-control" id="postName" placeholder="Post name">
+        <div class="mat-errorContainer">
+          <mat-error *ngIf="!postName.valid && postName.touched ">
+            {{ getErrorPostName()}}
+          </mat-error>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="width: 100%">
+    <div class="buttons">
+<!--      [disabled]="!registerForm.valid"-->
+      <button class="btn btn-primary" [disabled]="!registerForm.valid" (click)="addPost()"   mat-raised-button  type="submit" >Add post</button>
+
+      <button type="button" (click)="closeThis()" class="btn btn-light" style="margin-left: 20px;">Cancel</button>
+    </div>
+  </div>
+</form>

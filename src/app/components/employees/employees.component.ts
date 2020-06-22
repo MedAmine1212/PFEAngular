@@ -7,7 +7,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {AddDepartmentComponent} from '../../dialogs/dialog-forms/add-department/add-department.component';
 import {AddUserComponent} from '../../dialogs/dialog-forms/add-user/add-user.component';
 import {UserService} from '../../services/user/user.service';
-import {EmployeeDetailsComponent} from '../../dialogs/employee-details/employee-details.component';
+import {EmployeeDetailsComponent} from '../employee-details/employee-details.component';
 import {DeleteDialogComponent} from '../../dialogs/delete-dialog/delete-dialog.component';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 import {ImageService} from '../../services/image/image.service';
@@ -39,8 +39,6 @@ export class EmployeesComponent implements OnInit {
   chefDep: User;
   users: User[];
   usersForDep: User[];
-  images: Image[] = [];
-  image: Image ;
   private deleteId: number;
   showUsers: boolean;
   img: any ;
@@ -70,24 +68,15 @@ export class EmployeesComponent implements OnInit {
     }
   }
 
-  getImages(users: User[]) {
-    const img: Image[] = [];
-    for (const emp of users) {
-      const imageName = emp.image;
-      const image = null;
-      img.push(new Image(imageName, image));
-    }
-    this.images = img;
-    for (const emp of this.images) {
-      this.imageService.load(emp.imageName).subscribe(
+  getImages() {
+    for (const emp of this.users) {
+      this.imageService.load(emp.image).subscribe(
         // tslint:disable-next-line:no-shadowed-variable
         img  => {
           if (img != null ) {
             // @ts-ignore
             const base64Data = img.picByte;
-            this.images.forEach(imageuser => {
-              if (imageuser.imageName === emp.imageName) { imageuser.imageFile =  'data:image/jpeg;base64,' + base64Data; }
-            });
+            emp.fullImage =  'data:image/jpeg;base64,' + base64Data;
           }
         });
     }
@@ -104,7 +93,7 @@ export class EmployeesComponent implements OnInit {
     if (this.clickedDep.depId !== -1) {
       this.setChefDep(this.clickedDep.depId);
       this.users = this.clickedDep.users;
-      this.getImages(this.clickedDep.users);
+      this.getImages();
       setTimeout(() => {
         this.loading = false;
       }, 500);
@@ -203,7 +192,7 @@ export class EmployeesComponent implements OnInit {
       } else {
           this.users = [];
           this.users = r;
-          this.getImages(this.users);
+          this.getImages();
     }
   }, () => {
       setTimeout(() => {
@@ -255,14 +244,6 @@ export class EmployeesComponent implements OnInit {
 
   reloadFromSocket() {
     this.reloadData();
-  }
-  showImage(name) {
-    for (const img of this.images) {
-      if (img.imageName === name) {
-        return img.imageFile;
-      }
-    }
-    return null;
   }
 
 }

@@ -1,4 +1,4 @@
-  <div [ngClass]="getTheme() ? 'bg-dark' :''" style="height:100vh;width: 100%;text-align: center" *ngIf="loading">
+  <div [ngStyle]="{'background-color': getTheme() ? 'black' :''}" style="height:100vh;width: 100%;text-align: center" *ngIf="loading">
   <div>
   <img style="margin-top: 20vh" *ngIf="!getTheme()" src="../../../assets/loading/loadinglight.gif">
   <img style="margin-top: 20vh" *ngIf="getTheme()" src="../../../assets/loading/loadingdark.gif"><br>
@@ -10,9 +10,10 @@
 
   <app-nav [connectedUser]="connectedUser"></app-nav>
 
-  <!--the rest-->
+  <!--profile-->
   <app-profile [connectedUser]="connectedUser" *ngIf="router.url === '/RemoteMonitoring/(mainCon:Profile)'" style="margin: 15px;padding: 0" name="mainCon"></app-profile>
-
+  <!--posts-->
+  <app-posts *ngIf="router.url === '/RemoteMonitoring/(mainCon:Posts)'"></app-posts>
   <!--time tables-->
   <app-timetables *ngIf="router.url === '/RemoteMonitoring/(mainCon:TimeTables)'"></app-timetables>
 

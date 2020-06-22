@@ -13,6 +13,7 @@ import {User} from '../../models/User';
 import {TimetablesComponent} from '../timetables/timetables.component';
 import {MatSnackBar, MatSnackBarConfig} from '@angular/material/snack-bar';
 import {NavComponent} from '../nav/nav.component';
+import {PostsComponent} from '../posts/posts.component';
 @Component({
   selector: 'app-remmote-monitoring',
   animations: [
@@ -79,6 +80,7 @@ export class RemoteMonitoringComponent implements OnInit {
   @ViewChild(DepartmentsComponent) departmentComponent: DepartmentsComponent;
   @ViewChild(TimetablesComponent) timetablesComponent: TimetablesComponent;
   @ViewChild(NavComponent) navComponent: NavComponent;
+  @ViewChild(PostsComponent) postComponent: PostsComponent;
   showLoadingText: boolean;
   showSite: boolean;
 
@@ -162,6 +164,9 @@ public reloadFromWebSocket(message) {
       } else if (webSocketMessage === 'department') {
         this.openSnackBar('Departments updated', null);
         this.departmentComponent.reloadData();
+      } else if (webSocketMessage === 'post') {
+        this.openSnackBar('Posts updated', null);
+        this.postComponent.reloadData();
       } else if (webSocketMessage === 'userConfig') {
          if (this.connectedUser.userId === Number.parseInt(JSON.parse(message.body).senderId, 0)) {
             this.openSnackBar('Theme updated', null);
@@ -174,7 +179,6 @@ public reloadFromWebSocket(message) {
             }
           }
         }
-      console.log(webSocketMessage);
       if (webSocketMessage !== 'userConfig') {
         this.navComponent.reloadNotifs();
       }

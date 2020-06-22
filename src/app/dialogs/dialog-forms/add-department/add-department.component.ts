@@ -49,14 +49,16 @@ export class AddDepartmentComponent implements OnInit {
 
     }
   private createFormGroup() {
+    const name: RegExp = /^[a-zA-Z\s]*$/;
     this.registerForm = this.formBuilder.group({
       depName: [this.department.depName, [Validators.required,
-        Validators.pattern('[a-zA-Z ]*'),  Validators.minLength(3)], this.checkInUseDepartment.bind(this)]
+        Validators.pattern(name),  Validators.minLength(3)], this.checkInUseDepartment.bind(this)]
     });
   }
   createEditFormGroup() {
+    const name: RegExp = /^[a-zA-Z\s]*$/;
     this.editForm = this.formBuilder.group({
-      depNameEdit: [this.newName, [Validators.pattern('[a-zA-Z ]*'),
+      depNameEdit: [this.newName, [Validators.pattern(name),
         Validators.minLength(3)], this.checkInUseDepartmentEdit.bind(this)]
     });
   }
@@ -97,7 +99,7 @@ export class AddDepartmentComponent implements OnInit {
     return this.depName.hasError('required') ?
       'Department name required' :
       this.depName.hasError('minlength') ? 'You need to specify at least 3 characters' :
-        this.depName.hasError('alreadyInUse') ? 'Department allready exists' :
+        this.depName.hasError('alreadyInUse') ? 'Department already exists' :
         'Department name should contain only characters';
 
   }

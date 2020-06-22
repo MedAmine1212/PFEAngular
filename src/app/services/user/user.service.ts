@@ -38,9 +38,9 @@ export class UserService {
     return this.http.delete(this.baseurl + 'delete/' + id + '/' + this.userConnected.userId);
   }
 
-  modify(id, user) {
+  modify(id, user, sender) {
     // this.headers = new HttpHeaders({Authorization: 'Bearer ' + localStorage.token});
-    return this.http.put(this.baseurl + 'update/' + id, user);
+    return this.http.put(this.baseurl + 'update/' + id + '/' + sender, user);
   }
 
   findById(id): Observable<User> {

@@ -23,8 +23,8 @@ export class UserConfigsService {
       return this.http.post(this.baseurl + 'add', config );
     }
 
-    update(id, config) {
+    update(id, config, sender) {
       // this.headers = new HttpHeaders({Authorization: 'Bearer ' + localStorage.token});
-      return this.http.put(this.baseurl + 'update/' + id, config);
+      return this.http.put(this.baseurl + 'update/' + id + '/' + sender, config);
     }
 }

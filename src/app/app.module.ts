@@ -10,7 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './components/nav/nav.component';
 import { AbsencesComponent } from './components/absences/absences.component';
 import { DepartmentsComponent } from './components/departments/departments.component';
-import { AdministratorsComponent } from './components/administrators/administrators.component';
+import { PostsComponent } from './components/posts/posts.component';
 import { TimetablesComponent } from './components/timetables/timetables.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { EmployeesComponent } from './components/employees/employees.component';
@@ -38,7 +38,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatSelectModule} from '@angular/material/select';
 import {DialogComponent} from './dialogs/message-dialog/dialog.component';
-import {EmployeeDetailsComponent} from './dialogs/employee-details/employee-details.component';
+import {EmployeeDetailsComponent} from './components/employee-details/employee-details.component';
 import {MatNativeDateModule} from '@angular/material/core';
 import {DeleteDialogComponent} from './dialogs/delete-dialog/delete-dialog.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -52,6 +52,10 @@ import { AddScheduleComponent } from './dialogs/dialog-forms/add-schedule/add-sc
 import {MatTableModule} from "@angular/material/table";
 import {MatBadgeModule} from "@angular/material/badge";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import { AddUsersToPostComponent } from './sheets/add-users-to-post/add-users-to-post.component';
+import {MatListModule} from "@angular/material/list";
+import {MatBottomSheet} from "@angular/material/bottom-sheet";
+import { AddPostComponent } from './dialogs/dialog-forms/add-post/add-post.component';
 
 
 @NgModule({
@@ -62,7 +66,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
     NavComponent,
     AbsencesComponent,
     DepartmentsComponent,
-    AdministratorsComponent,
+    PostsComponent,
     TimetablesComponent,
     ProfileComponent,
     EmployeesComponent,
@@ -76,7 +80,9 @@ import {MatSnackBar} from "@angular/material/snack-bar";
     SchedulesComponent,
     PlanningDetailsComponent,
     AddScheduleComponent,
-    ProfileComponent
+    ProfileComponent,
+    AddUsersToPostComponent,
+    AddPostComponent
   ],
   imports: [
     BrowserModule,
@@ -112,10 +118,11 @@ import {MatSnackBar} from "@angular/material/snack-bar";
     MatCheckboxModule,
     MatTableModule,
     MatBadgeModule,
+    MatListModule,
 
 
   ],
-  providers: [AuthenticationGuard, MatSnackBar],
+  providers: [AuthenticationGuard, MatSnackBar, MatBottomSheet],
   bootstrap: [AppComponent],
   entryComponents: [
     AddUserComponent,

@@ -1,0 +1,137 @@
+
+<div class="app-main main">
+  <div class="app-main__outer outer">
+    <div class="app-sidebar sidebar-shadow sideBar"  [ngClass]="getTheme() ? 'bg-premium-dark' :''">
+
+      <div class="scrollbar-sidebar">
+        <div class="app-sidebar__inner" style="padding-left: 20px;padding-right:5px">
+          <ul class="vertical-nav-menu navMenu">
+            <li class="app-sidebar__heading sideBarHeading">
+              <span class="app-sidebar__heading" style="font-size:18px;font-weight: bolder">
+                <i [ngStyle]="{'color': getTheme()? 'white' :'grey'}" style="margin-right: 15px" class="fa fa-briefcase"></i>
+                Posts
+                <button mat-raised-button matTooltip="Add post" [ngClass]="{'bg-premium-dark': getTheme()}" (click)="addPost()" class="btn btn-outline-primary addPost" ><span class="fas fa-plus"></span></button>
+             <div style="float:right;width:50px;padding-top:10px"> <span (click)="clickedPost = null" [ngClass]="getTheme() ? 'darkUnselect' :'lightUnselect'" *ngIf="clickedPost != null" matTooltip="Unselect post" class="fa fa-check-circle"></span></div>
+              </span>
+              <br><br><br>
+              <div class="search-wrapper wrapper">
+                <div class="searchContainer" [ngClass]="{'search-wrapper active': showHideInput}">
+                  <div class="input-holder holder" [ngClass]=" getTheme() && showHideInput? 'bg-dark' :''">
+                    <input [ngStyle]="{'color': getTheme()? 'white' :''}" type="text" [(ngModel)]="searchText" style="width: 100%" class="search-input searchInput" placeholder="Search...">
+                    <button (click)="showHideInput = true;" class="search-icon"><span></span></button>
+                  </div>
+                  <button (click)="showHideInput = false;" class="close closeSearchButt"></button>
+                </div>
+              </div>
+              <br>
+            </li>
+            <li (click)="setClickedPost(post)" [ngStyle]="{'background-color': clickedPost == post ? 'rgb(224,243,255)' :''}" [ngClass]="getTheme()? 'lightPl' :''" class="schItem" *ngFor="let post of posts | filter:searchText">
+              <div class="widget-subheading opacity-7" [ngStyle]="{'color':getTheme() && clickedPost == post ? 'black': ''}">{{post.postId}}. {{post.postName}}</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+<!--    body-->
+
+    <div style="min-height: 540px;border-radius: 20px;margin:40px"  class="main-card mb-3 card" [ngClass]="getTheme() ? 'bg-premium-dark' :''">
+      <div [ngStyle]="{'color': getTheme()? 'white' :'grey'}" style="padding-top: 15%;text-align: center;font-weight:bolder;margin:0 auto;font-size:25px;width: 100%" *ngIf="clickedPost == null">
+        <span style="font-size:30px;color:#3f6ad8">Click a post to show details here</span><br><br>No Post Selected
+      </div>
+      <div class="card-header" *ngIf="clickedPost != null">
+        <h2 [ngStyle]="{'color': getTheme()? 'white' :''}" style="padding-top: 8px;width:70%">
+          Post: {{clickedPost.postName}}
+        </h2>
+        <div style="width: 30%">
+      <div style="float: right">
+        <button mat-raised-button class="btn btn-secondary" style="margin-right: 15px" matTooltip="Update post"><span class="fas fa-pencil-alt"></span></button>
+        <button mat-raised-button class="btn btn-danger" (click)="deletePost()" matTooltip="Delete post"><span class="fas fa-trash-alt"></span></button>
+      </div>
+      </div>
+      </div>
+      <div class="card-body" *ngIf="clickedPost != null">
+        <table style="margin-bottom: 20px;width: 100%">
+          <tr>
+            <td>
+              <h1 [ngStyle]="{'color': getTheme()? 'white' :''}" style="margin-top: 20px;margin-right: 30px" class="empTitle">Employees with this post </h1>
+            </td>
+            <td style="padding-left: 25px">
+              <div class="search-wrapper">
+                <div style="position: absolute;background-color: transparent;margin-top: -15px;margin-left: -35px;" [ngClass]="{'search-wrapper active': showHideInput2}">
+                  <div class="input-holder" [ngClass]=" getTheme() && showHideInput2? 'bg-dark' :''">
+                    <input [ngStyle]="{'color': getTheme()? 'white' :''}" type="text" [(ngModel)]="searchText2" style="width: 100%" class="search-input" placeholder="Search (name, Email, Phone,...)">
+                    <button (click)="showHideInput2 = true;" class="search-icon"><span></span></button>
+                  </div>
+                  <button (click)="showHideInput2 = false;" class="close"></button>
+                </div>
+              </div>
+            </td>
+          <td style="width: 70%">
+            <div style="float: right">
+              <button type="button" id="PopoverCustomT-5" (click)="openBottomSheet()" style="border-radius: 12px" class="btn btn-success btn-sm" matTooltip="Add employees"><span class="fa fa-plus-circle"></span></button>
+
+            </div>
+          </td>
+          </tr>
+        </table>
+        <div *ngIf="loading" style="padding-top: 15%;width:100%">
+          <div style="width:200px;margin:auto">
+            <div class="spinner-container">
+              <mat-spinner></mat-spinner>
+            </div>
+          </div>
+        </div>
+        <div style="width: 100%;text-align:center;margin:0;padding-top: 10%;font-weight: bolder;font-size: 20px" *ngIf="!loading && clickedPost.users.length === 0" [ngStyle]="{'color': getTheme()? 'white' :'black'}"> No Employees to show</div>
+
+        <div *ngIf="!loading && clickedPost.users.length>0" style="overflow-y:auto;max-height: 540px;border-radius: 20px;margin:40px"  class="main-card mb-3 card" [ngClass]="getTheme() ? 'bg-premium-dark' :''">
+
+        <table [ngClass]="getTheme() ? 'bg-premium-dark text-light' :'text-dark'"  [ngStyle]="{'color': getTheme()? 'white' :''}" class="align-middle text-light mb-0 table table-borderless table-striped table-hover">
+        <thead>
+        <tr>
+          <th class="text-center">N°</th>
+          <th>Department</th>
+          <th>Name</th>
+          <th class="text-center">CIN</th>
+          <th>Email</th>
+          <th>Phone number</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr [ngClass]="getTheme() ? 'lightText' :''" class="emp" *ngFor="let emp of clickedPost.users | filter:searchText2">
+          <td class="text-center" [ngStyle]="{'color': getTheme()? 'white' :''}" style="padding-top: 15px">{{emp.userId}}</td>
+          <td  style="padding-top: 15px" [ngStyle]="{'color': getTheme()? 'white' :'grey'}">{{emp.department.depName}}</td>
+          <td>
+            <div class="widget-content p-0">
+              <div class="widget-content-wrapper">
+                <div class="widget-content-left mr-3">
+                  <div class="widget-content-left">
+                    <img width="48" height="49" class="rounded-circle" *ngIf=" showImage(emp.image) != null" [src]="showImage(emp.image)" alt="">
+                    <img width="53" height="53" class="rounded-circle" *ngIf=" showImage(emp.image) === null " src="../../assets/images/avatars/0.png" alt="">
+                  </div>
+                </div>
+                <div class="widget-content-left flex2">
+                  <div class="widget-heading">{{emp.name}} {{emp.firstName}}</div>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td  class="text-center" style="padding-top: 15px">{{emp.cin}}</td>
+          <td>
+            <div class="widget-subheading opacity-7">{{emp.email}}</div>
+          </td>
+          <td>
+            <div class="widget-subheading opacity-7">{{emp.phone}}</div>
+          </td>
+          <span>
+    <td style="float: right" class="text-center">
+       <button type="button" id="PopoverCustomT-4" style="border-radius: 12px" class="btn btn-danger btn-sm" (click)="revokePost(emp)" matTooltip="Revoke post"><span class="fa fa-minus-circle"></span></button>
+    </td>
+    </span>
+        </tr>
+        </tbody>
+      </table>
+        </div>
+    </div>
+    </div>
+  </div>
+  </div>

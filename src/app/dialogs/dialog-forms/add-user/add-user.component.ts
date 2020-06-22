@@ -91,6 +91,7 @@ export class AddUserComponent implements  OnInit  {
     userId: null,
     userConfigs: [],
     image: '',
+    fullImage: null,
     notificationMessages: []
   };
   address1: Address = {
@@ -153,7 +154,11 @@ export class AddUserComponent implements  OnInit  {
         this.user.name = this.data[0].name;
         this.user.hireDay = this.data[0].hireDay;
         this.tempDep = this.user.department.depName;
+        if (this.user.post !== null) {
         this.tempPost = this.user.post.postName;
+        } else {
+          this.tempPost = null;
+        }
         if (this.user.addresses != null) {
         this.address1 = this.user.addresses[0];
         if (this.user.addresses[1] != null) {
@@ -571,7 +576,7 @@ export class AddUserComponent implements  OnInit  {
     if (this.retrievedImage == null || this.selectedFile != null) {
       this.user.image = null;
     }
-    this.userService.modify(this.user.userId, this.user).subscribe(() => {
+    this.userService.modify(this.user.userId, this.user, 1).subscribe(() => {
       setTimeout(() => {
         this.savingUser = false;
         // tslint:disable-next-line:triple-equals

@@ -24,14 +24,18 @@ export class DeleteDialogComponent implements OnInit {
     message = 'Are you sure you want to ';
     if (this.data[1] === 'employee') {
       message = message + 'remove ' + this.data[0].firstName + ' ' + this.data[0].name;
+    } else if (this.data[1] === 'changePost') {
+      message = message + 'override this user\'s post';
     } else {
       message = message + 'delete ';
       if (this.data[1] === 'department') {
         message = message + this.data[0].depName + ' department';
       } else if (this.data[1] === 'planning') {
         message = message + this.data[0].planningName + '   planning';
-      } else if (this.data [1] === 'schedule') {
+      } else if (this.data[1] === 'schedule') {
         message = message + 'this schedule';
+      } else if (this.data[1] === 'post') {
+        message = message + 'this post';
       }
     }
     message = message + ' ?';

@@ -68,8 +68,8 @@ export class AddPlanningComponent implements AfterViewInit {
               private userService: UserService,
               private userConfigService: UserConfigsService,
               public dialogRef: MatDialogRef<AddPlanningComponent>,
-              private planningService: PlanningService,
               @Inject(MAT_DIALOG_DATA) public pl: Planning,
+              private planningService: PlanningService,
               private formBuilder: FormBuilder,
               public dialog: MatDialog,
               private scheduleService: ScheduleService) {

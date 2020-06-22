@@ -30,12 +30,18 @@ mat-tree{
 }
 .fa-check-circle{
   cursor:pointer;
-  color:black;
   font-size:24px;
   float:right;
   margin-left: 10px;
   margin-right: -10px;
   opacity: 0.7;
+}
+.darkUnselect{
+  color:white;
+}
+
+.lightUnselect{
+  color:black;
 }
 .fa-check-circle:hover{
   color:red !important;
@@ -78,7 +84,7 @@ mat-tree{
   margin-top: 10px;
 }
 .addButtForDark{
-  margin-left: 10px;
+  margin-left: 5px;
 }
 .addButtForDark:hover {
   background:#007bff !important;
