@@ -1,4 +1,14 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef, ViewChild} from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  TemplateRef,
+  ViewChild
+} from '@angular/core';
 import {Router} from '@angular/router';
 import {Department} from '../../models/Department';
 import {User} from '../../models/User';
@@ -11,6 +21,9 @@ import {EmployeeDetailsComponent} from '../../dialogs/employee-details/employee-
 import {DeleteDialogComponent} from '../../dialogs/delete-dialog/delete-dialog.component';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 import {ImageService} from '../../services/image/image.service';
+import * as Jspdf from 'jspdf';
+import 'jspdf-autotable';
+import html2canvas from 'html2canvas';
 
 
 export class Image {
@@ -32,6 +45,7 @@ export class Image {
 })
 export class EmployeesComponent implements OnInit {
   @Output() outPutData = new EventEmitter<any>();
+  @ViewChild('htmlData') htmlData: ElementRef;
   clickedDep: Department;
   thisIsEmp: boolean;
   searchText;
@@ -46,6 +60,12 @@ export class EmployeesComponent implements OnInit {
   img: any ;
   loading: boolean;
    user: User;
+
+  head = [['ID', 'Last name', 'Firstname', 'CIN', 'Email', 'Phone', 'Birthday', 'Hireday']];
+
+  data = [
+
+  ];
   constructor(
               private themeChanger: ThemeChangerService, public dialog: MatDialog, public router: Router,
               private departmentService: DepartmentService, private userService: UserService, private imageService: ImageService) {
@@ -104,6 +124,11 @@ export class EmployeesComponent implements OnInit {
     if (this.clickedDep.depId !== -1) {
       this.setChefDep(this.clickedDep.depId);
       this.users = this.clickedDep.users;
+      this.users.forEach(user => {
+        // tslint:disable-next-line:max-line-length
+        this.data.push([user.userId, user.name, user.firstName, user.cin, user.email, user.phone, user.birthDate, user.hireDay]);
+      });
+      console.log(this.data);
       this.getImages(this.clickedDep.users);
       setTimeout(() => {
         this.loading = false;
@@ -200,6 +225,7 @@ export class EmployeesComponent implements OnInit {
         setTimeout(() => {
           this.loading = false;
         }, 500);
+
       } else {
           this.users = [];
           this.users = r;
@@ -264,5 +290,39 @@ export class EmployeesComponent implements OnInit {
     }
     return null;
   }
+  public openPDF(): void {
+    // const DATA = this.htmlData.nativeElement;
+    // const doc = new Jspdf('p', 'pt', 'a4');
+    // doc.fromHTML(DATA.innerHTML, 15, 15);
+    // doc.setFont('helvetica');
+    // doc.setFontType('bold');
+    // doc.setFontSize(9);
+    // doc.output('dataurlnewwindow');
+    const doc = new Jspdf();
 
+    doc.setFontSize(15);
+    doc.text(this.clickedDep.depName + ' employees', 8, 5);
+    doc.setFontSize(10);
+    doc.setTextColor(200);
+
+    (doc as any).autoTable({
+      head: this.head,
+      body: this.data,
+      theme: 'plain',
+      didDrawCell: data => {
+        console.log(data.column.index);
+      }
+    });
+
+    // Open PDF document in new tab
+    doc.output('dataurlnewwindow');
+
+    // Download PDF document
+    // doc.save('table.pdf');
+  }
+
+
+  print() {
+
+  }
 }

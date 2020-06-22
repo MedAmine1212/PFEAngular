@@ -1,4 +1,42 @@
+<div class="container" style="display: none">
+  <div class="row">
+<div class="col-md-8"  #htmlData *ngIf="router.url === '/RemoteMonitoring/(mainCon:Departments)'">
+  <span> Department: {{clickedDep.depName}}</span>
+  <div class="btn-actions-pane-right">
+    <div role="group" class="btn-group-sm btn-group">
+      <span *ngIf="chefDep!=null" style="float:right">Chef dep: {{chefDep.name}} {{chefDep.firstName}}</span>
+    </div>
+  </div>
+  <table class="table table-bordered" id="htmlData">
+    <thead>
+    <tr class="table-primary"  >
+      <th>Id</th>
+      <th>Last Name</th>
+      <th>Firs tName</th>
+      <th>CIN</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Birthday</th>
+      <th>Hire day</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of users"  >
+      <th>{{user.userId}}</th>
+      <td>{{user.name}}</td>
+      <td>{{user.firstName}}</td>
+      <td>{{user.cin}}</td>
+      <td>{{user.email}}</td>
+      <td>{{user.phone}}</td>
+      <td>{{user.birthDate}}</td>
+      <td>{{user.hireDay}}</td>
+    </tr>
+    </tbody>
 
+  </table>
+</div>
+  </div>
+</div>
 <div  class="main-card mb-3 card" [ngStyle]="{'height': router.url === '/RemoteMonitoring/(mainCon:Absences)'  || router.url === '/RemoteMonitoring'? '100%' :''}"  [ngClass]="getTheme() ? 'bg-premium-dark' :''" style="margin-left:15px;border: none">
   <div class="card-header">
     <div border="1" *ngIf="!thisIsEmp && clickedDep.depId!=-1" [ngStyle]="{'color': getTheme()? 'white' :'black'}" style="padding-bottom: 10px;width: 100%" >
@@ -12,6 +50,7 @@
         <button mat-raised-button class="btn btn-info" (click)="showAddUserDialog()" matTooltip="Add Employee">
           <span style="cursor:pointer;color:white" title="add" class="fa fa-user-plus"></span>
         </button>
+        <button mat-raised-button class="btn btn-secondary" (click)="openPDF()" matTooltip="print as PDF"><span class="fas fa-print"></span></button>
         <button mat-raised-button class="btn btn-success" (click)="showAddDepDialog()" matTooltip="Add departement"><span class="fas fa-plus"></span></button>
         <button mat-raised-button class="btn btn-secondary" (click)="showUpdateDepDialog()" matTooltip="Update departement"><span class="fas fa-pencil-alt"></span></button>
         <button mat-raised-button class="btn btn-danger" (click)="showDeleteDialog()" matTooltip="Delete departement"><span class="fas fa-trash-alt"></span></button>
