@@ -133,7 +133,19 @@ reloadData() {
     const dialogRef = this.dialog.open(AddPostComponent, {
       width: '800px',
       height: '430px',
-      data: [null, 1]
+      data: null
+    });
+    dialogRef.afterClosed().subscribe(async result => {
+      if (result) {
+        this.reloadData();
+      }
+    });
+  }
+  updatePost() {
+    const dialogRef = this.dialog.open(AddPostComponent, {
+      width: '800px',
+      height: '430px',
+      data: this.clickedPost
     });
     dialogRef.afterClosed().subscribe(async result => {
       if (result) {
