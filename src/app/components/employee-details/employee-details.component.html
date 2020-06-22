@@ -49,7 +49,7 @@
         <td class="data">
           <span *ngIf="!showUpdateForm">{{newEmp.birthDate | date: 'dd MMMM yyyy '}}</span>
           <input [matDatepicker]="picker" [ngClass]="getTheme() ? 'darkInput' : ''" [(ngModel)]="newEmp.birthDate" *ngIf="showUpdateForm"/>
-          <mat-datepicker-toggle matSuffix [for]="picker" *ngIf="showUpdateForm" style="margin-left: -40px"></mat-datepicker-toggle>
+          <mat-datepicker-toggle matSuffix [for]="picker" [ngStyle]="{'color': getTheme() ? 'white' : ''}" *ngIf="showUpdateForm" style="margin-left: -40px"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </td></tr>
       <tr>
