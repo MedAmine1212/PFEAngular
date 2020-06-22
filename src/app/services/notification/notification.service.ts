@@ -26,7 +26,6 @@ export class NotificationService {
   }
   list(){
     return this.http.get( this.baseUrl + 'list');
-
   }
 
 }
