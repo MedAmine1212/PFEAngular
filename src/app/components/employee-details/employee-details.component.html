@@ -49,7 +49,7 @@
         <td class="data">
           <span *ngIf="!showUpdateForm">{{newEmp.birthDate | date: 'dd MMMM yyyy '}}</span>
           <input [matDatepicker]="picker" [ngClass]="getTheme() ? 'darkInput' : ''" [(ngModel)]="newEmp.birthDate" *ngIf="showUpdateForm"/>
-          <mat-datepicker-toggle matSuffix [for]="picker" *ngIf="showUpdateForm" style="margin-left: -40px"></mat-datepicker-toggle>
+          <mat-datepicker-toggle matSuffix [for]="picker" [ngStyle]="{'color': getTheme() ? 'white' : ''}" *ngIf="showUpdateForm" style="margin-left: -40px"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </td></tr>
       <tr>
@@ -122,7 +122,15 @@
         </td>
         <td class="data">
           <div style="height:24px" *ngIf="!showAddressUpdateForm">{{add.zipCode}}</div>
-          <input [ngClass]="getTheme() ? 'darkInput' : ''" style="height:24px" class="addIn" *ngIf="showAddressUpdateForm" type="number"  [(ngModel)]="add.state"/>
+          <input [ngClass]="getTheme() ? 'darkInput' : ''" style="height:24px" class="addIn" *ngIf="showAddressUpdateForm" type="number"  [(ngModel)]="add.zipCode"/>
+        </td>
+        <td *ngIf="newEmpAddresses.length > 1">
+          <button type="button" id="PopoverCustomT-4" style="border-radius: 12px" class="btn btn-danger btn-sm" (click)="deleteAddress(add)" matTooltip="Delete address"><span class="fa fa-minus-circle"></span></button>
+        </td>
+      </tr>
+      <tr *ngIf="newEmpAddresses.length == 1">
+        <td colspan="3">
+          <button (click)="addSecondAddress()" class="btn btn-link" style="float: right"> Add second address</button>
         </td>
       </tr>
       </tbody>

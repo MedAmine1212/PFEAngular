@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 import {PostService} from '../../services/post/post.service';
 import {Post} from '../../models/Post';
-import set = Reflect.set;
 import {Image} from '../employees/employees.component';
 import {User} from '../../models/User';
 import {ImageService} from '../../services/image/image.service';
@@ -56,46 +55,30 @@ reloadData() {
         this.users.push(emp);
       }
     }
-    this.getImages(this.users);
+    this.getImages();
   }, error => console.log(error));
 }
   getTheme() {
     return this.themeChanger.getTheme();
   }
-  getImages(users: User[]) {
-    const img: Image[] = [];
-    for (const emp of users) {
-      const imageName = emp.image;
-      const image = null;
-      img.push(new Image(imageName, image));
-    }
-    this.images = img;
-    for (const emp of this.images) {
-      this.imageService.load(emp.imageName).subscribe(
+  getImages() {
+    for (const emp of this.users) {
+      this.imageService.load(emp.image).subscribe(
         // tslint:disable-next-line:no-shadowed-variable
         img  => {
           if (img != null ) {
             // @ts-ignore
             const base64Data = img.picByte;
-            this.images.forEach(imageuser => {
-              if (imageuser.imageName === emp.imageName) { imageuser.imageFile =  'data:image/jpeg;base64,' + base64Data; }
-            });
+            emp.fullImage =  'data:image/jpeg;base64,' + base64Data;
+          } else {
+            emp.fullImage = null;
           }
         });
     }
     setTimeout(() => {
       this.loading = false;
-    }, 500);
+    }, 400);
   }
-  showImage(name) {
-    for (const img of this.images) {
-      if (img.imageName === name) {
-        return img.imageFile;
-      }
-    }
-    return null;
-  }
-
   setClickedPost(p) {
     this.loading = true;
     this.clickedPost = p;

@@ -36,6 +36,8 @@ export class DeleteDialogComponent implements OnInit {
         message = message + 'this schedule';
       } else if (this.data[1] === 'post') {
         message = message + 'this post';
+      } else if (this.data[1] === 'address') {
+        message = message + 'this address';
       }
     }
     message = message + ' ?';

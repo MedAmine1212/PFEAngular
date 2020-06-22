@@ -18,7 +18,7 @@
     <mat-horizontal-stepper [linear]="isLinear" #stepper>
 
       <!-- **********************************  1st stepper  ***************************************-->
-      <mat-step [stepControl]="firstFormGroup" >
+      <mat-step *ngIf="data[1] != 4" [stepControl]="firstFormGroup" >
         <div  class="main-card mb-3 card">
           <ng-template matStepLabel>Select department</ng-template>
           <div *ngIf="router.url !=='/RemoteMonitoring/(mainCon:Departments)'" >
@@ -72,7 +72,7 @@
 
       <!-- **********************************  2nd stepper  ***************************************-->
 
-      <mat-step [stepControl]="secondFormGroup" >
+      <mat-step *ngIf="data[1] != 4" [stepControl]="secondFormGroup" >
         <ng-template matStepLabel>Fill out user informations</ng-template>
         <div  class="main-card mb-3 card">
           <div class="card-header">
@@ -274,7 +274,7 @@
 
       <mat-step [stepControl]="thirdFormGroup" >
         <ng-template matStepLabel>Addresses</ng-template>
-        <form [formGroup]="thirdFormGroup" >
+        <form  *ngIf="data[1] != 4" [formGroup]="thirdFormGroup" >
           <div id="firstAdress">
             <div  class="main-card mb-3 card">
               <div class="card-header">
@@ -362,7 +362,7 @@
               </div>
             </div>
           </div>
-          <div class="note">
+          <div *ngIf="data[1] != 4" class="note">
             <button (click)="showFourthFormGroup()" *ngIf="!showOtherAddress" class="btn btn-info addAddressButton">
               <span mat-raised-button matTooltip="Add second Address now" *ngIf="data[1] == 1 || (data[1] == 2 && data[0].addresses[1] == null)" class="fas fa-plus-circle"></span>
               <span mat-raised-button matTooltip="Restore second address" *ngIf="data[1] == 2 && data[0].addresses[1] != null" class="fas fa-plus-circle"></span>
@@ -469,6 +469,7 @@
           <div style="float: right;">
             <button type="submit" *ngIf="data[1] == 1" [disabled]="!thirdFormGroup.valid || (showOtherAddress && !fourthFormGroup.valid)" class="btn btn-primary"  (click)="addUser()">Add user</button>
             <button type="submit" *ngIf="data[1] == 2" [disabled]="!thirdFormGroup.valid || (showOtherAddress && !fourthFormGroup.valid)" class="btn btn-primary"  (click)="updateUser()">Update user</button>
+            <button type="submit" *ngIf="data[1] == 4" [disabled]="!fourthFormGroup.valid || addAddressDone" class="btn btn-primary"  (click)="addSecondAddress()">Add address</button>
             <button type="button" (click)="closeThis()" class="btn btn-light" style="margin-left: 20px;">Cancel</button>
           </div>
         </div>

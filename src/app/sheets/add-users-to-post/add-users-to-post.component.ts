@@ -66,6 +66,8 @@ export class AddUsersToPostComponent implements OnInit {
             // @ts-ignore
             const base64Data = img.picByte;
             emp.fullImage =  'data:image/jpeg;base64,' + base64Data;
+          } else {
+            emp.fullImage = null;
           }
         });
     }

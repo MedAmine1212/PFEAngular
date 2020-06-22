@@ -1,5 +1,4 @@
 import {Component, Inject, Input, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {User} from '../../models/User';
 import {Department} from '../../models/Department';
 import {DepartmentService} from '../../services/department/department.service';
@@ -7,6 +6,9 @@ import {Address} from '../../models/Address';
 import {UserService} from '../../services/user/user.service';
 import {AddressService} from '../../services/address/address.service';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
+import {AddUserComponent} from '../../dialogs/dialog-forms/add-user/add-user.component';
+import {MatDialog} from '@angular/material/dialog';
+import {DeleteDialogComponent} from '../../dialogs/delete-dialog/delete-dialog.component';
 
 @Component({
   selector: 'app-employee-details',
@@ -15,6 +17,7 @@ import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.ser
 })
 export class EmployeeDetailsComponent implements OnInit {
   constructor(
+  public dialog: MatDialog,
   private themeChanger: ThemeChangerService,
   private departmentService: DepartmentService, private  userService: UserService,
   private addressService: AddressService) {}
@@ -93,5 +96,46 @@ export class EmployeeDetailsComponent implements OnInit {
 
   getTheme() {
     return this.themeChanger.getTheme();
+  }
+
+  addSecondAddress() {
+    const dialogRef = this.dialog.open(AddUserComponent, {
+      width: '900px',
+      height: '625px',
+      panelClass: 'matDialogClass',
+      data: [this.newEmp, 4]
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.userService.findUserWithToken().subscribe(res => {
+          this.newEmpAddresses = [];
+          // @ts-ignore
+          this.newEmp = res;
+          // @ts-ignore
+          this.emp = res;
+          console.log(res);
+          for (const add of this.newEmp.addresses) {
+            this.newEmpAddresses.push(add);
+          }
+        }, error => console.log(error));
+        }
+      });
+  }
+
+  deleteAddress(add: Address) {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      width: '400px',
+      height: '380',
+      data: [null, 'address']
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.addressService.remove(add.addressId).subscribe(() => {
+          this.newEmpAddresses.splice(this.newEmpAddresses.indexOf(add), 1);
+          this.newEmp.addresses.splice(this.newEmp.addresses.indexOf(add), 1);
+          this.emp = this.newEmp;
+        }, error => console.log(error));
+      }
+    });
   }
 }

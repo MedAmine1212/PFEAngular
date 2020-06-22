@@ -17,7 +17,7 @@
       <span>{{connectedUser.name}} {{connectedUser.firstName}}</span>
     </div>
     <div [ngStyle]="{'color': getTheme() ? 'white' : ''}">
-    <div class="desc">Developper</div>
+    <div class="desc">{{connectedUser.post.postName}}</div>
     </div>
   </div>
   <div style="text-align: left">
