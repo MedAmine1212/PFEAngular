@@ -63,6 +63,7 @@ export class AddUserComponent implements  OnInit  {
   subscribingUser: boolean;
   savingUser: boolean;
   allDone: boolean;
+  addAddressDone: boolean;
   loading: boolean;
   tempDep: string;
   @ViewChild('stepper') stepper: MatStepper;
@@ -202,6 +203,8 @@ export class AddUserComponent implements  OnInit  {
             setTimeout(() => {
               this.stepper.selectedIndex = 1;
             }, 900);
+          } else if (this.data[1] === 4) {
+            this.showOtherAddress = true;
           }
           this.loading = false;
         });
@@ -603,5 +606,13 @@ export class AddUserComponent implements  OnInit  {
       } else {this.retrievedImage = null ; }
     });
     }
+  }
+
+  addSecondAddress() {
+    this.addAddressDone = true;
+    this.address2.user = this.data[0];
+    this.addressService.add(this.address2).subscribe(() => {
+        this.dialogRef.close(true);
+    }, error => console.log(error));
   }
 }
