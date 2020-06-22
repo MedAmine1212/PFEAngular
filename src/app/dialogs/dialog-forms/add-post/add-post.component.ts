@@ -17,11 +17,12 @@ export class AddPostComponent implements OnInit {
     private formBuilder: FormBuilder,
     private postService: PostService,
     public dialogRef: MatDialogRef<AddPostComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any[]) {
-    if (data[0] != null) {
-      // edit
-    } else {
-      this.newPost = new Post();
+    @Inject(MAT_DIALOG_DATA) public post: Post) {
+    this.newPost = new Post();
+    if (post != null) {
+      this.newPost.postName = this.post.postName;
+      this.newPost.postId = this.post.postId;
+      this.newPost.users = this.post.users;
     }
   }
 
@@ -53,9 +54,9 @@ export class AddPostComponent implements OnInit {
       this.postService.list().subscribe(psts => {
         // console.log(psts);
 
-        if (this.data[0] != null) {
+        if (this.post != null) {
           for (const p of psts) {
-            if (p.postName !== this.data[0].postName) {
+            if (p.postName !== this.post.postName) {
               posts.push(p.postName.toLowerCase());
             }
           }
@@ -79,6 +80,12 @@ export class AddPostComponent implements OnInit {
   }
   addPost() {
     this.postService.add(this.newPost).subscribe(() => {
+      this.dialogRef.close(true);
+    }, error => console.log(error));
+  }
+
+  updatePost() {
+    this.postService.update(this.post.postId, this.newPost).subscribe(() => {
       this.dialogRef.close(true);
     }, error => console.log(error));
   }

@@ -17,6 +17,9 @@ export class PostService {
   add(post: Post) {
     return this.http.post(this.baseUrl + 'add', post);
   }
+  update(id: number, post: Post) {
+    return this.http.put(this.baseUrl + 'update/' + id , post);
+  }
   list(): Observable<any> {
     return this.http.get(this.baseUrl + 'list');
   }

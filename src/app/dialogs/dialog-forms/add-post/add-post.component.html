@@ -25,8 +25,8 @@
   </div>
   <div style="width: 100%">
     <div class="buttons">
-<!--      [disabled]="!registerForm.valid"-->
-      <button class="btn btn-primary" [disabled]="!registerForm.valid" (click)="addPost()"   mat-raised-button  type="submit" >Add post</button>
+      <button class="btn btn-primary" [disabled]="!registerForm.valid" (click)="addPost()" *ngIf="post == null"  mat-raised-button  type="submit" >Add post</button>
+      <button class="btn btn-primary" [disabled]="!registerForm.valid" (click)="updatePost()" *ngIf="post != null"  mat-raised-button  type="submit" >Update post</button>
 
       <button type="button" (click)="closeThis()" class="btn btn-light" style="margin-left: 20px;">Cancel</button>
     </div>
