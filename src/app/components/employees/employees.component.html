@@ -112,8 +112,7 @@
                   <div class="widget-content-left mr-3">
                     <div class="widget-content-left">
                       <img width="48" height="49" class="rounded-circle" *ngIf="emp.fullImage != null" [src]="emp.fullImage" alt="">
-                      <img width="53" height="53" class="rounded-circle" *ngIf=" emp.fullImage === null" src="../../assets/images/avatars/0.png" alt="">
-                      <div style="font-size: 20px;height:47px;width: 49px" class="rounded-circle spinner-border text-info" *ngIf="emp.fullImage == undefined " alt=""></div>
+                      <img width="53" height="53" class="rounded-circle" *ngIf=" emp.fullImage == null" src="../../assets/images/avatars/0.png" alt="">
                     </div>
                   </div>
                   <div class="widget-content-left flex2">
