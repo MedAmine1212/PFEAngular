@@ -14,7 +14,7 @@
              <div style="float:right;width:50px;padding-top:10px"> <span (click)="clickedPost = null" [ngClass]="getTheme() ? 'darkUnselect' :'lightUnselect'" *ngIf="clickedPost != null" matTooltip="Unselect post" class="fa fa-check-circle"></span></div>
               </span>
               <br><br><br>
-              <div class="search-wrapper wrapper">
+              <div *ngIf="!loadingPosts" class="search-wrapper wrapper">
                 <div class="searchContainer" [ngClass]="{'search-wrapper active': showHideInput}">
                   <div class="input-holder holder" [ngClass]=" getTheme() && showHideInput? 'bg-dark' :''">
                     <input [ngStyle]="{'color': getTheme()? 'white' :''}" type="text" [(ngModel)]="searchText" style="width: 100%" class="search-input searchInput" placeholder="Search...">
@@ -25,9 +25,16 @@
               </div>
               <br>
             </li>
-            <li (click)="setClickedPost(post)" [ngStyle]="{'background-color': clickedPost == post ? 'rgb(224,243,255)' :''}" [ngClass]="getTheme()? 'lightPl' :''" class="schItem" *ngFor="let post of posts | filter:searchText">
-              <div class="widget-subheading opacity-7" [ngStyle]="{'color':getTheme() && clickedPost == post ? 'black': ''}">{{post.postId}}. {{post.postName}}</div>
+            <li style="text-align:center;padding-top: 100px" *ngIf="loadingPosts">
+              <div style=";margin-right:15px;width: 60px;height:60px;font-size: 20px" class="spinner-border text-info" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
             </li>
+            <span *ngIf="!loadingPosts">
+              <li (click)="setClickedPost(post)" [ngStyle]="{'background-color': clickedPost == post ? 'rgb(224,243,255)' :''}" [ngClass]="getTheme()? 'lightPl' :''" class="schItem" *ngFor="let post of posts | filter:searchText">
+                <div class="widget-subheading opacity-7" [ngStyle]="{'color':getTheme() && clickedPost == post ? 'black': ''}">{{post.postId}}. {{post.postName}}</div>
+              </li>
+            </span>
           </ul>
         </div>
       </div>

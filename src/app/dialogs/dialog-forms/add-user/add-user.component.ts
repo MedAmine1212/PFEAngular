@@ -579,7 +579,7 @@ export class AddUserComponent implements  OnInit  {
     // if (this.retrievedImage == null || this.selectedFile != null) {
     //   this.user.image = null;
     // }
-    this.userService.modify(this.user.userId, this.user,1).subscribe(() => {
+    this.userService.modify(this.user.userId, this.user, 1).subscribe(() => {
       setTimeout(() => {
         this.savingUser = false;
         // tslint:disable-next-line:triple-equals
@@ -598,6 +598,10 @@ export class AddUserComponent implements  OnInit  {
               console.log('image not found');
             }
           });
+        } else {
+          setTimeout(() => {
+            this.userAddedSuccessfully('updated');
+          }, 400);
         }
       }, 200);
     }, error => console.log(error));

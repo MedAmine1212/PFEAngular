@@ -34,11 +34,16 @@
     <span (click)="unselectDep()" [ngClass]="getTheme() ? 'darkUnselect' :'lightUnselect'" *ngIf="clickedDep.depId!=-1" matTooltip="Unselect departement" class="fa fa-check-circle"></span>
   </span>
         </li>
-        <li class="noDepLi" [ngStyle]="{'color': getTheme()? 'white' :''}" *ngIf="this.data.length === 0">
+        <li class="noDepLi" [ngStyle]="{'color': getTheme()? 'white' :''}" *ngIf="this.data.length === 0 && !database.loading">
           No departments to show<br>
           <button class="btn btn-info noDepButt" matTooltip="Add departement" (click)="addDepartment()">Add</button>
         </li>
-        <li *ngIf="this.data.length > 0" style="overflow: auto;max-height: 580px;">
+        <li style="text-align:center;padding-top: 100px" *ngIf="database.loading">
+          <div style="margin-right:20px;width: 60px;height:60px;font-size: 20px" class="spinner-border text-info" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </li>
+        <li *ngIf="this.data.length > 0 && !database.loading" style="overflow: auto;max-height: 580px;">
           <div>
             <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
               <mat-tree-node  [@enterAnimation] *matTreeNodeDef="let node" matTreeNodePadding>

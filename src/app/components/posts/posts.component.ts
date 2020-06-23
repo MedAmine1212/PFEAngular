@@ -28,6 +28,7 @@ export class PostsComponent implements OnInit {
   users: User[];
   showHideInput2: boolean;
   searchText2;
+  loadingPosts: boolean;
   constructor(
     private bottomSheet: MatBottomSheet,
     public dialog: MatDialog,
@@ -38,6 +39,7 @@ export class PostsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.loadingPosts = true;
     this.reloadData();
   }
 reloadData() {
@@ -56,7 +58,11 @@ reloadData() {
       }
     }
     this.getImages();
-  }, error => console.log(error));
+    this.loadingPosts = false;
+  }, error => {
+    this.loadingPosts = false;
+    console.log(error);
+  });
 }
   getTheme() {
     return this.themeChanger.getTheme();
@@ -73,11 +79,13 @@ reloadData() {
           } else {
             emp.fullImage = null;
           }
+          if (this.users.indexOf(emp) === (this.users.length - 1)) {
+            setTimeout(() => {
+              this.loading = false;
+            }, 500);
+          }
         });
     }
-    setTimeout(() => {
-      this.loading = false;
-    }, 400);
   }
   setClickedPost(p) {
     this.loading = true;

@@ -57,7 +57,7 @@ export class EmployeesComponent implements OnInit {
   img: any ;
   loading: boolean;
    user: User;
-  head = [['ID', 'Last name', 'Firstname', 'Gender', 'CIN', 'Email', 'Phone', 'Birthday', 'Hireday']];
+  head = [['ID', 'Last name', 'Firstname', 'Gender', 'CIN', 'Email', 'Phone', 'Birthday', 'Hireday', 'Post']];
   data = [];
   constructor(
               private themeChanger: ThemeChangerService, public dialog: MatDialog, public router: Router,
@@ -95,11 +95,13 @@ export class EmployeesComponent implements OnInit {
           } else {
             emp.fullImage = null;
           }
+          if (this.users.indexOf(emp) === (this.users.length - 1)) {
+            setTimeout(() => {
+              this.loading = false;
+            }, 500);
+          }
         });
     }
-    setTimeout(() => {
-      this.loading = false;
-    }, 500);
   }
 
   setDepartment(dep: Department) {
@@ -294,7 +296,7 @@ export class EmployeesComponent implements OnInit {
     let i = 0;
     users.forEach(user => {
       // tslint:disable-next-line:max-line-length
-      this.data.push([user.userId, user.name, user.firstName, user.gender, user.cin, user.email, user.phone, user.birthDate, user.hireDay]);
+      this.data.push([user.userId, user.name, user.firstName, user.gender, user.cin, user.email, user.phone, user.birthDate, user.hireDay, user.post.postName]);
       if (this.router.url !== '/RemoteMonitoring/(mainCon:Departments)') {
         this.data[i].push([user.department.depName]);
       }

@@ -40,7 +40,7 @@
                 </span>
 
               <br><br><br>
-              <div  *ngIf="plannings.length>0" class="search-wrapper wrapper">
+              <div  *ngIf="plannings.length>0 && !loading" class="search-wrapper wrapper">
                 <div class="searchContainer" [ngClass]="{'search-wrapper active': showHideInput}">
                   <div [ngClass]=" getTheme() && showHideInput? 'bg-dark' :''"  class="input-holder holder">
                     <input [ngStyle]="{'color': getTheme()? 'white' :''}" type="text" [(ngModel)]="searchText" class="search-input searchInput" placeholder="Search...">
@@ -50,6 +50,12 @@
                 </div>
               </div><br>
             </li>
+            <li style="text-align:center;padding-top: 100px" *ngIf="loading">
+                <div style=";margin-right:5px;width: 60px;height:60px;font-size: 20px" class="spinner-border text-info" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+            </li>
+            <span *ngIf="!loading">
             <li [ngStyle]="{'background-color': clickedPlanning == pl ? 'rgb(224,243,255)' :''}" [ngClass]="getTheme()? 'lightPl' :''" class="schItem" *ngFor="let pl of plannings  | filter:searchText">
               <div style="float: left;width:20%">
               <span (click)="showHideSch(pl)" *ngIf="pl.showPl" class="schIconSpan" [ngClass]="(getTheme() && pl.color ==='btn btn-dark') ? 'btn btn-outline-light' :pl.colorIcon">
@@ -61,6 +67,7 @@
               </div>
               <div [ngClass]="getTheme() ? 'hoveredInDark': ''" [ngStyle]="{'color':getTheme() && clickedPlanning == pl ? 'black': ''}" style="width:80%;float: right" (click)="setClickedPl(pl)">{{pl.planningName}}<span class="planDays" matTooltip="Planned days">{{planningDaysDesc(pl)}}</span></div>
             </li>
+         </span>
           </ul>
         </div>
       </div>

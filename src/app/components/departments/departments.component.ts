@@ -24,7 +24,7 @@ export class DynamicDatabase {
   departments: Department[] = [];
   dataMap = new Map<number, Department[]>([]);
   rootLevelNodes: Department[] = [];
-
+  loading = true;
   initialData(data: Department[]): DynamicFlatNode[] {
     this.rootLevelNodes = [];
     this.dataMap.clear();
@@ -36,6 +36,7 @@ export class DynamicDatabase {
         this.dataMap.set(dep.depId, dep.departments);
       }
     }
+    this.loading = false;
     return this.rootLevelNodes.map(name => new DynamicFlatNode(name, 0, this.isExpandable(name)));
   }
 
@@ -144,10 +145,9 @@ export class DepartmentsComponent implements  OnInit {
   fakedep: Department;
   clickedDep: Department;
   treeControl: FlatTreeControl<DynamicFlatNode>;
-
   dataSource: DynamicDataSource;
   constructor(private themeChanger: ThemeChangerService,
-              public dialog: MatDialog, private database: DynamicDatabase, private departmentService: DepartmentService) {
+              public dialog: MatDialog, public database: DynamicDatabase, private departmentService: DepartmentService) {
   }
   sendData(dep: Department) {
     if (dep.depId === -1) {
@@ -187,7 +187,7 @@ export class DepartmentsComponent implements  OnInit {
     this.departmentService.list().subscribe(r => {
     this.data = r;
     this.dataSource.data = this.database.initialData(this.data);
-    });
+    }, error => this.database.loading = false);
   }
   addDepartment() {
     const dialogRef = this.dialog.open(AddDepartmentComponent, {

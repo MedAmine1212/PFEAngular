@@ -64,6 +64,7 @@ export class TimetablesComponent implements OnInit {
   clickedPlanning: Planning;
   user: User = null;
    selectedPlanning: boolean;
+  loading: boolean;
   constructor(
     private themeChanger: ThemeChangerService,
     private userService: UserService,
@@ -84,6 +85,7 @@ export class TimetablesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loading = true;
     this.selectedPlanning = false;
     this.userConfig.shownPlannings = [];
     this.showTable = false;
@@ -206,9 +208,6 @@ export class TimetablesComponent implements OnInit {
       this.userConfig = this.user.userConfigs[0];
       this.listPlannings();
     }, error => {
-      setTimeout(() => {
-        this.showTable = true;
-      }, 500);
       console.log(error);
     });
     }
@@ -238,11 +237,13 @@ export class TimetablesComponent implements OnInit {
         this.clickedPlanning = null;
       }
       setTimeout(() => {
+        this.loading = false;
         this.showTable = true;
       }, 500);
     }, error => {
       console.log(error);
       setTimeout(() => {
+        this.loading = false;
         this.showTable = true;
       }, 500);
     });

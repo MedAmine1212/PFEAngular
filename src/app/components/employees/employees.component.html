@@ -11,9 +11,9 @@
         <button mat-raised-button class="btn btn-info" (click)="showAddUserDialog()" matTooltip="Add Employee">
           <span style="cursor:pointer;color:white" title="add" class="fa fa-user-plus"></span>
         </button>
-        <button mat-raised-button class="btn btn-secondary" (click)="openPDF()" matTooltip="print as PDF"><span class="fas fa-print"></span></button>
         <button mat-raised-button class="btn btn-success" (click)="showAddDepDialog()" matTooltip="Add departement"><span class="fas fa-plus"></span></button>
         <button mat-raised-button class="btn btn-secondary" (click)="showUpdateDepDialog()" matTooltip="Update departement"><span class="fas fa-pencil-alt"></span></button>
+        <button mat-raised-button class="btn btn-warning" (click)="openPDF()" matTooltip="print as PDF"><span class="fas fa-print"></span></button>
         <button mat-raised-button class="btn btn-danger" (click)="showDeleteDialog()" matTooltip="Delete departement"><span class="fas fa-trash-alt"></span></button>
       </div>
     </div>
@@ -42,7 +42,7 @@
         <td>
           <h1 *ngIf="!thisIsEmp && clickedDep.depId != -1" [ngStyle]="{'color': getTheme()? 'white' :''}" style="margin-top: 20px;margin-right: 30px" class="empTitle">{{clickedDep.depName}} Employees </h1>
         </td>
-        <td *ngIf="!loading && (router.url === '/RemoteMonitoring/(mainCon:Absences)' || router.url === '/RemoteMonitoring')">
+        <td *ngIf="!loading && users.length > 0 && (router.url === '/RemoteMonitoring/(mainCon:Absences)' || router.url === '/RemoteMonitoring')">
           <div style="margin-left: -50px">
             <div  class="search-wrapper wrapper">
               <div class="searchContainer" style="background-color: transparent" [ngClass]="{'search-wrapper active': showHideInput}">
@@ -55,7 +55,7 @@
             </div>
           </div>
         </td>
-        <td *ngIf="!loading && (router.url === '/RemoteMonitoring/(mainCon:Employees)' || router.url === '/RemoteMonitoring/(mainCon:Departments)')">
+        <td *ngIf="!loading && users.length > 0 && (router.url === '/RemoteMonitoring/(mainCon:Employees)' || router.url === '/RemoteMonitoring/(mainCon:Departments)')">
           <div class="search-wrapper" [ngStyle]="{'margin-left': router.url === '/RemoteMonitoring/(mainCon:Employees)'? '40px' :''}">
             <div style="position: absolute;background-color: transparent;margin-top: -15px;margin-left: -35px;" [ngClass]="{'search-wrapper active': showHideInput}">
               <div class="input-holder" [ngClass]=" getTheme() && showHideInput? 'bg-dark' :''">
@@ -72,17 +72,23 @@
     <div [ngStyle]="{'color': getTheme()? 'white' :'grey'}" style="padding-top: 5%;text-align: center;font-weight:bolder;margin:0 auto;font-size:25px;width: 100%" *ngIf="!thisIsEmp && clickedDep.depId === -1">
       <span style="font-size:30px;color:#3f6ad8">Click a department to show details here</span><br><br><br><br>No Department Selected
     </div>
-    <div *ngIf="loading && !(!thisIsEmp && clickedDep.depId === -1)" style="padding-top: 15%;width:100%">
+    <div *ngIf="loading && !(!thisIsEmp && clickedDep.depId === -1) && router.url !== '/RemoteMonitoring/(mainCon:Absences)' && router.url !== '/RemoteMonitoring'" style="padding-top: 5%;width:100%">
       <div style="width:200px;margin:auto">
-        <div class="spinner-container" [ngStyle]="{'margin-top': router.url !== '/RemoteMonitoring/(mainCon:Absences)' && router.url !== '/RemoteMonitoring' ?'-100px' :'35px', 'margin-left': router.url === '/RemoteMonitoring/(mainCon:Absences)' ||  router.url === '/RemoteMonitoring' ? '25px' :''}">
+        <div class="spinner-container">
           <mat-spinner></mat-spinner>
         </div>
       </div>
     </div>
-    <div style="width: 100%;text-align:center;margin:0;padding-top: 10%;font-weight: bolder;font-size: 20px" *ngIf="!loading && ((thisIsEmp && users.length === 0) || (!thisIsEmp && clickedDep.depId!==-1 && (users==null || users.length === 0)))" [ngStyle]="{'margin-top': router.url === '/RemoteMonitoring/(mainCon:Absences)'  || router.url === '/RemoteMonitoring'? '40%' : '', 'color': getTheme()? 'white' :'black'}"> No Employees to show</div>
+    <div style="text-align:center;padding-top: 100px" *ngIf="loading && (router.url === '/RemoteMonitoring/(mainCon:Absences)' || router.url === '/RemoteMonitoring')">
+      <div style="margin-right:60px;width: 60px;height:60px;font-size: 20px" class="spinner-border text-info" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    <div style="width: 100%;text-align:center;margin:0;padding-top: 10%;font-weight: bolder;font-size: 20px" *ngIf="!loading && ((thisIsEmp && users.length === 0) || (!thisIsEmp && clickedDep.depId!==-1 && (users==null || users.length === 0)))" [ngStyle]="{'margin-left' : router.url === '/RemoteMonitoring/(mainCon:Absences)'  || router.url === '/RemoteMonitoring'? '-30px' : ''
+    , 'margin-top': router.url === '/RemoteMonitoring/(mainCon:Absences)'  || router.url === '/RemoteMonitoring'? '40%' : '', 'color': getTheme()? 'white' :'black'}"> No Employees to show</div>
     <div *ngIf="users!=null && !loading">
 <!--      <div class="buttons">-->
-        <button *ngIf="router.url === '/RemoteMonitoring/(mainCon:Employees)'" style="float: right ; margin-right: 15px; margin-bottom: 10px" mat-raised-button class="btn btn-secondary" (click)="openPDF()" matTooltip="print as PDF"><span class="fas fa-print"></span></button>
+        <button *ngIf="router.url === '/RemoteMonitoring/(mainCon:Employees)' && !loading && users.length > 0" style="float: right ; margin-right: 15px; margin-bottom: 10px" mat-raised-button class="btn btn-warning" (click)="openPDF()" matTooltip="print as PDF"><span class="fas fa-print"></span></button>
 <!--      </div>-->
       <div [ngStyle]="{'margin-left': router.url === '/RemoteMonitoring/(mainCon:Absences)'  || router.url === '/RemoteMonitoring'? '-25px' :''}" class="main-card mb-3 card" [ngClass]="getTheme() ? 'bg-premium-dark' :''" style="overflow: auto;max-height: 480px;margin-top: 40px;border-radius:0" *ngIf="(users.length !=0 && thisIsEmp) || (users.length !=0 && clickedDep.depId != -1)">
           <table [ngClass]="getTheme() ? 'bg-premium-dark text-light' :'text-dark'"  [ngStyle]="{'color': getTheme()? 'white' :''}" class="align-middle text-light mb-0 table table-borderless table-striped table-hover">
@@ -106,7 +112,8 @@
                   <div class="widget-content-left mr-3">
                     <div class="widget-content-left">
                       <img width="48" height="49" class="rounded-circle" *ngIf="emp.fullImage != null" [src]="emp.fullImage" alt="">
-                      <img width="53" height="53" class="rounded-circle" *ngIf=" emp.fullImage === null " src="../../assets/images/avatars/0.png" alt="">
+                      <img width="53" height="53" class="rounded-circle" *ngIf=" emp.fullImage === null" src="../../assets/images/avatars/0.png" alt="">
+                      <div style="font-size: 20px;height:47px;width: 49px" class="rounded-circle spinner-border text-info" *ngIf="emp.fullImage == undefined " alt=""></div>
                     </div>
                   </div>
                   <div class="widget-content-left flex2">
