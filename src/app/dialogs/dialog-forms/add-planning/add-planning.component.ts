@@ -4,7 +4,6 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Schedule} from '../../../models/Schedule';
 import {Planning} from '../../../models/Planning';
 import {Observable} from 'rxjs';
-import {DialogComponent} from '../../message-dialog/dialog.component';
 import {ScheduleService} from '../../../services/schedule/schedule.service';
 import {MatStepper} from '@angular/material/stepper';
 import {animate, style, transition, trigger} from '@angular/animations';
@@ -13,7 +12,6 @@ import {UserService} from '../../../services/user/user.service';
 import {User} from '../../../models/User';
 import {UserConfigsService} from '../../../services/UserConfigs/user-configs.service';
 import {NotificationService} from '../../../services/notification/notification.service';
-import {NotificationMessage} from '../../../models/NotificationMessage';
 
 @Component({
   selector: 'app-add-planning',
@@ -35,7 +33,6 @@ import {NotificationMessage} from '../../../models/NotificationMessage';
   styleUrls: ['./add-planning.component.css']
 })
 export class AddPlanningComponent implements AfterViewInit {
-  dialogComponent: MatDialogRef<DialogComponent>;
   formGroup: FormGroup;
   formGroup2: FormGroup;
   schedules: Schedule[] = [];
@@ -203,13 +200,7 @@ export class AddPlanningComponent implements AfterViewInit {
 saveModifiedPlanning() {
   this.pl = this.planning;
   this.planningService.modify(this.planning, this.pl.planningId).subscribe(() => {
-    this.dialogComponent = this.dialog.open(DialogComponent, {
-      width: '400px',
-      data : 'Planning updated successfully ! '
-    });
-    this.dialogComponent.afterClosed().subscribe(() =>
-      this.dialogRef.close(true)
-    );
+    this.dialogRef.close(true);
   }, error1 => console.log(error1));
 
 }
@@ -217,13 +208,7 @@ saveModifiedPlanning() {
   updateExistingSchedule() {
     this.schedule.plannings.push(this.planning);
     this.scheduleService.modify(this.schedule, this.schedule.scheduleId).subscribe(() => {
-      this.dialogComponent = this.dialog.open(DialogComponent, {
-        width: '400px',
-        data : 'Planning added successfully ! '
-      });
-      this.dialogComponent.afterClosed().subscribe(() =>
-        this.dialogRef.close(true)
-      );
+      this.dialogRef.close(true);
     }, error1 => console.log(error1));
   }
 
@@ -231,13 +216,7 @@ saveModifiedPlanning() {
   sendNewSchedule() {
     this.schedule.plannings.push(this.planning);
     this.scheduleService.add(this.schedule).subscribe(sch => {
-      this.dialogComponent = this.dialog.open(DialogComponent, {
-        width: '400px',
-        data : 'Planning added successfully ! '
-      });
-      this.dialogComponent.afterClosed().subscribe(() =>
-        this.dialogRef.close(true)
-      );
+      this.dialogRef.close(true);
     }, error1 => console.log(error1));
   }
 

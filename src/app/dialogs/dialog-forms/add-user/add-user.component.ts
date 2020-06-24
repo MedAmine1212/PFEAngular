@@ -12,7 +12,6 @@ import {PostService} from '../../../services/post/post.service';
 import {AddressService} from '../../../services/address/address.service';
 import {Address} from '../../../models/Address';
 import {User} from '../../../models/User';
-import {DialogComponent} from '../../message-dialog/dialog.component';
 import {Router} from '@angular/router';
 import {UserConfigs} from '../../../models/UserConfigs';
 import {PlanningService} from '../../../services/planning/planning.service';
@@ -52,7 +51,6 @@ import {ImageService} from '../../../services/image/image.service';
   styleUrls: ['./add-user.component.css']
 })
 export class AddUserComponent implements  OnInit  {
-  dialogComponent: MatDialogRef<DialogComponent>;
   selectedFile: File;
   imageName: string;
   retrievedImage: any;
@@ -301,7 +299,7 @@ export class AddUserComponent implements  OnInit  {
           this.upload(user.userId, 'added');
         } else {
           setTimeout(() => {
-            this.userAddedSuccessfully('added');
+            this.dialogRef.close(true);
           }, 400);
         }
       }, 200);
@@ -323,23 +321,13 @@ export class AddUserComponent implements  OnInit  {
             setTimeout(() => {
               this.allDone = false;
               setTimeout(() => {
-              this.userAddedSuccessfully(message);
+                this.dialogRef.close(true);
               }, 400);
             }, 1500);
 
           }
         }, error => console.log(error)
       );
-  }
-
-  userAddedSuccessfully(message) {
-    this.dialogComponent = this.dialog.open(DialogComponent, {
-      width: '400px',
-      data : 'User ' + message + ' successfully ! '
-    });
-    this.dialogComponent.afterClosed().subscribe(() =>
-      this.dialogRef.close(true)
-    );
   }
 
   // CHECK IN USE
@@ -590,7 +578,7 @@ export class AddUserComponent implements  OnInit  {
             console.log(isDeleted);
             if (isDeleted) {
               setTimeout(() => {
-                this.userAddedSuccessfully('updated');
+                this.dialogRef.close(true);
               }, 400);
             } else if (!isDeleted) {
               console.log('couldn\'t delete the file ');
@@ -600,7 +588,7 @@ export class AddUserComponent implements  OnInit  {
           });
         } else {
           setTimeout(() => {
-            this.userAddedSuccessfully('updated');
+            this.dialogRef.close(true);
           }, 400);
         }
       }, 200);

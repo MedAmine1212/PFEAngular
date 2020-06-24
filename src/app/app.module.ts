@@ -37,7 +37,6 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatSelectModule} from '@angular/material/select';
-import {DialogComponent} from './dialogs/message-dialog/dialog.component';
 import {EmployeeDetailsComponent} from './components/employee-details/employee-details.component';
 import {MatNativeDateModule} from '@angular/material/core';
 import {DeleteDialogComponent} from './dialogs/delete-dialog/delete-dialog.component';
@@ -73,7 +72,6 @@ import { AddPostComponent } from './dialogs/dialog-forms/add-post/add-post.compo
     MotifsAbsencesComponent,
     AddUserComponent,
     AddDepartmentComponent,
-    DialogComponent,
     DeleteDialogComponent,
     AddPlanningComponent,
     SchedulesComponent,

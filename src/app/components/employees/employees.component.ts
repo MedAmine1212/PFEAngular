@@ -24,6 +24,7 @@ import * as Jspdf from 'jspdf';
 import 'jspdf-autotable';
 import html2canvas from 'html2canvas';
 import {EmployeeDetailsComponent} from '../employee-details/employee-details.component';
+import {MatSnackBar, MatSnackBarConfig} from '@angular/material/snack-bar';
 
 
 export class Image {
@@ -60,6 +61,7 @@ export class EmployeesComponent implements OnInit {
   head = [['ID', 'Last name', 'Firstname', 'Gender', 'CIN', 'Email', 'Phone', 'Birthday', 'Hireday', 'Post']];
   data = [];
   constructor(
+              private snackBar: MatSnackBar,
               private themeChanger: ThemeChangerService, public dialog: MatDialog, public router: Router,
               private departmentService: DepartmentService, private userService: UserService, private imageService: ImageService) {
     this.loading = true;
@@ -269,6 +271,7 @@ export class EmployeesComponent implements OnInit {
     this.reloadData();
   }
   public openPDF(): void {
+    if (this.users.length > 0) {
     const doc = new Jspdf('l', 'pt', 'a4');
     if (this.router.url === '/RemoteMonitoring/(mainCon:Departments)') {
       doc.text(this.clickedDep.depName + ' Employees', 15, 25);
@@ -289,14 +292,32 @@ export class EmployeesComponent implements OnInit {
       });
     }
     doc.output('dataurlnewwindow');
+    } else {
+      setTimeout(() => {
+        const config = new MatSnackBarConfig();
+        if (this.themeChanger.getTheme()) {
+          config.panelClass = ['snackBar'];
+        } else {
+          config.panelClass = ['snackBarDark'];
+        }
+        config.duration = 3000;
+        this.snackBar.open('No users to export', null, config);
 
+      }, 500);
+    }
   }
 
   private fillBody(users: User[]) {
     let i = 0;
+    this.data = [];
     users.forEach(user => {
       // tslint:disable-next-line:max-line-length
-      this.data.push([user.userId, user.name, user.firstName, user.gender, user.cin, user.email, user.phone, user.birthDate, user.hireDay, user.post.postName]);
+      let post = 'No post assigned';
+      if (!!user.post) {
+        post = user.post.postName;
+      }
+      this.data.push([user.userId, user.name, user.firstName, user.gender, user.cin, user.email, user.phone, user.birthDate,
+        user.hireDay, post]);
       if (this.router.url !== '/RemoteMonitoring/(mainCon:Departments)') {
         this.data[i].push([user.department.depName]);
       }

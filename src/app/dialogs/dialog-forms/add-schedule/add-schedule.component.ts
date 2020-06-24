@@ -2,7 +2,6 @@ import {AfterViewInit, Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Schedule} from '../../../models/Schedule';
 import {ScheduleService} from '../../../services/schedule/schedule.service';
-import {DialogComponent} from '../../message-dialog/dialog.component';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {animate, style, transition, trigger} from '@angular/animations';
 
@@ -26,7 +25,6 @@ import {animate, style, transition, trigger} from '@angular/animations';
   styleUrls: ['./add-schedule.component.css']
 })
 export class AddScheduleComponent implements OnInit {
-  dialogComponent: MatDialogRef<DialogComponent>;
   formGroup: FormGroup;
   formGroup2: FormGroup;
   beginHour: string;
@@ -109,26 +107,14 @@ export class AddScheduleComponent implements OnInit {
       this.setFinalSchedule();
       console.log(this.schedule);
       this.scheduleService.add(this.schedule).subscribe(sch => {
-      this.dialogComponent = this.dialog.open(DialogComponent, {
-        width: '400px',
-        data : 'Schedule added successfully ! '
-      });
-      this.dialogComponent.afterClosed().subscribe(() =>
-        this.dialogRef.close(true)
-      );
+        this.dialogRef.close(true);
     }, error1 => console.log(error1));
   }
 
   modifySchedule() {
     this.setFinalSchedule();
     this.scheduleService.modify(this.schedule, this.schedule.scheduleId).subscribe(() => {
-      this.dialogComponent = this.dialog.open(DialogComponent, {
-        width: '400px',
-        data : 'Schedule updated successfully ! '
-      });
-      this.dialogComponent.afterClosed().subscribe(() =>
-        this.dialogRef.close(true)
-      );
+      this.dialogRef.close(true);
     }, error1 => console.log(error1));
   }
   setFinalSchedule() {

@@ -3,9 +3,8 @@ import {Login} from '../../models/Login';
 import {AuthenticationService} from '../../services/Authentication/authentication.service';
 import {UserService} from '../../services/user/user.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {DialogComponent} from '../../dialogs/message-dialog/dialog.component';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {Router} from '@angular/router';
+import {MatDialog} from '@angular/material/dialog';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 
 @Component({
@@ -17,7 +16,6 @@ import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.ser
 export class LoginComponent implements OnInit {
   login: Login ;
   signInForm: FormGroup;
-  dialogComponent: MatDialogRef<DialogComponent>;
   showError: boolean;
   isRemeberChecked: boolean;
   passType: string;
