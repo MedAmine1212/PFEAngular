@@ -33,6 +33,10 @@
 ::ng-deep .userMenu{
   margin-top: 7px;
 }
+::ng-deep .dbMenu {
+  margin-top: 7px;
+  width: 150px;
+}
 ::ng-deep .notifMenu {
   margin-top: 19px;
   position: fixed;

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../../services/Authentication/authentication.service';
 import {UserService} from '../../services/user/user.service';
@@ -11,6 +11,8 @@ import {ImageService} from '../../services/image/image.service';
 import {NotificationService} from '../../services/notification/notification.service';
 import {NotificationMessage} from '../../models/NotificationMessage';
 import {Howl} from 'howler';
+import {DataBaseExportImportService} from '../../services/dataBaseImportExport/data-base-export-import.service';
+import {MatSnackBar, MatSnackBarConfig} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-nav',
@@ -34,7 +36,10 @@ export class NavComponent implements OnInit {
   notifSound = new Howl({
     src: ['assets\\sounds\\notification.mp3']
   });
+  openedDataBaseMenu: boolean;
   constructor(
+    private snackBar: MatSnackBar,
+    private dataBaseExportImportService: DataBaseExportImportService,
     private notifService: NotificationService,
     private userConfigsService: UserConfigsService,
     private themeChanger: ThemeChangerService,
@@ -153,5 +158,21 @@ export class NavComponent implements OnInit {
     event.stopPropagation();
     this.notifs.splice(this.notifs.indexOf(ntf), 1);
     this.notifService.remove(ntf.notifId).subscribe();
+  }
+
+  exportDB() {
+  this.dataBaseExportImportService.exportDB().subscribe(() => {
+    setTimeout(() => {
+      const config = new MatSnackBarConfig();
+      if (this.themeChanger.getTheme()) {
+        config.panelClass = ['snackBar'];
+      } else {
+        config.panelClass = ['snackBarDark'];
+      }
+      config.duration = 3000;
+      this.snackBar.open('Export successful', null, config);
+
+    }, 500);
+  }, error => console.log(error));
   }
 }

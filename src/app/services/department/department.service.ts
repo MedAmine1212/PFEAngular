@@ -18,7 +18,7 @@ export class DepartmentService {
   }
 
   list(): Observable<any> {
-    return this.http.get(this.baseUrl + 'list' );
+    return this.http.get(this.baseUrl + 'list');
   }
 
   remove(id) {
