@@ -55,6 +55,7 @@ import { AddUsersToPostComponent } from './sheets/add-users-to-post/add-users-to
 import {MatListModule} from '@angular/material/list';
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import { AddPostComponent } from './dialogs/dialog-forms/add-post/add-post.component';
+import { ImportDataBaseComponent } from './dialogs/import-data-base/import-data-base.component';
 
 
 @NgModule({
@@ -81,6 +82,7 @@ import { AddPostComponent } from './dialogs/dialog-forms/add-post/add-post.compo
     AddUsersToPostComponent,
     AddPostComponent,
     EmployeeDetailsComponent,
+    ImportDataBaseComponent,
 
   ],
   imports: [

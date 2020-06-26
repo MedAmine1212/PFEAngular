@@ -12,7 +12,11 @@ export class DataBaseExportImportService {
   exportDB() {
     return this.http.get(this.baseUrl + 'dumpDb/' + 1);
   }
-  // import() {
-  //   return this.http.post(this.baseUrl + 'add', department);
-  // }
+  importDB(file: File) {
+    return this.http.post(this.baseUrl + 'restore', file);
+  }
+  rollBack() {
+    return this.http.get(this.baseUrl + 'rollback');
+  }
 }
+

@@ -59,10 +59,11 @@
             </a>
             <mat-menu (close)="openedDataBaseMenu = false" [class]="getTheme() ? 'bg-dark': ''" class="dbMenu" xPosition="after" #menuDB="matMenu">
               <div class="menuContent" style="width: 100% !important;">
-                <button [class]="router.url === '/RemoteMonitoring/(mainCon:Profile)' ? 'current' : ''" [ngClass]="getTheme() ? 'dropdown-item btnDark bg-dark': 'dropdown-item'" [ngStyle]="{'color': getTheme()? 'white' :''}">Import</button>
+                <button (click)="importDB()" matTooltip="Import an external database" [ngClass]="getTheme() ? 'dropdown-item btnDark bg-dark': 'dropdown-item'" [ngStyle]="{'color': getTheme()? 'white' :''}">Import</button>
+                <button style="margin-top: 15px" (click)="rollBack()" matTooltip="Rollback to previous version" [ngClass]="getTheme() ? 'dropdown-item btnDark bg-dark': 'dropdown-item'" [ngStyle]="{'color': getTheme()? 'white' :''}">Rollback</button>
                 <div tabindex="-1" class="dropdown-divider"></div>
                 <button type="button" tabindex="0" (click)="exportDB()" [class]="getTheme() ? 'btnDark': ''" [ngClass]="getTheme() ? 'dropdown-item bg-dark': 'dropdown-item'" [ngStyle]="{'color': getTheme()? 'white' :''}">
-                  Export
+                  <span matTooltip="Back-up your database">Export</span>
                   <span style="float:right;margin-top: 5px;font-size:16px;color: #007bff" matTooltip="Daily back-up enabled" class="fa fa-info-circle"></span>
                 </button>
               </div>

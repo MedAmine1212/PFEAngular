@@ -13,6 +13,9 @@ import {NotificationMessage} from '../../models/NotificationMessage';
 import {Howl} from 'howler';
 import {DataBaseExportImportService} from '../../services/dataBaseImportExport/data-base-export-import.service';
 import {MatSnackBar, MatSnackBarConfig} from '@angular/material/snack-bar';
+import {DeleteDialogComponent} from '../../dialogs/delete-dialog/delete-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
+import {ImportDataBaseComponent} from '../../dialogs/import-data-base/import-data-base.component';
 
 @Component({
   selector: 'app-nav',
@@ -37,7 +40,9 @@ export class NavComponent implements OnInit {
     src: ['assets\\sounds\\notification.mp3']
   });
   openedDataBaseMenu: boolean;
+  selectedFile: File;
   constructor(
+    public dialog: MatDialog,
     private snackBar: MatSnackBar,
     private dataBaseExportImportService: DataBaseExportImportService,
     private notifService: NotificationService,
@@ -175,4 +180,81 @@ export class NavComponent implements OnInit {
     }, 500);
   }, error => console.log(error));
   }
+
+  importDB() {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      width: '400px',
+      height: '380',
+      data: [null, 'dataBase']
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const dialogRef2 = this.dialog.open(ImportDataBaseComponent, {
+          width: '400px',
+          height: '380',
+          data: [null, 'dataBase']
+        });
+        dialogRef2.afterClosed().subscribe(result2 => {
+          if (result2[0] && result2[1] != null) {
+            this.selectedFile = result2[1];
+            console.log(this.selectedFile);
+            setTimeout(() => {
+              const config = new MatSnackBarConfig();
+              if (this.themeChanger.getTheme()) {
+                config.panelClass = ['snackBar'];
+              } else {
+                config.panelClass = ['snackBarDark'];
+              }
+              let dismissedWithAction = false;
+              config.duration = 7000;
+              this.snackBar.open('Rebuilding database...', 'Undo ↩', config);
+              this.snackBar._openedSnackBarRef.onAction().subscribe(() => {
+                dismissedWithAction = true;
+              });
+              this.snackBar._openedSnackBarRef.afterDismissed().subscribe(() => {
+                if (dismissedWithAction) {
+                config.duration = 3000;
+                setTimeout(() => {
+                  this.snackBar.open('Database import canceled', null, config);
+                }, 600);
+                } else {
+                this.dataBaseExportImportService.importDB(this.selectedFile).subscribe(() => {}, error => console.log(error));
+                }
+              });
+            }, 500);
+          }
+       });
+      }
+    });
+  }
+
+  rollBack() {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      width: '400px',
+      height: '380',
+      data: [null, 'rollback']
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.dataBaseExportImportService.rollBack().subscribe(() => {
+          setTimeout(() => {
+            const config = new MatSnackBarConfig();
+            if (this.themeChanger.getTheme()) {
+              config.panelClass = ['snackBar'];
+            } else {
+              config.panelClass = ['snackBarDark'];
+            }
+            config.duration = 3000;
+            this.snackBar.open('Restoring previous version...', null, config);
+            this.snackBar._openedSnackBarRef.afterDismissed().subscribe(() => {
+              setTimeout (() => {
+                window.location.reload();
+                }, 2000);
+            });
+          }, 500);
+        }, error => console.log(error));
+      }
+    });
+    }
+
 }
