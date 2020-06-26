@@ -330,17 +330,28 @@ export class AddUserComponent implements  OnInit  {
       );
   }
 
+  findConnectedUser() {
+     this.userService.findUserWithToken().subscribe(user => {
+       return user;
+     });
+  }
+
   // CHECK IN USE
   checkInUseEmail(control) {
     const emails = [];
     this.userService.list().subscribe(users => {
       for (const user of users) {
         // @ts-ignore
-        if (this.user.email !== user.email) {
+        if (this.data[1] === 2) {
+          if (this.data[0].email !== user.email) {
+            emails.push(user.email);
+          }
+        } else {
           emails.push(user.email);
         }
       }
     });
+    console.log(emails);
     return new Observable(observer => {
       setTimeout(() => {
         const result = (emails.indexOf(control.value) !== -1) ? { alreadyInUse: true } : null;
@@ -354,9 +365,12 @@ export class AddUserComponent implements  OnInit  {
     const cins = [];
     this.userService.list().subscribe(users => {
       for (const user of users) {
-        if (this.user.cin !== user.cin) {
-        // @ts-ignore
-        cins.push(user.cin);
+        if (this.data[1] === 2) {
+          if (this.data[0].cin !== user.cin) {
+            cins.push(user.cin);
+          }
+        } else {
+          cins.push(user.cin);
         }
       }
     });
@@ -373,12 +387,16 @@ export class AddUserComponent implements  OnInit  {
     const phoneNumbers = [];
     this.userService.list().subscribe(users => {
       for (const user of users) {
-        if (this.user.phone !== user.phone) {
-        // @ts-ignore
-        phoneNumbers.push(user.phone);
+        if (this.data[1] === 2) {
+          if (this.data[0].phone !== user.phone) {
+            phoneNumbers.push(user.phone);
+          }
+        } else {
+          phoneNumbers.push(user.phone);
         }
       }
     });
+    console.log(phoneNumbers);
     return new Observable(observer => {
       setTimeout(() => {
         const result = (phoneNumbers.indexOf(control.value) !== -1) ? { alreadyInUse: true } : null;
