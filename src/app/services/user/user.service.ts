@@ -10,7 +10,7 @@ import {environment} from '../../../environments/environment';
 export class UserService {
   private baseurl = environment.ipAddress + environment.port + '/user/';
   private headers: HttpHeaders;
-   sender : User;
+   sender: User;
 
   constructor(private http: HttpClient) {
     // @ts-ignore

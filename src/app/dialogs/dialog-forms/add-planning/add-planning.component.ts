@@ -257,7 +257,7 @@ saveModifiedPlanning() {
       this.user = user;
       this.user.userConfigs[0].shownPlannings.push(this.planning.planningId);
       // @ts-ignore
-      this.userConfigService.update(this.user.userConfigs[0].configId, this.user.userConfigs[0].configId).subscribe( () => {
+      this.userConfigService.update(this.user.userConfigs[0].configId, this.user.userConfigs[0], 1).subscribe( () => {
       }, error => console.log(error));
     }, error => console.log(error));
 

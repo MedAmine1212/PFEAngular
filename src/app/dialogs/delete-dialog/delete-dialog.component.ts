@@ -22,7 +22,11 @@ export class DeleteDialogComponent implements OnInit {
   deleteMessage() {
     let message: string;
     message = 'Are you sure you want to ';
-    if (this.data[1] === 'employee') {
+    if (this.data[1] === 'dataBase') {
+      message = message + 'overwrite your current data base\'s data';
+    } else if (this.data[1] === 'rollback') {
+      message = message + 'perform a rollback ';
+    } else if (this.data[1] === 'employee') {
       message = message + 'remove ' + this.data[0].firstName + ' ' + this.data[0].name;
     } else if (this.data[1] === 'changePost') {
       message = message + 'override this user\'s post';
@@ -41,6 +45,11 @@ export class DeleteDialogComponent implements OnInit {
       }
     }
     message = message + ' ?';
+    if (this.data[1] === 'dataBase') {
+      message = message + ' this process can harm your database !';
+    } else if (this.data[1] === 'rollback') {
+      message = message + ' this action cannot be undone !';
+    }
     return message;
   }
 }

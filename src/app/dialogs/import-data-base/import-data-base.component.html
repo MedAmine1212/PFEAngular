@@ -1,0 +1,28 @@
+<div *ngIf="uploadDone">
+<div style="text-align: center" class="card-body" *ngIf="backup">
+  <h3>Creating a rollback point..</h3>
+</div>
+  <div style="text-align: center" class="card-body" *ngIf="importing">
+    <h3>Finising up..</h3>
+  </div>
+</div>
+<div *ngIf="!uploadDone" class="main-card mb-3 card">
+  <div class="card-header">
+    <h1 >Import file</h1>
+  </div>
+<div  class="card-body">
+  <div class="line">
+  <label>Sql file*</label>
+    <div style="cursor:pointer;border: 1px solid darkgrey; border-radius: 20px" (change)="onSelectFile(file.files)">
+     <input style="cursor:pointer;opacity: 0" matTooltip="Select sql file" title="" #file  accept=".sql" type="file" class="form-control">
+      <span style="cursor:pointer;margin-right:15px;margin-top: -28px;float: right" *ngIf="noFileSelected"> No file selected</span>
+      <span style="cursor:pointer;margin-right:15px;margin-top: -28px;float: right" *ngIf="!noFileSelected">File selected: {{selectedFile.name}}</span>
+  </div>
+</div>
+</div>
+</div>
+<div *ngIf="!uploadDone" style="width: 100%">
+  <div class="buttons">
+    <button class="btn btn-primary"  [disabled]="noFileSelected" mat-raised-button  type="submit" (click)="done()">Submit</button>
+    <button type="button" (click)="closeThis()" class="btn btn-light" style="margin-left: 20px;">Cancel</button>
+  </div></div>

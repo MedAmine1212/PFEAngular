@@ -103,6 +103,7 @@ reloadData() {
 
   revokePost(emp: User) {
     emp.post = null;
+    console.log(emp);
     this.userService.modify(emp.userId, emp, 2).subscribe();
   }
 

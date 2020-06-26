@@ -59,11 +59,11 @@
             </a>
             <mat-menu (close)="openedDataBaseMenu = false" [class]="getTheme() ? 'bg-dark': ''" class="dbMenu" xPosition="after" #menuDB="matMenu">
               <div class="menuContent" style="width: 100% !important;">
-                <button [class]="router.url === '/RemoteMonitoring/(mainCon:Profile)' ? 'current' : ''" [ngClass]="getTheme() ? 'dropdown-item btnDark bg-dark': 'dropdown-item'" [ngStyle]="{'color': getTheme()? 'white' :''}" (click)="openImportDialog()">Import</button>
-<!--                <input style="opacity: 0" type="file" accept=".sql" #file (change)="onSelectFile(file.files)" >-->
+                <button (click)="importDB()" matTooltip="Import an external database" [ngClass]="getTheme() ? 'dropdown-item btnDark bg-dark': 'dropdown-item'" [ngStyle]="{'color': getTheme()? 'white' :''}">Import</button>
+                <button style="margin-top: 15px" (click)="rollBack()" matTooltip="Rollback to previous version" [ngClass]="getTheme() ? 'dropdown-item btnDark bg-dark': 'dropdown-item'" [ngStyle]="{'color': getTheme()? 'white' :''}">Rollback</button>
                 <div tabindex="-1" class="dropdown-divider"></div>
                 <button type="button" tabindex="0" (click)="exportDB()" [class]="getTheme() ? 'btnDark': ''" [ngClass]="getTheme() ? 'dropdown-item bg-dark': 'dropdown-item'" [ngStyle]="{'color': getTheme()? 'white' :''}">
-                  Export
+                  <span matTooltip="Back-up your database">Export</span>
                   <span style="float:right;margin-top: 5px;font-size:16px;color: #007bff" matTooltip="Daily back-up enabled" class="fa fa-info-circle"></span>
                 </button>
               </div>
@@ -113,8 +113,8 @@
                   <table style="width: 100%;margin-left: 10px" class="mb-0 table table-borderless" [ngClass]="getTheme()? 'table-dark': ''">
                     <tbody>
                     <tr style="padding: 3px" *ngFor="let ntf of notifs">
-                      <td (mouseleave)="viewOne(ntf)" style="border-radius: 10px">
-                        <div class="notifContainer"  [ngClass]="!ntf.isHovered && getTheme() ? 'notifContainerNotHovered notifContainerNotHoveredDark' : !ntf.isHovered && !getTheme() ? 'notifContainerNotHovered notifContainerNotHoveredLight' :
+                      <td style="border-radius: 10px">
+                        <div (mouseleave)="viewOne(ntf)" class="notifContainer"  [ngClass]="!ntf.isHovered && getTheme() ? 'notifContainerNotHovered notifContainerNotHoveredDark' : !ntf.isHovered && !getTheme() ? 'notifContainerNotHovered notifContainerNotHoveredLight' :
                      !getTheme() ?  'notifContainerDark' : 'notifContainerLight'" [ngStyle]="{'background-color': !ntf.isHovered && getTheme()? '#454d55' : !ntf.isHovered && !getTheme()? '#dee2e6' : '' }">
                           <h2 style="font-size: 20px !important;">
                             {{ntf.notifTitle}}
@@ -130,7 +130,7 @@
                           <div style="padding-left: 28px;margin-bottom: 30px">
                             <span (click)="deleteNotif($event, ntf)" matTooltip="Delete" [ngStyle]="{'color': getTheme() ? 'white' :'grey'}" class="fa fa-trash-alt deleteNotif"></span>
                           </div>
-                          <div *ngIf="!ntf.isHovered" matTooltip="New">
+                          <div *ngIf="!ntf.isHovered" matTooltip="Unseen">
                             <span style="font-size: 20px;margin-left: 10px" class="fa fa-exclamation-circle"></span>
                           </div>
                         </div>
