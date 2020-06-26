@@ -351,7 +351,6 @@ export class AddUserComponent implements  OnInit  {
         }
       }
     });
-    console.log(emails);
     return new Observable(observer => {
       setTimeout(() => {
         const result = (emails.indexOf(control.value) !== -1) ? { alreadyInUse: true } : null;
@@ -396,7 +395,6 @@ export class AddUserComponent implements  OnInit  {
         }
       }
     });
-    console.log(phoneNumbers);
     return new Observable(observer => {
       setTimeout(() => {
         const result = (phoneNumbers.indexOf(control.value) !== -1) ? { alreadyInUse: true } : null;
