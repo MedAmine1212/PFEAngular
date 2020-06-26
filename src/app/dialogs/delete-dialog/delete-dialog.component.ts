@@ -23,7 +23,7 @@ export class DeleteDialogComponent implements OnInit {
     let message: string;
     message = 'Are you sure you want to ';
     if (this.data[1] === 'dataBase') {
-      message = message + 'overwrite your current data base\'s data';
+      message = message + 'overwrite your current data base';
     } else if (this.data[1] === 'rollback') {
       message = message + 'perform a rollback ';
     } else if (this.data[1] === 'employee') {
