@@ -59,7 +59,8 @@
             </a>
             <mat-menu (close)="openedDataBaseMenu = false" [class]="getTheme() ? 'bg-dark': ''" class="dbMenu" xPosition="after" #menuDB="matMenu">
               <div class="menuContent" style="width: 100% !important;">
-                <button [class]="router.url === '/RemoteMonitoring/(mainCon:Profile)' ? 'current' : ''" [ngClass]="getTheme() ? 'dropdown-item btnDark bg-dark': 'dropdown-item'" [ngStyle]="{'color': getTheme()? 'white' :''}">Import</button>
+                <button [class]="router.url === '/RemoteMonitoring/(mainCon:Profile)' ? 'current' : ''" [ngClass]="getTheme() ? 'dropdown-item btnDark bg-dark': 'dropdown-item'" [ngStyle]="{'color': getTheme()? 'white' :''}" (click)="openImportDialog()">Import</button>
+<!--                <input style="opacity: 0" type="file" accept=".sql" #file (change)="onSelectFile(file.files)" >-->
                 <div tabindex="-1" class="dropdown-divider"></div>
                 <button type="button" tabindex="0" (click)="exportDB()" [class]="getTheme() ? 'btnDark': ''" [ngClass]="getTheme() ? 'dropdown-item bg-dark': 'dropdown-item'" [ngStyle]="{'color': getTheme()? 'white' :''}">
                   Export

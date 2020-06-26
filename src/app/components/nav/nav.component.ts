@@ -175,4 +175,9 @@ export class NavComponent implements OnInit {
     }, 500);
   }, error => console.log(error));
   }
+
+
+  openImportDialog() {
+
+  }
 }
