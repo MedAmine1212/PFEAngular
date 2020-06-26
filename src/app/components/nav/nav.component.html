@@ -113,8 +113,8 @@
                   <table style="width: 100%;margin-left: 10px" class="mb-0 table table-borderless" [ngClass]="getTheme()? 'table-dark': ''">
                     <tbody>
                     <tr style="padding: 3px" *ngFor="let ntf of notifs">
-                      <td (mouseleave)="viewOne(ntf)" style="border-radius: 10px">
-                        <div class="notifContainer"  [ngClass]="!ntf.isHovered && getTheme() ? 'notifContainerNotHovered notifContainerNotHoveredDark' : !ntf.isHovered && !getTheme() ? 'notifContainerNotHovered notifContainerNotHoveredLight' :
+                      <td style="border-radius: 10px">
+                        <div (mouseleave)="viewOne(ntf)" class="notifContainer"  [ngClass]="!ntf.isHovered && getTheme() ? 'notifContainerNotHovered notifContainerNotHoveredDark' : !ntf.isHovered && !getTheme() ? 'notifContainerNotHovered notifContainerNotHoveredLight' :
                      !getTheme() ?  'notifContainerDark' : 'notifContainerLight'" [ngStyle]="{'background-color': !ntf.isHovered && getTheme()? '#454d55' : !ntf.isHovered && !getTheme()? '#dee2e6' : '' }">
                           <h2 style="font-size: 20px !important;">
                             {{ntf.notifTitle}}
@@ -130,7 +130,7 @@
                           <div style="padding-left: 28px;margin-bottom: 30px">
                             <span (click)="deleteNotif($event, ntf)" matTooltip="Delete" [ngStyle]="{'color': getTheme() ? 'white' :'grey'}" class="fa fa-trash-alt deleteNotif"></span>
                           </div>
-                          <div *ngIf="!ntf.isHovered" matTooltip="New">
+                          <div *ngIf="!ntf.isHovered" matTooltip="Unseen">
                             <span style="font-size: 20px;margin-left: 10px" class="fa fa-exclamation-circle"></span>
                           </div>
                         </div>

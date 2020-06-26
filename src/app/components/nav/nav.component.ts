@@ -195,7 +195,8 @@ export class NavComponent implements OnInit {
           data: [null, 'dataBase']
         });
         dialogRef2.afterClosed().subscribe(result2 => {
-          if (result2[0] && result2[1] != null) {
+          if (result2[0]) {
+            if (result2[1] != null) {
             this.selectedFile = result2[1];
             console.log(this.selectedFile);
             setTimeout(() => {
@@ -213,15 +214,17 @@ export class NavComponent implements OnInit {
               });
               this.snackBar._openedSnackBarRef.afterDismissed().subscribe(() => {
                 if (dismissedWithAction) {
-                config.duration = 3000;
-                setTimeout(() => {
-                  this.snackBar.open('Database import canceled', null, config);
-                }, 600);
+                  config.duration = 3000;
+                  setTimeout(() => {
+                    this.snackBar.open('Database import canceled', null, config);
+                  }, 600);
                 } else {
-                this.dataBaseExportImportService.importDB(this.selectedFile).subscribe(() => {}, error => console.log(error));
+                  this.dataBaseExportImportService.importDB(this.selectedFile).subscribe(() => {
+                  }, error => console.log(error));
                 }
               });
             }, 500);
+          }
           }
        });
       }
