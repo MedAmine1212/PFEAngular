@@ -207,6 +207,7 @@ saveModifiedPlanning() {
  // newSch false.
   updateExistingSchedule() {
     this.schedule.plannings.push(this.planning);
+    console.log(this.schedule);
     this.scheduleService.modify(this.schedule, this.schedule.scheduleId).subscribe(() => {
       this.dialogRef.close(true);
     }, error1 => console.log(error1));
