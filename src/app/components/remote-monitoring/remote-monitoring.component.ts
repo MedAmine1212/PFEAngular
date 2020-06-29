@@ -108,11 +108,15 @@ export class RemoteMonitoringComponent implements OnInit {
       this.showSite = true;
       this.reloadJs();
       }, 1500);
-    }, error => console.log(error));
-    if (this.jwt.isTokenExpired(localStorage.getItem('token'))) {
+      if (this.jwt.isTokenExpired(localStorage.getItem('token'))) {
+        this.authService.loggedOut();
+        window.location.reload();
+      }
+    }, error => {
+      console.log(error);
       this.authService.loggedOut();
       window.location.reload();
-    }
+    });
   }
   reloadJs() {
     this.loadAPI = new Promise(resolve => {
@@ -137,6 +141,8 @@ export class RemoteMonitoringComponent implements OnInit {
   }
 
   reloadDep($event: any) {
+    this.departmentComponent.clickedDep.depId = null;
+    this.departmentComponent.unselectDep();
     this.departmentComponent.reloadData();
   }
 
@@ -161,7 +167,7 @@ public reloadFromWebSocket(message) {
       } else if (webSocketMessage === 'timetable') {
         if (this.router.url === '/RemoteMonitoring/(mainCon:Departments)') {
           this.openSnackBar('Department updated', null);
-          this.departmentComponent.reloadData();
+          // this.departmentComponent.reloadData();
         } else {
           this.openSnackBar('Time table updated', null);
           this.timetablesComponent.reloadFromSocket();
