@@ -41,6 +41,7 @@ export class NavComponent implements OnInit {
   });
   openedDataBaseMenu: boolean;
   selectedFile: File;
+  private sqlData: FormData;
   constructor(
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
@@ -219,7 +220,9 @@ export class NavComponent implements OnInit {
                     this.snackBar.open('Database import canceled', null, config);
                   }, 600);
                 } else {
-                  this.dataBaseExportImportService.importDB(this.selectedFile).subscribe(() => {
+                  this.sqlData = new FormData();
+                  this.sqlData.append('sql', this.selectedFile, this.selectedFile.name);
+                  this.dataBaseExportImportService.importDB(this.sqlData).subscribe(() => {
                   }, error => console.log(error));
                 }
               });

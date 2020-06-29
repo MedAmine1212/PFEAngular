@@ -12,7 +12,7 @@ export class DataBaseExportImportService {
   exportDB() {
     return this.http.get(this.baseUrl + 'dumpDb/' + 1);
   }
-  importDB(file: File) {
+  importDB(file) {
     return this.http.post(this.baseUrl + 'restore', file);
   }
   rollBack() {
