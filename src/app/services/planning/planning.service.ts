@@ -35,7 +35,7 @@ export class PlanningService {
 
   modify( planning: Planning , id, sender): Observable<any> {
     return this.http.put( this.baseUrl + 'update/' + id + '/' + sender   , planning);
-  } 
+  }
 
   findById(id): Observable<any> {
     return this.http.get(this.baseUrl + 'findById/'  + id);
