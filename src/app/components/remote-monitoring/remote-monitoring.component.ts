@@ -159,8 +159,13 @@ public reloadFromWebSocket(message) {
         this.openSnackBar('Employees updated', null);
         this.employeesComponent.reloadFromSocket();
       } else if (webSocketMessage === 'timetable') {
-        this.openSnackBar('Time table updated', null);
-        this.timetablesComponent.reloadFromSocket();
+        if (this.router.url === '/RemoteMonitoring/(mainCon:Departments)') {
+          this.openSnackBar('Department updated', null);
+          this.departmentComponent.reloadData();
+        } else {
+          this.openSnackBar('Time table updated', null);
+          this.timetablesComponent.reloadFromSocket();
+        }
       } else if (webSocketMessage === 'department') {
         this.openSnackBar('Departments updated', null);
         this.departmentComponent.reloadData();
@@ -197,5 +202,13 @@ public reloadFromWebSocket(message) {
       this.snackBar.open(message, action, config);
 
     }, 500);
+    }
+
+    refreshConnectedUser(event) {
+    if (event == null) {
+      this.navComponent.reloadImage();
+    } else {
+      this.navComponent.connectedUser = event;
+    }
     }
 }

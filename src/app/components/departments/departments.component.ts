@@ -187,6 +187,11 @@ export class DepartmentsComponent implements  OnInit {
     this.departmentService.list().subscribe(r => {
     this.data = r;
     this.dataSource.data = this.database.initialData(this.data);
+    if (this.clickedDep != null) {
+      if (this.clickedDep.depId !== -1) {
+      this.sendData(this.clickedDep);
+      }
+    }
     }, error => this.database.loading = false);
   }
   addDepartment() {

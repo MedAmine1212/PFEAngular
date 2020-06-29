@@ -26,10 +26,14 @@ export class DeleteDialogComponent implements OnInit {
       message = message + 'overwrite your current data base';
     } else if (this.data[1] === 'rollback') {
       message = message + 'perform a rollback ';
+    } else if (this.data[1] === 'removeDePl') {
+      message = message + ' remove this department\'s planning';
     } else if (this.data[1] === 'employee') {
       message = message + 'remove ' + this.data[0].firstName + ' ' + this.data[0].name;
     } else if (this.data[1] === 'changePost') {
       message = message + 'override this user\'s post';
+    } else if (this.data[1] === 'changeDepPl') {
+      message = message + 'override this department\'s planning';
     } else {
       message = message + 'delete ';
       if (this.data[1] === 'department') {

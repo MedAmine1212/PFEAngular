@@ -53,10 +53,6 @@ export class AddUsersToPostComponent implements OnInit {
       this.getImages();
     }, error => console.log(error));
   }
-  onNoClick(event) {
-    this.bottomSheetRef.dismiss();
-    event.preventDefault();
-  }
   getImages() {
     for (const emp of this.users) {
       this.imageService.load(emp.image).subscribe(

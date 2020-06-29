@@ -28,3 +28,22 @@
   margin-top: 20px;
   padding: 4px 8px 10px;
 }
+.saveBut{
+  cursor: pointer;
+  margin-right: 20px;
+}
+.saveBut:hover{
+  color:rgb(52,248,61);
+}
+
+.cancelBut:hover{
+  cursor: pointer;
+  color:red;
+}
+
+.buttonsContainer{
+  font-size: 25px;
+  padding-left: 100px;
+  margin-top: -12px;
+  float:right;
+}

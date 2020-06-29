@@ -1,0 +1,35 @@
+<div [ngClass]=" getTheme()? 'bg-dark' :''" style="min-height:250px;margin: -20px">
+  <div *ngIf="loading" style="text-align:center;padding-top: 15%;width:100%">
+    <div style="width: 60px;height:60px;font-size: 20px" class="spinner-border text-info" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <div *ngIf="!loading">
+    <div  class="search-wrapper">
+      <div style="position: absolute;background-color: transparent;margin-top: 25px;margin-left: 20px;" [ngClass]="{'search-wrapper active': showHideInput}">
+        <div class="input-holder" [ngClass]=" getTheme() && showHideInput? 'bg-premium-dark' :''">
+          <input [ngStyle]="{'color': getTheme()? 'white' :''}" type="text" [(ngModel)]="searchText" style="width: 100%" class="search-input" placeholder="Search...">
+          <button  (click)="showHideInput = true;" class="search-icon"><span></span></button>
+        </div>
+        <button (click)="showHideInput = false;" class="close"></button>
+      </div>
+    </div><br><br>
+    <mat-nav-list style="margin-top: 30px">
+      <a  (click)="setPlanning(pl)" style="margin-bottom: 10px;" *ngFor="let pl of plannings | filter: searchText" mat-list-item>
+    <span mat-line>
+        <span [ngStyle]="{'color': getTheme()? 'white' :''}" style="padding-left: 55px">{{pl.planningName}}<span class="planDays" matTooltip="Planned days">{{planningDaysDesc(pl)}}</span></span>
+    </span>
+        <span style="color:grey;" mat-line>
+          Schedule: {{returnSchDesc(pl.schedule)}}
+        </span>
+        <span style="float: right">
+              <button type="button" id="PopoverCustomT-5" style="border-radius: 12px;" class="btn btn-success btn-sm" matTooltip="select planning"><span class="fa fa-check"></span></button>
+            </span>
+      </a>
+
+    </mat-nav-list>
+  </div>
+  <br>
+
+</div>
+

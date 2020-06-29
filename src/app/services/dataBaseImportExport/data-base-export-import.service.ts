@@ -15,7 +15,7 @@ export class DataBaseExportImportService {
   importDB(file) {
     return this.http.post(this.baseUrl + 'restore', file);
   }
-  rollBack() {
+  rollBackDB() {
     return this.http.get(this.baseUrl + 'rollback');
   }
 }

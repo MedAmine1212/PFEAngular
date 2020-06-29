@@ -68,7 +68,6 @@
         </td>
       </tr>
     </table>
-
     <div [ngStyle]="{'color': getTheme()? 'white' :'grey'}" style="padding-top: 5%;text-align: center;font-weight:bolder;margin:0 auto;font-size:25px;width: 100%" *ngIf="!thisIsEmp && clickedDep.depId === -1">
       <span style="font-size:30px;color:#3f6ad8">Click a department to show details here</span><br><br><br><br>No Department Selected
     </div>
@@ -87,9 +86,7 @@
     <div style="width: 100%;text-align:center;margin:0;padding-top: 10%;font-weight: bolder;font-size: 20px" *ngIf="!loading && ((thisIsEmp && users.length === 0) || (!thisIsEmp && clickedDep.depId!==-1 && (users==null || users.length === 0)))" [ngStyle]="{'margin-left' : router.url === '/RemoteMonitoring/(mainCon:Absences)'  || router.url === '/RemoteMonitoring'? '-30px' : ''
     , 'margin-top': router.url === '/RemoteMonitoring/(mainCon:Absences)'  || router.url === '/RemoteMonitoring'? '40%' : '', 'color': getTheme()? 'white' :'black'}"> No Employees to show</div>
     <div *ngIf="users!=null && !loading">
-<!--      <div class="buttons">-->
         <button *ngIf="router.url === '/RemoteMonitoring/(mainCon:Employees)' && !loading && users.length > 0" style="float: right ; margin-right: 15px; margin-bottom: 10px" mat-raised-button class="btn btn-warning" (click)="openPDF()" matTooltip="print as PDF"><span class="fas fa-print"></span></button>
-<!--      </div>-->
       <div [ngStyle]="{'margin-left': router.url === '/RemoteMonitoring/(mainCon:Absences)'  || router.url === '/RemoteMonitoring'? '-25px' :''}" class="main-card mb-3 card" [ngClass]="getTheme() ? 'bg-premium-dark' :''" style="overflow: auto;max-height: 480px;margin-top: 40px;border-radius:0" *ngIf="(users.length !=0 && thisIsEmp) || (users.length !=0 && clickedDep.depId != -1)">
           <table [ngClass]="getTheme() ? 'bg-premium-dark text-light' :'text-dark'"  [ngStyle]="{'color': getTheme()? 'white' :''}" class="align-middle text-light mb-0 table table-borderless table-striped table-hover">
           <thead>
@@ -132,18 +129,72 @@
             </td>
             <span *ngIf="router.url === '/RemoteMonitoring/(mainCon:Employees)' || !thisIsEmp">
 
-                <!--              <td class="text-center">-->
-              <!--                <div class="badge badge-warning">Pending</div>-->
-              <!--           </td>-->
               <td style="float: right" class="text-center">
                 <button type="button" id="PopoverCustomT-1" (click)="openDetailsDialog(emp)" style="border-radius: 12px" class="btn btn-primary btn-sm" matTooltip="Employee details"><span class="fa fa-info-circle"></span></button>
                 <button type="button" id="PopoverCustomT-2" (click)="openDeleteEmpDialog(emp)" style="border-radius: 12px" class="btn btn-danger btn-sm" matTooltip="Delete employee"><span class="fa fa-trash-alt"></span></button>
               </td>
-              <!--                <td>{{emp.birthDay}}</td>-->
               </span>
           </tr>
           </tbody>
         </table>
+      </div>
+      <div *ngIf="!thisIsEmp">
+      <div class="card-header" *ngIf="clickedDep.depId != -1 && !loading" style="margin-top: 40px;width: 100%">
+        <h1 [ngStyle]="{'color': getTheme()? 'white' :''}" style="margin-right: 30px" class="empTitle">Planning</h1>
+      </div>
+        <div style="float: right;padding-bottom: 50px" *ngIf="clickedDep.planning != null">
+            <button type="button" style="border-radius: 12px;" (click)="openPlanningSheet()" class="btn btn-info btn-sm" matTooltip="Change planning"><span class="fa fa-sync-alt"></span></button>
+            <button type="button" style="border-radius: 12px;" (click)="removePlanning()" class="btn btn-danger btn-sm" matTooltip="Remove planning"><span class="fa fa-minus-circle"></span></button>
+        </div>
+      <div  class="main-card mb-3 card" [ngClass]="getTheme() ? 'bg-premium-dark' :''" style="overflow: auto;min-height: 100px;border-radius:0" *ngIf="clickedDep.depId != -1 && !loading">
+
+        <div style="width:100%;text-align: center" *ngIf="clickedDep.planning == null">
+          <div [ngStyle]="{'color': getTheme()? 'white' :''}" style="font-size: 20px">
+            No planning is set for this department<br><br>
+            <button class="btn btn-info" (click)="openPlanningSheet()">Set planning</button>
+          </div>
+        </div>
+        <div *ngIf="clickedDep.planning != null">
+          <div class="bodyContainer">
+            <div class="main-card mb-3 card descCard"  [ngClass]="getTheme() ? 'bg-premium-dark' :''" [ngStyle]="{'color': getTheme()? 'white' :'black'}">
+              <div [ngStyle]="{'color': getTheme()? 'white' :''}" *ngIf="clickedPlanning != null" class="card-header" style="width: 100%">
+                <div style="width: 60%">
+                  {{clickedPlanning.planningName}}
+                </div>
+              </div>
+              <app-planning-details></app-planning-details>
+              <div class="card-header">
+                <h2 [ngStyle]="{'color': getTheme()? 'white' :''}" style="float: left">Schedule</h2>
+              </div>
+              <div>
+                <table style="width: 100%;font-size:14px;margin-bottom: 20px;margin-top: 5px" [ngStyle]="{'color': getTheme()? 'white' :'black'}" class="table-hover mat-calendar-table-header table-striped tableHeader">
+                  <thead>
+                  <tr>
+                    <th class="text-center tableTh">Id°</th>
+                    <th  class="text-center tableTh">Start</th>
+                    <th class="text-center tableTh">End</th>
+                    <th class="text-center tableTh">Pause</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr [ngClass]="getTheme() ? 'lightText' :''">
+                    <td class="text-center tableTd">{{clickedPlanning.schedule.scheduleId}}</td>
+                    <td  class="text-center tableTd" >{{getTime(clickedPlanning.schedule.startHour)}}</td>
+                    <td class="text-center tableTd">{{getTime(clickedPlanning.schedule.endHour)}}</td>
+                    <td class="text-center tableTd" style="width:30%;color: grey" *ngIf="!clickedPlanning.schedule.pauseTime">
+                      No pause time
+                    </td>
+                    <td class="text-center tableTd" style="width:30%;" *ngIf="clickedPlanning.schedule.pauseTime">
+                      From: {{getTime(clickedPlanning.schedule.pauseStart)}} To: {{getTime(clickedPlanning.schedule.pauseEnd)}}
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       </div>
     </div>
   </div>

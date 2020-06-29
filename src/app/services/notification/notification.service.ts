@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import {environment} from '../../../environments/environment';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {NotificationMessage} from '../../models/NotificationMessage';
 import {UserService} from '../user/user.service';
+import {NotificationMessage} from '../../models/NotificationMessage';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,7 @@ export class NotificationService {
   modify( notif: NotificationMessage , id): Observable<any> {
     return this.http.put( this.baseUrl + 'update/' + id   , notif);
   }
-  list(){
+  list() {
     return this.http.get( this.baseUrl + 'list');
   }
 

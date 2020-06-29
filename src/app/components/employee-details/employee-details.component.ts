@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
 import {User} from '../../models/User';
 import {Department} from '../../models/Department';
 import {DepartmentService} from '../../services/department/department.service';
@@ -22,6 +22,7 @@ export class EmployeeDetailsComponent implements OnInit {
   private departmentService: DepartmentService, private  userService: UserService,
   private addressService: AddressService) {}
   static refreshEmp: boolean;
+  @Output() outPutData = new EventEmitter<User>();
   @Input() emp: User;
   showUpdateForm: boolean;
   showAddressUpdateForm: boolean;
@@ -79,7 +80,9 @@ export class EmployeeDetailsComponent implements OnInit {
           break;
         }
     }
-    this.userService.modify(this.emp.userId, this.newEmp, 3).subscribe( next => {
+    this.userService.modify(this.emp.userId, this.newEmp, 3).subscribe( user => {
+      // @ts-ignore
+      this.outPutData.emit(user);
       this.showUpdateForm = false;
       EmployeeDetailsComponent.refreshEmp = true;
     }, error1 => {console.log(error1), this.undoUserChanges(); });

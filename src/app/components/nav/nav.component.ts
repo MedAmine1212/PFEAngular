@@ -95,7 +95,9 @@ export class NavComponent implements OnInit {
     this.playNotifSound = false;
     this.reloadNotifs();
     this.isLoggedIn = this.auth.loggedIn() ;
-
+    this.reloadImage();
+    }
+  reloadImage() {
     if (this.connectedUser != null) {
       if (this.connectedUser.image !== '') {
         this.imageService.load(this.connectedUser.image).subscribe(
@@ -104,15 +106,15 @@ export class NavComponent implements OnInit {
               this.retrieveResonse = img;
               this.base64Data = this.retrieveResonse.picByte;
               this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
-            } else {this.retrievedImage = null ; }
+            } else {
+              this.retrievedImage = null;
+            }
           }
         );
       }
+
     }
-
-
   }
-
   logout() {
   this.auth.loggedOut();
   this.router.navigateByUrl('');
@@ -242,7 +244,7 @@ export class NavComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.dataBaseExportImportService.rollBack().subscribe(() => {
+        this.dataBaseExportImportService.rollBackDB().subscribe(() => {
           setTimeout(() => {
             const config = new MatSnackBarConfig();
             if (this.themeChanger.getTheme()) {
@@ -255,7 +257,7 @@ export class NavComponent implements OnInit {
             this.snackBar._openedSnackBarRef.afterDismissed().subscribe(() => {
               setTimeout (() => {
                 window.location.reload();
-                }, 2000);
+                }, 1000);
             });
           }, 500);
         }, error => console.log(error));
