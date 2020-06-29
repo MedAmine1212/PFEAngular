@@ -195,19 +195,19 @@ export class AddUserComponent implements  OnInit  {
     this.postService.list().subscribe(posts => {
       for (const post of posts) {
         this.posts.push(post);
-        this.departmentService.list().subscribe(r => {
-          this.departments = r;
-          if (this.user.department !== null && this.data[1] === 1) {
-            setTimeout(() => {
-              this.stepper.selectedIndex = 1;
-            }, 900);
-          } else if (this.data[1] === 4) {
-            this.showOtherAddress = true;
-          }
-          this.loading = false;
-        });
       }
-    });
+      this.departmentService.list().subscribe(r => {
+        this.departments = r;
+        if (this.user.department !== null && this.data[1] === 1) {
+          setTimeout(() => {
+            this.stepper.selectedIndex = 1;
+          }, 900);
+        } else if (this.data[1] === 4) {
+          this.showOtherAddress = true;
+        }
+        this.loading = false;
+      }, error => this.loading = false);
+    }, error => this.loading = false);
   }
   createFirstFormGroup() {
     this.firstFormGroup = this.formBuilder.group({
@@ -284,8 +284,10 @@ export class AddUserComponent implements  OnInit  {
 
     // set shown plannings
     this.planningService.list().subscribe( r => {
+      if (r.length > 0) {
       for (const pl of r) {
         this.userConfigs.shownPlannings.push(pl.planningId);
+      }
       }
     }, error => console.log(error));
 
@@ -303,7 +305,7 @@ export class AddUserComponent implements  OnInit  {
           }, 400);
         }
       }, 200);
-    }, error1 => console.log('erreur user add ' + error1));
+    }, error1 => console.log(error1));
   }
 
   upload(id, message) {

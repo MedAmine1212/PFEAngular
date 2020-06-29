@@ -1,3 +1,4 @@
+ <div [ngStyle]="{'pointer-events': getDataBaseUpdating() ? 'none': ''}">
   <div [ngStyle]="{'background-color': getTheme() ? 'black' :''}" style="height:100vh;width: 100%;text-align: center" *ngIf="loading">
   <div>
   <img style="margin-top: 20vh" *ngIf="!getTheme()" src="../../../assets/loading/loadinglight.gif">
@@ -53,3 +54,4 @@
 
 </div>
 
+ </div>

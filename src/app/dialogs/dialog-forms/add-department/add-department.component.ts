@@ -5,6 +5,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {User} from '../../../models/User';
 import {Observable} from 'rxjs';
+import {Router} from '@angular/router';
 @Component({
   selector: 'app-add-department',
   templateUrl: './add-department.component.html',
@@ -21,7 +22,9 @@ export class AddDepartmentComponent implements OnInit {
   public sender: number;
   newName: string;
   disable: boolean;
-  constructor(public dialogRef: MatDialogRef<AddDepartmentComponent>,
+  constructor(
+              public router: Router,
+              public dialogRef: MatDialogRef<AddDepartmentComponent>,
               @Inject(MAT_DIALOG_DATA) public data: Array<any>,
               private formBuilder: FormBuilder, private departmentService: DepartmentService,
               ) { }
@@ -71,7 +74,13 @@ export class AddDepartmentComponent implements OnInit {
       this.department.supDep = this.dep;
     }
     this.departmentService.add(this.department).subscribe(
-      data => this.dialogRef.close(true), error1 => console.log(error1));
+      data => {
+        if (this.router.url !== '/') {
+        this.dialogRef.close(true);
+        } else {
+          this.dialogRef.close([true, data]);
+        }
+      }, error1 => console.log(error1));
   }
 
   updateDep() {

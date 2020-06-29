@@ -210,7 +210,7 @@ export class NavComponent implements OnInit {
                 config.panelClass = ['snackBarDark'];
               }
               let dismissedWithAction = false;
-              config.duration = 7000;
+              config.duration = 5000;
               this.snackBar.open('Rebuilding database...', 'Undo ↩', config);
               this.snackBar._openedSnackBarRef.onAction().subscribe(() => {
                 dismissedWithAction = true;
@@ -222,9 +222,11 @@ export class NavComponent implements OnInit {
                     this.snackBar.open('Database import canceled', null, config);
                   }, 600);
                 } else {
+                  this.dataBaseExportImportService.setDataBaseUpdating(true);
                   this.sqlData = new FormData();
                   this.sqlData.append('sql', this.selectedFile, this.selectedFile.name);
                   this.dataBaseExportImportService.importDB(this.sqlData).subscribe(() => {
+                    window.location.reload();
                   }, error => console.log(error));
                 }
               });
@@ -245,6 +247,7 @@ export class NavComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.dataBaseExportImportService.rollBackDB().subscribe(() => {
+          this.dataBaseExportImportService.setDataBaseUpdating(true);
           setTimeout(() => {
             const config = new MatSnackBarConfig();
             if (this.themeChanger.getTheme()) {
@@ -255,9 +258,7 @@ export class NavComponent implements OnInit {
             config.duration = 3000;
             this.snackBar.open('Restoring previous version...', null, config);
             this.snackBar._openedSnackBarRef.afterDismissed().subscribe(() => {
-              setTimeout (() => {
                 window.location.reload();
-                }, 1000);
             });
           }, 500);
         }, error => console.log(error));

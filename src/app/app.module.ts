@@ -57,6 +57,7 @@ import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import { AddPostComponent } from './dialogs/dialog-forms/add-post/add-post.component';
 import { ImportDataBaseComponent } from './dialogs/import-data-base/import-data-base.component';
 import { SetDepartmentPlanningComponent } from './sheets/set-department-planning/set-department-planning.component';
+import {MatCardModule} from "@angular/material/card";
 
 
 @NgModule({
@@ -122,6 +123,7 @@ import { SetDepartmentPlanningComponent } from './sheets/set-department-planning
     MatTableModule,
     MatBadgeModule,
     MatListModule,
+    MatCardModule,
 
 
   ],

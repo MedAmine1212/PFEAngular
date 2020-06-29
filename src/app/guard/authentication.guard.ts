@@ -25,7 +25,7 @@ export class AuthenticationGuard implements CanActivate, CanActivateChild, CanLo
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
 
     // @ts-ignore
-    if (next.component.name === 'LoginComponent'){
+    if (next.component.name === 'LoginComponent') {
       if (this.auth.loggedIn()) {
         this.router.navigate(['/RemoteMonitoring']);
         return false;

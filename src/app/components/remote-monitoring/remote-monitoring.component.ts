@@ -14,6 +14,7 @@ import {TimetablesComponent} from '../timetables/timetables.component';
 import {MatSnackBar, MatSnackBarConfig} from '@angular/material/snack-bar';
 import {NavComponent} from '../nav/nav.component';
 import {PostsComponent} from '../posts/posts.component';
+import {DataBaseExportImportService} from '../../services/dataBaseImportExport/data-base-export-import.service';
 @Component({
   selector: 'app-remmote-monitoring',
   animations: [
@@ -66,6 +67,7 @@ export class RemoteMonitoringComponent implements OnInit {
   connectedUser: User;
   loading: boolean;
   constructor(
+    private dataBaseExportImportService: DataBaseExportImportService,
     private snackBar: MatSnackBar,
     private userService: UserService,
     private webSocketAPI: WebSocketAPIService,
@@ -217,4 +219,8 @@ public reloadFromWebSocket(message) {
       this.navComponent.connectedUser = event;
     }
     }
+
+  getDataBaseUpdating() {
+    return this.dataBaseExportImportService.getDataBaseUpdating();
+  }
 }
