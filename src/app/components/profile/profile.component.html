@@ -24,7 +24,7 @@
     <div class="title">
       <span>{{connectedUser.name}} {{connectedUser.firstName}}</span>
     </div>
-    <div [ngStyle]="{'color': getTheme() ? 'white' : ''}">
+    <div *ngIf="connectedUser.post != null" [ngStyle]="{'color': getTheme() ? 'white' : ''}">
     <div class="desc">{{connectedUser.post.postName}}</div>
     </div>
   </div>

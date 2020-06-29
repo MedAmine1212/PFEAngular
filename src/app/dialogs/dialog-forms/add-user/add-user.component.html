@@ -21,7 +21,7 @@
       <mat-step *ngIf="data[1] != 4" [stepControl]="firstFormGroup" >
         <div  class="main-card mb-3 card">
           <ng-template matStepLabel>Select department</ng-template>
-          <div *ngIf="router.url !=='/RemoteMonitoring/(mainCon:Departments)'" >
+          <div *ngIf="router.url !=='/RemoteMonitoring/(mainCon:Departments)' && router.url !== '/'" >
             <div class="card-header">
               <h1>Department</h1>
               <hr>
@@ -51,7 +51,7 @@
             </div>
           </div>
 
-          <div *ngIf="router.url === '/RemoteMonitoring/(mainCon:Departments)'">
+          <div *ngIf="router.url === '/RemoteMonitoring/(mainCon:Departments)' || router.url === '/'">
             <div class="card-header">
               <h1>Department</h1>
               <hr>
@@ -233,7 +233,7 @@
                   <!--                  -->
                   <!--                </div>-->
                 </div>
-                <div style="margin-bottom: -30px;padding-top:18px" class="form-group col-md-7">
+                <div style="margin-bottom: -30px;padding-top:18px" class="form-group col-md-7" *ngIf="posts.length > 0">
                   <label for="inputGroupSelect02">Post*</label><br>
                     <input type="text" class="form-control" *ngIf="data[1] == 2 && tempPost != null" style="float: left;width: 45%" disabled value="{{tempPost}}"/>
                     <input type="text" class="form-control" *ngIf="data[1] == 2 && tempPost == null" style="float: left;width: 45%" disabled value="No post assigned"/>
@@ -263,7 +263,7 @@
         </div>
         <div style="width:100%">
           <div style="float: right;margin-top: -25px;margin-bottom: -20px;padding-top: 5px">
-            <button type="submit" mat-raised-button color="primary" [disabled]="!secondFormGroup.valid ||( userPost == null && data[1] == 1)" (click)="test()" matStepperNext >Next</button>
+            <button type="submit" mat-raised-button color="primary" [disabled]="!secondFormGroup.valid || ( userPost == null && data[1] == 1 && posts.length != 0)" (click)="test()" matStepperNext >Next</button>
             <button type="button" (click)="closeThis()" class="btn btn-light" style="margin-left: 20px;">Cancel</button>
           </div>
         </div>

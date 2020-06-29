@@ -1,14 +1,55 @@
 <div class="bg"></div>
 <div class="bgImg"></div>
-<div class="bigContainer">
+<div class="bigContainer" style="margin-top: 100px;width: 100%" *ngIf="firstTime">
   <div class="container">
-    <!--<div class="titleContainer">
-     <h1>Remote Time Management app</h1>
-    </div>-->
+  <div *ngIf="showWelcome" [@enterAnimation] class="main-card mb-3 card bg-premium-dark" style="opacity:.9;border-radius: 20px;min-height: 500px;">
+    <div style="padding-top: 16%;width: 100%;text-align: center">
+      <h1 style="font-size: 40px;color:#007bff;font-weight: bolder">Welcome to the<br><br>Remote Time Management application</h1>
+    </div>
+    <div style="margin-top: 100px;margin-bottom:-20px;padding-right: 40px">
+      <button class="btn btn-info" (click)="goToNext(1)" style="float:right">Proceed <span class="fa fa-arrow-circle-right"></span></button>
+    </div>
+  </div>
+    <div *ngIf="showAddDep" [@enterAnimation] class="main-card mb-3 card bg-premium-dark" style="opacity:.9;border-radius: 20px;min-height: 500px;">
+      <div style="padding-top: 16%;width: 100%;text-align: center">
+        <h1 style="font-size: 40px;color:#007bff;font-weight: bolder">
+          You need to add <br><br>a parent department (company name...)</h1>
+      </div>
+      <div style="margin-top: 110px;margin-bottom:-20px;padding-right: 40px">
+        <button class="btn btn-info" style="float:right" (click)="addFirstDep()">Add department <span class="fa fa-plus-circle"></span></button>
+      </div>
+    </div>
+    <div *ngIf="showAddUser" [@enterAnimation] class="main-card mb-3 card bg-premium-dark" style="opacity:.9;border-radius: 20px;min-height: 500px;">
+      <div style="padding-top: 16%;width: 100%;text-align: center">
+        <h1 style="font-size: 40px;color:#007bff;font-weight: bolder">
+          Now you need to add <br><br>a system administrator to proceed..</h1>
+      </div>
+      <div style="margin-top: 110px;margin-bottom:-20px;padding-right: 40px">
+        <button class="btn btn-info" style="float:right" (click)="addFirstUser()">Add administrator <span class="fa fa-user-plus"></span></button>
+      </div>
+    </div>
+    <div *ngIf="allDone" [@enterAnimation] class="main-card mb-3 card bg-premium-dark" style="opacity:.9;border-radius: 20px;min-height: 500px;">
+      <div style="padding-top: 14%;width: 100%;text-align: center">
+        <h1 style="font-size: 40px;color:#007bff;font-weight: bolder">
+          Everything is set ! <br><br>
+          Login to proceed to dashboard
+        </h1><br><br>
+        <h2 style="color:lightgray;font-weight: bolder">
+          your password has been sent to your email
+        </h2>
+      </div>
+      <div style="margin-top: 70px;margin-bottom:-20px;padding-right: 40px">
+        <button class="btn btn-info" style="float:right" (click)="goToNext(4)">Login <span class="fa fa-sign-in-alt"></span></button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="firstTime === false" [@enterAnimation] class="bigContainer">
+  <div class="container">
     <div class="d-flex justify-content-center h-100">
-      <div class="card">
-        <div class="card-header">
-          <h3>Sign In</h3>
+      <div class="card loginCard">
+        <div class="card-header LoginCardHeader">
+          <h3 class="loginTitle">Sign In</h3>
         </div><br>
         <div class="card-body">
           <div  style="height: 20px;margin-top: -20px;margin-bottom: 15px">
@@ -22,7 +63,7 @@
               <input
                 type="text"
                 required
-                class="form-control"
+                class="form-control LoginInput"
                 placeholder="CIN"
                 [(ngModel)]="login.cin"
                 formControlName="cin"
@@ -36,7 +77,7 @@
               <input
                 style="border:none;"
                 [type]="passType"
-                class="form-control"
+                class="form-control LoginInput"
                 placeholder="password"
                 required
                 [(ngModel)]="login.password"

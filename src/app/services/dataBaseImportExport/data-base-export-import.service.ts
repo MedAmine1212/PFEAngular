@@ -7,6 +7,7 @@ import {HttpClient} from '@angular/common/http';
 })
 export class DataBaseExportImportService {
   private baseUrl = environment.ipAddress + environment.port + '/db/';
+  private updating: boolean;
   constructor(private http: HttpClient) { }
 
   exportDB() {
@@ -17,6 +18,13 @@ export class DataBaseExportImportService {
   }
   rollBackDB() {
     return this.http.get(this.baseUrl + 'rollback');
+  }
+
+  getDataBaseUpdating() {
+    return this.updating;
+  }
+  setDataBaseUpdating(value) {
+    this.updating = value;
   }
 }
 

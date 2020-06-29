@@ -53,11 +53,7 @@
   box-shadow: 0px 0px 40px 23px rgba(0,0,0,1);
 
 }
-h1{
-  font-weight: bolder;
-  font-size: 270%;
-}
-.card{
+.loginCard{
   -webkit-box-shadow: 3px 3px 4px 1px rgba(0,0,0,1);
   -moz-box-shadow: 3px 3px 4px 1px rgba(0,0,0,1);
   box-shadow: 3px 3px 4px 1px rgba(0,0,0,1);
@@ -69,7 +65,7 @@ h1{
   background-color: rgba(0,0,0,0.5) !important;
 }
 
-.card-header h3{
+.loginTitle{
   color: white;
 }
 
@@ -86,7 +82,7 @@ h1{
   border:0 !important;
 }
 
-input:focus{
+.LoginInput:focus{
   outline: none  !important;
   box-shadow: 0 0 0 0 !important;
 
@@ -109,7 +105,7 @@ input:focus{
   background-color: rgb(82,148,226);
   width: 100px;
 }
-.card-header{
+.LoginCardHeader{
   margin:10px;
   border-top-right-radius:20px;
   border-bottom-left-radius:20px;

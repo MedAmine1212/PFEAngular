@@ -21,7 +21,7 @@ import { MotifsAbsencesComponent } from './components/motifs-absences/motifs-abs
 import {HttpClientModule} from '@angular/common/http';
 import {MatTreeModule} from '@angular/material/tree';
 import {MatIconModule} from '@angular/material/icon';
-import {MatProgressBar, MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatButtonModule} from '@angular/material/button';
 import { AddUserComponent } from './dialogs/dialog-forms/add-user/add-user.component';
@@ -58,7 +58,8 @@ import { AddPostComponent } from './dialogs/dialog-forms/add-post/add-post.compo
 import { ImportDataBaseComponent } from './dialogs/import-data-base/import-data-base.component';
 import { SetDepartmentPlanningComponent } from './sheets/set-department-planning/set-department-planning.component';
 import { ChangePasswordComponent } from './dialogs/dialog-forms/change-password/change-password.component';
-import {MatPasswordStrengthModule} from "@angular-material-extensions/password-strength";
+import {MatPasswordStrengthModule} from '@angular-material-extensions/password-strength';
+import {MatCardModule} from '@angular/material/card';
 
 
 @NgModule({
@@ -90,45 +91,44 @@ import {MatPasswordStrengthModule} from "@angular-material-extensions/password-s
     ChangePasswordComponent,
 
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        ReactiveFormsModule,
-        BrowserAnimationsModule,
-        FormsModule,
-        Ng2SearchPipeModule,
-        NgbDatepickerModule,
-        MatDatepickerModule,
-        HttpClientModule,
-        MatTreeModule,
-        MatIconModule,
-        MatProgressBarModule,
-        MatTooltipModule,
-        MatButtonModule,
-        BsDropdownModule,
-        NgxMatIntlTelInputModule,
-        NgxIntlTelInputModule,
-        MatFormFieldModule,
-        MatStepperModule,
-        MatExpansionModule,
-        ReactiveFormsModule,
-        MatDialogModule,
-        MatMenuModule,
-        MatInputModule,
-        MatButtonToggleModule,
-        MatSelectModule,
-        MatNativeDateModule,
-        MatProgressSpinnerModule,
-        MatFormFieldModule,
-        NgxMaterialTimepickerModule,
-        MatCheckboxModule,
-        MatTableModule,
-        MatBadgeModule,
-        MatListModule,
-        MatPasswordStrengthModule,
-
-
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    Ng2SearchPipeModule,
+    NgbDatepickerModule,
+    MatDatepickerModule,
+    HttpClientModule,
+    MatTreeModule,
+    MatIconModule,
+    MatProgressBarModule,
+    MatTooltipModule,
+    MatButtonModule,
+    BsDropdownModule,
+    NgxMatIntlTelInputModule,
+    NgxIntlTelInputModule,
+    MatFormFieldModule,
+    MatStepperModule,
+    MatExpansionModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatMenuModule,
+    MatInputModule,
+    MatButtonToggleModule,
+    MatSelectModule,
+    MatNativeDateModule,
+    MatProgressSpinnerModule,
+    MatFormFieldModule,
+    NgxMaterialTimepickerModule,
+    MatCheckboxModule,
+    MatTableModule,
+    MatBadgeModule,
+    MatListModule,
+    MatCardModule,
+    MatPasswordStrengthModule,
+  ],
   providers: [AuthenticationGuard, MatSnackBar, MatBottomSheet],
   bootstrap: [AppComponent],
   entryComponents: [
