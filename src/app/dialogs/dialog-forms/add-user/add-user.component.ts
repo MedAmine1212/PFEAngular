@@ -326,8 +326,7 @@ export class AddUserComponent implements  OnInit  {
             }, 1500);
 
           }
-        }, error => console.log(error)
-      );
+        }, error => console.log(error));
   }
 
   findConnectedUser() {

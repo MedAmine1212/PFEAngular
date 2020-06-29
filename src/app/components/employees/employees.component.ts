@@ -22,9 +22,13 @@ import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.ser
 import {ImageService} from '../../services/image/image.service';
 import * as Jspdf from 'jspdf';
 import 'jspdf-autotable';
-import html2canvas from 'html2canvas';
 import {EmployeeDetailsComponent} from '../employee-details/employee-details.component';
 import {MatSnackBar, MatSnackBarConfig} from '@angular/material/snack-bar';
+import {Planning} from '../../models/Planning';
+import {PlanningDetailsComponent} from '../planning-details/planning-details.component';
+import {MatBottomSheet} from '@angular/material/bottom-sheet';
+import {SetDepartmentPlanningComponent} from '../../sheets/set-department-planning/set-department-planning.component';
+import {PlanningService} from '../../services/planning/planning.service';
 
 
 export class Image {
@@ -46,6 +50,7 @@ export class Image {
 })
 export class EmployeesComponent implements OnInit {
   @Output() outPutData = new EventEmitter<any>();
+  @ViewChild(PlanningDetailsComponent) planningDetailsComp: PlanningDetailsComponent;
   clickedDep: Department;
   thisIsEmp: boolean;
   searchText;
@@ -60,10 +65,13 @@ export class EmployeesComponent implements OnInit {
    user: User;
   head = [['ID', 'Last name', 'Firstname', 'Gender', 'CIN', 'Email', 'Phone', 'Birthday', 'Hireday', 'Post']];
   data = [];
+  clickedPlanning: Planning;
   constructor(
-              private snackBar: MatSnackBar,
-              private themeChanger: ThemeChangerService, public dialog: MatDialog, public router: Router,
-              private departmentService: DepartmentService, private userService: UserService, private imageService: ImageService) {
+          private planningService: PlanningService,
+          private bottomSheet: MatBottomSheet,
+          private snackBar: MatSnackBar,
+          private themeChanger: ThemeChangerService, public dialog: MatDialog, public router: Router,
+          private departmentService: DepartmentService, private userService: UserService, private imageService: ImageService) {
     this.loading = true;
     if (this.router.url === '/RemoteMonitoring/(mainCon:Departments)') {
       this.clickedDep = new Department();
@@ -106,6 +114,22 @@ export class EmployeesComponent implements OnInit {
     }
   }
 
+  getTime(hour: number) {
+    const h = Math.floor(hour / 60);
+    const m = hour % 60;
+    let returnTime: string;
+    returnTime = '';
+    if (h < 10) {
+      returnTime = returnTime + '0';
+    }
+    returnTime = returnTime + h.toString() + ':';
+    if (m < 10) {
+      returnTime = returnTime + '0';
+    }
+    returnTime = returnTime + m.toString();
+    return returnTime;
+  }
+
   setDepartment(dep: Department) {
     this.users = [];
     this.chefDep = null;
@@ -114,6 +138,12 @@ export class EmployeesComponent implements OnInit {
     if (this.clickedDep.depId !== -1) {
       this.setChefDep(this.clickedDep.depId);
       this.users = this.clickedDep.users;
+      if (this.clickedDep.planning != null) {
+      this.clickedPlanning = this.clickedDep.planning;
+      setTimeout(() => {
+        this.planningDetailsComp.setClickedPl(this.clickedPlanning);
+      }, 600);
+      }
       this.fillBody(this.users);
       this.getImages();
       setTimeout(() => {
@@ -324,4 +354,35 @@ export class EmployeesComponent implements OnInit {
       i++;
     });
   }
+
+  openPlanningSheet() {
+    this.bottomSheet.open(SetDepartmentPlanningComponent , {
+      data: this.clickedDep
+    });
+  }
+
+  removePlanning() {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      width: '400px',
+      height: '380',
+      data: [null, 'removeDePl']
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+      let pl: Planning;
+      this.planningService.findById(this.clickedDep.planning.planningId).subscribe(r => {
+        pl = r;
+        for (const dep of pl.departments) {
+          if (dep.depId === this.clickedDep.depId) {
+            pl.departments.splice(pl.departments.indexOf(dep), 1);
+            break;
+          }
+        }
+        this.planningService.modify(pl, pl.planningId, 1).subscribe(() => {
+
+        }, error => console.log(error));
+      }, error => console.log(error));
+      }
+  });
+}
 }

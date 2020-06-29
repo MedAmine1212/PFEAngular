@@ -97,5 +97,42 @@
              {{clickedPlanning.planningDescription}}
            </div>
          </div>
+       <div *ngIf="clickedPlanning.departments != null">
+       <div [@enterAnimation]  *ngIf="clickedPlanning.departments.length>0" class="main-card mb-3 card" style="margin: 15px;min-height: 50px" [ngClass]="getTheme() ? 'bg-premium-dark' :''">
+         <div class="card-header">
+           <h2 [ngStyle]="{'color': getTheme()? 'white' :'black'}">Departments</h2>
+         </div>
+         <div class="card-body" style="padding-left: 10px;;padding-right: 10px;">
+
+         <table style="width: 100%;font-size:14px;margin-bottom: 20px;margin-top: 5px" [ngStyle]="{'color': getTheme()? 'white' :'black'}" class="table-striped tableHeader">
+          <thead>
+           <tr>
+            <th>
+              ID
+            </th>
+             <th>
+               Department name
+             </th>
+             <th>
+             </th>
+          </tr>
+          </thead>
+           <tbody>
+            <tr *ngFor="let dep of clickedPlanning.departments">
+              <td>
+                {{dep.depId}}
+              </td>
+              <td>
+                {{dep.depName}}
+              </td>
+              <td>
+                <button type="button" id="PopoverCustomT-4" style="border-radius: 12px;float: right" class="btn btn-danger btn-sm" (click)="removeDep(dep)" matTooltip="Remove planning"><span class="fa fa-minus-circle"></span></button>
+              </td>
+            </tr>
+           </tbody>
+         </table>
+       </div>
+       </div>
+     </div>
     </div>
     </div>

@@ -199,7 +199,7 @@ export class AddPlanningComponent implements AfterViewInit {
   // save planning to database
 saveModifiedPlanning() {
   this.pl = this.planning;
-  this.planningService.modify(this.planning, this.pl.planningId).subscribe(() => {
+  this.planningService.modify(this.planning, this.pl.planningId, 1).subscribe(() => {
     this.dialogRef.close(true);
   }, error1 => console.log(error1));
 

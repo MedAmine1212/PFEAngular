@@ -33,8 +33,8 @@ export class PlanningService {
     return this.http.delete(this.baseUrl + 'delete/' + id );
   }
 
-  modify( planning: Planning , id): Observable<any> {
-    return this.http.put( this.baseUrl + 'update/' + id   , planning);
+  modify( planning: Planning , id, sender): Observable<any> {
+    return this.http.put( this.baseUrl + 'update/' + id + '/' + sender   , planning);
   }
 
   findById(id): Observable<any> {

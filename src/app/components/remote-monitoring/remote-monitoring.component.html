@@ -11,7 +11,7 @@
   <app-nav [connectedUser]="connectedUser"></app-nav>
 
   <!--profile-->
-  <app-profile [connectedUser]="connectedUser" *ngIf="router.url === '/RemoteMonitoring/(mainCon:Profile)'" style="margin: 15px;padding: 0" name="mainCon"></app-profile>
+  <app-profile (outPutData)="refreshConnectedUser($event)" [connectedUser]="connectedUser" *ngIf="router.url === '/RemoteMonitoring/(mainCon:Profile)'" style="margin: 15px;padding: 0" name="mainCon"></app-profile>
   <!--posts-->
   <app-posts *ngIf="router.url === '/RemoteMonitoring/(mainCon:Posts)'"></app-posts>
   <!--time tables-->

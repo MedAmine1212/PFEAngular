@@ -2,6 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {Planning} from '../../models/Planning';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
+import {Department} from '../../models/Department';
+import {PlanningService} from '../../services/planning/planning.service';
 
 @Component({
   selector: 'app-planning-details',
@@ -26,7 +28,9 @@ export class PlanningDetailsComponent implements OnInit {
   showBody: boolean;
   clickedPlanning: Planning;
 
-  constructor(private themeChanger: ThemeChangerService) {
+  constructor(
+    private planningService: PlanningService,
+    private themeChanger: ThemeChangerService) {
   }
 
   ngOnInit(): void {
@@ -53,5 +57,12 @@ export class PlanningDetailsComponent implements OnInit {
 
   getTheme() {
     return this.themeChanger.getTheme();
+  }
+
+  removeDep(dep: Department) {
+    this.clickedPlanning.departments.splice(this.clickedPlanning.departments.indexOf(dep), 1);
+    this.planningService.modify(this.clickedPlanning, this.clickedPlanning.planningId, 1).subscribe(() => {
+    }, error => console.log(error));
+
   }
 }
