@@ -312,6 +312,7 @@ export class AddUserComponent implements  OnInit  {
     }, 400);
     this.uploadImageData = new FormData();
     this.uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
+    console.log(this.uploadImageData);
     this.imageName = this.selectedFile.name;
     this.imageService.uploadImage(this.uploadImageData, id)
       .subscribe((response) => {

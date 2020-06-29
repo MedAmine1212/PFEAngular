@@ -57,7 +57,7 @@ export class UserService {
 
   changePassword(changePassword, user) {
     this.headers = new HttpHeaders({Authorization: 'Bearer ' + localStorage.token});
-    return this.http.post(this.baseurl + 'password/' + user.username, changePassword, {headers: this.headers});
+    return this.http.post(this.baseurl + 'changePassword/' + user.cin, changePassword, {headers: this.headers});
   }
   fileUpload(file) {
     // this.headers = new HttpHeaders({Authorization: 'Bearer ' + localStorage.token});

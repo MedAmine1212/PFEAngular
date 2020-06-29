@@ -9,6 +9,9 @@ import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.ser
 import {AddUserComponent} from '../../dialogs/dialog-forms/add-user/add-user.component';
 import {MatDialog} from '@angular/material/dialog';
 import {DeleteDialogComponent} from '../../dialogs/delete-dialog/delete-dialog.component';
+import {AddDepartmentComponent} from '../../dialogs/dialog-forms/add-department/add-department.component';
+import {ChangePasswordComponent} from '../../dialogs/dialog-forms/change-password/change-password.component';
+import {MatSnackBar, MatSnackBarConfig} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-employee-details',
@@ -20,7 +23,10 @@ export class EmployeeDetailsComponent implements OnInit {
   public dialog: MatDialog,
   private themeChanger: ThemeChangerService,
   private departmentService: DepartmentService, private  userService: UserService,
+  private snackBar: MatSnackBar,
   private addressService: AddressService) {}
+
+
   static refreshEmp: boolean;
   @Output() outPutData = new EventEmitter<User>();
   @Input() emp: User;
@@ -138,6 +144,26 @@ export class EmployeeDetailsComponent implements OnInit {
           this.newEmp.addresses.splice(this.newEmp.addresses.indexOf(add), 1);
           this.emp = this.newEmp;
         }, error => console.log(error));
+      }
+    });
+  }
+
+  openChangePwDialog() {
+    const dialog = this.dialog.open(ChangePasswordComponent, {
+      width: '600px',
+      height: '300px',
+      data: this.emp
+    });
+    dialog.afterClosed().subscribe(result => {
+      if(result){
+        const config = new MatSnackBarConfig();
+        if (this.themeChanger.getTheme()) {
+          config.panelClass = ['snackBar'];
+        } else {
+          config.panelClass = ['snackBarDark'];
+        }
+        config.duration = 3000;
+        this.snackBar.open('Password changed successfully !', null, config);
       }
     });
   }

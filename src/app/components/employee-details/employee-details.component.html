@@ -81,8 +81,10 @@
           <span *ngIf="!showUpdateForm">{{newEmp.post.postName}}</span>
           <input [ngClass]="getTheme() ? 'darkInput' : ''" [(ngModel)]="newEmp.post.postName" *ngIf="showUpdateForm" type="text"/>
         </td>
+
       </tr>
     </table>
+    <button style="float: right" class="btn btn-info" (click)="openChangePwDialog()">Change password</button>
   </div>
 </div>
 <div class="main-card mb-3 card" [ngClass]="getTheme() ? 'bg-premium-dark' : ''" style="margin-left: 3px">
