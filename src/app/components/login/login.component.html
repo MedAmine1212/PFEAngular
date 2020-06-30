@@ -47,7 +47,7 @@
 <div *ngIf="firstTime === false" [@enterAnimation] class="bigContainer">
   <div class="container">
     <div class="d-flex justify-content-center h-100">
-      <div class="card loginCard">
+      <div class="card loginCard" [@shakeit]="this.states['state1']">
         <div class="card-header LoginCardHeader">
           <h3 class="loginTitle">Sign In</h3>
         </div><br>

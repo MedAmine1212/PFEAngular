@@ -77,7 +77,7 @@
         </td></tr>
       <tr>
         <td class="tag">Post:</td>
-        <td class="data">
+        <td class="data" *ngIf="newEmp.post !== null">
           <span *ngIf="!showUpdateForm">{{newEmp.post.postName}}</span>
           <input [ngClass]="getTheme() ? 'darkInput' : ''" [(ngModel)]="newEmp.post.postName" *ngIf="showUpdateForm" type="text"/>
         </td>

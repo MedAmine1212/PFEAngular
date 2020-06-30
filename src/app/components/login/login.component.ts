@@ -6,7 +6,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
-import {animate, style, transition, trigger} from '@angular/animations';
+import {animate, keyframes, state, style, transition, trigger} from '@angular/animations';
 import {AddUserComponent} from '../../dialogs/dialog-forms/add-user/add-user.component';
 import {AddDepartmentComponent} from '../../dialogs/dialog-forms/add-department/add-department.component';
 import {Department} from '../../models/Department';
@@ -25,8 +25,28 @@ import {Department} from '../../models/Department';
           animate('300ms', style({transform: 'translateX(-100%)', opacity: 0}))
         ])
       ]
-    )
-    ],
+    ),
+    trigger('shakeit', [
+      state('shakestart', style({
+        transform: 'scale(1)',
+      })),
+      state('shakeend', style({
+        transform: 'scale(1)',
+      })),
+      transition('shakestart => shakeend', animate('1000ms ease-in',     keyframes([
+        style({transform: 'translate3d(-1px, 0, 0)', offset: 0.1}),
+        style({transform: 'translate3d(2px, 0, 0)', offset: 0.2}),
+        style({transform: 'translate3d(-4px, 0, 0)', offset: 0.3}),
+        style({transform: 'translate3d(4px, 0, 0)', offset: 0.4}),
+        style({transform: 'translate3d(-4px, 0, 0)', offset: 0.5}),
+        style({transform: 'translate3d(4px, 0, 0)', offset: 0.6}),
+        style({transform: 'translate3d(-4px, 0, 0)', offset: 0.7}),
+        style({transform: 'translate3d(2px, 0, 0)', offset: 0.8}),
+        style({transform: 'translate3d(-1px, 0, 0)', offset: 0.9}),
+      ]))),
+    ])
+
+],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 
@@ -43,8 +63,10 @@ export class LoginComponent implements OnInit {
   newDep: Department;
   allDone: boolean;
   firstTime: boolean;
+  states = {};
 
-constructor(
+
+  constructor(
             private themeChanger: ThemeChangerService,
             private authService: AuthenticationService,
             private userService: UserService,
@@ -53,6 +75,8 @@ constructor(
             public dialog: MatDialog,
   ) {
   this.passType = 'password';
+  this.states['state1'] = 'shakestart';
+
 }
   ngOnInit(): void {
     this.getFirstTime();
@@ -63,6 +87,9 @@ constructor(
     this.createSignInForm();
   }
 
+  shakeMe(stateVar: string) {
+    this.states[stateVar] = (this.states[stateVar] === 'shakestart' ? 'shakeend' : 'shakestart');
+  }
 
   submit() {
     this.authService.authenticate(this.login, this.isRemeberChecked).subscribe(res => {
@@ -78,7 +105,7 @@ constructor(
         }, 100);
       }, error => console.log(error));
     }, error => {
-      console.log(error);
+      this.shakeMe('state1');
       this.showError = true;
       });
   }
