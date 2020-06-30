@@ -11,7 +11,9 @@ import {MatDialog} from '@angular/material/dialog';
 import {DeleteDialogComponent} from '../../dialogs/delete-dialog/delete-dialog.component';
 import {AddDepartmentComponent} from '../../dialogs/dialog-forms/add-department/add-department.component';
 import {ChangePasswordComponent} from '../../dialogs/dialog-forms/change-password/change-password.component';
-import {MatSnackBar, MatSnackBarConfig} from "@angular/material/snack-bar";
+import {MatSnackBar, MatSnackBarConfig} from '@angular/material/snack-bar';
+import {PostService} from '../../services/post/post.service';
+import {Post} from '../../models/Post';
 
 @Component({
   selector: 'app-employee-details',
@@ -19,15 +21,15 @@ import {MatSnackBar, MatSnackBarConfig} from "@angular/material/snack-bar";
   styleUrls: ['./employee-details.component.css']
 })
 export class EmployeeDetailsComponent implements OnInit {
+  static refreshEmp: boolean;
+  posts: Post[] = [];
   constructor(
   public dialog: MatDialog,
   private themeChanger: ThemeChangerService,
   private departmentService: DepartmentService, private  userService: UserService,
   private snackBar: MatSnackBar,
-  private addressService: AddressService) {}
-
-
-  static refreshEmp: boolean;
+  private addressService: AddressService,
+  private postService: PostService) {}
   @Output() outPutData = new EventEmitter<User>();
   @Input() emp: User;
   showUpdateForm: boolean;
@@ -36,10 +38,18 @@ export class EmployeeDetailsComponent implements OnInit {
   newEmp: User = new User();
   newEmpAddresses: Address [];
   selectedDep: number;
+  selectedPost: string;
+  noPost: number;
   ngOnInit(): void {
+    this.noPost = -1;
     console.log(this.emp);
     EmployeeDetailsComponent.refreshEmp = false;
     this.selectedDep = this.emp.department.depId;
+    if (this.emp.post != null) {
+    this.selectedPost = this.emp.post.postId.toString();
+    } else {
+      this.selectedPost = '-1';
+    }
     this.duplicateUser();
     this.duplicateAddresses();
     this.showUpdateForm = false;
@@ -47,6 +57,9 @@ export class EmployeeDetailsComponent implements OnInit {
     this.departments = [];
     this.departmentService.list().subscribe(r => {
       this.departments = r;
+    });
+    this.postService.list().subscribe(r => {
+      this.posts = r;
     });
   }
   duplicateUser() {
@@ -86,6 +99,18 @@ export class EmployeeDetailsComponent implements OnInit {
           break;
         }
     }
+    const postId = Number.parseInt(this.selectedPost, 0);
+    if (this.posts.length > 0) {
+    for (const post of this.posts) {
+      if (post.postId === postId) {
+        this.newEmp.post = post;
+        this.emp.post = post;
+        console.log(this.newEmp);
+        break;
+      }
+    }
+    }
+    console.log(this.newEmp);
     this.userService.modify(this.emp.userId, this.newEmp, 3).subscribe( user => {
       // @ts-ignore
       this.outPutData.emit(user);
@@ -155,7 +180,7 @@ export class EmployeeDetailsComponent implements OnInit {
       data: this.emp
     });
     dialog.afterClosed().subscribe(result => {
-      if(result){
+      if (result) {
         const config = new MatSnackBarConfig();
         if (this.themeChanger.getTheme()) {
           config.panelClass = ['snackBar'];

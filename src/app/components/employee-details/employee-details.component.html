@@ -75,16 +75,27 @@
             </option>
           </select>
         </td></tr>
-      <tr>
+      <tr *ngIf="posts.length > 0">
         <td class="tag">Post:</td>
         <td class="data">
-          <span *ngIf="!showUpdateForm">{{newEmp.post.postName}}</span>
-          <input [ngClass]="getTheme() ? 'darkInput' : ''" [(ngModel)]="newEmp.post.postName" *ngIf="showUpdateForm" type="text"/>
+          <span *ngIf="!showUpdateForm">
+            <span *ngIf="emp.post != null">{{newEmp.post.postName}}</span>
+            <span *ngIf="emp.post == null">No post assigned</span>
+          </span>
+          <select [ngClass]="getTheme() ? 'darkInput' : ''" *ngIf="showUpdateForm"  class="custom-select" id="inputGroupSelect02"
+                  [(ngModel)]='selectedPost'>
+            <option value="{{noPost}}" disabled selected>
+              Posts:
+            </option>
+            <option *ngFor="let post of posts" value="{{post.postId}}" selected>
+              <span>{{post.postName}}</span>
+            </option>
+          </select>
         </td>
 
       </tr>
     </table>
-    <button style="float: right" class="btn btn-info" (click)="openChangePwDialog()">Change password</button>
+    <button style="float: right" class="btn btn-link" (click)="openChangePwDialog()">Change password</button>
   </div>
 </div>
 <div class="main-card mb-3 card" [ngClass]="getTheme() ? 'bg-premium-dark' : ''" style="margin-left: 3px">
