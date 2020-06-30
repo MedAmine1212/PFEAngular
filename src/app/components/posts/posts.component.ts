@@ -57,7 +57,13 @@ reloadData() {
         this.users.push(emp);
       }
     }
+    if (this.users.length > 0) {
     this.getImages();
+    } else {
+      setTimeout(() => {
+        this.loading = false;
+      }, 500);
+    }
     this.loadingPosts = false;
   }, error => {
     this.loadingPosts = false;
@@ -79,12 +85,12 @@ reloadData() {
           } else {
             emp.fullImage = null;
           }
-          if (this.users.indexOf(emp) === (this.users.length - 1)) {
-            setTimeout(() => {
-              this.loading = false;
-            }, 500);
-          }
         });
+      if (this.users.indexOf(emp) === (this.users.length - 1)) {
+        setTimeout(() => {
+          this.loading = false;
+        }, 500);
+      }
     }
   }
   setClickedPost(p) {
