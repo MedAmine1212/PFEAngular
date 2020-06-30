@@ -105,12 +105,12 @@ export class EmployeesComponent implements OnInit {
           } else {
             emp.fullImage = null;
           }
-          if (this.users.indexOf(emp) === (this.users.length - 1)) {
-            setTimeout(() => {
-              this.loading = false;
-            }, 500);
-          }
         });
+      if (this.users.indexOf(emp) === (this.users.length - 1)) {
+        setTimeout(() => {
+          this.loading = false;
+        }, 500);
+      }
     }
   }
 
