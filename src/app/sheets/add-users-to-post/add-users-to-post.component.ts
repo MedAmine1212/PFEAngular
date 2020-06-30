@@ -65,13 +65,14 @@ export class AddUsersToPostComponent implements OnInit {
           } else {
             emp.fullImage = null;
           }
-          if (this.users.indexOf(emp) === (this.users.length - 1)) {
-            this.loading = false;
-            setTimeout(() => {
-              this.changeDetectorRef.detectChanges();
-            }, 500);
-          }
         });
+
+      if (this.users.indexOf(emp) === (this.users.length - 1)) {
+        this.loading = false;
+        setTimeout(() => {
+          this.changeDetectorRef.detectChanges();
+        }, 500);
+      }
     }
   }
   getTheme() {
