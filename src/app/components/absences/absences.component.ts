@@ -8,6 +8,7 @@ import {DepartmentService} from '../../services/department/department.service';
 import {PlanningService} from '../../services/planning/planning.service';
 import {AttendanceService} from '../../services/Attendance/attendance.service';
 import {Attendance} from '../../models/Attendance';
+import {User} from '../../models/User';
 @Component({
   selector: 'app-absences',
   templateUrl: './absences.component.html',
@@ -58,6 +59,7 @@ export class AbsencesComponent implements OnInit {
   loading: boolean;
   todaysAttendances: Attendance[] = [];
   days: string[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  clickedUser: User;
   constructor(
     private attendanceService: AttendanceService,
     private departmentService: DepartmentService,
@@ -171,5 +173,10 @@ export class AbsencesComponent implements OnInit {
       this.selectedFilter = filter;
     }, 400 );
     }
+  }
+
+  setEmployee(emp: User) {
+    this.clickedUser = emp;
+    console.log('Absences: haw l emp mteek ya si zebi sayb zebi 5anmchi nal3b taw ' + emp);
   }
 }

@@ -15,6 +15,7 @@ import {MatSnackBar, MatSnackBarConfig} from '@angular/material/snack-bar';
 import {NavComponent} from '../nav/nav.component';
 import {PostsComponent} from '../posts/posts.component';
 import {DataBaseExportImportService} from '../../services/dataBaseImportExport/data-base-export-import.service';
+import {AbsencesComponent} from '../absences/absences.component';
 @Component({
   selector: 'app-remmote-monitoring',
   animations: [
@@ -66,6 +67,7 @@ export class RemoteMonitoringComponent implements OnInit {
   name: string;
   connectedUser: User;
   loading: boolean;
+  clickedEmp: User;
   constructor(
     private dataBaseExportImportService: DataBaseExportImportService,
     private snackBar: MatSnackBar,
@@ -82,6 +84,7 @@ export class RemoteMonitoringComponent implements OnInit {
   @ViewChild(TimetablesComponent) timetablesComponent: TimetablesComponent;
   @ViewChild(NavComponent) navComponent: NavComponent;
   @ViewChild(PostsComponent) postComponent: PostsComponent;
+  @ViewChild(AbsencesComponent) absencesComponent: AbsencesComponent;
   showLoadingText: boolean;
   showSite: boolean;
 
@@ -216,5 +219,14 @@ public reloadFromWebSocket(message) {
 
   getDataBaseUpdating() {
     return this.dataBaseExportImportService.getDataBaseUpdating();
+  }
+
+  setClickedUser(emp: User) {
+    setTimeout (() => {
+      if (this.absencesComponent != null) {
+        this.clickedEmp = emp;
+        this.absencesComponent.setEmployee(emp);
+      }
+    }, 1);
   }
 }

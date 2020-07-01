@@ -18,7 +18,7 @@ const routes: Routes = [
       {
         path: '',
         component: AbsencesComponent,
-        outlet: 'secCon'
+        outlet: 'mainCon'
       },
       {
         path: 'Absences',

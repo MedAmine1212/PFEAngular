@@ -66,6 +66,7 @@ export class EmployeesComponent implements OnInit {
   head = [['ID', 'Last name', 'Firstname', 'Gender', 'CIN', 'Email', 'Phone', 'Birthday', 'Hireday', 'Post']];
   data = [];
   clickedPlanning: Planning;
+  clickedEmp: User;
   constructor(
           private planningService: PlanningService,
           private bottomSheet: MatBottomSheet,
@@ -399,4 +400,11 @@ export class EmployeesComponent implements OnInit {
       }
   });
 }
+
+  setClickedEmployee(emp: User) {
+    if ((this.router.url === '/RemoteMonitoring/(mainCon:Absences)' || this.router.url === '/RemoteMonitoring') && this.clickedEmp !== emp) {
+      this.clickedEmp = emp;
+      this.outPutData.emit(emp);
+    }
+  }
 }

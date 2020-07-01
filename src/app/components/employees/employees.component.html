@@ -100,7 +100,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr [ngClass]="getTheme() ? 'lightText' :''" class="emp" *ngFor="let emp of users | filter:searchText">
+          <tr (click)="setClickedEmployee(emp)" [ngClass]="getTheme() ? 'lightText' :''" class="emp" *ngFor="let emp of users | filter:searchText">
             <td *ngIf="router.url === '/RemoteMonitoring/(mainCon:Employees)' || !thisIsEmp" class="text-center" [ngStyle]="{'color': getTheme()? 'white' :''}" style="padding-top: 15px">{{emp.userId}}</td>
             <td *ngIf="router.url === '/RemoteMonitoring/(mainCon:Employees)' " style="padding-top: 15px" [ngStyle]="{'color': getTheme()? 'white' :'grey'}">{{emp.department.depName}}</td>
             <td>
