@@ -1,3 +1,7 @@
+
+<div style="z-index:999999999999;position:fixed;top:0;margin-top: 140px;margin-left:324px;height: 200px;width: 300px">
+  <app-profile *ngIf="showProfile" [connectedUser]="user"></app-profile>
+</div>
 <div style="margin-top: 30px;margin-left: 40px">
   <div class="search-wrapper">
     <div style="position: absolute;background-color: transparent;margin-top: -15px;margin-left: -35px;" [ngClass]="{'search-wrapper active': showHideInput}">
@@ -26,7 +30,7 @@
   </thead>
   <tbody>
   <tr [ngClass]="getTheme() ? 'lightText' :''" [ngStyle]="{'color': getTheme()? 'white' :''}" class="emp" *ngFor="let att of attendances | filter: searchText">
-    <td  class="text-center">
+    <td  class="text-center" (mouseenter)="showUserProfile(att.user, $event)" (mouseleave)="hideUserProfile()">
       {{att.user.firstName}} {{att.user.name}}
     </td>
     <td  class="text-center">

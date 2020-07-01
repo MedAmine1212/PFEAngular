@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {ImageService} from '../../services/image/image.service';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 import {User} from '../../models/User';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -22,7 +23,9 @@ export class ProfileComponent implements OnInit {
   imagePath: FileList;
   uploadImageData: FormData;
   imageName: string;
-  constructor(private httpClient: HttpClient,
+  constructor(
+              public router: Router,
+              private httpClient: HttpClient,
               private themeChanger: ThemeChangerService,
               private imageService: ImageService
   ) { }

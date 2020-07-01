@@ -139,8 +139,6 @@ export class RemoteMonitoringComponent implements OnInit {
   }
 
   reloadDep($event: any) {
-    this.departmentComponent.clickedDep.depId = null;
-    this.departmentComponent.unselectDep();
     this.departmentComponent.reloadData();
   }
 

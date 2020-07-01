@@ -177,7 +177,7 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr [ngClass]="getTheme() ? 'lightText' :''">
+                  <tr *ngIf="clickedPlanning != null" [ngClass]="getTheme() ? 'lightText' :''">
                     <td class="text-center tableTd">{{clickedPlanning.schedule.scheduleId}}</td>
                     <td  class="text-center tableTd" >{{getTime(clickedPlanning.schedule.startHour)}}</td>
                     <td class="text-center tableTd">{{getTime(clickedPlanning.schedule.endHour)}}</td>

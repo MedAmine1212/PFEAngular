@@ -172,6 +172,8 @@ export class SetDepartmentPlanningComponent implements OnInit {
   updatePlanning(pl: Planning) {
     pl.departments.push(this.clickedDep);
     this.planningService.modify(pl, pl.planningId, 1).subscribe(() => {
+      pl.departments = null;
+      this.clickedDep.planning = pl;
       this.setDepPlan.dismiss();
     }, error => console.log(error));
   }

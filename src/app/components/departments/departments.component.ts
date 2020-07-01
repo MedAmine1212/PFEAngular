@@ -189,7 +189,15 @@ export class DepartmentsComponent implements  OnInit {
     this.dataSource.data = this.database.initialData(this.data);
     if (this.clickedDep != null) {
       if (this.clickedDep.depId !== -1) {
-      this.sendData(this.clickedDep);
+        const ids: number[] = [];
+        for (const dep of this.data) {
+          ids.push(dep.depId);
+        }
+        if (ids.indexOf(this.clickedDep.depId) > -1) {
+            this.sendData(this.clickedDep);
+        } else {
+          this.unselectDep();
+        }
       }
     }
     }, error => this.database.loading = false);

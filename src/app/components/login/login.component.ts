@@ -34,15 +34,15 @@ import {Department} from '../../models/Department';
         transform: 'scale(1)',
       })),
       transition('shakestart => shakeend', animate('1000ms ease-in',     keyframes([
-        style({transform: 'translate3d(-1px, 0, 0)', offset: 0.1}),
-        style({transform: 'translate3d(2px, 0, 0)', offset: 0.2}),
-        style({transform: 'translate3d(-4px, 0, 0)', offset: 0.3}),
-        style({transform: 'translate3d(4px, 0, 0)', offset: 0.4}),
-        style({transform: 'translate3d(-4px, 0, 0)', offset: 0.5}),
-        style({transform: 'translate3d(4px, 0, 0)', offset: 0.6}),
-        style({transform: 'translate3d(-4px, 0, 0)', offset: 0.7}),
-        style({transform: 'translate3d(2px, 0, 0)', offset: 0.8}),
-        style({transform: 'translate3d(-1px, 0, 0)', offset: 0.9}),
+        style({transform: 'translate3d(-3px, 0, 0)', offset: 0.1}),
+        style({transform: 'translate3d(4px, 0, 0)', offset: 0.2}),
+        style({transform: 'translate3d(-6px, 0, 0)', offset: 0.3}),
+        style({transform: 'translate3d(6px, 0, 0)', offset: 0.4}),
+        style({transform: 'translate3d(-6px, 0, 0)', offset: 0.5}),
+        style({transform: 'translate3d(6px, 0, 0)', offset: 0.6}),
+        style({transform: 'translate3d(-6px, 0, 0)', offset: 0.7}),
+        style({transform: 'translate3d(6px, 0, 0)', offset: 0.8}),
+        style({transform: 'translate3d(-3px, 0, 0)', offset: 0.9}),
       ]))),
     ])
 
@@ -106,6 +106,9 @@ export class LoginComponent implements OnInit {
       }, error => console.log(error));
     }, error => {
       this.shakeMe('state1');
+      setTimeout(() => {
+        this.shakeMe('state1');
+      }, 1000);
       this.showError = true;
       });
   }

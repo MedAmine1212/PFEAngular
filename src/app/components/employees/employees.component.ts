@@ -365,6 +365,14 @@ export class EmployeesComponent implements OnInit {
     this.bottomSheet.open(SetDepartmentPlanningComponent , {
       data: this.clickedDep
     });
+    this.bottomSheet._openedBottomSheetRef.afterDismissed().subscribe(() => {
+      if (this.clickedDep.planning != null) {
+        setTimeout(() => {
+          this.clickedPlanning = this.clickedDep.planning;
+          this.planningDetailsComp.setClickedPl(this.clickedPlanning);
+        }, 600);
+      }
+    });
   }
 
   removePlanning() {
@@ -385,7 +393,7 @@ export class EmployeesComponent implements OnInit {
           }
         }
         this.planningService.modify(pl, pl.planningId, 1).subscribe(() => {
-
+          this.clickedDep.planning = null;
         }, error => console.log(error));
       }, error => console.log(error));
       }
