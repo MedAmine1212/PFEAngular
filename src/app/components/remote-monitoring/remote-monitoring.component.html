@@ -27,15 +27,7 @@
 
         </div>
 
-       <div [@enterSecondAnimation] [ngClass]="getTheme() ? 'bg-premium-dark' :''" *ngIf="router.url === '/RemoteMonitoring' || router.url === '/RemoteMonitoring/(mainCon:Absences)'" class="card mainCard">
-
-          <div class="card-body">
-            <router-outlet  name="secCon"></router-outlet>
-          </div>
-          <div [ngStyle]="{'color': getTheme()? 'white' :''}" class="card-footer">
-            {{time | date: 'dd MMMM yyyy '}} <span [ngStyle]="{'color': getTheme()? 'white' :''}" class="time">{{ time | date: 'HH:mm:ss a' }}</span></div>
-
-        </div>
+      <router-outlet *ngIf="router.url === '/RemoteMonitoring' || router.url === '/RemoteMonitoring/(mainCon:Absences)'"  name="secCon"></router-outlet>
 
       <!--Departments-->
       <app-departments *ngIf="router.url === '/RemoteMonitoring/(mainCon:Departments)'" [@enterAnimation] (outPutData)="setClickedDep($event)"></app-departments>

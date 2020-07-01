@@ -1,0 +1,43 @@
+<div style="margin-top: 30px;margin-left: 40px">
+  <div class="search-wrapper">
+    <div style="position: absolute;background-color: transparent;margin-top: -15px;margin-left: -35px;" [ngClass]="{'search-wrapper active': showHideInput}">
+      <div class="input-holder" [ngClass]=" getTheme() && showHideInput? 'bg-dark' :''">
+        <input [ngStyle]="{'color': getTheme()? 'white' :''}" type="text" [(ngModel)]="searchText" style="width: 100%" class="search-input" placeholder="Search...">
+        <button (click)="showHideInput = true;" class="search-icon"><span></span></button>
+      </div>
+      <button (click)="showHideInput = false;" class="close"></button>
+    </div>
+  </div>
+</div>
+<br><br>
+<div style="width: 100%;text-align:center" *ngIf="attendances.length == 0">
+  <div [ngStyle]="{'color': getTheme()? 'white' :''}" style="font-weight:bolder;font-size:16px;padding-top: 50px">
+    No attendances to show
+  </div>
+</div>
+<table *ngIf="attendances.length > 0" [ngClass]="getTheme() ? 'bg-premium-dark text-light' :'text-dark'"  [ngStyle]="{'color': getTheme()? 'white' :''}" class="align-middle text-light mb-0 table table-borderless table-striped table-hover">
+  <thead>
+  <tr>
+    <th class="text-center">Employee</th>
+    <th class="text-center">Type</th>
+    <th class="text-center">Time</th>
+<!--    <th class="text-center">date</th>-->
+  </tr>
+  </thead>
+  <tbody>
+  <tr [ngClass]="getTheme() ? 'lightText' :''" [ngStyle]="{'color': getTheme()? 'white' :''}" class="emp" *ngFor="let att of attendances | filter: searchText">
+    <td  class="text-center">
+      {{att.user.firstName}} {{att.user.name}}
+    </td>
+    <td  class="text-center">
+      {{att.attendanceType}}
+    </td>
+    <td  class="text-center">
+      {{getTime(att.attendanceTime)}}
+    </td>
+<!--    <td  class="text-center">-->
+<!--      {{att.attendanceDate | date: 'dd MMMM yyyy'}}-->
+<!--    </td>-->
+  </tr>
+  </tbody>
+</table>

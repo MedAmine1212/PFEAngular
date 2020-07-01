@@ -4,11 +4,39 @@ h1{
 }
 .reasons{
   color: black;
+  float: right;
   padding-left: 30px;
-  float:right;
-  font-size: 60%;
   cursor: pointer;
+  font-size: 12px;
 }
 .reasons:hover{
   opacity: 0.9;
+}
+.mainCard{
+  border-radius: 15px !important;
+  min-height: 630px;
+  background-color: white;
+  border: none;
+  margin-left: 90px;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+.card-body{
+  overflow-y: auto;
+}
+.card-footer{
+  border-radius: 0 0 15px 15px !important;
+  border-top: 0 !important;
+  color:black;
+  font-weight: bolder;
+  font-size: 17px;
+}
+
+.time{
+  color: black;
+  margin-left: 80%;
+}
+.chip-list {
+  margin-left: 25px;
+  width: 60%;
 }

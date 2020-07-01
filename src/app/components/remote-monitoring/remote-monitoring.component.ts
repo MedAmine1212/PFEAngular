@@ -76,7 +76,6 @@ export class RemoteMonitoringComponent implements OnInit {
       this.reloadFromWebSocket(res);
     });
   }
-  time = new Date();
   private jwt = new JwtHelperService();
   @ViewChild(EmployeesComponent) employeesComponent: EmployeesComponent;
   @ViewChild(DepartmentsComponent) departmentComponent: DepartmentsComponent;
@@ -98,9 +97,6 @@ export class RemoteMonitoringComponent implements OnInit {
         this.showLoadingText = true;
       }, 200);
       localStorage.cin = this.connectedUser.cin;
-      setInterval(() => {
-        this.time = new Date();
-      }, 1000);
       setTimeout( () => {
         this.connect();
       });

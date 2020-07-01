@@ -1,15 +1,108 @@
-<h1>Absences
-  <span class="reasons" [ngStyle]="{'color':showMotifs ? ' rgb(82,148,226)' : getTheme() ? 'white' : 'grey' }" (click)="showHide(1)">Regitered Reasons</span>
-  <span class="reasons" [ngStyle]="{'color':showPoint ? ' rgb(82,148,226)' : getTheme() ? 'white' : 'grey' }"(click)="showHide(2)">Check-in</span>
-  <span class="reasons" [ngStyle]="{'color':showAbsences ? ' rgb(82,148,226)' : getTheme() ? 'white' : 'grey' }" (click)="showHide(3)">Absences</span>
-</h1>
+<div [@enterSecondAnimation] [ngClass]="getTheme() ? 'bg-premium-dark' :''" class="card mainCard">
+<div class="card-header">
+  <h3 [ngStyle]="{'color': getTheme() ? 'white' :''}" style="margin-top: 15px">
+    Today's Attendance
+    <img height="25" width="25" matTooltip="Live attendance" src="assets/images/stream.png" style="margin-left: 10px"/>
+  </h3>
+</div>
+  <div *ngIf="loading" style="padding-top: 15%;width:100%">
+    <div style="width:200px;margin:auto">
+      <div class="spinner-container" style="">
+        <mat-spinner></mat-spinner>
+      </div>
+    </div>
+  </div>
+  <div class="card-body" *ngIf="!loading">
+    <mat-chip-list aria-label="Filter selection">
+      <mat-label [ngStyle]="{'color': getTheme() ? 'white' :''}">Filter by:</mat-label>
+      <mat-chip style="cursor: pointer" [selected]="selectedFilter == 'employees'" (click)="setFilter('employees')" color="primary">Employees</mat-chip>
+      <mat-chip  style="cursor: pointer" [selected]="selectedFilter == 'departments'" (click)="setFilter('departments')" color="primary">Departments</mat-chip>
+      <mat-chip  style="cursor: pointer" [selected]="selectedFilter == 'plannings'" (click)="setFilter('plannings')" color="primary">Plannings</mat-chip>
+    </mat-chip-list>
+    <br>
+<!--    Employees-->
+    <div [@enterThirdAnimation] *ngIf="selectedFilter =='employees'">
+      <div style="margin:20px;min-height: 300px" [ngClass]="getTheme() ? 'bg-premium-dark' :''" class="card">
+      <app-attendance [attendances]="todaysAttendances"></app-attendance>
+      </div>
+    </div>
+<!--    Departments-->
+    <div [@enterThirdAnimation] *ngIf="selectedFilter == 'departments'">
+      <div style="margin-top: 30px;margin-left: 30px">
+      <div class="search-wrapper">
+        <div style="position: absolute;background-color: transparent;margin-top: -15px;margin-left: -35px;" [ngClass]="{'search-wrapper active': showHideInput}">
+          <div class="input-holder" [ngClass]=" getTheme() && showHideInput? 'bg-dark' :''">
+            <input [ngStyle]="{'color': getTheme()? 'white' :''}" type="text" [(ngModel)]="searchText" style="width: 100%" class="search-input" placeholder="Search...">
+            <button (click)="showHideInput = true;" class="search-icon"><span></span></button>
+          </div>
+          <button (click)="showHideInput = false;" class="close"></button>
+        </div>
+      </div>
+      </div><br>
+      <div style="margin:20px;min-height: 300px" [ngClass]="getTheme() ? 'bg-premium-dark' :''" class="card" *ngFor="let dep of departments | filter: searchText">
+        <div class="card-header">
+          <h3 [ngStyle]="{'color': getTheme() ? 'white' :''}" style="margin-top: 15px">Department {{dep.depName}}
+          </h3>
+        </div>
+        <div class="card-body">
+          <app-attendance [attendances]="getAttByDep(dep)"></app-attendance>
+        </div>
+      </div>
+    </div>
+    <!--    Plannings-->
+    <div [@enterThirdAnimation] *ngIf="selectedFilter == 'plannings'">
+      <div style="margin-top: 30px;margin-left: 30px">
+      <div class="search-wrapper">
+        <div style="position: absolute;background-color: transparent;margin-top: -15px;margin-left: -35px;" [ngClass]="{'search-wrapper active': showHideInput}">
+          <div class="input-holder" [ngClass]=" getTheme() && showHideInput2? 'bg-dark' :''">
+            <input [ngStyle]="{'color': getTheme()? 'white' :''}" type="text" [(ngModel)]="searchText" style="width: 100%" class="search-input" placeholder="Search...">
+            <button (click)="showHideInput = true;" class="search-icon"><span></span></button>
+          </div>
+          <button (click)="showHideInput = false;" class="close"></button>
+        </div>
+      </div>
+      </div><br>
+      <div style="margin:20px;min-height: 300px" [ngClass]="getTheme() ? 'bg-premium-dark' :''" class="card" *ngFor="let pl of plannings  | filter: searchText2">
+        <div class="card-header">
+          <h3 [ngStyle]="{'color': getTheme() ? 'white' :''}" style="margin-top: 15px">Planning {{pl.planningName}}
+          </h3>
+        </div>
+        <div class="card-body">
+          <app-attendance [attendances]="getAttByPl(pl)"></app-attendance>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading" [ngStyle]="{'color': getTheme()? 'white' :''}" class="card-footer">
+    {{time | date: 'dd MMMM yyyy '}}
+    <span [ngStyle]="{'color': getTheme()? 'white' :''}" class="time">{{ time | date: 'HH:mm:ss a' }}</span></div>
+
+</div>
+
+<div *ngIf="!loading" [@enterSecondAnimation] [ngClass]="getTheme() ? 'bg-premium-dark' :''" class="card mainCard">
+  <div class="card-header">
+    <h3 [ngStyle]="{'color': getTheme() ? 'white' :''}" style="width: 100%;margin-top: 15px">
+      <div style="float: left">
+       Employees attendances
+      </div>
+      <span class="reasons" [ngStyle]="{'color':showMotifs ? ' rgb(82,148,226)' : getTheme() ? 'white' : 'grey' }" (click)="showHide(1)">Regitered Reasons</span>
+      <span class="reasons" [ngStyle]="{'color':showAbsences ? ' rgb(82,148,226)' : getTheme() ? 'white' : 'grey' }"(click)="showHide(2)">Absences</span>
+      <span class="reasons" [ngStyle]="{'color':showPoint ? ' rgb(82,148,226)' : getTheme() ? 'white' : 'grey' }" (click)="showHide(3)">Attendence</span>
+    </h3>
+  </div>
+  <div class="card-body" *ngIf="!loading">
+
+
 <div [@enterAnimation] *ngIf="showMotifs">
-<app-motifs-absences></app-motifs-absences>
+  <app-motifs-absences></app-motifs-absences>
 </div>
 <div *ngIf="showPoint" [@enterSecondAnimation]>
-<h1 style="margin-top:20%;margin-left: 28%">Select an employee to show his check-in here</h1>
+  <h1 style="margin-top:20%;margin-left: 28%">Select an employee to show his attendance here</h1>
 </div>
 
 <div *ngIf="showAbsences" [@enterSecondAnimation]>
   <h1 style="margin-top:20%;margin-left: 28%">Select an employee to show his absences here</h1>
+</div>
+  </div>
 </div>
