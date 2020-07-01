@@ -1,34 +1,11 @@
 
-.card{
-  overflow-y: hidden;
-  border-radius: 15px !important;
-  min-height: 600px;
-  background-color: white;
-  border: none;
-}
 .closed-sidebar .app-sidebar{
   width:0px;
 }
 .app-sidebar{
   width:370px;
 }
-.mainCard{
 
-  margin-left: 90px;
-  margin-right: 10px;
-  margin-top: 10px;
-}
-.card-body{
-  max-height: 700px;
-  overflow-y: hidden;
-}
-.card-footer{
-  border-radius: 0 0 15px 15px !important;
-  border-top: 0 !important;
-  color:black;
-  font-weight: bolder;
-  font-size: 17px;
-}
 .container{
   align-content: center;
 }
@@ -76,10 +53,6 @@
 
 .mainTD{
   padding-left: 30px;
-}
-.time{
-  color: black;
-  margin-left: 80%;
 }
 .cardContainer{
   width:100% ;

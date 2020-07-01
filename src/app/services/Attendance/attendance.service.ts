@@ -1,21 +1,18 @@
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Address} from '../../models/Address';
+import {Observable} from 'rxjs';
 import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AddressService {
-  private baseUrl = environment.ipAddress + environment.port + '/address/';
+export class AttendanceService {
+
+  private baseUrl = environment.ipAddress + environment.port + '/att/';
   private headers: HttpHeaders;
   constructor(private http: HttpClient) { }
 
-
-  add(address: Address) {
-    return this.http.post(this.baseUrl + 'add', address);
-  }
 
   list(): Observable<any> {
     return this.http.get(this.baseUrl + 'list' );
@@ -31,6 +28,6 @@ export class AddressService {
   }
 
   findById(id): Observable<any> {
-    return this.http.get(this.baseUrl + 'addressById/'  + id);
+    return this.http.get(this.baseUrl + 'findById/'  + id);
   }
 }

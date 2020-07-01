@@ -60,6 +60,8 @@ import { SetDepartmentPlanningComponent } from './sheets/set-department-planning
 import { ChangePasswordComponent } from './dialogs/dialog-forms/change-password/change-password.component';
 import {MatPasswordStrengthModule} from '@angular-material-extensions/password-strength';
 import {MatCardModule} from '@angular/material/card';
+import {MatChipsModule} from "@angular/material/chips";
+import { AttendanceComponent } from './components/attendance/attendance.component';
 
 
 @NgModule({
@@ -89,6 +91,7 @@ import {MatCardModule} from '@angular/material/card';
     ImportDataBaseComponent,
     SetDepartmentPlanningComponent,
     ChangePasswordComponent,
+    AttendanceComponent,
 
   ],
   imports: [
@@ -128,6 +131,7 @@ import {MatCardModule} from '@angular/material/card';
     MatListModule,
     MatCardModule,
     MatPasswordStrengthModule,
+    MatChipsModule,
   ],
   providers: [AuthenticationGuard, MatSnackBar, MatBottomSheet],
   bootstrap: [AppComponent],

@@ -1,0 +1,8 @@
+.emp:hover{
+  opacity: 0.8;
+  cursor:pointer;
+}
+
+.lightText:hover{
+  color:white !important;
+}
