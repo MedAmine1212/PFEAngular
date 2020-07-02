@@ -23,7 +23,7 @@
 <!--    Employees-->
     <div [@enterThirdAnimation] *ngIf="selectedFilter =='employees'">
       <div style="margin:20px;min-height: 300px" [ngClass]="getTheme() ? 'bg-premium-dark' :''" class="card">
-      <app-attendance [attendances]="todaysAttendances"></app-attendance>
+      <app-attendance [users]="users"></app-attendance>
       </div>
     </div>
 <!--    Departments-->
@@ -45,7 +45,7 @@
           </h3>
         </div>
         <div class="card-body">
-          <app-attendance [attendances]="getAttByDep(dep)"></app-attendance>
+          <app-attendance [users]="getAttByDep(dep)"></app-attendance>
         </div>
       </div>
     </div>
@@ -53,12 +53,12 @@
     <div [@enterThirdAnimation] *ngIf="selectedFilter == 'plannings'">
       <div style="margin-top: 30px;margin-left: 30px">
       <div class="search-wrapper">
-        <div style="position: absolute;background-color: transparent;margin-top: -15px;margin-left: -35px;" [ngClass]="{'search-wrapper active': showHideInput}">
+        <div style="position: absolute;background-color: transparent;margin-top: -15px;margin-left: -35px;" [ngClass]="{'search-wrapper active': showHideInput2}">
           <div class="input-holder" [ngClass]=" getTheme() && showHideInput2? 'bg-dark' :''">
-            <input [ngStyle]="{'color': getTheme()? 'white' :''}" type="text" [(ngModel)]="searchText" style="width: 100%" class="search-input" placeholder="Search...">
-            <button (click)="showHideInput = true;" class="search-icon"><span></span></button>
+            <input [ngStyle]="{'color': getTheme()? 'white' :''}" type="text" [(ngModel)]="searchText2" style="width: 100%" class="search-input" placeholder="Search...">
+            <button (click)="showHideInput2 = true;" class="search-icon"><span></span></button>
           </div>
-          <button (click)="showHideInput = false;" class="close"></button>
+          <button (click)="showHideInput2 = false;" class="close"></button>
         </div>
       </div>
       </div><br>
@@ -68,7 +68,7 @@
           </h3>
         </div>
         <div class="card-body">
-          <app-attendance [attendances]="getAttByPl(pl)"></app-attendance>
+          <app-attendance [users]="getAttByPl(pl)"></app-attendance>
         </div>
       </div>
     </div>
@@ -97,8 +97,60 @@
 <div [@enterAnimation] *ngIf="showMotifs">
   <app-motifs-absences></app-motifs-absences>
 </div>
-<div *ngIf="showPoint" [@enterSecondAnimation]>
-  <h1 style="margin-top:20%;margin-left: 28%">Select an employee to show his attendance here</h1>
+<div *ngIf="showPoint" [@enterSecondAnimation] style="padding: 20px">
+  <h1 style="margin-top:20%;margin-left: 28%" *ngIf="clickedUser == null">Select an employee to show his attendance here</h1>
+  <div style="display: inline-block;width:45%;padding: 15px;margin: 10px" *ngIf="clickedUser != null" [ngClass]="getTheme() ? 'bg-premium-dark' :''" class="card">
+    <h1 >Check-in</h1>
+    <br>
+    <table [ngClass]="getTheme() ? 'bg-premium-dark text-light' :'text-dark'"  [ngStyle]="{'color': getTheme()? 'white' :''}" class="align-middle text-light mb-0 table table-borderless table-striped table-hover">
+      <thead>
+      <tr>
+        <th class="text-center">Date</th>
+        <th class="text-center">Time</th>
+        <th class="text-center">Type</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr [ngClass]="getTheme() ? 'lightText' :''" [ngStyle]="{'color': getTheme()? 'white' :''}" class="emp" *ngFor="let att of userCheckIns">
+        <td  class="text-center">
+          {{att.attendanceDate}}
+        </td>
+        <td  class="text-center">
+          {{getTime(att.attendanceTime)}}
+        </td>
+        <td  class="text-center">
+          {{att.inputType}}
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div style="display: inline-block;width:45%;padding: 15px;margin: 10px" *ngIf="clickedUser != null" [ngClass]="getTheme() ? 'bg-premium-dark' :''" class="card">
+    <h1>Check-out</h1>
+    <br>
+    <table [ngClass]="getTheme() ? 'bg-premium-dark text-light' :'text-dark'"  [ngStyle]="{'color': getTheme()? 'white' :''}" class="align-middle text-light mb-0 table table-borderless table-striped table-hover">
+      <thead>
+      <tr>
+        <th class="text-center">Date</th>
+        <th class="text-center">Time</th>
+        <th class="text-center">Type</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr [ngClass]="getTheme() ? 'lightText' :''" [ngStyle]="{'color': getTheme()? 'white' :''}" class="emp" *ngFor="let att of userCheckOuts">
+        <td  class="text-center">
+          {{att.attendanceDate}}
+        </td>
+        <td  class="text-center">
+          {{getTime(att.attendanceTime)}}
+        </td>
+        <td  class="text-center">
+          {{att.inputType}}
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <div *ngIf="showAbsences" [@enterSecondAnimation]>

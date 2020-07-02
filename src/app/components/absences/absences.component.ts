@@ -9,6 +9,7 @@ import {PlanningService} from '../../services/planning/planning.service';
 import {AttendanceService} from '../../services/Attendance/attendance.service';
 import {Attendance} from '../../models/Attendance';
 import {User} from '../../models/User';
+import {UserService} from '../../services/user/user.service';
 @Component({
   selector: 'app-absences',
   templateUrl: './absences.component.html',
@@ -50,22 +51,26 @@ export class AbsencesComponent implements OnInit {
   time = new Date();
   departments: Department[] = [];
   plannings: Planning[] = [];
+  users: User[] = [];
   selectedFilter: string;
   showHideInput: boolean;
   showHideInput2: boolean;
   searchText;
   searchText2;
-  attendances: Attendance[] = [];
+  userCheckIns: Attendance[];
+  userCheckOuts: Attendance[];
   loading: boolean;
-  todaysAttendances: Attendance[] = [];
-  days: string[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  days: string[] = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATRUDAY'];
   clickedUser: User;
+  currentDay: string;
   constructor(
+    private userService: UserService,
     private attendanceService: AttendanceService,
     private departmentService: DepartmentService,
     private planningService: PlanningService,
     public router: Router, private themeChanger: ThemeChangerService) {
     this.selectedFilter = 'employees';
+    this.currentDay = this.days[this.time.getDay()];
   }
 
   ngOnInit(): void {
@@ -78,14 +83,21 @@ export class AbsencesComponent implements OnInit {
     this.showAbsences = false;
     this.showPoint = true;
   }
-
+  //
+  // const date = new Date(att.attendanceDate.toString());
+  // console.log(date.toDateString());
   reloadData() {
-    this.attendanceService.list().subscribe(r => {
-      this.attendances = r;
-      for (const att of r) {
-        const date = new Date(att.attendanceDate.toString());
-        if ( date.toDateString() === this.time.toDateString()) {
-          this.todaysAttendances.push(att);
+    this.userService.list().subscribe(r => {
+      for (const emp of r) {
+        if ( emp.department.planning.scheduleDays.indexOf(this.currentDay) > -1 ) {
+          for (const att of emp.attendances) {
+            let date: Date;
+            date = new Date(att.attendanceDate);
+            if (date.toDateString() !== this.time.toDateString()) {
+              emp.attendances.splice(emp.attendances.indexOf(att), 1);
+            }
+          }
+          this.users.push(emp);
        }
       }
       this.planningService.list().subscribe(r1 => {
@@ -146,21 +158,20 @@ export class AbsencesComponent implements OnInit {
   }
 
   getAttByDep(dep: Department) {
-    const attToReturn: Attendance[] = [];
-    for (const att of this.todaysAttendances) {
-      if (att.user.department.depId === dep.depId) {
-        attToReturn.push(att);
+    const attToReturn: User[] = [];
+    for (const emp of this.users) {
+      if (emp.department.depId === dep.depId) {
+        attToReturn.push(emp);
       }
     }
     return attToReturn;
   }
 
   getAttByPl(pl: Planning) {
-    console.log('ey ne5dem');
-    const attToReturn: Attendance[] = [];
-    for (const att of this.todaysAttendances) {
-      if (att.user.department.planning.planningId === pl.planningId) {
-        attToReturn.push(att);
+    const attToReturn: User[] = [];
+    for (const emp of this.users) {
+      if (emp.department.planning.planningId === pl.planningId) {
+        attToReturn.push(emp);
       }
     }
     return attToReturn;
@@ -177,6 +188,29 @@ export class AbsencesComponent implements OnInit {
 
   setEmployee(emp: User) {
     this.clickedUser = emp;
-    console.log('Absences: haw l emp mteek ya si zebi sayb zebi 5anmchi nal3b taw ' + emp);
+    this.userCheckOuts = [];
+    this.userCheckIns = [];
+    for (const att of emp.attendances) {
+      if (att.attendanceType === 'CHECK OUT') {
+        this.userCheckOuts.push(att);
+      } else {
+        this.userCheckIns.push(att);
+      }
+    }
+  }
+  getTime(hour: number) {
+    const h = Math.floor(hour / 60);
+    const m = hour % 60;
+    let returnTime: string;
+    returnTime = '';
+    if (h < 10) {
+      returnTime = returnTime + '0';
+    }
+    returnTime = returnTime + h.toString() + ':';
+    if (m < 10) {
+      returnTime = returnTime + '0';
+    }
+    returnTime = returnTime + m.toString();
+    return returnTime;
   }
 }

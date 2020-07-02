@@ -14,34 +14,31 @@
   </div>
 </div>
 <br><br>
-<div style="width: 100%;text-align:center" *ngIf="attendances.length == 0">
+<div style="width: 100%;text-align:center" *ngIf="users.length == 0">
   <div [ngStyle]="{'color': getTheme()? 'white' :''}" style="font-weight:bolder;font-size:16px;padding-top: 50px">
     No attendances to show
   </div>
 </div>
-<table *ngIf="attendances.length > 0" [ngClass]="getTheme() ? 'bg-premium-dark text-light' :'text-dark'"  [ngStyle]="{'color': getTheme()? 'white' :''}" class="align-middle text-light mb-0 table table-borderless table-striped table-hover">
+<table *ngIf="users.length > 0" [ngClass]="getTheme() ? 'bg-premium-dark text-light' :'text-dark'"  [ngStyle]="{'color': getTheme()? 'white' :''}" class="align-middle text-light mb-0 table table-borderless table-striped table-hover">
   <thead>
   <tr>
     <th class="text-center">Employee</th>
-    <th class="text-center">Type</th>
-    <th class="text-center">Time</th>
+    <th class="text-center">Checked-in</th>
+    <th class="text-center">Checked-out</th>
 <!--    <th class="text-center">date</th>-->
   </tr>
   </thead>
   <tbody>
-  <tr [ngClass]="getTheme() ? 'lightText' :''" [ngStyle]="{'color': getTheme()? 'white' :''}" class="emp" *ngFor="let att of attendances | filter: searchText">
-    <td  class="text-center" (mouseenter)="showUserProfile(att.user, $event)" (mouseleave)="hideUserProfile()">
-      {{att.user.firstName}} {{att.user.name}}
+  <tr [ngClass]="getTheme() ? 'lightText' :''" [ngStyle]="{'color': getTheme()? 'white' :''}" class="emp" *ngFor="let emp of users | filter: searchText">
+    <td  class="text-center" (mouseenter)="showUserProfile(emp, $event)" (mouseleave)="hideUserProfile()">
+      {{emp.firstName}} {{emp.name}}
     </td>
     <td  class="text-center">
-      {{att.attendanceType}}
+      <span class="fa fa-circle" matTooltip="{{emp.checkInMsg}}" [ngStyle]="{'color': emp.checkInStatus}"></span>
     </td>
     <td  class="text-center">
-      {{getTime(att.attendanceTime)}}
+      <span class="fa fa-circle" matTooltip="{{emp.checkOutMsg}}" [ngStyle]="{'color': emp.checkOutStatus}"></span>
     </td>
-<!--    <td  class="text-center">-->
-<!--      {{att.attendanceDate | date: 'dd MMMM yyyy'}}-->
-<!--    </td>-->
   </tr>
   </tbody>
 </table>

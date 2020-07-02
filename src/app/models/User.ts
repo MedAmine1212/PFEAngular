@@ -3,6 +3,7 @@ import {Address} from './Address';
 import {Post} from './Post';
 import {UserConfigs} from './UserConfigs';
 import {NotificationMessage} from './NotificationMessage';
+import {Attendance} from './Attendance';
 export class User {
   userId: number;
   cin: string;
@@ -21,4 +22,9 @@ export class User {
   image: string;
   fullImage: any;
   notificationMessages: NotificationMessage[];
+  attendances: Attendance[];
+  checkInStatus: string;
+  checkInMsg: string;
+  checkOutStatus: string;
+  checkOutMsg: string;
   }

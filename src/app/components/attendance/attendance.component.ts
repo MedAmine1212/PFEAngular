@@ -11,15 +11,21 @@ import {User} from '../../models/User';
 export class AttendanceComponent implements OnInit {
   showHideInput: boolean;
   searchText;
-  @Input() attendances: Attendance[];
+  @Input() users: User[];
   showProfile: boolean;
   user: User;
   topProfile: string;
-
+  time = new Date();
   constructor(private attendanceService: AttendanceService, private themeChanger: ThemeChangerService) {
   }
 
   ngOnInit(): void {
+    for (const emp of this.users) {
+        this.getStatus('CHECK IN', emp);
+        setTimeout(() => {
+          this.getStatus('CHECK OUT', emp);
+        });
+      }
   }
 
   getTheme() {
@@ -43,13 +49,62 @@ export class AttendanceComponent implements OnInit {
   }
 
   showUserProfile(user: User, event) {
-      this.topProfile = (event.target.offsetTop - 15) + 'px';
-      this.user = user;
-      this.showProfile = true;
+    this.topProfile = (event.target.offsetTop - 15) + 'px';
+    this.user = user;
+    this.showProfile = true;
   }
 
   hideUserProfile() {
     this.showProfile = false;
     this.user = null;
+  }
+
+  getStatus(type: string, emp: User) {
+    // emp.department.planning.schedule.endHour > this.time.getMinutes() + (this.time.getHours() * 60)
+    if (type === 'CHECK OUT') {
+      for (const att of emp.attendances) {
+        if (att.attendanceType === 'CHECK OUT') {
+          emp.checkOutStatus = 'lightgreen';
+          emp.checkOutMsg = 'Checked out at: ' + this.getTime(att.attendanceTime);
+          return;
+        }
+      }
+      if (emp.checkInStatus != null) {
+        if (emp.checkInStatus === 'red') {
+
+          emp.checkOutStatus =  'red';
+          emp.checkOutMsg = 'Absent !';
+        } else {
+          emp.checkOutStatus =  'grey';
+          emp.checkOutMsg = 'didn\'t check-out yet';
+        }
+      } else {
+        emp.checkOutStatus =  'grey';
+        emp.checkOutMsg = 'didn\'t check-out yet';
+      }
+      return;
+      } else  {
+        for (const att of emp.attendances) {
+          if (att.attendanceType === 'CHECK IN') {
+            emp.checkInStatus = 'lightgreen';
+            emp.checkInMsg = 'Cheked-in at ' + this.getTime(att.attendanceTime);
+            return;
+          }
+        }
+        if (emp.department.planning.schedule.startHour > this.time.getMinutes() + (this.time.getHours() * 60)) {
+          emp.checkInStatus =  'grey';
+          emp.checkInMsg = 'Didn\'t check-in yet ';
+          return;
+        } else if (emp.department.planning.schedule.startHour === this.time.getMinutes() + (this.time.getHours() * 60)) {
+          emp.checkInStatus =  'yellow';
+          emp.checkInMsg = 'Didn\'t check-in yey. Late ! ';
+          return;
+        } else {
+          emp.checkInStatus =  'red';
+          emp.checkInMsg = 'Absent ! ';
+          // ab3th zok om l absence l zok om l back !!!
+          return;
+        }
+    }
   }
 }

@@ -1,5 +1,4 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Schedule} from '../../models/Schedule';
 import {ScheduleService} from '../../services/schedule/schedule.service';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {AddPlanningComponent} from '../../dialogs/dialog-forms/add-planning/add-planning.component';
@@ -72,7 +71,7 @@ export class TimetablesComponent implements OnInit {
     public dialog: MatDialog, private  scheduleService: ScheduleService, private  planningService: PlanningService) {
     this.clickedPlanning = null;
     this.hours = Array(24).fill(6).map((x, i) => i);
-    this.days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    this.days = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'];
     this.startMinutes = 0;
     this.endMinutes = 0;
     this.pauseStartMinutes = 0;

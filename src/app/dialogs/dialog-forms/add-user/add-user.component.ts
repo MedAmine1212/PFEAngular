@@ -91,7 +91,12 @@ export class AddUserComponent implements  OnInit  {
     userConfigs: [],
     image: '',
     fullImage: null,
-    notificationMessages: []
+    notificationMessages: [],
+    attendances: null,
+    checkInStatus: null,
+    checkInMsg: null,
+    checkOutStatus: null,
+    checkOutMsg: null,
   };
   address1: Address = {
     addressId: null,
