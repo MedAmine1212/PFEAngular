@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {animate, group, state, style, transition, trigger} from '@angular/animations';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 import {Router} from '@angular/router';
@@ -10,6 +10,7 @@ import {AttendanceService} from '../../services/Attendance/attendance.service';
 import {Attendance} from '../../models/Attendance';
 import {User} from '../../models/User';
 import {UserService} from '../../services/user/user.service';
+import {HoveredUserService} from "../../services/hoveredUser/hovered-user.service";
 @Component({
   selector: 'app-absences',
   templateUrl: './absences.component.html',
@@ -64,6 +65,7 @@ export class AbsencesComponent implements OnInit {
   clickedUser: User;
   currentDay: string;
   constructor(
+    private hoveredUserService: HoveredUserService,
     private userService: UserService,
     private attendanceService: AttendanceService,
     private departmentService: DepartmentService,
@@ -178,6 +180,11 @@ export class AbsencesComponent implements OnInit {
   }
 
   setFilter(filter: string) {
+    if (filter === 'employees') {
+      this.hoveredUserService.setPlusTop(0);
+    } else {
+      this.hoveredUserService.setPlusTop(120);
+    }
     if (filter !== this.selectedFilter) {
     this.selectedFilter = '';
     setTimeout(() => {

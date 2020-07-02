@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 import {AttendanceService} from '../../services/Attendance/attendance.service';
-import {Attendance} from '../../models/Attendance';
 import {User} from '../../models/User';
+import {HoveredUserService} from '../../services/hoveredUser/hovered-user.service';
 @Component({
   selector: 'app-attendance',
   templateUrl: './attendance.component.html',
@@ -16,7 +16,10 @@ export class AttendanceComponent implements OnInit {
   user: User;
   topProfile: string;
   time = new Date();
-  constructor(private attendanceService: AttendanceService, private themeChanger: ThemeChangerService) {
+  leftProfile: string;
+  constructor(
+    private hoveredUserService: HoveredUserService,
+    private attendanceService: AttendanceService, private themeChanger: ThemeChangerService) {
   }
 
   ngOnInit(): void {
@@ -49,14 +52,18 @@ export class AttendanceComponent implements OnInit {
   }
 
   showUserProfile(user: User, event) {
-    this.topProfile = (event.target.offsetTop - 15) + 'px';
+    console.log(event.target.offsetLeft);
+    this.topProfile = (event.relatedTarget.offsetTop + this.hoveredUserService.getPlusTop() + 200) + 'px';
+    this.leftProfile = (event.target.offsetLeft + 150) + 'px';
+    this.hoveredUserService.setTop(this.topProfile);
+    this.hoveredUserService.setLeft(this.leftProfile);
     this.user = user;
-    this.showProfile = true;
+    this.hoveredUserService.setHoveredUser(user);
   }
 
   hideUserProfile() {
-    this.showProfile = false;
     this.user = null;
+    this.hoveredUserService.setHoveredUser(null);
   }
 
   getStatus(type: string, emp: User) {

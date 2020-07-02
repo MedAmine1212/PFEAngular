@@ -54,5 +54,7 @@ export class WebSocketAPIService {
     this.remoteMonitoringCompSource.next(message);
   }
 
-
+getRemoteMonitoring(): any {
+    return this.remoteMonitoringCompSource;
+}
 }
