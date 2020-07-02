@@ -1,4 +1,4 @@
-import {Component, HostListener, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {Department} from '../../models/Department';

@@ -16,6 +16,7 @@ import {MatSnackBar, MatSnackBarConfig} from '@angular/material/snack-bar';
 import {DeleteDialogComponent} from '../../dialogs/delete-dialog/delete-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {ImportDataBaseComponent} from '../../dialogs/import-data-base/import-data-base.component';
+import {HoveredUserService} from '../../services/hoveredUser/hovered-user.service';
 
 @Component({
   selector: 'app-nav',
@@ -43,6 +44,7 @@ export class NavComponent implements OnInit {
   selectedFile: File;
   private sqlData: FormData;
   constructor(
+    private hoveredUserService: HoveredUserService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
     private dataBaseExportImportService: DataBaseExportImportService,
@@ -266,4 +268,11 @@ export class NavComponent implements OnInit {
     });
     }
 
+  setClosedSideBarValue() {
+    if (this.hoveredUserService.getClosedSideBarValue() === 150) {
+    this.hoveredUserService.seClosedSideBarValue(200);
+    } else {
+      this.hoveredUserService.seClosedSideBarValue(150);
+    }
+  }
 }

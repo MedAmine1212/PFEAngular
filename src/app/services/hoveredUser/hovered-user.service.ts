@@ -13,8 +13,10 @@ export class HoveredUserService {
   private hoveredUser: User = null;
   top: string;
   Left: string;
+  private closedSideBarValue: number;
   constructor(private webSocketAPIService: WebSocketAPIService) {
     this.plusTop = 0;
+    this.closedSideBarValue = 150;
   }
 
   public setHoveredUser(user: User) {
@@ -41,5 +43,12 @@ export class HoveredUserService {
   }
   public getPlusTop() {
     return this.plusTop;
+  }
+  public getClosedSideBarValue() {
+    return this.closedSideBarValue;
+  }
+
+  public seClosedSideBarValue(value) {
+    this.closedSideBarValue = value;
   }
 }

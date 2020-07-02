@@ -52,9 +52,8 @@ export class AttendanceComponent implements OnInit {
   }
 
   showUserProfile(user: User, event) {
-    console.log(event.target.offsetLeft);
     this.topProfile = (event.relatedTarget.offsetTop + this.hoveredUserService.getPlusTop() + 200) + 'px';
-    this.leftProfile = (event.target.offsetLeft + 150) + 'px';
+    this.leftProfile = (event.target.offsetLeft + this.hoveredUserService.getClosedSideBarValue()) + 'px';
     this.hoveredUserService.setTop(this.topProfile);
     this.hoveredUserService.setLeft(this.leftProfile);
     this.user = user;
