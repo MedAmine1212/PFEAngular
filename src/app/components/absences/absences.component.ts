@@ -12,6 +12,8 @@ import {User} from '../../models/User';
 import {UserService} from '../../services/user/user.service';
 import {HoveredUserService} from '../../services/hoveredUser/hovered-user.service';
 import {Absence} from '../../models/Absence';
+import {DeleteDialogComponent} from '../../dialogs/delete-dialog/delete-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-absences',
@@ -67,6 +69,7 @@ export class AbsencesComponent implements OnInit {
   currentDay: string;
   loadingUser: boolean;
   constructor(
+    public dialog: MatDialog,
     private hoveredUserService: HoveredUserService,
     private userService: UserService,
     private attendanceService: AttendanceService,
@@ -238,6 +241,14 @@ export class AbsencesComponent implements OnInit {
   }
 
   openAbsenceVerificationSheet(abs: Absence) {
-
-  }
+      const dialogRef = this.dialog.open(DeleteDialogComponent, {
+        width: '400px',
+        height: '380',
+        data: [status, 'updateAbsence']
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+        }
+      });
+    }
 }

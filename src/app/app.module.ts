@@ -61,7 +61,6 @@ import {MatPasswordStrengthModule} from '@angular-material-extensions/password-s
 import {MatCardModule} from '@angular/material/card';
 import {MatChipsModule} from '@angular/material/chips';
 import { AttendanceComponent } from './components/attendance/attendance.component';
-import { AbsenceVerificationComponent } from './sheets/absence-verification/absence-verification.component';
 
 
 @NgModule({
@@ -91,7 +90,6 @@ import { AbsenceVerificationComponent } from './sheets/absence-verification/abse
     SetDepartmentPlanningComponent,
     ChangePasswordComponent,
     AttendanceComponent,
-    AbsenceVerificationComponent,
 
   ],
   imports: [
