@@ -91,6 +91,9 @@ export class RemoteMonitoringComponent implements OnInit {
   ngOnInit() {
     this.showSite = false;
     this.userService.findUserWithToken().subscribe( ress => {
+      if(ress == null){
+        this.authService.loggedOut();
+      }
       // @ts-ignore
       this.connectedUser = ress;
       // @ts-ignore
@@ -114,9 +117,7 @@ export class RemoteMonitoringComponent implements OnInit {
         window.location.reload();
       }
     }, error => {
-      console.log(error);
       this.authService.loggedOut();
-      window.location.reload();
     });
   }
   reloadJs() {

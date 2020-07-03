@@ -58,7 +58,8 @@ export class AuthenticationService  {
 
   loggedOut(): void {
     localStorage.removeItem('token');
-    localStorage.cin = '';
+    localStorage.removeItem('cin');
+    window.location.reload();
   }
 
 
