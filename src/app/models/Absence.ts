@@ -1,3 +1,5 @@
+import {User} from './User';
+
 export class Absence {
   idAbsence: number;
   absenceDate: Date;
@@ -6,4 +8,5 @@ export class Absence {
   reasonStatus: string;
   revisedBy: string;
   absentMinutes: number;
+  user: User;
 }

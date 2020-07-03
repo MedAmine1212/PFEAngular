@@ -23,9 +23,9 @@ export class DeleteDialogComponent implements OnInit {
     let message: string;
     message = 'Are you sure you want to ';
     if (this.data[1] === 'updateAbsence') {
-      if (this.data[2] === 'btn btn-warning') {
+      if (this.data[0] === 'btn btn-danger') {
         message = message + 'reject the provided reason';
-      } else if (this.data[2] === 'btn btn-success') {
+      } else if (this.data[0] === 'btn btn-success') {
         message = message + 'accept the provided reason';
       }
     } else if (this.data[1] === 'dataBase') {
