@@ -1,5 +1,5 @@
-import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {animate, group, state, style, transition, trigger} from '@angular/animations';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {animate, style, transition, trigger} from '@angular/animations';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 import {Router} from '@angular/router';
 import {Department} from '../../models/Department';
@@ -212,8 +212,20 @@ export class AbsencesComponent implements OnInit {
           this.userCheckIns.push(att);
         }
       }
-      // @ts-ignore
-      window.scroll(1, this.empAttDiv.nativeElement.offsetTop - 26);
+      // scroll to Absences div
+      let acceleration = 1;
+      const interval = setInterval(() => {
+        // @ts-ignore
+
+        if (window.scrollY < (this.empAttDiv.nativeElement.offsetTop - 100)) {
+          window.scroll(1, window.scrollY + ((window.innerHeight / 5) * acceleration) );
+          acceleration = acceleration + 0.1;
+        } else {
+          clearInterval(interval);
+          // @ts-ignore
+          window.scroll(1, this.empAttDiv.nativeElement.offsetTop - 26);
+      }
+    }, 1);
       setTimeout(() => {
         this.loadingUser = false;
       }, 600);
