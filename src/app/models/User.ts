@@ -4,6 +4,7 @@ import {Post} from './Post';
 import {UserConfigs} from './UserConfigs';
 import {NotificationMessage} from './NotificationMessage';
 import {Attendance} from './Attendance';
+import {Absence} from './Absence';
 export class User {
   userId: number;
   cin: string;
@@ -23,6 +24,7 @@ export class User {
   fullImage: any;
   notificationMessages: NotificationMessage[];
   attendances: Attendance[];
+  absences: Absence[];
   checkInStatus: string;
   checkInMsg: string;
   checkOutStatus: string;

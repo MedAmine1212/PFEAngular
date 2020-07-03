@@ -22,7 +22,13 @@ export class DeleteDialogComponent implements OnInit {
   deleteMessage() {
     let message: string;
     message = 'Are you sure you want to ';
-    if (this.data[1] === 'dataBase') {
+    if (this.data[1] === 'updateAbsence') {
+      if (this.data[2] === 'btn btn-warning') {
+        message = message + 'reject the provided reason';
+      } else if (this.data[2] === 'btn btn-success') {
+        message = message + 'accept the provided reason';
+      }
+    } else if (this.data[1] === 'dataBase') {
       message = message + 'overwrite your current data base';
     } else if (this.data[1] === 'rollback') {
       message = message + 'perform a rollback ';

@@ -10,7 +10,9 @@ import {AttendanceService} from '../../services/Attendance/attendance.service';
 import {Attendance} from '../../models/Attendance';
 import {User} from '../../models/User';
 import {UserService} from '../../services/user/user.service';
-import {HoveredUserService} from "../../services/hoveredUser/hovered-user.service";
+import {HoveredUserService} from '../../services/hoveredUser/hovered-user.service';
+import {Absence} from '../../models/Absence';
+
 @Component({
   selector: 'app-absences',
   templateUrl: './absences.component.html',
@@ -20,7 +22,7 @@ import {HoveredUserService} from "../../services/hoveredUser/hovered-user.servic
       'enterAnimation', [
         transition(':enter', [
           style({transform: 'translateY(-50%)', opacity: 0}),
-          animate('0.3s', style({transform: 'translateX(0)', opacity: 1}))
+          animate(500, style({transform: 'translateX(0)', opacity: 1}))
         ])
       ]
     ),
@@ -28,7 +30,7 @@ import {HoveredUserService} from "../../services/hoveredUser/hovered-user.servic
       'enterSecondAnimation', [
         transition(':enter', [
           style({transform: 'translateY(-400%)', opacity: 0}),
-          animate('0.3s', style({transform: 'translateX(0)', opacity: 1}))
+          animate(500, style({transform: 'translateX(0)', opacity: 1}))
         ])
       ]
     ),
@@ -46,7 +48,6 @@ import {HoveredUserService} from "../../services/hoveredUser/hovered-user.servic
   ]
 })
 export class AbsencesComponent implements OnInit {
-  showMotifs: boolean;
   showPoint: boolean;
   showAbsences: boolean;
   time = new Date();
@@ -64,6 +65,7 @@ export class AbsencesComponent implements OnInit {
   days: string[] = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATRUDAY'];
   clickedUser: User;
   currentDay: string;
+  loadingUser: boolean;
   constructor(
     private hoveredUserService: HoveredUserService,
     private userService: UserService,
@@ -81,7 +83,6 @@ export class AbsencesComponent implements OnInit {
     setInterval(() => {
       this.time = new Date();
     }, 1000);
-    this.showMotifs = false;
     this.showAbsences = false;
     this.showPoint = true;
   }
@@ -141,16 +142,10 @@ export class AbsencesComponent implements OnInit {
 
   showHide(x: number) {
     if (x === 1) {
-      this.showAbsences = false;
-      this.showMotifs = true;
-      this.showPoint = false;
-    } else if (x === 2) {
       this.showAbsences = true;
-      this.showMotifs = false;
       this.showPoint = false;
     } else {
       this.showAbsences = false;
-      this.showMotifs = false;
       this.showPoint = true;
     }
   }
@@ -194,6 +189,7 @@ export class AbsencesComponent implements OnInit {
   }
 
   setEmployee(emp: User) {
+    this.loadingUser = true;
     this.clickedUser = emp;
     this.userCheckOuts = [];
     this.userCheckIns = [];
@@ -204,8 +200,11 @@ export class AbsencesComponent implements OnInit {
         this.userCheckIns.push(att);
       }
     }
+    setTimeout(() => {
+      this.loadingUser = false;
+    }, 600);
   }
-  getTime(hour: number) {
+  getTime(hour: number, sender) {
     const h = Math.floor(hour / 60);
     const m = hour % 60;
     let returnTime: string;
@@ -213,11 +212,32 @@ export class AbsencesComponent implements OnInit {
     if (h < 10) {
       returnTime = returnTime + '0';
     }
-    returnTime = returnTime + h.toString() + ':';
+    returnTime = returnTime + h.toString();
+    if (sender === 2) {
+      returnTime = returnTime + 'h';
+    }
+    returnTime = returnTime + ':';
     if (m < 10) {
       returnTime = returnTime + '0';
     }
     returnTime = returnTime + m.toString();
+    if (sender === 2) {
+      returnTime = returnTime + 'mn';
+    }
     return returnTime;
+  }
+
+  getMessage(reasonStatus: string) {
+    if (reasonStatus === 'btn btn-warning') {
+      return 'Not verified yet';
+    } else if (reasonStatus === 'btn btn-success') {
+      return 'Accepted';
+    } else {
+      return 'Rejected !';
+    }
+  }
+
+  openAbsenceVerificationSheet(abs: Absence) {
+
   }
 }

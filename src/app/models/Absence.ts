@@ -3,6 +3,7 @@ export class Absence {
   absenceDate: Date;
   absenceType: string;
   reason: string;
-  reasonStatus: number;
+  reasonStatus: string;
+  revisedBy: string;
   absentMinutes: number;
 }
