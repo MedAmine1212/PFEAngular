@@ -3,6 +3,9 @@ import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.ser
 import {AttendanceService} from '../../services/Attendance/attendance.service';
 import {User} from '../../models/User';
 import {HoveredUserService} from '../../services/hoveredUser/hovered-user.service';
+import {Absence} from '../../models/Absence';
+import {DateFormatter} from 'ngx-bootstrap';
+import {AbsenceService} from '../../services/absence/absence.service';
 @Component({
   selector: 'app-attendance',
   templateUrl: './attendance.component.html',
@@ -12,12 +15,12 @@ export class AttendanceComponent implements OnInit {
   showHideInput: boolean;
   searchText;
   @Input() users: User[];
-  showProfile: boolean;
   user: User;
   topProfile: string;
   time = new Date();
   leftProfile: string;
   constructor(
+    private absenceService: AbsenceService,
     private hoveredUserService: HoveredUserService,
     private attendanceService: AttendanceService, private themeChanger: ThemeChangerService) {
   }
@@ -77,7 +80,6 @@ export class AttendanceComponent implements OnInit {
       }
       if (emp.checkInStatus != null) {
         if (emp.checkInStatus === 'red') {
-
           emp.checkOutStatus =  'red';
           emp.checkOutMsg = 'Absent !';
         } else {
@@ -103,14 +105,44 @@ export class AttendanceComponent implements OnInit {
           return;
         } else if (emp.department.planning.schedule.startHour === this.time.getMinutes() + (this.time.getHours() * 60)) {
           emp.checkInStatus =  'yellow';
-          emp.checkInMsg = 'Didn\'t check-in yey. Late ! ';
+          emp.checkInMsg = 'Didn\'t check-in yet. Late ! ';
           return;
         } else {
           emp.checkInStatus =  'red';
           emp.checkInMsg = 'Absent ! ';
-          // ab3th zok om l absence l zok om l back !!!
+          // creating absence
+          const format = new DateFormatter();
+          if (emp.absences.length > 0) {
+            // tslint:disable-next-line:triple-equals
+          if (emp.absences[emp.absences.length - 1].absenceDate != format.format(new Date(), 'YYYY-MM-DD', null)) {
+            this.createAbsence(emp);
+          } else {
+            this.checkAbsence(emp.absences[emp.absences.length - 1]);
+          }
+          } else {
+            this.createAbsence(emp);
+          }
           return;
         }
     }
+  }
+  checkAbsence(abs: Absence) {
+    if (abs.absenceType !== 'All day') {
+      abs.absenceType = 'All day';
+      abs.absentMinutes = 0;
+      this.absenceService.modify(abs, abs.idAbsence).subscribe(() => {}, error => console.log(error));
+    }
+  }
+  createAbsence(emp: User) {
+    const format = new DateFormatter();
+    const absent: Absence = new Absence();
+    absent.user = emp;
+    absent.absentMinutes = 0;
+    absent.absenceDate = format.format(new Date(), 'YYYY-MM-DD', null);
+    absent.absenceType = 'All day';
+    console.log(absent);
+    this.absenceService.add(absent).subscribe(res => {
+      console.log(res);
+    }, error => console.log(error));
   }
 }

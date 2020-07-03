@@ -9,3 +9,13 @@
 .fa-circle{
   font-size: 25px;
 }
+
+::ng-deep .dbMenu {
+  height: 500px;
+  border: none;
+  box-shadow: none;
+  overflow: hidden;
+  background-color: black;
+  padding-top: -500px;
+  width: 300px;
+}

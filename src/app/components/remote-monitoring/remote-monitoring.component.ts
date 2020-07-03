@@ -55,6 +55,18 @@ import {HoveredUserService} from '../../services/hoveredUser/hovered-user.servic
           animate('0ms', style({transform: 'translateX(100%)', opacity: 0}))
         ])
       ]
+    ),
+    trigger(
+      'enterThirdAnimation', [
+        transition(':enter', [
+          style({transform: 'translateY(100%)'}),
+          animate('300ms', style({transform: 'translateY(0)'}))
+        ]),
+        transition(':leave', [
+          style({transform: 'translateY(0)'}),
+          animate('300ms', style({transform: 'translateY(100%)'}))
+        ])
+      ]
     )
   ],
   templateUrl: './remote-monitoring.component.html',
@@ -96,6 +108,7 @@ export class RemoteMonitoringComponent implements OnInit {
   showHoveredUser: boolean;
   topHoveredUser: string;
   leftHoveredUser: string;
+  window: Window = window;
 
   ngOnInit() {
     this.showSite = false;

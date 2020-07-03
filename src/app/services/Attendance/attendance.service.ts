@@ -32,7 +32,6 @@ export class AttendanceService {
   }
 
   findTodaysAttendancesByUser(user): Observable<any> {
-    console.log(user);
     return this.http.get(this.baseUrl + 'findByUserAndDate', user);
   }
 }

@@ -80,7 +80,7 @@
 
 </div>
 
-<div *ngIf="!loading" [@enterSecondAnimation] [ngClass]="getTheme() ? 'bg-premium-dark' :''" class="card mainCard">
+<div *ngIf="!loading" #empAtt [@enterThirdAnimation] [ngClass]="getTheme() ? 'bg-premium-dark' :''" class="card mainCard">
   <div class="card-header">
     <h3 [ngStyle]="{'color': getTheme() ? 'white' :''}" style="width: 100%;margin-top: 15px">
       <div style="float: left">
@@ -90,7 +90,7 @@
       <span class="reasons" [ngStyle]="{'color':showPoint ? ' rgb(82,148,226)' : getTheme() ? 'white' : 'grey' }" (click)="showHide(2)">Attendence</span>
     </h3>
   </div>
-  <div class="card-body" *ngIf="!loading">
+  <div class="card-body" style="max-height: 700px;overflow-y: auto" *ngIf="!loading">
 
 <div *ngIf="showPoint" [@enterSecondAnimation]>
   <h1 style="margin-top:20%;margin-left: 28%" *ngIf="clickedUser == null">Select an employee to show his attendance here</h1>
@@ -152,7 +152,7 @@
 
 <div *ngIf="showAbsences" [@enterSecondAnimation]>
   <h1 *ngIf="clickedUser == null" style="margin-top:20%;margin-left: 28%">Select an employee to show his absences here</h1>
-  <h1 *ngIf="clickedUser != null && clickedUser.absences.length == 0" style="margin-top:20%;margin-left: 37%">No absences to show</h1>
+  <h1 *ngIf="clickedUser != null && clickedUser.absences.length == 0 && !loadingUser" style="margin-top:20%;margin-left: 37%">No absences to show</h1>
   <div [@enterThirdAnimation] *ngIf="!loadingUser && clickedUser != null && clickedUser.absences.length > 0">
     <div style="width:100%;padding: 15px;margin: 10px" *ngIf="clickedUser != null" [ngClass]="getTheme() ? 'bg-premium-dark' :''" class="card">
 
@@ -167,7 +167,7 @@
         <tbody>
         <tr [ngClass]="getTheme() ? 'lightText' :''" [ngStyle]="{'color': getTheme()? 'white' :''}" class="emp" *ngFor="let abs of clickedUser.absences">
           <td  class="text-center">
-            {{abs.absenceDate}}
+            {{abs.absenceDate}} <span *ngIf="abs.absenceDate == format.format(date, 'YYYY-MM-DD', null)" style="margin-right: -45px;color: red"> Today</span>
           </td>
           <td  class="text-center">
            {{abs.absenceType}} <span *ngIf="abs.absenceType != 'All day'"> (By: {{getTime(abs.absentMinutes, 2)}})</span>

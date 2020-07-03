@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {animate, group, state, style, transition, trigger} from '@angular/animations';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 import {Router} from '@angular/router';
@@ -14,6 +14,8 @@ import {HoveredUserService} from '../../services/hoveredUser/hovered-user.servic
 import {Absence} from '../../models/Absence';
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import {AbsenceVerificationComponent} from '../../sheets/absence-verification/absence-verification.component';
+import {DateFormatter} from 'ngx-bootstrap';
+import {AbsenceService} from '../../services/absence/absence.service';
 @Component({
   selector: 'app-absences',
   templateUrl: './absences.component.html',
@@ -49,6 +51,9 @@ import {AbsenceVerificationComponent} from '../../sheets/absence-verification/ab
   ]
 })
 export class AbsencesComponent implements OnInit {
+  @ViewChild('empAtt') empAttDiv: HTMLDivElement;
+  format = new DateFormatter();
+  date = new Date();
   showPoint: boolean;
   showAbsences: boolean;
   time = new Date();
@@ -68,6 +73,7 @@ export class AbsencesComponent implements OnInit {
   currentDay: string;
   loadingUser: boolean;
   constructor(
+    private absenceService: AbsenceService,
     private bottomSheet: MatBottomSheet,
     private hoveredUserService: HoveredUserService,
     private userService: UserService,
@@ -192,19 +198,37 @@ export class AbsencesComponent implements OnInit {
 
   setEmployee(emp: User) {
     this.loadingUser = true;
-    this.clickedUser = emp;
-    this.userCheckOuts = [];
-    this.userCheckIns = [];
-    for (const att of emp.attendances) {
-      if (att.attendanceType === 'CHECK OUT') {
-        this.userCheckOuts.push(att);
-      } else {
-        this.userCheckIns.push(att);
+    if (emp != null) {
+    this.absenceService.listByUser(emp).subscribe(r => {
+      emp.absences = r;
+      this.clickedUser = emp;
+      this.clickedUser.absences.reverse();
+      this.userCheckOuts = [];
+      this.userCheckIns = [];
+      for (const att of emp.attendances) {
+        if (att.attendanceType === 'CHECK OUT') {
+          this.userCheckOuts.push(att);
+        } else {
+          this.userCheckIns.push(att);
+        }
       }
-    }
-    setTimeout(() => {
-      this.loadingUser = false;
+      // @ts-ignore
+      window.scroll(1, this.empAttDiv.nativeElement.offsetTop - 26);
+      setTimeout(() => {
+        this.loadingUser = false;
+      }, 600);
+    }, error => {
+      console.log(error);
+      setTimeout(() => {
+        this.loadingUser = false;
     }, 600);
+    });
+    } else {
+      this.clickedUser = null;
+      setTimeout(() => {
+        this.loadingUser = false;
+      }, 300);
+    }
   }
   getTime(hour: number, sender) {
     const h = Math.floor(hour / 60);

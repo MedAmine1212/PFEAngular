@@ -37,6 +37,7 @@ import {DeleteDialogComponent} from '../../dialogs/delete-dialog/delete-dialog.c
 })
 export class TimetablesComponent implements OnInit {
 
+  @ViewChild('schDiv') schDiv: HTMLDivElement;
   @ViewChild(PlanningDetailsComponent) planningDetailsComp: PlanningDetailsComponent;
   @ViewChild(SchedulesComponent) schComp: SchedulesComponent;
   userConfig: UserConfigs = new UserConfigs();
@@ -324,6 +325,8 @@ export class TimetablesComponent implements OnInit {
       this.clickedPlanning = pl;
       this.planningDetailsComp.setClickedPl(pl);
       this.schComp.setClickedPl(pl);
+      // @ts-ignore
+      window.scroll(1, this.schDiv.nativeElement.offsetTop - 26);
     }
   }
   getTheme() {
