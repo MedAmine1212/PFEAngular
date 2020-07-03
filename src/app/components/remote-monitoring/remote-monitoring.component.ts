@@ -1,4 +1,4 @@
-import {Component, HostListener, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {Department} from '../../models/Department';
@@ -16,6 +16,7 @@ import {NavComponent} from '../nav/nav.component';
 import {PostsComponent} from '../posts/posts.component';
 import {DataBaseExportImportService} from '../../services/dataBaseImportExport/data-base-export-import.service';
 import {AbsencesComponent} from '../absences/absences.component';
+import {HoveredUserService} from '../../services/hoveredUser/hovered-user.service';
 @Component({
   selector: 'app-remmote-monitoring',
   animations: [
@@ -54,6 +55,18 @@ import {AbsencesComponent} from '../absences/absences.component';
           animate('0ms', style({transform: 'translateX(100%)', opacity: 0}))
         ])
       ]
+    ),
+    trigger(
+      'enterThirdAnimation', [
+        transition(':enter', [
+          style({transform: 'translateY(100%)'}),
+          animate('300ms', style({transform: 'translateY(0)'}))
+        ]),
+        transition(':leave', [
+          style({transform: 'translateY(0)'}),
+          animate('300ms', style({transform: 'translateY(100%)'}))
+        ])
+      ]
     )
   ],
   templateUrl: './remote-monitoring.component.html',
@@ -68,7 +81,9 @@ export class RemoteMonitoringComponent implements OnInit {
   connectedUser: User;
   loading: boolean;
   clickedEmp: User;
+  hoveredUser: User;
   constructor(
+    private hoveredUserService: HoveredUserService,
     private dataBaseExportImportService: DataBaseExportImportService,
     private snackBar: MatSnackBar,
     private userService: UserService,
@@ -76,6 +91,9 @@ export class RemoteMonitoringComponent implements OnInit {
     public router: Router, private authService: AuthenticationService, private themeChanger: ThemeChangerService) {
     this.webSocketAPI.remoteMonitoringComp.subscribe(res => {
       this.reloadFromWebSocket(res);
+    });
+    this.hoveredUserService.remoteMonitoringComp2.subscribe( () => {
+      this.getHoveredUser();
     });
   }
   private jwt = new JwtHelperService();
@@ -87,6 +105,10 @@ export class RemoteMonitoringComponent implements OnInit {
   @ViewChild(AbsencesComponent) absencesComponent: AbsencesComponent;
   showLoadingText: boolean;
   showSite: boolean;
+  showHoveredUser: boolean;
+  topHoveredUser: string;
+  leftHoveredUser: string;
+  window: Window = window;
 
   ngOnInit() {
     this.showSite = false;
@@ -156,6 +178,7 @@ connect() {
 }
 
 public reloadFromWebSocket(message) {
+    if (message != null) {
   if (this.connectedUser != null) {
     const webSocketMessage = JSON.parse(message.body).socketMessage;
     if (webSocketMessage == null) {
@@ -195,6 +218,7 @@ public reloadFromWebSocket(message) {
       }
       }
     }
+    }
 }
   openSnackBar(message: string, action) {
     setTimeout(() => {
@@ -229,5 +253,15 @@ public reloadFromWebSocket(message) {
         this.absencesComponent.setEmployee(emp);
       }
     }, 1);
+  }
+
+  getHoveredUser() {
+    this.showHoveredUser = false;
+    this.hoveredUser = this.hoveredUserService.getHoveredUser();
+    if (this.hoveredUser != null) {
+      this.topHoveredUser = this.hoveredUserService.getTop();
+      this.leftHoveredUser = this.hoveredUserService.getLeft();
+      this.showHoveredUser = true;
+    }
   }
 }

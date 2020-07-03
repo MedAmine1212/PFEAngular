@@ -1,49 +1,56 @@
- <div [ngStyle]="{'pointer-events': getDataBaseUpdating() ? 'none': ''}">
-  <div [ngStyle]="{'background-color': getTheme() ? 'black' :''}" style="height:100vh;width: 100%;text-align: center" *ngIf="loading">
-  <div>
-  <img style="margin-top: 20vh" *ngIf="!getTheme()" src="../../../assets/loading/loadinglight.gif">
-  <img style="margin-top: 20vh" *ngIf="getTheme()" src="../../../assets/loading/loadingdark.gif"><br>
-    <span [@enterLoadingAnimation] *ngIf="showLoadingText" [ngStyle]="{'color': getTheme() ? 'grey' : 'grey'}" style="margin-left:40px;font-size: 30px;font-weight: bolder">Loading...</span>
-  </div>
+<div class="backToTop" *ngIf="window.scrollY > 70" [@enterThirdAnimation]>
+  <span matTooltip="Back to top" (click)="window.scroll(null, 0)" class="fa fa-arrow-alt-circle-up" style="font-size: 40px;color:#3f6ad8"></span>
 </div>
-<div *ngIf="showSite">
-<div [ngClass]="getTheme() ? 'bg-dark' :''" class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header" style="overflow: hidden" >
 
-  <app-nav [connectedUser]="connectedUser"></app-nav>
+<div *ngIf="showHoveredUser && (router.url === '/RemoteMonitoring' || router.url === '/RemoteMonitoring/(mainCon:Absences)')" [ngStyle]="{'top': topHoveredUser, 'left': leftHoveredUser}" style="z-index:999999999999;position:absolute;height:0;width: 300px">
+  <app-profile [connectedUser]="hoveredUser"></app-profile>
+</div>
+<div [ngStyle]="{'pointer-events': getDataBaseUpdating() ? 'none': ''}">
+  <div [ngStyle]="{'background-color': getTheme() ? 'black' :''}" style="height:100vh;width: 100%;text-align: center" *ngIf="loading">
+    <div>
+      <img style="margin-top: 20vh" *ngIf="!getTheme()" src="../../../assets/loading/loadinglight.gif">
+      <img style="margin-top: 20vh" *ngIf="getTheme()" src="../../../assets/loading/loadingdark.gif"><br>
+      <span [@enterLoadingAnimation] *ngIf="showLoadingText" [ngStyle]="{'color': getTheme() ? 'grey' : 'grey'}" style="margin-left:40px;font-size: 30px;font-weight: bolder">Loading...</span>
+    </div>
+  </div>
+  <div *ngIf="showSite">
+    <div [ngClass]="getTheme() ? 'bg-dark' :''" class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header" style="overflow: hidden" >
 
-  <!--profile-->
-  <app-profile (outPutData)="refreshConnectedUser($event)" [connectedUser]="connectedUser" *ngIf="router.url === '/RemoteMonitoring/(mainCon:Profile)'" style="margin: 15px;padding: 0" name="mainCon"></app-profile>
-  <!--posts-->
-  <app-posts *ngIf="router.url === '/RemoteMonitoring/(mainCon:Posts)'"></app-posts>
-  <!--time tables-->
-  <app-timetables *ngIf="router.url === '/RemoteMonitoring/(mainCon:TimeTables)'"></app-timetables>
+      <app-nav [connectedUser]="connectedUser"></app-nav>
 
-  <div *ngIf="router.url !== '/RemoteMonitoring/(mainCon:TimeTables)' && router.url !== '/RemoteMonitoring/(mainCon:Employees)'" class="app-main">
-    <div class="app-main__outer">
-      <!--Absences-->
-        <div [@enterAnimation] *ngIf="router.url === '/RemoteMonitoring' || router.url === '/RemoteMonitoring/(mainCon:Absences)'" class="app-sidebar sidebar-shadow" [ngClass]="getTheme() ? 'bg-premium-dark' :''" style="max-width: 320px;margin-top: -14px;margin-left: -300px">
+      <!--profile-->
+      <app-profile (outPutData)="refreshConnectedUser($event)" [connectedUser]="connectedUser" *ngIf="router.url === '/RemoteMonitoring/(mainCon:Profile)'" style="margin: 15px;padding: 0" name="mainCon"></app-profile>
+      <!--posts-->
+      <app-posts *ngIf="router.url === '/RemoteMonitoring/(mainCon:Posts)'"></app-posts>
+      <!--time tables-->
+      <app-timetables *ngIf="router.url === '/RemoteMonitoring/(mainCon:TimeTables)'"></app-timetables>
 
-          <app-employees (outPutData)="setClickedUser($event)"></app-employees>
+      <div *ngIf="router.url !== '/RemoteMonitoring/(mainCon:TimeTables)' && router.url !== '/RemoteMonitoring/(mainCon:Employees)'" class="app-main">
+        <div class="app-main__outer">
+          <!--Absences-->
+          <div [@enterAnimation] *ngIf="router.url === '/RemoteMonitoring' || router.url === '/RemoteMonitoring/(mainCon:Absences)'" class="app-sidebar sidebar-shadow" [ngClass]="getTheme() ? 'bg-premium-dark' :''" style="max-width: 320px;margin-top: -14px;margin-left: -300px">
 
+            <app-employees (outPutData)="setClickedUser($event)"></app-employees>
+
+          </div>
+
+          <app-absences *ngIf="router.url === '/RemoteMonitoring' || router.url === '/RemoteMonitoring/(mainCon:Absences)'"></app-absences>
+
+          <!--Departments-->
+          <app-departments *ngIf="router.url === '/RemoteMonitoring/(mainCon:Departments)'" [@enterAnimation] (outPutData)="setClickedDep($event)"></app-departments>
+          <div style="margin-top: 20px !important;;margin-right: 15px !important;">
+            <app-employees *ngIf="router.url === '/RemoteMonitoring/(mainCon:Departments)'" (outPutData)="reloadDep($event)" [@enterSecondAnimation]></app-employees>
+          </div>
         </div>
 
-      <app-absences *ngIf="router.url === '/RemoteMonitoring' || router.url === '/RemoteMonitoring/(mainCon:Absences)'"></app-absences>
-
-      <!--Departments-->
-      <app-departments *ngIf="router.url === '/RemoteMonitoring/(mainCon:Departments)'" [@enterAnimation] (outPutData)="setClickedDep($event)"></app-departments>
-      <div style="margin-top: 20px !important;;margin-right: 15px !important;">
-        <app-employees *ngIf="router.url === '/RemoteMonitoring/(mainCon:Departments)'" (outPutData)="reloadDep($event)" [@enterSecondAnimation]></app-employees>
       </div>
+
+      <!--Employees-->
+      <app-employees [@enterAnimation] *ngIf="router.url === '/RemoteMonitoring/(mainCon:Employees)'" style="margin: 70px 15px 15px;"></app-employees>
+
+
     </div>
 
   </div>
 
-  <!--Employees-->
- <app-employees [@enterAnimation] *ngIf="router.url === '/RemoteMonitoring/(mainCon:Employees)'" style="margin: 70px 15px 15px;"></app-employees>
-
-
 </div>
-
-</div>
-
- </div>

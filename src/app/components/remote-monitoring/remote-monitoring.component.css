@@ -128,3 +128,16 @@ mat-form-field {
 ::ng-deep .snackBar .mat-simple-snackbarDark {
   color: #f8f9fa;
 }
+
+.backToTop {
+  left: 95%;
+  margin-right:20px;
+  z-index: 999999999999;
+  position: fixed ;
+  top: 90%;
+  opacity: .5;
+}
+.backToTop:hover{
+  opacity: 1;
+  cursor: pointer;
+}

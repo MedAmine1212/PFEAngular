@@ -1,8 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 import {AttendanceService} from '../../services/Attendance/attendance.service';
-import {Attendance} from '../../models/Attendance';
 import {User} from '../../models/User';
+import {HoveredUserService} from '../../services/hoveredUser/hovered-user.service';
+import {Absence} from '../../models/Absence';
+import {DateFormatter} from 'ngx-bootstrap';
+import {AbsenceService} from '../../services/absence/absence.service';
 @Component({
   selector: 'app-attendance',
   templateUrl: './attendance.component.html',
@@ -12,11 +15,14 @@ export class AttendanceComponent implements OnInit {
   showHideInput: boolean;
   searchText;
   @Input() users: User[];
-  showProfile: boolean;
   user: User;
   topProfile: string;
   time = new Date();
-  constructor(private attendanceService: AttendanceService, private themeChanger: ThemeChangerService) {
+  leftProfile: string;
+  constructor(
+    private absenceService: AbsenceService,
+    private hoveredUserService: HoveredUserService,
+    private attendanceService: AttendanceService, private themeChanger: ThemeChangerService) {
   }
 
   ngOnInit(): void {
@@ -49,14 +55,17 @@ export class AttendanceComponent implements OnInit {
   }
 
   showUserProfile(user: User, event) {
-    this.topProfile = (event.target.offsetTop - 15) + 'px';
+    this.topProfile = (event.relatedTarget.offsetTop + this.hoveredUserService.getPlusTop() + 200) + 'px';
+    this.leftProfile = (event.target.offsetLeft + this.hoveredUserService.getClosedSideBarValue()) + 'px';
+    this.hoveredUserService.setTop(this.topProfile);
+    this.hoveredUserService.setLeft(this.leftProfile);
     this.user = user;
-    this.showProfile = true;
+    this.hoveredUserService.setHoveredUser(user);
   }
 
   hideUserProfile() {
-    this.showProfile = false;
     this.user = null;
+    this.hoveredUserService.setHoveredUser(null);
   }
 
   getStatus(type: string, emp: User) {
@@ -71,7 +80,6 @@ export class AttendanceComponent implements OnInit {
       }
       if (emp.checkInStatus != null) {
         if (emp.checkInStatus === 'red') {
-
           emp.checkOutStatus =  'red';
           emp.checkOutMsg = 'Absent !';
         } else {
@@ -97,14 +105,44 @@ export class AttendanceComponent implements OnInit {
           return;
         } else if (emp.department.planning.schedule.startHour === this.time.getMinutes() + (this.time.getHours() * 60)) {
           emp.checkInStatus =  'yellow';
-          emp.checkInMsg = 'Didn\'t check-in yey. Late ! ';
+          emp.checkInMsg = 'Didn\'t check-in yet. Late ! ';
           return;
         } else {
           emp.checkInStatus =  'red';
           emp.checkInMsg = 'Absent ! ';
-          // ab3th zok om l absence l zok om l back !!!
+          // creating absence
+          const format = new DateFormatter();
+          if (emp.absences.length > 0) {
+            // tslint:disable-next-line:triple-equals
+          if (emp.absences[emp.absences.length - 1].absenceDate != format.format(new Date(), 'YYYY-MM-DD', null)) {
+            this.createAbsence(emp);
+          } else {
+            this.checkAbsence(emp.absences[emp.absences.length - 1]);
+          }
+          } else {
+            this.createAbsence(emp);
+          }
           return;
         }
     }
+  }
+  checkAbsence(abs: Absence) {
+    if (abs.absenceType !== 'All day') {
+      abs.absenceType = 'All day';
+      abs.absentMinutes = 0;
+      this.absenceService.modify(abs, abs.idAbsence).subscribe(() => {}, error => console.log(error));
+    }
+  }
+  createAbsence(emp: User) {
+    const format = new DateFormatter();
+    const absent: Absence = new Absence();
+    absent.user = emp;
+    absent.absentMinutes = 0;
+    absent.absenceDate = format.format(new Date(), 'YYYY-MM-DD', null);
+    absent.absenceType = 'All day';
+    console.log(absent);
+    this.absenceService.add(absent).subscribe(res => {
+      console.log(res);
+    }, error => console.log(error));
   }
 }

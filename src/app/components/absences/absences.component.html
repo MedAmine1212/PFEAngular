@@ -80,26 +80,22 @@
 
 </div>
 
-<div *ngIf="!loading" [@enterSecondAnimation] [ngClass]="getTheme() ? 'bg-premium-dark' :''" class="card mainCard">
+<div *ngIf="!loading" #empAtt [@enterThirdAnimation] [ngClass]="getTheme() ? 'bg-premium-dark' :''" class="card mainCard">
   <div class="card-header">
     <h3 [ngStyle]="{'color': getTheme() ? 'white' :''}" style="width: 100%;margin-top: 15px">
       <div style="float: left">
        Employees attendances
       </div>
-      <span class="reasons" [ngStyle]="{'color':showMotifs ? ' rgb(82,148,226)' : getTheme() ? 'white' : 'grey' }" (click)="showHide(1)">Regitered Reasons</span>
-      <span class="reasons" [ngStyle]="{'color':showAbsences ? ' rgb(82,148,226)' : getTheme() ? 'white' : 'grey' }"(click)="showHide(2)">Absences</span>
-      <span class="reasons" [ngStyle]="{'color':showPoint ? ' rgb(82,148,226)' : getTheme() ? 'white' : 'grey' }" (click)="showHide(3)">Attendence</span>
+      <span class="reasons" [ngStyle]="{'color':showAbsences ? ' rgb(82,148,226)' : getTheme() ? 'white' : 'grey' }"(click)="showHide(1)">Absences</span>
+      <span class="reasons" [ngStyle]="{'color':showPoint ? ' rgb(82,148,226)' : getTheme() ? 'white' : 'grey' }" (click)="showHide(2)">Attendence</span>
     </h3>
   </div>
-  <div class="card-body" *ngIf="!loading">
+  <div class="card-body" style="max-height: 700px;overflow-y: auto" *ngIf="!loading">
 
-
-<div [@enterAnimation] *ngIf="showMotifs">
-  <app-motifs-absences></app-motifs-absences>
-</div>
-<div *ngIf="showPoint" [@enterSecondAnimation] style="padding: 20px">
+<div *ngIf="showPoint" [@enterSecondAnimation]>
   <h1 style="margin-top:20%;margin-left: 28%" *ngIf="clickedUser == null">Select an employee to show his attendance here</h1>
-  <div style="display: inline-block;width:45%;padding: 15px;margin: 10px" *ngIf="clickedUser != null" [ngClass]="getTheme() ? 'bg-premium-dark' :''" class="card">
+  <div [@enterThirdAnimation] *ngIf="!loadingUser && clickedUser != null">
+    <div style="display: inline-block;width:45%;padding: 15px;margin: 10px" *ngIf="clickedUser != null" [ngClass]="getTheme() ? 'bg-premium-dark' :''" class="card">
     <h1 >Check-in</h1>
     <br>
     <table [ngClass]="getTheme() ? 'bg-premium-dark text-light' :'text-dark'"  [ngStyle]="{'color': getTheme()? 'white' :''}" class="align-middle text-light mb-0 table table-borderless table-striped table-hover">
@@ -116,7 +112,7 @@
           {{att.attendanceDate}}
         </td>
         <td  class="text-center">
-          {{getTime(att.attendanceTime)}}
+          {{getTime(att.attendanceTime, 1)}}
         </td>
         <td  class="text-center">
           {{att.inputType}}
@@ -125,7 +121,7 @@
       </tbody>
     </table>
   </div>
-  <div style="display: inline-block;width:45%;padding: 15px;margin: 10px" *ngIf="clickedUser != null" [ngClass]="getTheme() ? 'bg-premium-dark' :''" class="card">
+    <div style="display: inline-block;width:45%;padding: 15px;margin: 10px" *ngIf="clickedUser != null" [ngClass]="getTheme() ? 'bg-premium-dark' :''" class="card">
     <h1>Check-out</h1>
     <br>
     <table [ngClass]="getTheme() ? 'bg-premium-dark text-light' :'text-dark'"  [ngStyle]="{'color': getTheme()? 'white' :''}" class="align-middle text-light mb-0 table table-borderless table-striped table-hover">
@@ -142,7 +138,7 @@
           {{att.attendanceDate}}
         </td>
         <td  class="text-center">
-          {{getTime(att.attendanceTime)}}
+          {{getTime(att.attendanceTime, 1)}}
         </td>
         <td  class="text-center">
           {{att.inputType}}
@@ -151,10 +147,41 @@
       </tbody>
     </table>
   </div>
+  </div>
 </div>
 
 <div *ngIf="showAbsences" [@enterSecondAnimation]>
-  <h1 style="margin-top:20%;margin-left: 28%">Select an employee to show his absences here</h1>
+  <h1 *ngIf="clickedUser == null" style="margin-top:20%;margin-left: 28%">Select an employee to show his absences here</h1>
+  <h1 *ngIf="clickedUser != null && clickedUser.absences.length == 0 && !loadingUser" style="margin-top:20%;margin-left: 37%">No absences to show</h1>
+  <div [@enterThirdAnimation] *ngIf="!loadingUser && clickedUser != null && clickedUser.absences.length > 0">
+    <div style="width:100%;padding: 15px;margin: 10px" *ngIf="clickedUser != null" [ngClass]="getTheme() ? 'bg-premium-dark' :''" class="card">
+
+      <table [ngClass]="getTheme() ? 'bg-premium-dark text-light' :'text-dark'"  [ngStyle]="{'color': getTheme()? 'white' :''}" class="align-middle text-light mb-0 table table-borderless table-striped table-hover">
+        <thead>
+        <tr>
+          <th class="text-center">Date</th>
+          <th class="text-center">Type</th>
+          <th class="text-center">Reason</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr [ngClass]="getTheme() ? 'lightText' :''" [ngStyle]="{'color': getTheme()? 'white' :''}" class="emp" *ngFor="let abs of clickedUser.absences">
+          <td  class="text-center">
+            {{abs.absenceDate}} <span *ngIf="abs.absenceDate == format.format(date, 'YYYY-MM-DD', null)" style="margin-right: -45px;color: red"> Today</span>
+          </td>
+          <td  class="text-center">
+           {{abs.absenceType}} <span *ngIf="abs.absenceType != 'All day'"> (By: {{getTime(abs.absentMinutes, 2)}})</span>
+          </td>
+          <td>
+           <button (click)="openAbsenceVerificationSheet(abs)" matTooltip="{{getMessage(abs.reasonStatus)}}" *ngIf="abs.reason != null" class="{{abs.reasonStatus}} reasonBtn"> {{abs.reason}}</button>
+           <button disabled style="cursor: default" *ngIf="abs.reason == null" class="btn btn-info reasonBtn">No reason provided</button> <div [ngStyle]="{'color': getTheme()? 'white' :''}" *ngIf="abs.revisedBy != null" style="float: right;width: 47%;margin-left: 10px">Revised by : {{abs.revisedBy}}</div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
 </div>
   </div>
 </div>

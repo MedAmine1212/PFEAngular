@@ -402,9 +402,14 @@ export class EmployeesComponent implements OnInit {
 }
 
   setClickedEmployee(emp: User) {
-    if ((this.router.url === '/RemoteMonitoring/(mainCon:Absences)' || this.router.url === '/RemoteMonitoring') && this.clickedEmp !== emp) {
+    if ((this.router.url === '/RemoteMonitoring/(mainCon:Absences)' || this.router.url === '/RemoteMonitoring')) {
+      if (this.clickedEmp !== emp) {
       this.clickedEmp = emp;
       this.outPutData.emit(emp);
+      } else {
+        this.clickedEmp = null;
+        this.outPutData.emit(null);
+      }
     }
   }
 }

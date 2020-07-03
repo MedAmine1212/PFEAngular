@@ -93,6 +93,7 @@ export class AddUserComponent implements  OnInit  {
     fullImage: null,
     notificationMessages: [],
     attendances: null,
+    absences: null,
     checkInStatus: null,
     checkInMsg: null,
     checkOutStatus: null,

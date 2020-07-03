@@ -123,7 +123,7 @@
 
         </div>
       </div>
-      <div *ngIf="showTable" style="padding:0;width: 100%">
+      <div #schDiv *ngIf="showTable" style="padding:0;width: 100%">
 
         <div style="float: left;width: 60%">
           <app-schedules (outPutData)="reloadData()"></app-schedules>

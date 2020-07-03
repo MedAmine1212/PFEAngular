@@ -17,7 +17,6 @@ import { EmployeesComponent } from './components/employees/employees.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import {NgbDatepickerModule} from '@ng-bootstrap/ng-bootstrap';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import { MotifsAbsencesComponent } from './components/motifs-absences/motifs-absences.component';
 import {HttpClientModule} from '@angular/common/http';
 import {MatTreeModule} from '@angular/material/tree';
 import {MatIconModule} from '@angular/material/icon';
@@ -60,8 +59,9 @@ import { SetDepartmentPlanningComponent } from './sheets/set-department-planning
 import { ChangePasswordComponent } from './dialogs/dialog-forms/change-password/change-password.component';
 import {MatPasswordStrengthModule} from '@angular-material-extensions/password-strength';
 import {MatCardModule} from '@angular/material/card';
-import {MatChipsModule} from "@angular/material/chips";
+import {MatChipsModule} from '@angular/material/chips';
 import { AttendanceComponent } from './components/attendance/attendance.component';
+import { AbsenceVerificationComponent } from './sheets/absence-verification/absence-verification.component';
 
 
 @NgModule({
@@ -76,7 +76,6 @@ import { AttendanceComponent } from './components/attendance/attendance.componen
     TimetablesComponent,
     ProfileComponent,
     EmployeesComponent,
-    MotifsAbsencesComponent,
     AddUserComponent,
     AddDepartmentComponent,
     DeleteDialogComponent,
@@ -92,6 +91,7 @@ import { AttendanceComponent } from './components/attendance/attendance.componen
     SetDepartmentPlanningComponent,
     ChangePasswordComponent,
     AttendanceComponent,
+    AbsenceVerificationComponent,
 
   ],
   imports: [

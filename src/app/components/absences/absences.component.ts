@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {animate, group, state, style, transition, trigger} from '@angular/animations';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 import {Router} from '@angular/router';
@@ -10,6 +10,12 @@ import {AttendanceService} from '../../services/Attendance/attendance.service';
 import {Attendance} from '../../models/Attendance';
 import {User} from '../../models/User';
 import {UserService} from '../../services/user/user.service';
+import {HoveredUserService} from '../../services/hoveredUser/hovered-user.service';
+import {Absence} from '../../models/Absence';
+import {MatBottomSheet} from '@angular/material/bottom-sheet';
+import {AbsenceVerificationComponent} from '../../sheets/absence-verification/absence-verification.component';
+import {DateFormatter} from 'ngx-bootstrap';
+import {AbsenceService} from '../../services/absence/absence.service';
 @Component({
   selector: 'app-absences',
   templateUrl: './absences.component.html',
@@ -19,7 +25,7 @@ import {UserService} from '../../services/user/user.service';
       'enterAnimation', [
         transition(':enter', [
           style({transform: 'translateY(-50%)', opacity: 0}),
-          animate('0.3s', style({transform: 'translateX(0)', opacity: 1}))
+          animate(500, style({transform: 'translateX(0)', opacity: 1}))
         ])
       ]
     ),
@@ -27,7 +33,7 @@ import {UserService} from '../../services/user/user.service';
       'enterSecondAnimation', [
         transition(':enter', [
           style({transform: 'translateY(-400%)', opacity: 0}),
-          animate('0.3s', style({transform: 'translateX(0)', opacity: 1}))
+          animate(500, style({transform: 'translateX(0)', opacity: 1}))
         ])
       ]
     ),
@@ -45,7 +51,9 @@ import {UserService} from '../../services/user/user.service';
   ]
 })
 export class AbsencesComponent implements OnInit {
-  showMotifs: boolean;
+  @ViewChild('empAtt') empAttDiv: HTMLDivElement;
+  format = new DateFormatter();
+  date = new Date();
   showPoint: boolean;
   showAbsences: boolean;
   time = new Date();
@@ -63,7 +71,11 @@ export class AbsencesComponent implements OnInit {
   days: string[] = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATRUDAY'];
   clickedUser: User;
   currentDay: string;
+  loadingUser: boolean;
   constructor(
+    private absenceService: AbsenceService,
+    private bottomSheet: MatBottomSheet,
+    private hoveredUserService: HoveredUserService,
     private userService: UserService,
     private attendanceService: AttendanceService,
     private departmentService: DepartmentService,
@@ -79,7 +91,6 @@ export class AbsencesComponent implements OnInit {
     setInterval(() => {
       this.time = new Date();
     }, 1000);
-    this.showMotifs = false;
     this.showAbsences = false;
     this.showPoint = true;
   }
@@ -139,16 +150,10 @@ export class AbsencesComponent implements OnInit {
 
   showHide(x: number) {
     if (x === 1) {
-      this.showAbsences = false;
-      this.showMotifs = true;
-      this.showPoint = false;
-    } else if (x === 2) {
       this.showAbsences = true;
-      this.showMotifs = false;
       this.showPoint = false;
     } else {
       this.showAbsences = false;
-      this.showMotifs = false;
       this.showPoint = true;
     }
   }
@@ -178,6 +183,11 @@ export class AbsencesComponent implements OnInit {
   }
 
   setFilter(filter: string) {
+    if (filter === 'employees') {
+      this.hoveredUserService.setPlusTop(0);
+    } else {
+      this.hoveredUserService.setPlusTop(135);
+    }
     if (filter !== this.selectedFilter) {
     this.selectedFilter = '';
     setTimeout(() => {
@@ -187,18 +197,40 @@ export class AbsencesComponent implements OnInit {
   }
 
   setEmployee(emp: User) {
-    this.clickedUser = emp;
-    this.userCheckOuts = [];
-    this.userCheckIns = [];
-    for (const att of emp.attendances) {
-      if (att.attendanceType === 'CHECK OUT') {
-        this.userCheckOuts.push(att);
-      } else {
-        this.userCheckIns.push(att);
+    this.loadingUser = true;
+    if (emp != null) {
+    this.absenceService.listByUser(emp).subscribe(r => {
+      emp.absences = r;
+      this.clickedUser = emp;
+      this.clickedUser.absences.reverse();
+      this.userCheckOuts = [];
+      this.userCheckIns = [];
+      for (const att of emp.attendances) {
+        if (att.attendanceType === 'CHECK OUT') {
+          this.userCheckOuts.push(att);
+        } else {
+          this.userCheckIns.push(att);
+        }
       }
+      // @ts-ignore
+      window.scroll(1, this.empAttDiv.nativeElement.offsetTop - 26);
+      setTimeout(() => {
+        this.loadingUser = false;
+      }, 600);
+    }, error => {
+      console.log(error);
+      setTimeout(() => {
+        this.loadingUser = false;
+    }, 600);
+    });
+    } else {
+      this.clickedUser = null;
+      setTimeout(() => {
+        this.loadingUser = false;
+      }, 300);
     }
   }
-  getTime(hour: number) {
+  getTime(hour: number, sender) {
     const h = Math.floor(hour / 60);
     const m = hour % 60;
     let returnTime: string;
@@ -206,11 +238,35 @@ export class AbsencesComponent implements OnInit {
     if (h < 10) {
       returnTime = returnTime + '0';
     }
-    returnTime = returnTime + h.toString() + ':';
+    returnTime = returnTime + h.toString();
+    if (sender === 2) {
+      returnTime = returnTime + 'h';
+    }
+    returnTime = returnTime + ':';
     if (m < 10) {
       returnTime = returnTime + '0';
     }
     returnTime = returnTime + m.toString();
+    if (sender === 2) {
+      returnTime = returnTime + 'mn';
+    }
     return returnTime;
+  }
+
+  getMessage(reasonStatus: string) {
+    if (reasonStatus === 'btn btn-warning') {
+      return 'Not verified yet';
+    } else if (reasonStatus === 'btn btn-success') {
+      return 'Accepted';
+    } else {
+      return 'Rejected !';
+    }
+  }
+
+  openAbsenceVerificationSheet(abs: Absence) {
+    abs.user = this.clickedUser;
+    this.bottomSheet.open(AbsenceVerificationComponent , {
+      data: abs
+    });
   }
 }
