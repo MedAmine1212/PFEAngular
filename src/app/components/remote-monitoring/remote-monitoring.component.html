@@ -1,5 +1,5 @@
 <div class="backToTop" *ngIf="window.scrollY > 70" [@enterThirdAnimation]>
-  <span matTooltip="Back to top" (click)="window.scroll(null, 0)" class="fa fa-arrow-alt-circle-up" style="font-size: 40px;color:#3f6ad8"></span>
+  <span matTooltip="Back to top" (click)="scrollToTop()" class="fa fa-arrow-alt-circle-up" style="font-size: 40px;color:#3f6ad8"></span>
 </div>
 
 <div *ngIf="showHoveredUser && (router.url === '/RemoteMonitoring' || router.url === '/RemoteMonitoring/(mainCon:Absences)')" [ngStyle]="{'top': topHoveredUser, 'left': leftHoveredUser}" style="z-index:999999999999;position:absolute;height:0;width: 300px">
