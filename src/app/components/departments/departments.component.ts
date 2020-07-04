@@ -10,6 +10,7 @@ import {AddDepartmentComponent} from '../../dialogs/dialog-forms/add-department/
 import {MatDialog} from '@angular/material/dialog';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
+import {User} from '../../models/User';
 
 export class DynamicFlatNode {
   constructor(public item: Department, public level = 1, public expandable = false,
@@ -141,6 +142,7 @@ export class DynamicDataSource implements DataSource<DynamicFlatNode> {
 
 export class DepartmentsComponent implements  OnInit {
   @Output() outPutData = new EventEmitter<Department>();
+  @Input() connectedUser: User;
   data: Department[] = [];
   fakedep: Department;
   clickedDep: Department;
@@ -169,6 +171,7 @@ export class DepartmentsComponent implements  OnInit {
   hasChild = (_: number, nodeData: DynamicFlatNode) => nodeData.expandable;
 
   ngOnInit(): void {
+    console.log(this.connectedUser);
     this.clickedDep = new Department();
     this.clickedDep.depId = -1;
     this.fakedep = this.clickedDep;
@@ -185,9 +188,15 @@ export class DepartmentsComponent implements  OnInit {
   public reloadData() {
     console.log('Reloading...');
     this.departmentService.list().subscribe(r => {
-    this.data = r;
-    this.dataSource.data = this.database.initialData(this.data);
-    if (this.clickedDep != null) {
+      r.forEach(dep => {
+        if (dep.depId === this.connectedUser.department.depId && this.isChefDep()) {
+          this.data.push(dep);
+        } else if (this.isAdmin()) {
+          this.data = r;
+        }
+      });
+      this.dataSource.data = this.database.initialData(this.data);
+      if (this.clickedDep != null) {
       if (this.clickedDep.depId !== -1) {
         const ids: number[] = [];
         for (const dep of this.data) {
@@ -217,5 +226,11 @@ export class DepartmentsComponent implements  OnInit {
 
   getTheme() {
     return this.themeChanger.getTheme();
+  }
+  isAdmin() {
+    return this.connectedUser.roles.findIndex(role => role.roleName === 'ADMIN' ) !== -1;
+  }
+  isChefDep() {
+    return this.connectedUser.roles.findIndex(role => role.roleName === 'CHEF_DEPARTMENT' ) !== -1;
   }
 }

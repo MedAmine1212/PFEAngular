@@ -18,6 +18,7 @@ import {PlanningService} from '../../../services/planning/planning.service';
 import {ThemeChangerService} from '../../../services/ThemeChanger/theme-changer.service';
 import {UserConfigsService} from '../../../services/UserConfigs/user-configs.service';
 import {ImageService} from '../../../services/image/image.service';
+import {TempUserService} from '../../../services/TempUser/temp-user.service';
 
 @Component({
   selector: 'app-add-user',
@@ -98,6 +99,7 @@ export class AddUserComponent implements  OnInit  {
     checkInMsg: null,
     checkOutStatus: null,
     checkOutMsg: null,
+    roles: []
   };
   address1: Address = {
     addressId: null,
@@ -122,6 +124,7 @@ export class AddUserComponent implements  OnInit  {
   userPost: Post;
   postFormGroup: FormGroup;
   sameImage: any;
+  connectedUser: User;
   constructor(private themeChanger: ThemeChangerService,
               public dialogRef: MatDialogRef<AddUserComponent>,
               private userConfigService: UserConfigsService,
@@ -134,7 +137,8 @@ export class AddUserComponent implements  OnInit  {
               private addressService: AddressService,
               private postService: PostService,
               private planningService: PlanningService,
-              private imageService: ImageService
+              private imageService: ImageService,
+              private tempUserService: TempUserService
   ) {
     this.userPost = null;
     if (this.data != null ) {
@@ -182,6 +186,8 @@ export class AddUserComponent implements  OnInit  {
   }
 
   ngOnInit(): void {
+    // @ts-ignore
+    this.userService.findUserWithToken().subscribe(user => this.connectedUser = user);
     if (this.user.image != null) {
     this.showImage(this.user.image);
     }
@@ -298,20 +304,36 @@ export class AddUserComponent implements  OnInit  {
     }, error => console.log(error));
 
     // add user
-    this.userService.add(this.user).subscribe(user => {
+    if (this.isAdmin()) {
+      this.userService.add(this.user).subscribe(user => {
+        setTimeout(() => {
+          this.savingUser = false;
+          if (this.selectedFile !== undefined) {
+            // @ts-ignore
+            this.upload(user.userId, 'added');
+          } else {
+            setTimeout(() => {
+              this.dialogRef.close(true);
+            }, 400);
+          }
+        }, 200);
+      }, error1 => console.log(error1));
+    } else {
+      this.tempUserService.add(this.user, this.connectedUser.userId).subscribe(user => {
+        setTimeout(() => {
+          this.savingUser = false;
+          if (this.selectedFile !== undefined) {
+            // @ts-ignore
+            this.upload(user.userId, 'added');
+          } else {
+            setTimeout(() => {
+              this.dialogRef.close(true);
+            }, 400);
+          }
+        }, 200);
+      });
+    }
 
-      setTimeout(() => {
-        this.savingUser = false;
-        if (this.selectedFile !== undefined) {
-          // @ts-ignore
-          this.upload(user.userId, 'added');
-        } else {
-          setTimeout(() => {
-            this.dialogRef.close(true);
-          }, 400);
-        }
-      }, 200);
-    }, error1 => console.log(error1));
   }
 
   upload(id, message) {
@@ -598,18 +620,7 @@ export class AddUserComponent implements  OnInit  {
         if (this.selectedFile != null) {
           this.upload(this.user.userId, 'updated');
         } else if (this.selectedFile == null && this.retrievedImage == null) {
-          this.imageService.delete(this.user.image).subscribe(isDeleted => {
-            console.log(isDeleted);
-            if (isDeleted) {
-              setTimeout(() => {
-                this.dialogRef.close(true);
-              }, 400);
-            } else if (!isDeleted) {
-              console.log('couldn\'t delete the file ');
-            } else {
-              console.log('image not found');
-            }
-          });
+          this.deleteImage(this.user.image);
         } else {
           setTimeout(() => {
             this.dialogRef.close(true);
@@ -617,6 +628,21 @@ export class AddUserComponent implements  OnInit  {
         }
       }, 200);
     }, error => console.log(error));
+  }
+
+  private deleteImage(image: string) {
+    this.imageService.delete(image).subscribe(isDeleted => {
+      console.log(isDeleted);
+      if (isDeleted) {
+        setTimeout(() => {
+          this.dialogRef.close(true);
+        }, 400);
+      } else if (!isDeleted) {
+        console.log('couldn\'t delete the file ');
+      } else {
+        console.log('image not found');
+      }
+    });
   }
 
   showImage(name) {
@@ -638,5 +664,12 @@ export class AddUserComponent implements  OnInit  {
     this.addressService.add(this.address2).subscribe(() => {
         this.dialogRef.close(true);
     }, error => console.log(error));
+  }
+
+  isAdmin() {
+    return this.connectedUser.roles.findIndex(role => role.roleName === 'ADMIN' ) !== -1;
+  }
+  isChefDep() {
+    return this.connectedUser.roles.findIndex(role => role.roleName === 'CHEF_DEPARTMENT' ) !== -1;
   }
 }

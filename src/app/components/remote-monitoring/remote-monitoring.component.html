@@ -37,7 +37,7 @@
           <app-absences *ngIf="router.url === '/RemoteMonitoring' || router.url === '/RemoteMonitoring/(mainCon:Absences)'"></app-absences>
 
           <!--Departments-->
-          <app-departments *ngIf="router.url === '/RemoteMonitoring/(mainCon:Departments)'" [@enterAnimation] (outPutData)="setClickedDep($event)"></app-departments>
+          <app-departments [connectedUser]="connectedUser" *ngIf="router.url === '/RemoteMonitoring/(mainCon:Departments)'" [@enterAnimation] (outPutData)="setClickedDep($event)"></app-departments>
           <div style="margin-top: 20px !important;;margin-right: 15px !important;">
             <app-employees *ngIf="router.url === '/RemoteMonitoring/(mainCon:Departments)'" (outPutData)="reloadDep($event)" [@enterSecondAnimation]></app-employees>
           </div>

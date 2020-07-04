@@ -5,6 +5,7 @@ import {UserConfigs} from './UserConfigs';
 import {NotificationMessage} from './NotificationMessage';
 import {Attendance} from './Attendance';
 import {Absence} from './Absence';
+import {Role} from "./Role";
 export class User {
   userId: number;
   cin: string;
@@ -29,4 +30,5 @@ export class User {
   checkInMsg: string;
   checkOutStatus: string;
   checkOutMsg: string;
+  roles: Role[];
   }

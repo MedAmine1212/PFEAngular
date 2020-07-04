@@ -8,4 +8,5 @@ export class NotificationMessage {
   isViewed: boolean;
   isHovered: boolean;
   user: User;
+  idTarget: number;
 }
