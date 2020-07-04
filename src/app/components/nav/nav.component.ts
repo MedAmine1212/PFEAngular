@@ -17,6 +17,7 @@ import {DeleteDialogComponent} from '../../dialogs/delete-dialog/delete-dialog.c
 import {MatDialog} from '@angular/material/dialog';
 import {ImportDataBaseComponent} from '../../dialogs/import-data-base/import-data-base.component';
 import {HoveredUserService} from '../../services/hoveredUser/hovered-user.service';
+import {TempUserService} from '../../services/TempUser/temp-user.service';
 
 @Component({
   selector: 'app-nav',
@@ -26,14 +27,14 @@ import {HoveredUserService} from '../../services/hoveredUser/hovered-user.servic
 export class NavComponent implements OnInit {
   @Input() connectedUser: User;
   isLoggedIn;
-  userConfigs: UserConfigs  = new UserConfigs();
+  userConfigs: UserConfigs = new UserConfigs();
   jwt = new JwtHelperService();
   retrieveResonse: any;
   base64Data: any;
   notifs: NotificationMessage[] = [];
   notViewdNotifs: number;
 
-   retrievedImage: any;
+  retrievedImage: any;
   openedNotif: boolean;
   openedMenu: any;
   playNotifSound: boolean;
@@ -43,6 +44,7 @@ export class NavComponent implements OnInit {
   openedDataBaseMenu: boolean;
   selectedFile: File;
   private sqlData: FormData;
+
   constructor(
     private hoveredUserService: HoveredUserService,
     public dialog: MatDialog,
@@ -54,11 +56,12 @@ export class NavComponent implements OnInit {
     public router: Router,
     private auth: AuthenticationService,
     private userService: UserService,
-    private imageService: ImageService
+    private imageService: ImageService,
+    private tempUserService: TempUserService
   ) {
     this.openedMenu = false;
     this.openedNotif = false;
-   }
+  }
 
   reloadNotifs() {
     if (this.connectedUser != null) {
@@ -67,38 +70,40 @@ export class NavComponent implements OnInit {
       }
       let tempNotifs: NotificationMessage[];
       this.userService.findUserWithToken().subscribe(res => {
-          // @ts-ignore
-          tempNotifs = res.notificationMessages.reverse();
+        // @ts-ignore
+        tempNotifs = res.notificationMessages.reverse();
 
-          if (tempNotifs.length > this.notifs.length) {
-            if (this.playNotifSound) {
-              this.notifSound.play();
-            }
-            this.notifs = tempNotifs;
-            this.notViewdNotifs = null;
-            for (const ntf of this.notifs) {
-              if (!ntf.isViewed) {
-                if (this.notViewdNotifs != null) {
-                  this.notViewdNotifs++;
-                } else {
-                  this.notViewdNotifs = 1;
-                }
+        if (tempNotifs.length > this.notifs.length) {
+          if (this.playNotifSound) {
+            this.notifSound.play();
+          }
+          this.notifs = tempNotifs;
+          this.notViewdNotifs = null;
+          for (const ntf of this.notifs) {
+            if (!ntf.isViewed) {
+              if (this.notViewdNotifs != null) {
+                this.notViewdNotifs++;
+              } else {
+                this.notViewdNotifs = 1;
               }
             }
           }
-          this.playNotifSound = true;
-        }, error => console.log(error));
+        }
+        this.playNotifSound = true;
+      }, error => console.log(error));
     }
-    }
+  }
 
   ngOnInit(): void {
+    console.log(this.isChefDep());
     this.notifs = [];
     this.notViewdNotifs = null;
     this.playNotifSound = false;
     this.reloadNotifs();
-    this.isLoggedIn = this.auth.loggedIn() ;
+    this.isLoggedIn = this.auth.loggedIn();
     this.reloadImage();
-    }
+  }
+
   reloadImage() {
     if (this.connectedUser != null) {
       if (this.connectedUser.image !== '') {
@@ -117,9 +122,10 @@ export class NavComponent implements OnInit {
 
     }
   }
+
   logout() {
-  this.auth.loggedOut();
-  this.router.navigateByUrl('');
+    this.auth.loggedOut();
+    this.router.navigateByUrl('');
   }
 
   getTheme() {
@@ -127,23 +133,23 @@ export class NavComponent implements OnInit {
   }
 
   setTheme(theme: boolean) {
-        this.themeChanger.setTheme(theme);
-        this.userConfigs = this.connectedUser.userConfigs[0];
-        this.userConfigs.theme = theme;
-        this.userConfigsService.update(this.userConfigs.configId, this.userConfigs, 2).subscribe(() => {
-        }, error => console.log(error));
-    }
+    this.themeChanger.setTheme(theme);
+    this.userConfigs = this.connectedUser.userConfigs[0];
+    this.userConfigs.theme = theme;
+    this.userConfigsService.update(this.userConfigs.configId, this.userConfigs, 2).subscribe(() => {
+    }, error => console.log(error));
+  }
 
   viewAll() {
     this.openedNotif = true;
     if (this.notifs != null) {
-    this.notViewdNotifs = null;
-    for (const ntf of this.notifs) {
-      if (!ntf.isViewed) {
-      ntf.isViewed = true;
-      this.notifService.modify(ntf, ntf.notifId).subscribe();
+      this.notViewdNotifs = null;
+      for (const ntf of this.notifs) {
+        if (!ntf.isViewed) {
+          ntf.isViewed = true;
+          this.notifService.modify(ntf, ntf.notifId).subscribe();
+        }
       }
-    }
     }
   }
 
@@ -171,19 +177,19 @@ export class NavComponent implements OnInit {
   }
 
   exportDB() {
-  this.dataBaseExportImportService.exportDB().subscribe(() => {
-    setTimeout(() => {
-      const config = new MatSnackBarConfig();
-      if (this.themeChanger.getTheme()) {
-        config.panelClass = ['snackBar'];
-      } else {
-        config.panelClass = ['snackBarDark'];
-      }
-      config.duration = 3000;
-      this.snackBar.open('Export successful', null, config);
+    this.dataBaseExportImportService.exportDB().subscribe(() => {
+      setTimeout(() => {
+        const config = new MatSnackBarConfig();
+        if (this.themeChanger.getTheme()) {
+          config.panelClass = ['snackBar'];
+        } else {
+          config.panelClass = ['snackBarDark'];
+        }
+        config.duration = 3000;
+        this.snackBar.open('Export successful', null, config);
 
-    }, 500);
-  }, error => console.log(error));
+      }, 500);
+    }, error => console.log(error));
   }
 
   importDB() {
@@ -202,40 +208,40 @@ export class NavComponent implements OnInit {
         dialogRef2.afterClosed().subscribe(result2 => {
           if (result2[0]) {
             if (result2[1] != null) {
-            this.selectedFile = result2[1];
-            console.log(this.selectedFile);
-            setTimeout(() => {
-              const config = new MatSnackBarConfig();
-              if (this.themeChanger.getTheme()) {
-                config.panelClass = ['snackBar'];
-              } else {
-                config.panelClass = ['snackBarDark'];
-              }
-              let dismissedWithAction = false;
-              config.duration = 5000;
-              this.snackBar.open('Rebuilding database...', 'Undo ↩', config);
-              this.snackBar._openedSnackBarRef.onAction().subscribe(() => {
-                dismissedWithAction = true;
-              });
-              this.snackBar._openedSnackBarRef.afterDismissed().subscribe(() => {
-                if (dismissedWithAction) {
-                  config.duration = 3000;
-                  setTimeout(() => {
-                    this.snackBar.open('Database import canceled', null, config);
-                  }, 600);
+              this.selectedFile = result2[1];
+              console.log(this.selectedFile);
+              setTimeout(() => {
+                const config = new MatSnackBarConfig();
+                if (this.themeChanger.getTheme()) {
+                  config.panelClass = ['snackBar'];
                 } else {
-                  this.dataBaseExportImportService.setDataBaseUpdating(true);
-                  this.sqlData = new FormData();
-                  this.sqlData.append('sql', this.selectedFile, this.selectedFile.name);
-                  this.dataBaseExportImportService.importDB(this.sqlData).subscribe(() => {
-                    window.location.reload();
-                  }, error => console.log(error));
+                  config.panelClass = ['snackBarDark'];
                 }
-              });
-            }, 500);
+                let dismissedWithAction = false;
+                config.duration = 5000;
+                this.snackBar.open('Rebuilding database...', 'Undo ↩', config);
+                this.snackBar._openedSnackBarRef.onAction().subscribe(() => {
+                  dismissedWithAction = true;
+                });
+                this.snackBar._openedSnackBarRef.afterDismissed().subscribe(() => {
+                  if (dismissedWithAction) {
+                    config.duration = 3000;
+                    setTimeout(() => {
+                      this.snackBar.open('Database import canceled', null, config);
+                    }, 600);
+                  } else {
+                    this.dataBaseExportImportService.setDataBaseUpdating(true);
+                    this.sqlData = new FormData();
+                    this.sqlData.append('sql', this.selectedFile, this.selectedFile.name);
+                    this.dataBaseExportImportService.importDB(this.sqlData).subscribe(() => {
+                      window.location.reload();
+                    }, error => console.log(error));
+                  }
+                });
+              }, 500);
+            }
           }
-          }
-       });
+        });
       }
     });
   }
@@ -260,19 +266,41 @@ export class NavComponent implements OnInit {
             config.duration = 3000;
             this.snackBar.open('Restoring previous version...', null, config);
             this.snackBar._openedSnackBarRef.afterDismissed().subscribe(() => {
-                window.location.reload();
+              window.location.reload();
             });
           }, 500);
         }, error => console.log(error));
       }
     });
-    }
+  }
 
   setClosedSideBarValue() {
     if (this.hoveredUserService.getClosedSideBarValue() === 150) {
-    this.hoveredUserService.seClosedSideBarValue(200);
+      this.hoveredUserService.seClosedSideBarValue(200);
     } else {
       this.hoveredUserService.seClosedSideBarValue(150);
     }
+  }
+
+  isAdmin() {
+    return this.connectedUser.roles.findIndex(role => role.roleName === 'ADMIN') !== -1;
+  }
+
+  isChefDep() {
+    return this.connectedUser.roles.findIndex(role => role.roleName === 'CHEF_DEPARTMENT') !== -1;
+  }
+
+  acceptUser(idTarget: number) {
+    this.tempUserService.findById(idTarget).subscribe(user => {
+      this.tempUserService.acceptRequest(user, 'add').subscribe(usr => {
+        console.log(usr);
+      }, error => console.log(error));
+    }, err => console.log(err));
+  }
+
+  declineUser(idTarget: number) {
+      this.tempUserService.declineRequest(idTarget).subscribe(usr => {
+        console.log(usr);
+    }, err => console.log(err));
   }
 }

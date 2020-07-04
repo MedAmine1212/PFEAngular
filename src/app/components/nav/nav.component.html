@@ -39,21 +39,20 @@
           <li class="nav-item">
             <a [routerLink]="[{ outlets: {mainCon: ['Absences'] } }]" [ngClass]="router.url === '/RemoteMonitoring/(mainCon:Absences)' || router.url === '/RemoteMonitoring' ? 'current' : ''" class="nav-link">Attendance</a>
           </li>
-          <li class="nav-item">
-
+          <li class="nav-item" *ngIf="isAdmin() || isChefDep()">
             <a [routerLink]="[{ outlets: {mainCon: ['Departments'] } }]" [ngClass]="router.url === '/RemoteMonitoring/(mainCon:Departments)' ? 'current' : ''" class="nav-link active">Departments</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" *ngIf="isAdmin()">
             <a [routerLink]="[{ outlets: {mainCon: ['Employees'] } }]" [ngClass]="router.url === '/RemoteMonitoring/(mainCon:Employees)' ? 'current' : ''" class="nav-link">Employees</a>
           </li>
           <li class="nav-item">
             <a [routerLink]="[{ outlets: {mainCon: ['TimeTables'] } }]" [ngClass]="router.url === '/RemoteMonitoring/(mainCon:TimeTables)' ? 'current' : ''" class="nav-link">Time Table</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" *ngIf="isAdmin() || isChefDep()">
             <a [routerLink]="[{ outlets: {mainCon: ['Posts'] } }]" [ngClass]="router.url === '/RemoteMonitoring/(mainCon:Posts)' ? 'current' : ''" class="nav-link">Posts</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" [matMenuTriggerFor]="menuDB" (click)="openedDataBaseMenu = true">
+            <a class="nav-link" *ngIf="isAdmin()"  [matMenuTriggerFor]="menuDB" (click)="openedDataBaseMenu = true">
               Database
               <i [ngStyle]="{'color': openedDataBaseMenu ? '#007bff' : ''}" class="fa fa-angle-down ml-2 opacity-8"></i>
             </a>
@@ -121,6 +120,10 @@
                           </h2>
                           <div style="margin-left: 10px;margin-top: -10px">
                             <span style="font-size: 14px">{{ntf.notifDesc}}</span><br>
+                            <div *ngIf="ntf.notifTitle ==='Add request' ">
+                              <button (click)="acceptUser(ntf.idTarget)" class="btn btn-info">Accept</button>
+                              <button (click)="declineUser(ntf.idTarget)" class="btn btn-danger">Decline</button>
+                            </div>
                             <span style="padding-top: 5px;float: right">
                         <span style="font-size: 12px;color: grey !important;">{{ntf.notifDate  | date: 'dd MMMM yyyy '}}, {{ntf.notifDate | date: 'HH:mm'}}</span>
                       </span>

@@ -49,6 +49,7 @@ export class SchedulesComponent implements OnInit {
 
   public setClickedPl(pl: Planning) {
     this.clickedPlanning = pl;
+    console.log(this.clickedPlanning.schedule);
     if (pl.schedule != null) {
       this.loading = true;
       setTimeout(() => {
