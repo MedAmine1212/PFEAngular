@@ -23,8 +23,8 @@
       <tr>
         <td class="tag">CIN:</td>
         <td class="data">
-          <span *ngIf="!showUpdateForm">{{newEmp.cin}}</span>
-          <input  [ngClass]="getTheme() ? 'darkInput' : ''" *ngIf="showUpdateForm" [(ngModel)]="newEmp.cin" type="text"/>
+          <span *ngIf="!showUpdateForm || role == 'user' || role =='chefDep'">{{newEmp.cin}}</span>
+          <input  [ngClass]="getTheme() ? 'darkInput' : ''" *ngIf="showUpdateForm && role == 'admin'" [(ngModel)]="newEmp.cin" type="text"/>
         </td></tr>
       <tr>
         <td class="tag">Name:</td>
@@ -42,7 +42,14 @@
         <td class="tag"> gender:</td>
         <td class="data">
           <span *ngIf="!showUpdateForm">{{newEmp.gender}}</span>
-          <input [ngClass]="getTheme() ? 'darkInput' : ''" [(ngModel)]="newEmp.gender" *ngIf="showUpdateForm" type="text"/>
+          <div *ngIf="showUpdateForm" class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label style="width: 150px;height: 35px !important;" class="btn btn-info" [ngClass]="newEmp.gender == 'male' ? 'active' :''">
+              <input type="radio" (focus)="newEmp.gender = 'male'" name="options" autocomplete="off"> <span style="font-size: 14px">Male</span>
+            </label>
+            <label style="width: 150px;height: 35px !important;" class="btn btn-info" [ngClass]="newEmp.gender == 'female' ? 'active' :''">
+              <input type="radio"  name="options" (focus)="newEmp.gender = 'female'" checked autocomplete="off"><span style="font-size: 14px"> Female</span>
+            </label>
+          </div>
         </td></tr>
       <tr>
         <td class="tag">Birth date:</td>
@@ -67,8 +74,8 @@
       <tr>
         <td class="tag">Department:</td>
         <td class="data">
-          <span *ngIf="!showUpdateForm">{{newEmp.department.depName}}</span>
-          <select [ngClass]="getTheme() ? 'darkInput' : ''" *ngIf="showUpdateForm"  class="custom-select" id="inputGroupSelect01"
+          <span *ngIf="!showUpdateForm || role == 'user' || role =='chefDep'">{{newEmp.department.depName}}</span>
+          <select [ngClass]="getTheme() ? 'darkInput' : ''" *ngIf="showUpdateForm && role == 'admin'"  class="custom-select" id="inputGroupSelect01"
                    [(ngModel)]='selectedDep'>
             <option *ngFor="let depp of departments" value="{{depp.depId}}" selected>
               <span>{{depp.depName}}</span>
@@ -78,11 +85,11 @@
       <tr *ngIf="posts.length > 0">
         <td class="tag">Post:</td>
         <td class="data">
-          <span *ngIf="!showUpdateForm">
+          <span *ngIf="!showUpdateForm || role == 'user' || role =='chefDep'">
             <span *ngIf="emp.post != null">{{newEmp.post.postName}}</span>
             <span *ngIf="emp.post == null">No post assigned</span>
           </span>
-          <select [ngClass]="getTheme() ? 'darkInput' : ''" *ngIf="showUpdateForm"  class="custom-select" id="inputGroupSelect02"
+          <select [ngClass]="getTheme() ? 'darkInput' : ''" *ngIf="showUpdateForm && role == 'admin'"  class="custom-select" id="inputGroupSelect02"
                   [(ngModel)]='selectedPost'>
             <option value="{{noPost}}" disabled selected>
               Posts:

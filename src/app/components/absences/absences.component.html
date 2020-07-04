@@ -169,7 +169,7 @@
         </thead>
         <tbody>
         <tr [ngClass]="getTheme() ? 'lightText' :''" [ngStyle]="{'color': getTheme()? 'white' :''}" class="emp" *ngFor="let abs of clickedUser.absences">
-          <td  class="text-center">
+          <td  class="text-center" style="min-width: 150px">
             {{abs.absenceDate}} <span *ngIf="abs.absenceDate == format.format(date, 'YYYY-MM-DD', null)" style="margin-right: -45px;color: red"> Today</span>
           </td>
           <td  class="text-center">

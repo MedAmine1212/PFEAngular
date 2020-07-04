@@ -36,7 +36,7 @@ export class ImportDataBaseComponent implements OnInit {
   done() {
     this.uploadDone = true;
     this.backup = true;
-    this.dataBaseExportImportService.exportDB().subscribe(() => {
+    this.dataBaseExportImportService.exportDB(0).subscribe(() => {
       setTimeout(() => {
         this.backup = false;
         this.importing = true;
