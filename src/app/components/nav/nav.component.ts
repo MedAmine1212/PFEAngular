@@ -176,7 +176,7 @@ export class NavComponent implements OnInit {
   }
 
   exportDB() {
-    this.dataBaseExportImportService.exportDB().subscribe(() => {
+    this.dataBaseExportImportService.exportDB(1).subscribe(() => {
       setTimeout(() => {
         const config = new MatSnackBarConfig();
         if (this.themeChanger.getTheme()) {

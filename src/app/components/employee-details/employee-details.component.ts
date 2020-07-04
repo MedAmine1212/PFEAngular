@@ -14,6 +14,7 @@ import {ChangePasswordComponent} from '../../dialogs/dialog-forms/change-passwor
 import {MatSnackBar, MatSnackBarConfig} from '@angular/material/snack-bar';
 import {PostService} from '../../services/post/post.service';
 import {Post} from '../../models/Post';
+import {GetRoleService} from "../../services/getRole/get-role.service";
 
 @Component({
   selector: 'app-employee-details',
@@ -23,7 +24,9 @@ import {Post} from '../../models/Post';
 export class EmployeeDetailsComponent implements OnInit {
   static refreshEmp: boolean;
   posts: Post[] = [];
+  role: string;
   constructor(
+  private roleService: GetRoleService,
   public dialog: MatDialog,
   private themeChanger: ThemeChangerService,
   private departmentService: DepartmentService, private  userService: UserService,
@@ -41,6 +44,7 @@ export class EmployeeDetailsComponent implements OnInit {
   selectedPost: string;
   noPost: number;
   ngOnInit(): void {
+    this.role = this.roleService.userRole();
     this.noPost = -1;
     console.log(this.emp);
     EmployeeDetailsComponent.refreshEmp = false;

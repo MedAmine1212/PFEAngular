@@ -10,8 +10,8 @@ export class DataBaseExportImportService {
   private updating: boolean;
   constructor(private http: HttpClient) { }
 
-  exportDB() {
-    return this.http.get(this.baseUrl + 'dumpDb/' + 1);
+  exportDB(sender) {
+    return this.http.get(this.baseUrl + 'dumpDb/' + sender);
   }
   importDB(file) {
     return this.http.post(this.baseUrl + 'restore', file);
