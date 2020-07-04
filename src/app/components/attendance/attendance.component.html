@@ -36,16 +36,5 @@
       <span class="fa fa-circle" matTooltip="{{emp.checkOutMsg}}" [ngStyle]="{'color': emp.checkOutStatus}"></span>
     </td>
   </tr>
-  <tr [ngClass]="getTheme() ? 'lightText' :''" [ngStyle]="{'color': getTheme()? 'white' :''}" class="emp" *ngFor="let emp of users | filter: searchText">
-    <td  class="text-center">
-      {{emp.firstName}} {{emp.name}} <span class="fa fa-info-circle" style="font-size:25px;float: right;color: #3f6ad8" (mouseenter)="showUserProfile(emp, $event)" (mouseleave)="hideUserProfile()"></span>
-    </td>
-    <td  class="text-center">
-      <span class="fa fa-circle" matTooltip="{{emp.checkInMsg}}" [ngStyle]="{'color': emp.checkInStatus}"></span>
-    </td>
-    <td  class="text-center">
-      <span class="fa fa-circle" matTooltip="{{emp.checkOutMsg}}" [ngStyle]="{'color': emp.checkOutStatus}"></span>
-    </td>
-  </tr>
     </tbody>
 </table>

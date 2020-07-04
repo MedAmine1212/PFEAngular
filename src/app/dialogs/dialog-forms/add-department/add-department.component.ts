@@ -6,6 +6,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {User} from '../../../models/User';
 import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
+import {GetRoleService} from '../../../services/getRole/get-role.service';
 @Component({
   selector: 'app-add-department',
   templateUrl: './add-department.component.html',
@@ -22,7 +23,9 @@ export class AddDepartmentComponent implements OnInit {
   public sender: number;
   newName: string;
   disable: boolean;
+  role: string;
   constructor(
+              private roleService: GetRoleService,
               public router: Router,
               public dialogRef: MatDialogRef<AddDepartmentComponent>,
               @Inject(MAT_DIALOG_DATA) public data: Array<any>,
@@ -30,6 +33,7 @@ export class AddDepartmentComponent implements OnInit {
               ) { }
 
   ngOnInit(): void {
+    this.getRole();
     this.disable = true;
     this.createFormGroup();
     this.createEditFormGroup();
@@ -177,6 +181,10 @@ export class AddDepartmentComponent implements OnInit {
   } else {
       return new Observable<any>();
     }
+  }
+
+  private getRole() {
+    this.role = this.roleService.userRole();
   }
 }
 

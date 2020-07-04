@@ -29,6 +29,7 @@ import {PlanningDetailsComponent} from '../planning-details/planning-details.com
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import {SetDepartmentPlanningComponent} from '../../sheets/set-department-planning/set-department-planning.component';
 import {PlanningService} from '../../services/planning/planning.service';
+import {GetRoleService} from '../../services/getRole/get-role.service';
 
 
 export class Image {
@@ -67,7 +68,10 @@ export class EmployeesComponent implements OnInit {
   data = [];
   clickedPlanning: Planning;
   clickedEmp: User;
+  connectedUser: User;
+  role: string;
   constructor(
+          private roleService: GetRoleService,
           private planningService: PlanningService,
           private bottomSheet: MatBottomSheet,
           private snackBar: MatSnackBar,
@@ -86,6 +90,8 @@ export class EmployeesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getRole();
+    this.connectedUser = this.roleService.getConnectedUser();
     this.showUsers = true;
     this.showHideInput = false;
     if (this.router.url === '/RemoteMonitoring/(mainCon:Employees)'
@@ -176,7 +182,6 @@ export class EmployeesComponent implements OnInit {
         this.departmentService.remove(this.clickedDep.depId).subscribe(() => {
           this.clickedDep = new Department();
           this.clickedDep.depId = -1;
-          this.outPutData.emit();
         }, error1 => console.log(error1));
       }
     });
@@ -191,7 +196,7 @@ export class EmployeesComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-      this.outPutData.emit();
+        console.log('added');
       }
     });
   }
@@ -205,12 +210,10 @@ export class EmployeesComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.outPutData.emit();
         this.setChefDep(this.clickedDep.depId);
       }
     });
   }
-
   showAddUserDialog() {
     const dialogRef = this.dialog.open(AddUserComponent, {
       width: '900px',
@@ -223,8 +226,9 @@ export class EmployeesComponent implements OnInit {
         if (this.router.url === '/RemoteMonitoring/(mainCon:Employees)' || this.router.url === '/RemoteMonitoring/(mainCon:Absences)') {
           this.reloadData();
         } else {
-          this.outPutData.emit();
+          if (this.roleService.isAdmin()) {
           this.reloadData();
+          }
         }
       }
     });
@@ -244,17 +248,25 @@ export class EmployeesComponent implements OnInit {
         }
         this.clickedDep.users = [];
         this.clickedDep.users = this.users;
-        this.outPutData.emit();
+        this.getImages();
         setTimeout(() => {
           this.loading = false;
         }, 500);
 
       } else {
-          this.users = [];
+        this.users = [];
+        if (this.roleService.isAdmin()) {
           this.users = r;
-          this.head[0].push('Department');
-          this.fillBody(this.users);
-          this.getImages();
+        } else if (this.roleService.isChefDep()) {
+          for (const emp of r) {
+            if (emp.department.depId === this.connectedUser.department.depId) {
+              this.users.push(emp);
+            }
+          }
+        }
+        this.head[0].push('Department');
+        this.fillBody(this.users);
+        this.getImages();
     }
   }, () => {
       setTimeout(() => {
@@ -278,9 +290,6 @@ export class EmployeesComponent implements OnInit {
         setTimeout(() => {
           this.reloadData();
         }, 100);
-        if (this.router.url === '/RemoteMonitoring/(mainCon:Departments)') {
-          this.outPutData.emit();
-        }
       }
     });
   }
@@ -411,5 +420,9 @@ export class EmployeesComponent implements OnInit {
         this.outPutData.emit(null);
       }
     }
+  }
+
+  getRole() {
+    this.role = this.roleService.userRole();
   }
 }

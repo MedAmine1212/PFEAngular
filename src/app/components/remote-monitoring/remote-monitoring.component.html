@@ -17,7 +17,10 @@
     <div [ngClass]="getTheme() ? 'bg-dark' :''" class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header" style="overflow: hidden" >
 
       <app-nav [connectedUser]="connectedUser"></app-nav>
-
+      <!--absences for user-->
+      <div *ngIf="role == 'user' && (router.url === '/RemoteMonitoring' || router.url === '/RemoteMonitoring/(mainCon:Absences)')" style="margin-top: 80px">
+        <app-absences></app-absences>
+      </div>
       <!--profile-->
       <app-profile (outPutData)="refreshConnectedUser($event)" [connectedUser]="connectedUser" *ngIf="router.url === '/RemoteMonitoring/(mainCon:Profile)'" style="margin: 15px;padding: 0" name="mainCon"></app-profile>
       <!--posts-->
@@ -28,18 +31,18 @@
       <div *ngIf="router.url !== '/RemoteMonitoring/(mainCon:TimeTables)' && router.url !== '/RemoteMonitoring/(mainCon:Employees)'" class="app-main">
         <div class="app-main__outer">
           <!--Absences-->
-          <div [@enterAnimation] *ngIf="router.url === '/RemoteMonitoring' || router.url === '/RemoteMonitoring/(mainCon:Absences)'" class="app-sidebar sidebar-shadow" [ngClass]="getTheme() ? 'bg-premium-dark' :''" style="max-width: 320px;margin-top: -14px;margin-left: -300px">
+          <div  [@enterAnimation] *ngIf="role != 'user' && (router.url === '/RemoteMonitoring' || router.url === '/RemoteMonitoring/(mainCon:Absences)')" class="app-sidebar sidebar-shadow" [ngClass]="getTheme() ? 'bg-premium-dark' :''" style="max-width: 320px;margin-top: -14px;margin-left: -300px">
 
             <app-employees (outPutData)="setClickedUser($event)"></app-employees>
 
           </div>
 
-          <app-absences *ngIf="router.url === '/RemoteMonitoring' || router.url === '/RemoteMonitoring/(mainCon:Absences)'"></app-absences>
+          <app-absences *ngIf="role != 'user' && (router.url === '/RemoteMonitoring' || router.url === '/RemoteMonitoring/(mainCon:Absences)')"></app-absences>
 
           <!--Departments-->
-          <app-departments [connectedUser]="connectedUser" *ngIf="router.url === '/RemoteMonitoring/(mainCon:Departments)'" [@enterAnimation] (outPutData)="setClickedDep($event)"></app-departments>
+          <app-departments *ngIf="router.url === '/RemoteMonitoring/(mainCon:Departments)'" [@enterAnimation] (outPutData)="setClickedDep($event)"></app-departments>
           <div style="margin-top: 20px !important;;margin-right: 15px !important;">
-            <app-employees *ngIf="router.url === '/RemoteMonitoring/(mainCon:Departments)'" (outPutData)="reloadDep($event)" [@enterSecondAnimation]></app-employees>
+            <app-employees *ngIf="router.url === '/RemoteMonitoring/(mainCon:Departments)'" [@enterSecondAnimation]></app-employees>
           </div>
         </div>
 

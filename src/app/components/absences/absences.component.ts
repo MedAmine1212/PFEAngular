@@ -16,6 +16,10 @@ import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import {AbsenceVerificationComponent} from '../../sheets/absence-verification/absence-verification.component';
 import {DateFormatter} from 'ngx-bootstrap';
 import {AbsenceService} from '../../services/absence/absence.service';
+import {GetRoleService} from "../../services/getRole/get-role.service";
+import {DeleteDialogComponent} from "../../dialogs/delete-dialog/delete-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
+import {UpdateAbsenceComponent} from "../../dialogs/dialog-forms/update-absence/update-absence.component";
 @Component({
   selector: 'app-absences',
   templateUrl: './absences.component.html',
@@ -52,6 +56,8 @@ import {AbsenceService} from '../../services/absence/absence.service';
 })
 export class AbsencesComponent implements OnInit {
   @ViewChild('empAtt') empAttDiv: HTMLDivElement;
+  role: string;
+  connectedUser: User;
   format = new DateFormatter();
   date = new Date();
   showPoint: boolean;
@@ -73,6 +79,8 @@ export class AbsencesComponent implements OnInit {
   currentDay: string;
   loadingUser: boolean;
   constructor(
+    public dialog: MatDialog,
+    private  roleService: GetRoleService,
     private absenceService: AbsenceService,
     private bottomSheet: MatBottomSheet,
     private hoveredUserService: HoveredUserService,
@@ -86,7 +94,9 @@ export class AbsencesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getRole();
     this.loading = true;
+    this.getConnectedUser();
     this.reloadData();
     setInterval(() => {
       this.time = new Date();
@@ -278,6 +288,30 @@ export class AbsencesComponent implements OnInit {
   openAbsenceVerificationSheet(abs: Absence) {
     abs.user = this.clickedUser;
     this.bottomSheet.open(AbsenceVerificationComponent , {
+      data: abs
+    });
+  }
+
+  getRole() {
+    this.role = this.roleService.userRole();
+  }
+  getConnectedUser() {
+    if (this.roleService.getConnectedUser() == null) {
+      setTimeout(() => {
+        this.getConnectedUser();
+      }, 500);
+    } else {
+      this.connectedUser = this.roleService.connectedUser;
+      if (this.role === 'user') {
+        this.clickedUser = this.connectedUser;
+      }
+    }
+  }
+
+  updateAbs(abs: Absence) {
+    const dialogRef = this.dialog.open(UpdateAbsenceComponent, {
+      width: '600px',
+      height: '300px',
       data: abs
     });
   }

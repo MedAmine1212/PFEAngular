@@ -27,7 +27,7 @@
               <hr>
             </div>
             <div class="card-body">
-              <div *ngIf="this.data[1] == 2" style="margin-bottom: 40px">
+              <div *ngIf="this.data[1] == 2 || this.data[1] === 5" style="margin-bottom: 40px">
               <h3>Current department</h3>
               <input  type="text" class="form-control" id="inputDep2" value="{{tempDep}}" disabled="true">
               </div>
@@ -39,7 +39,7 @@
                 [ngModelOptions]="{standalone: true}"
               >
                 <option style="color: grey;" disabled [selected]="user.department === null" *ngIf="this.data[1] == 1" value="null">Choose a department: </option>
-                <option style="color: blue;" *ngIf="this.data[1] == 2" >Unchanged</option>
+                <option style="color: blue;" *ngIf="this.data[1] == 2 || this.data[1] === 5" >Unchanged</option>
                 <option *ngFor="let depp of departments" [ngValue]="depp">
                   <span>{{depp.depName}}</span>
                 </option>
@@ -77,9 +77,10 @@
         <div  class="main-card mb-3 card">
           <div class="card-header">
 
-            <h1 *ngIf="user.department != null && data[1] == 1">Add a user to <b>{{user.department.depName}}</b> department</h1>
+            <h1 *ngIf="user.department != null && data[1] == 1 && data[1] != 5">Add a user to <b>{{user.department.depName}}</b> department</h1>
             <h1 *ngIf="data[1] == 2"><b>Edit user</b></h1>
-            <h1 *ngIf="user.department == null && data[1] == 1">User info</h1>
+            <h1 *ngIf="data[1] == 5"><b>Verify add request</b></h1>
+            <h1 *ngIf="user.department == null && data[1] == 1 && data[1] != 5">User info</h1>
             <hr>
           </div>
           <div class="card-body" style="padding-bottom: 40px">
@@ -235,10 +236,10 @@
                 </div>
                 <div style="margin-bottom: -30px;padding-top:18px" class="form-group col-md-7" *ngIf="posts.length > 0">
                   <label for="inputGroupSelect02">Post*</label><br>
-                    <input type="text" class="form-control" *ngIf="data[1] == 2 && tempPost != null" style="float: left;width: 45%" disabled value="{{tempPost}}"/>
-                    <input type="text" class="form-control" *ngIf="data[1] == 2 && tempPost == null" style="float: left;width: 45%" disabled value="No post assigned"/>
+                    <input type="text" class="form-control" *ngIf="(data[1] == 2 || data[1] == 5) && tempPost != null" style="float: left;width: 45%" disabled value="{{tempPost}}"/>
+                    <input type="text" class="form-control" *ngIf="(data[1] == 2 || data[1] == 5) && tempPost == null" style="float: left;width: 45%" disabled value="No post assigned"/>
                   <select
-                  [ngStyle]="{'float' : data[1] == 2 ? 'right': '', 'width': data[1] == 2 ? '50%' :''}"
+                  [ngStyle]="{'float' : (data[1] == 2 || data[1] == 5)? 'right': '', 'width':  (data[1] == 2 || data[1] == 5)? '50%' :''}"
                     required
                     class="custom-select"
                     id="inputGroupSelect02"
@@ -246,7 +247,7 @@
                     [ngModelOptions]="{standalone: true}"
                   >
                     <option style="color: grey;" disabled *ngIf="data[1] == 1 || tempPost == null" selected value="null"> Post: </option>
-                    <option style="color: blue;" *ngIf="data[1] == 2 && tempPost != null" selected value="null"> Unchanged</option>
+                    <option style="color: blue;" *ngIf="(data[1] == 2 || data[1] == 5) && tempPost != null" selected value="null"> Unchanged</option>
                     <option *ngFor="let post of posts" [ngValue]="post">
                       <span>{{post.postName}}</span>
                     </option>
@@ -364,12 +365,12 @@
           </div>
           <div *ngIf="data[1] != 4" class="note">
             <button (click)="showFourthFormGroup()" *ngIf="!showOtherAddress" class="btn btn-info addAddressButton">
-              <span mat-raised-button matTooltip="Add second Address now" *ngIf="data[1] == 1 || (data[1] == 2 && data[0].addresses[1] == null)" class="fas fa-plus-circle"></span>
-              <span mat-raised-button matTooltip="Restore second address" *ngIf="data[1] == 2 && data[0].addresses[1] != null" class="fas fa-plus-circle"></span>
+              <span mat-raised-button matTooltip="Add second Address now" *ngIf="data[1] == 1 || ((data[1] == 2 || data[1] == 5) && data[0].addresses[1] == null)" class="fas fa-plus-circle"></span>
+              <span mat-raised-button matTooltip="Restore second address" *ngIf="(data[1] == 2 || data[1] == 5) && data[0].addresses[1] != null" class="fas fa-plus-circle"></span>
             </button>
             <button (click)="hideFourthFormGroup()" *ngIf="showOtherAddress"  class="btn btn-info addAddressButton">
-              <span mat-raised-button matTooltip="Hide form" *ngIf="data[1] == 1 || (data[1] == 2 && data[0].addresses[1] == null)"  class="fas fa-minus-circle"></span>
-              <span mat-raised-button matTooltip="Delete second address" *ngIf="data[1] == 2 && data[0].addresses[1] != null"  class="fas fa-minus-circle"></span>
+              <span mat-raised-button matTooltip="Hide form" *ngIf="data[1] == 1 || ((data[1] == 2 || data[1] == 5) && data[0].addresses[1] == null)"  class="fas fa-minus-circle"></span>
+              <span mat-raised-button matTooltip="Delete second address" *ngIf="(data[1] == 2 || data[1] == 5) && data[0].addresses[1] != null"  class="fas fa-minus-circle"></span>
             </button>
             <span *ngIf="!showOtherAddress"> Note: Each user can have 2 addresses, you can add another address now, otherwise this user or the employer can add another address later.</span>
           </div><br>
@@ -469,8 +470,10 @@
           <div style="float: right;">
             <button type="submit" *ngIf="data[1] == 1" [disabled]="!thirdFormGroup.valid || (showOtherAddress && !fourthFormGroup.valid)" class="btn btn-primary"  (click)="addUser()">Add user</button>
             <button type="submit" *ngIf="data[1] == 2" [disabled]="!thirdFormGroup.valid || (showOtherAddress && !fourthFormGroup.valid)" class="btn btn-primary"  (click)="updateUser()">Update user</button>
+            <button type="submit" *ngIf="data[1] == 5" [disabled]="!thirdFormGroup.valid || (showOtherAddress && !fourthFormGroup.valid)" class="btn btn-info"  (click)="acceptUser()">Accept user</button>
+            <button type="submit" *ngIf="data[1] == 5"  class="btn btn-danger" style="margin-left: 15px"  (click)="declineUser()">Decline user</button>
             <button type="submit" *ngIf="data[1] == 4" [disabled]="!fourthFormGroup.valid || addAddressDone" class="btn btn-primary"  (click)="addSecondAddress()">Add address</button>
-            <button type="button" (click)="closeThis()" class="btn btn-light" style="margin-left: 20px;">Cancel</button>
+            <button type="button" *ngIf="data[1] != 5" (click)="closeThis()" class="btn btn-light" style="margin-left: 20px;">Cancel</button>
           </div>
         </div>
 

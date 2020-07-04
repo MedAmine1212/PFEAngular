@@ -11,6 +11,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 import {User} from '../../models/User';
+import {GetRoleService} from '../../services/getRole/get-role.service';
 
 export class DynamicFlatNode {
   constructor(public item: Department, public level = 1, public expandable = false,
@@ -142,27 +143,28 @@ export class DynamicDataSource implements DataSource<DynamicFlatNode> {
 
 export class DepartmentsComponent implements  OnInit {
   @Output() outPutData = new EventEmitter<Department>();
-  @Input() connectedUser: User;
+  role: string;
   data: Department[] = [];
   fakedep: Department;
   clickedDep: Department;
   treeControl: FlatTreeControl<DynamicFlatNode>;
   dataSource: DynamicDataSource;
-  constructor(private themeChanger: ThemeChangerService,
+  connectedUser: User;
+  constructor(
+              private roleService: GetRoleService,
+              private themeChanger: ThemeChangerService,
               public dialog: MatDialog, public database: DynamicDatabase, private departmentService: DepartmentService) {
   }
   sendData(dep: Department) {
     if (dep.depId === -1) {
       this.clickedDep = dep;
+      this.outPutData.emit(this.clickedDep);
     } else {
-    for (const depp of this.data) {
-      if (dep.depId === depp.depId) {
-        this.clickedDep = depp;
-        break;
+      this.departmentService.findById(dep.depId).subscribe(r => {
+        this.clickedDep = r;
+        this.outPutData.emit(this.clickedDep);
+      }, error => console.log(error));
       }
-    }
-    }
-    this.outPutData.emit(this.clickedDep);
   }
   getLevel = (node: DynamicFlatNode) => node.level;
 
@@ -171,7 +173,8 @@ export class DepartmentsComponent implements  OnInit {
   hasChild = (_: number, nodeData: DynamicFlatNode) => nodeData.expandable;
 
   ngOnInit(): void {
-    console.log(this.connectedUser);
+    this.getConnectedUser();
+    this.getRole();
     this.clickedDep = new Department();
     this.clickedDep.depId = -1;
     this.fakedep = this.clickedDep;
@@ -180,21 +183,31 @@ export class DepartmentsComponent implements  OnInit {
     this.reloadData();
     this.unselectDep();
   }
-
+  getConnectedUser() {
+    if (this.roleService.getConnectedUser() == null) {
+      setTimeout(() => {
+        this.getConnectedUser();
+      }, 500);
+    } else {
+      this.connectedUser = this.roleService.connectedUser;
+    }
+  }
   unselectDep() {
     this.sendData(this.fakedep);
   }
 
   public reloadData() {
-    console.log('Reloading...');
+    this.data = [];
     this.departmentService.list().subscribe(r => {
+      if (!this.roleService.isAdmin()) {
       r.forEach(dep => {
-        if (dep.depId === this.connectedUser.department.depId && this.isChefDep()) {
+        if (dep.depId === this.connectedUser.department.depId && this.roleService.isChefDep()) {
           this.data.push(dep);
-        } else if (this.isAdmin()) {
-          this.data = r;
         }
       });
+      } else if (this.roleService.isAdmin()) {
+        this.data = r;
+      }
       this.dataSource.data = this.database.initialData(this.data);
       if (this.clickedDep != null) {
       if (this.clickedDep.depId !== -1) {
@@ -227,10 +240,8 @@ export class DepartmentsComponent implements  OnInit {
   getTheme() {
     return this.themeChanger.getTheme();
   }
-  isAdmin() {
-    return this.connectedUser.roles.findIndex(role => role.roleName === 'ADMIN' ) !== -1;
-  }
-  isChefDep() {
-    return this.connectedUser.roles.findIndex(role => role.roleName === 'CHEF_DEPARTMENT' ) !== -1;
+
+  getRole() {
+   this.role = this.roleService.userRole();
   }
 }

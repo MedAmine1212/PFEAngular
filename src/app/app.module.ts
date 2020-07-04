@@ -62,6 +62,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatChipsModule} from '@angular/material/chips';
 import { AttendanceComponent } from './components/attendance/attendance.component';
 import { AbsenceVerificationComponent } from './sheets/absence-verification/absence-verification.component';
+import { UpdateAbsenceComponent } from './dialogs/dialog-forms/update-absence/update-absence.component';
 
 
 @NgModule({
@@ -92,6 +93,7 @@ import { AbsenceVerificationComponent } from './sheets/absence-verification/abse
     ChangePasswordComponent,
     AttendanceComponent,
     AbsenceVerificationComponent,
+    UpdateAbsenceComponent,
 
   ],
   imports: [

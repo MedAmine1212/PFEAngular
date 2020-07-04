@@ -32,7 +32,7 @@
           </mat-error>
         </div>
       </div>
-  <div class="main-card mb-3 card">
+  <div *ngIf="role == 'admin'" class="main-card mb-3 card">
     <div class="card-body">
       <div class="line">
         <label for="supDep">Chef. Department</label>

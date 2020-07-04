@@ -19,6 +19,8 @@ import {ThemeChangerService} from '../../../services/ThemeChanger/theme-changer.
 import {UserConfigsService} from '../../../services/UserConfigs/user-configs.service';
 import {ImageService} from '../../../services/image/image.service';
 import {TempUserService} from '../../../services/TempUser/temp-user.service';
+import {MatSnackBar, MatSnackBarConfig} from '@angular/material/snack-bar';
+import {GetRoleService} from '../../../services/getRole/get-role.service';
 
 @Component({
   selector: 'app-add-user',
@@ -125,7 +127,11 @@ export class AddUserComponent implements  OnInit  {
   postFormGroup: FormGroup;
   sameImage: any;
   connectedUser: User;
-  constructor(private themeChanger: ThemeChangerService,
+  role: string;
+  constructor(
+              private roleService: GetRoleService,
+              private snackBar: MatSnackBar,
+              private themeChanger: ThemeChangerService,
               public dialogRef: MatDialogRef<AddUserComponent>,
               private userConfigService: UserConfigsService,
               @Inject(MAT_DIALOG_DATA) public data: any[],
@@ -284,6 +290,7 @@ export class AddUserComponent implements  OnInit  {
   }
 
   addUser() {
+    this.role = this.roleService.userRole();
     this.subscribingUser = true;
     this.savingUser = true;
     // set user
@@ -304,7 +311,7 @@ export class AddUserComponent implements  OnInit  {
     }, error => console.log(error));
 
     // add user
-    if (this.isAdmin()) {
+    if (this.role === 'admin') {
       this.userService.add(this.user).subscribe(user => {
         setTimeout(() => {
           this.savingUser = false;
@@ -327,6 +334,17 @@ export class AddUserComponent implements  OnInit  {
             this.upload(user.userId, 'added');
           } else {
             setTimeout(() => {
+              setTimeout(() => {
+                const config = new MatSnackBarConfig();
+                if (this.themeChanger.getTheme()) {
+                  config.panelClass = ['snackBar'];
+                } else {
+                  config.panelClass = ['snackBarDark'];
+                }
+                config.duration = 3000;
+                this.snackBar.open('Add request sent successfully', null, config);
+
+              }, 500);
               this.dialogRef.close(true);
             }, 400);
           }
@@ -360,19 +378,13 @@ export class AddUserComponent implements  OnInit  {
         }, error => console.log(error));
   }
 
-  findConnectedUser() {
-     this.userService.findUserWithToken().subscribe(user => {
-       return user;
-     });
-  }
-
   // CHECK IN USE
   checkInUseEmail(control) {
     const emails = [];
     this.userService.list().subscribe(users => {
       for (const user of users) {
         // @ts-ignore
-        if (this.data[1] === 2) {
+        if (this.data[1] === 2 || this.data[1] === 5) {
           if (this.data[0].email !== user.email) {
             emails.push(user.email);
           }
@@ -394,7 +406,7 @@ export class AddUserComponent implements  OnInit  {
     const cins = [];
     this.userService.list().subscribe(users => {
       for (const user of users) {
-        if (this.data[1] === 2) {
+        if (this.data[1] === 2 || this.data[1] === 5) {
           if (this.data[0].cin !== user.cin) {
             cins.push(user.cin);
           }
@@ -416,7 +428,7 @@ export class AddUserComponent implements  OnInit  {
     const phoneNumbers = [];
     this.userService.list().subscribe(users => {
       for (const user of users) {
-        if (this.data[1] === 2) {
+        if (this.data[1] === 2 || this.data[1] === 5) {
           if (this.data[0].phone !== user.phone) {
             phoneNumbers.push(user.phone);
           }
@@ -613,6 +625,7 @@ export class AddUserComponent implements  OnInit  {
     // if (this.retrievedImage == null || this.selectedFile != null) {
     //   this.user.image = null;
     // }
+    this.user.department.users = null;
     this.userService.modify(this.user.userId, this.user, 1).subscribe(() => {
       setTimeout(() => {
         this.savingUser = false;
@@ -646,7 +659,7 @@ export class AddUserComponent implements  OnInit  {
   }
 
   showImage(name) {
-    if (name != null &&  this.data[1] === 2 ) {
+    if (name != null && (this.data[1] === 2 || this.data[1] === 5)) {
     this.imageService.load(name).subscribe( img => {
       if (img !== null) {
         this.retrieveResonse = img;
@@ -666,10 +679,16 @@ export class AddUserComponent implements  OnInit  {
     }, error => console.log(error));
   }
 
-  isAdmin() {
-    return this.connectedUser.roles.findIndex(role => role.roleName === 'ADMIN' ) !== -1;
+  acceptUser() {
+      console.log(this.user);
+      this.tempUserService.acceptRequest(this.user, 'add').subscribe(usr => {
+        this.dialogRef.close(1);
+      }, error => console.log(error));
   }
-  isChefDep() {
-    return this.connectedUser.roles.findIndex(role => role.roleName === 'CHEF_DEPARTMENT' ) !== -1;
+
+  declineUser() {
+    this.tempUserService.declineRequest(this.data[0].userId).subscribe(usr => {
+     this.dialogRef.close(-1);
+    }, err => console.log(err));
   }
 }

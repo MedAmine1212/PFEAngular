@@ -75,7 +75,6 @@ reloadUser() {
   }
 
   removeImage() {
-    console.log(this.tempImage);
     if (this.tempImage == null) {
       this.imageChanged = false;
     } else {

@@ -18,6 +18,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {ImportDataBaseComponent} from '../../dialogs/import-data-base/import-data-base.component';
 import {HoveredUserService} from '../../services/hoveredUser/hovered-user.service';
 import {TempUserService} from '../../services/TempUser/temp-user.service';
+import {AddUserComponent} from '../../dialogs/dialog-forms/add-user/add-user.component';
 
 @Component({
   selector: 'app-nav',
@@ -95,7 +96,6 @@ export class NavComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.isChefDep());
     this.notifs = [];
     this.notViewdNotifs = null;
     this.playNotifSound = false;
@@ -125,7 +125,6 @@ export class NavComponent implements OnInit {
 
   logout() {
     this.auth.loggedOut();
-    this.router.navigateByUrl('');
   }
 
   getTheme() {
@@ -290,17 +289,30 @@ export class NavComponent implements OnInit {
     return this.connectedUser.roles.findIndex(role => role.roleName === 'CHEF_DEPARTMENT') !== -1;
   }
 
-  acceptUser(idTarget: number) {
-    this.tempUserService.findById(idTarget).subscribe(user => {
-      this.tempUserService.acceptRequest(user, 'add').subscribe(usr => {
-        console.log(usr);
-      }, error => console.log(error));
-    }, err => console.log(err));
-  }
+  verifYUser(ntf: NotificationMessage) {
+    if (ntf.idTarget !== 0) {
+      this.tempUserService.findById(ntf.idTarget).subscribe(r => {
+        const dialogRef = this.dialog.open(AddUserComponent, {
+          width: '900px',
+          height: '625px',
+          panelClass: 'matDialogClass',
+          data: [r, 5]
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          // tslint:disable-next-line:triple-equals
+          if (result != false) {
+            ntf.idTarget = 0;
+            this.notifService.modify(ntf, ntf.notifId).subscribe(() => {
+            }, error => console.log(error));
+            this.reloadNotifs();
+          } else {
 
-  declineUser(idTarget: number) {
-      this.tempUserService.declineRequest(idTarget).subscribe(usr => {
-        console.log(usr);
-    }, err => console.log(err));
+          }
+        });
+      }, error => console.log(error));
+    } else {
+      return;
+    }
+
   }
 }

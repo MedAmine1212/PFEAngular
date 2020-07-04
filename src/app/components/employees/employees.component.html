@@ -11,10 +11,10 @@
         <button mat-raised-button class="btn btn-info" (click)="showAddUserDialog()" matTooltip="Add Employee">
           <span style="cursor:pointer;color:white" title="add" class="fa fa-user-plus"></span>
         </button>
-        <button mat-raised-button class="btn btn-success" (click)="showAddDepDialog()" matTooltip="Add departement"><span class="fas fa-plus"></span></button>
+        <button mat-raised-button class="btn btn-success" *ngIf="role == 'admin'" (click)="showAddDepDialog()" matTooltip="Add departement"><span class="fas fa-plus"></span></button>
         <button mat-raised-button class="btn btn-secondary" (click)="showUpdateDepDialog()" matTooltip="Update departement"><span class="fas fa-pencil-alt"></span></button>
         <button mat-raised-button class="btn btn-warning" (click)="openPDF()" matTooltip="print as PDF"><span class="fas fa-print"></span></button>
-        <button mat-raised-button class="btn btn-danger" (click)="showDeleteDialog()" matTooltip="Delete departement"><span class="fas fa-trash-alt"></span></button>
+        <button mat-raised-button class="btn btn-danger" (click)="showDeleteDialog()" *ngIf="role == 'admin'" matTooltip="Delete departement"><span class="fas fa-trash-alt"></span></button>
       </div>
     </div>
     <div [ngStyle]="{'margin-left': router.url === '/RemoteMonitoring/(mainCon:Absences)'  || router.url === '/RemoteMonitoring'? '-25px': ''}" *ngIf="thisIsEmp" style="width: 100%">
@@ -23,8 +23,8 @@
       <i [ngStyle]="{'color': getTheme()? 'white' :'grey'}" style="margin-right: 5px" class="fa fa-user-friends"></i>
       Employees
       <span [ngStyle]="{'margin-left': router.url === '/RemoteMonitoring/(mainCon:Absences)' || router.url === '/RemoteMonitoring' ? '5px' :'30px'}">
-        <button mat-raised-button matTooltip="Add user" (click)="showAddUserDialog()" [ngClass]="{'bg-premium-dark': getTheme()}" class="btn btn-outline-primary addUser" ><span class="fas fa-user-plus"></span></button>
-      <span title="open" [ngStyle]="{'color': getTheme()? 'white' :'grey'}" [routerLink]="[{ outlets: {mainCon: ['Employees'] } }]" *ngIf="router.url != '/RemoteMonitoring/(mainCon:Employees)'" style="cursor:pointer;margin-left:10px;margin-top: 5px" class="fa fa-external-link-alt butts"></span>
+        <button *ngIf="role == 'admin'" mat-raised-button matTooltip="Add user" (click)="showAddUserDialog()" [ngClass]="{'bg-premium-dark': getTheme()}" class="btn btn-outline-primary addUser" ><span class="fas fa-user-plus"></span></button>
+      <span title="open" [ngStyle]="{'color': getTheme()? 'white' :'grey'}" [routerLink]="[{ outlets: {mainCon: ['Employees'] } }]" *ngIf="role == 'admin' && router.url != '/RemoteMonitoring/(mainCon:Employees)'" style="cursor:pointer;margin-left:10px;margin-top: 5px" class="fa fa-external-link-alt butts"></span>
     </span>
 
     </h2>
@@ -132,9 +132,12 @@
             </td>
             <span *ngIf="router.url === '/RemoteMonitoring/(mainCon:Employees)' || !thisIsEmp">
 
-              <td style="float: right" class="text-center">
+              <td *ngIf="emp.userId != connectedUser.userId" style="float: right" class="text-center">
                 <button type="button" id="PopoverCustomT-1" (click)="openDetailsDialog(emp)" style="border-radius: 12px" class="btn btn-primary btn-sm" matTooltip="Employee details"><span class="fa fa-info-circle"></span></button>
-                <button type="button" id="PopoverCustomT-2" (click)="openDeleteEmpDialog(emp)" style="border-radius: 12px" class="btn btn-danger btn-sm" matTooltip="Delete employee"><span class="fa fa-trash-alt"></span></button>
+                <button type="button" id="PopoverCustomT-2"  *ngIf="role == 'admin'" (click)="openDeleteEmpDialog(emp)" style="border-radius: 12px" class="btn btn-danger btn-sm" matTooltip="Delete employee"><span class="fa fa-trash-alt"></span></button>
+              </td>
+              <td class="text-center" *ngIf="emp.userId == connectedUser.userId">
+                <div style="float: right">Current user</div>
               </td>
               </span>
           </tr>

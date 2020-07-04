@@ -30,13 +30,13 @@
           <i style="margin-right:7px;" [ngStyle]="{'color': getTheme() ? 'white' :'grey'}" class="fa fa-building"></i>
           Departments</span>
           <span class="buttons" style="border:1px solid transparent">
-      <button (click)="addDepartment()" mat-raised-button matTooltip="Add departement" [ngClass]="{'bg-premium-dark': getTheme()}" class="btn btn-outline-primary addButtForDark" ><span class="fas fa-plus"></span></button>
+      <button (click)="addDepartment()" *ngIf="role == 'admin'" mat-raised-button matTooltip="Add departement" [ngClass]="{'bg-premium-dark': getTheme()}" class="btn btn-outline-primary addButtForDark" ><span class="fas fa-plus"></span></button>
     <span (click)="unselectDep()" [ngClass]="getTheme() ? 'darkUnselect' :'lightUnselect'" *ngIf="clickedDep.depId!=-1" matTooltip="Unselect departement" class="fa fa-check-circle"></span>
   </span>
         </li>
         <li class="noDepLi" [ngStyle]="{'color': getTheme()? 'white' :''}" *ngIf="this.data.length === 0 && !database.loading">
           No departments to show<br>
-          <button class="btn btn-info noDepButt" matTooltip="Add departement" (click)="addDepartment()">Add</button>
+          <button class="btn btn-info noDepButt" matTooltip="Add departement" *ngIf="role == 'admin'" (click)="addDepartment()">Add</button>
         </li>
         <li style="text-align:center;padding-top: 100px" *ngIf="database.loading">
           <div style="margin-right:20px;width: 60px;height:60px;font-size: 20px" class="spinner-border text-info" role="status">

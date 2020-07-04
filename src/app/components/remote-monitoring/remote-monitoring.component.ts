@@ -17,6 +17,7 @@ import {PostsComponent} from '../posts/posts.component';
 import {DataBaseExportImportService} from '../../services/dataBaseImportExport/data-base-export-import.service';
 import {AbsencesComponent} from '../absences/absences.component';
 import {HoveredUserService} from '../../services/hoveredUser/hovered-user.service';
+import {GetRoleService} from '../../services/getRole/get-role.service';
 @Component({
   selector: 'app-remmote-monitoring',
   animations: [
@@ -83,6 +84,7 @@ export class RemoteMonitoringComponent implements OnInit {
   clickedEmp: User;
   hoveredUser: User;
   constructor(
+    private roleService: GetRoleService,
     private hoveredUserService: HoveredUserService,
     private dataBaseExportImportService: DataBaseExportImportService,
     private snackBar: MatSnackBar,
@@ -96,6 +98,7 @@ export class RemoteMonitoringComponent implements OnInit {
       this.getHoveredUser();
     });
   }
+  public role: string;
   private jwt = new JwtHelperService();
   @ViewChild(EmployeesComponent) employeesComponent: EmployeesComponent;
   @ViewChild(DepartmentsComponent) departmentComponent: DepartmentsComponent;
@@ -113,11 +116,13 @@ export class RemoteMonitoringComponent implements OnInit {
   ngOnInit() {
     this.showSite = false;
     this.userService.findUserWithToken().subscribe( ress => {
-      if(ress == null){
+      if (ress == null) {
         this.authService.loggedOut();
       }
       // @ts-ignore
       this.connectedUser = ress;
+      this.roleService.setConnectedUser(this.connectedUser);
+      this.getRole();
       // @ts-ignore
       this.themeChanger.setTheme(ress.userConfigs[0].theme);
       this.loading = true;
@@ -163,12 +168,6 @@ export class RemoteMonitoringComponent implements OnInit {
     }
     }, 1);
   }
-
-  reloadDep($event: any) {
-    this.departmentComponent.reloadData();
-  }
-
-
   getTheme() {
     return this.themeChanger.getTheme();
   }
@@ -184,9 +183,16 @@ public reloadFromWebSocket(message) {
     if (webSocketMessage == null) {
       console.log('ERROR MESSAGE');
     } else {
-      if (webSocketMessage === 'employee') {
-        this.openSnackBar('Employees updated', null);
+      if (webSocketMessage === 'tempUserAdded') {
+        this.navComponent.reloadNotifs();
         this.employeesComponent.reloadFromSocket();
+      } else if (webSocketMessage === 'tempUser') {
+        this.navComponent.reloadNotifs();
+      } else if (webSocketMessage === 'employee') {
+        setTimeout(() => {
+          this.employeesComponent.reloadFromSocket();
+          this.openSnackBar('Employees updated', null);
+        }, 1000);
       } else if (webSocketMessage === 'timetable') {
         if (this.router.url === '/RemoteMonitoring/(mainCon:Departments)') {
           this.openSnackBar('Department updated', null);
@@ -278,5 +284,9 @@ public reloadFromWebSocket(message) {
         window.scroll(1, 0);
       }
     }, 1);
+  }
+
+  getRole() {
+    this.role = this.roleService.userRole();
   }
 }

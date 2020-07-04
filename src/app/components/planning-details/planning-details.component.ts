@@ -4,6 +4,8 @@ import {Planning} from '../../models/Planning';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 import {Department} from '../../models/Department';
 import {PlanningService} from '../../services/planning/planning.service';
+import {GetRoleService} from '../../services/getRole/get-role.service';
+import {User} from '../../models/User';
 
 @Component({
   selector: 'app-planning-details',
@@ -27,13 +29,18 @@ import {PlanningService} from '../../services/planning/planning.service';
 export class PlanningDetailsComponent implements OnInit {
   showBody: boolean;
   clickedPlanning: Planning;
+  connectedUser: User;
+  role: string;
 
   constructor(
+    private roleService: GetRoleService,
     private planningService: PlanningService,
     private themeChanger: ThemeChangerService) {
   }
 
   ngOnInit(): void {
+    this.getRole();
+    this.getConnectedUser();
     this.clickedPlanning = null;
     this.showBody = false;
 
@@ -64,5 +71,17 @@ export class PlanningDetailsComponent implements OnInit {
     this.planningService.modify(this.clickedPlanning, this.clickedPlanning.planningId, 1).subscribe(() => {
     }, error => console.log(error));
 
+  }
+  getConnectedUser() {
+    if (this.roleService.getConnectedUser() == null) {
+      setTimeout(() => {
+        this.getConnectedUser();
+      }, 500);
+    } else {
+      this.connectedUser = this.roleService.connectedUser;
+    }
+  }
+  getRole() {
+    this.role = this.roleService.userRole();
   }
 }

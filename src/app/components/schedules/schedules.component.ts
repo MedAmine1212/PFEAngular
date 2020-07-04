@@ -7,6 +7,8 @@ import {Planning} from '../../models/Planning';
 import {MatDialog} from '@angular/material/dialog';
 import {AddScheduleComponent} from '../../dialogs/dialog-forms/add-schedule/add-schedule.component';
 import {DeleteDialogComponent} from '../../dialogs/delete-dialog/delete-dialog.component';
+import {User} from "../../models/User";
+import {GetRoleService} from "../../services/getRole/get-role.service";
 
 @Component({
   selector: 'app-schedules',
@@ -33,8 +35,11 @@ export class SchedulesComponent implements OnInit {
   schedules: Schedule[] = [];
   clickedPlanning: Planning = new Planning();
   loading: boolean;
+  connectedUser: User;
+  role: string;
 
   constructor(
+    private roleService: GetRoleService,
     public dialog: MatDialog,
     private scheduleService: ScheduleService,
     private themeChanger: ThemeChangerService) {
@@ -42,6 +47,8 @@ export class SchedulesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getRole();
+    this.getConnectedUser();
     this.loading = false;
     this.reloadData();
     this.showHideInput = false;
@@ -138,5 +145,17 @@ export class SchedulesComponent implements OnInit {
       }
 
     });
+  }
+  getConnectedUser() {
+    if (this.roleService.getConnectedUser() == null) {
+      setTimeout(() => {
+        this.getConnectedUser();
+      }, 500);
+    } else {
+      this.connectedUser = this.roleService.connectedUser;
+    }
+  }
+  getRole() {
+    this.role = this.roleService.userRole();
   }
 }

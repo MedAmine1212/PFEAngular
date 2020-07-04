@@ -31,7 +31,7 @@
               <i class="fa fa-clock"></i>
               Plannings
               <span class="buttons">
-                  <button (click)="addPlanning()" mat-raised-button matTooltip="Add Planning" [ngClass]="{'bg-premium-dark': getTheme()}" class="btn btn-outline-primary addSch" ><span class="fas fa-plus"></span></button>
+                  <button (click)="addPlanning()" mat-raised-button matTooltip="Add Planning" *ngIf="role == 'admin'" [ngClass]="{'bg-premium-dark': getTheme()}" class="btn btn-outline-primary addSch" ><span class="fas fa-plus"></span></button>
              <span *ngIf="plannings.length > 0">
                 <span *ngIf="selectedCount < plannings.length" (click)="showAll()" mat-raised-button matTooltip="Show all" class="fa fa-check-circle showAll"></span>
                 <span *ngIf="selectedCount === plannings.length" (click)="hideAll()" mat-raised-button matTooltip="Hide all" class="fa fa-times-circle showAll hideAll"></span>
@@ -80,7 +80,7 @@
           <div class="card-body noSchBod">
             <div [ngStyle]="{'color': getTheme()? 'white' :''}"  class="noSchContainer">
               No plannings to show<br><br>
-              <button class="btn btn-primary" (click)="addPlanning()">Add Planning</button>
+              <button class="btn btn-primary" *ngIf="role == 'admin'" (click)="addPlanning()">Add Planning</button>
             </div>
           </div>
         </div>
@@ -137,8 +137,8 @@
                 </div>
                 <div style="width: 40%">
                   <div class="buttonsDetails">
-                    <button mat-raised-button class="btn btn-secondary btnDetails" (click)="openDetailsDialog()" matTooltip="Update planning"><span class="fas fa-pencil-alt"></span></button>
-                    <button mat-raised-button class="btn btn-danger btnDetails" (click)="openDeletePlanDialog()" matTooltip="Delete planning"><span class="fas fa-trash-alt"></span></button>
+                    <button mat-raised-button class="btn btn-secondary btnDetails" (click)="openDetailsDialog()" *ngIf="role != 'user'" matTooltip="Update planning"><span class="fas fa-pencil-alt"></span></button>
+                    <button mat-raised-button class="btn btn-danger btnDetails" (click)="openDeletePlanDialog()" *ngIf="role == 'admin'" matTooltip="Delete planning"><span class="fas fa-trash-alt"></span></button>
                   </div>
                 </div>
               </div>

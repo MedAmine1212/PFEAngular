@@ -11,7 +11,7 @@
     <div [@enterAnimation] [ngStyle]="{'color': getTheme()? 'white' :'black'}" class="card-header">
       Schedules
       <span class="buttons">
-          <button (click)="openAddScheduleDialog()" mat-raised-button matTooltip="Add Schedule" [ngClass]="{'bg-premium-dark': getTheme()}" class="btn btn-outline-primary addSch" ><span class="fas fa-plus"></span></button>
+          <button (click)="openAddScheduleDialog()" *ngIf="role == 'admin'" mat-raised-button matTooltip="Add Schedule" [ngClass]="{'bg-premium-dark': getTheme()}" class="btn btn-outline-primary addSch" ><span class="fas fa-plus"></span></button>
       </span>
     </div>
       <div *ngIf="clickedPlanning.schedule == null && !loading" [ngStyle]="{'color': getTheme()? 'white' :'black'}" class="noDescBod">
@@ -50,8 +50,8 @@
             From: {{getTime(clickedPlanning.schedule.pauseStart)}} To: {{getTime(clickedPlanning.schedule.pauseEnd)}}
           </td>
           <td class="tableTd" style="padding: 10px;float: right"class="text-center">
-            <button type="button" id="PopoverCustomT-3" style="margin-right:10px;border-radius: 12px" class="btn btn-primary btn-sm" matTooltip="Edit schedule" (click)="sendScheduleToEdit(clickedPlanning.schedule)"><span class="fa fa-pencil-alt"></span></button>
-            <button type="button" id="PopoverCustomT-4" style="border-radius: 12px" class="btn btn-danger btn-sm" matTooltip="Delete schedule" (click)="openDeleteDialog(clickedPlanning.schedule)"><span class="fa fa-trash-alt"></span></button>
+            <button type="button" id="PopoverCustomT-3" style="margin-right:10px;border-radius: 12px" *ngIf="role == 'admin'" class="btn btn-primary btn-sm" matTooltip="Edit schedule" (click)="sendScheduleToEdit(clickedPlanning.schedule)"><span class="fa fa-pencil-alt"></span></button>
+            <button type="button" id="PopoverCustomT-4" style="border-radius: 12px" *ngIf="role == 'admin'" class="btn btn-danger btn-sm" matTooltip="Delete schedule" (click)="openDeleteDialog(clickedPlanning.schedule)"><span class="fa fa-trash-alt"></span></button>
           </td>
         </tr>
         </tbody>
@@ -94,8 +94,8 @@
             From: {{getTime(sch.pauseStart)}} To: {{getTime(sch.pauseEnd)}}
           </td>
               <td class="tableTd" style="padding: 10px;float: right"class="text-center">
-                <button type="button" id="PopoverCustomT-1" style="margin-right:10px;border-radius: 12px" class="btn btn-primary btn-sm" matTooltip="Edit schedule" (click)="openEditScheduleDialog(sch)"><span class="fa fa-pencil-alt"></span></button>
-                <button type="button" id="PopoverCustomT-2" style="border-radius: 12px" class="btn btn-danger btn-sm" matTooltip="Delete schedule" (click)="openDeleteDialog(sch)"><span class="fa fa-trash-alt"></span></button>
+                <button type="button" id="PopoverCustomT-1" style="margin-right:10px;border-radius: 12px" *ngIf="role == 'admin'" class="btn btn-primary btn-sm" matTooltip="Edit schedule" (click)="openEditScheduleDialog(sch)"><span class="fa fa-pencil-alt"></span></button>
+                <button type="button" id="PopoverCustomT-2" style="border-radius: 12px" *ngIf="role == 'admin'" class="btn btn-danger btn-sm" matTooltip="Delete schedule" (click)="openDeleteDialog(sch)"><span class="fa fa-trash-alt"></span></button>
               </td>
         </tr>
         </tbody>

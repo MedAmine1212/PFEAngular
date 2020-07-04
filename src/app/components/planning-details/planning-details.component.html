@@ -126,7 +126,7 @@
                 {{dep.depName}}
               </td>
               <td>
-                <button type="button" id="PopoverCustomT-4" style="border-radius: 12px;float: right" class="btn btn-danger btn-sm" (click)="removeDep(dep)" matTooltip="Remove planning"><span class="fa fa-minus-circle"></span></button>
+                <button type="button" id="PopoverCustomT-4" style="border-radius: 12px;float: right" class="btn btn-danger btn-sm" *ngIf="role == 'admin'" (click)="removeDep(dep)" matTooltip="Remove planning"><span class="fa fa-minus-circle"></span></button>
               </td>
             </tr>
            </tbody>

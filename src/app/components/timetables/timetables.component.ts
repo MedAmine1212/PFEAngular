@@ -13,6 +13,7 @@ import {User} from '../../models/User';
 import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.service';
 import {SchedulesComponent} from '../schedules/schedules.component';
 import {DeleteDialogComponent} from '../../dialogs/delete-dialog/delete-dialog.component';
+import {GetRoleService} from '../../services/getRole/get-role.service';
 
 
 @Component({
@@ -65,7 +66,10 @@ export class TimetablesComponent implements OnInit {
   user: User = null;
    selectedPlanning: boolean;
   loading: boolean;
+  connectedUser: User;
+  role: string;
   constructor(
+    private roleService: GetRoleService,
     private themeChanger: ThemeChangerService,
     private userService: UserService,
     private userConfigService: UserConfigsService,
@@ -85,6 +89,8 @@ export class TimetablesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getRole();
+    this.getConnectedUser();
     this.loading = true;
     this.selectedPlanning = false;
     this.userConfig.shownPlannings = [];
@@ -202,18 +208,20 @@ export class TimetablesComponent implements OnInit {
   }
 
    reloadData() {
-    this.userService.findUserWithToken().subscribe(user => {
-      // @ts-ignore
-      this.user = user;
-      this.userConfig = this.user.userConfigs[0];
+      this.userConfig = this.connectedUser.userConfigs[0];
       this.listPlannings();
-    }, error => {
-      console.log(error);
-    });
     }
   listPlannings() {
     this.planningService.list().subscribe(list => {
-      this.plannings = list;
+      if (this.role === 'admin') {
+        this.plannings = list;
+      } else {
+        for (const pl of list) {
+        if (this.connectedUser.department.planning.planningId === pl.planningId) {
+          this.plannings.push(pl);
+        }
+        }
+      }
       this.selectedCount = 0;
       let changed: boolean;
       changed = false;
@@ -347,5 +355,18 @@ export class TimetablesComponent implements OnInit {
   reloadFromSocket() {
     this.schComp.reloadData();
     this.reloadData();
+  }
+
+  getConnectedUser() {
+    if (this.roleService.getConnectedUser() == null) {
+      setTimeout(() => {
+        this.getConnectedUser();
+      }, 500);
+    } else {
+      this.connectedUser = this.roleService.connectedUser;
+    }
+  }
+  getRole() {
+   this.role = this.roleService.userRole();
   }
 }

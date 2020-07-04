@@ -1,4 +1,4 @@
-<div [@enterSecondAnimation] [ngClass]="getTheme() ? 'bg-premium-dark' :''" class="card mainCard">
+<div *ngIf="role != 'user'" [@enterSecondAnimation] [ngClass]="getTheme() ? 'bg-premium-dark' :''" class="card mainCard">
 <div class="card-header">
   <h3 [ngStyle]="{'color': getTheme() ? 'white' :''}" style="margin-top: 15px">
     Today's Attendance
@@ -83,8 +83,11 @@
 <div *ngIf="!loading" #empAtt [@enterThirdAnimation] [ngClass]="getTheme() ? 'bg-premium-dark' :''" class="card mainCard">
   <div class="card-header">
     <h3 [ngStyle]="{'color': getTheme() ? 'white' :''}" style="width: 100%;margin-top: 15px">
-      <div style="float: left">
+      <div *ngIf="role != 'user'" style="float: left">
        Employees attendances
+      </div>
+      <div *ngIf="role == 'user'" style="float: left">
+        {{connectedUser.firstName}} {{connectedUser.name}} attendance
       </div>
       <span class="reasons" [ngStyle]="{'color':showAbsences ? ' rgb(82,148,226)' : getTheme() ? 'white' : 'grey' }"(click)="showHide(1)">Absences</span>
       <span class="reasons" [ngStyle]="{'color':showPoint ? ' rgb(82,148,226)' : getTheme() ? 'white' : 'grey' }" (click)="showHide(2)">Attendence</span>
@@ -175,6 +178,12 @@
           <td>
            <button (click)="openAbsenceVerificationSheet(abs)" matTooltip="{{getMessage(abs.reasonStatus)}}" *ngIf="abs.reason != null" class="{{abs.reasonStatus}} reasonBtn"> {{abs.reason}}</button>
            <button disabled style="cursor: default" *ngIf="abs.reason == null" class="btn btn-info reasonBtn">No reason provided</button> <div [ngStyle]="{'color': getTheme()? 'white' :''}" *ngIf="abs.revisedBy != null" style="float: right;width: 47%;margin-left: 10px">Revised by : {{abs.revisedBy}}</div>
+          </td>
+          <td *ngIf="clickedUser.userId == connectedUser.userId && abs.reason == null">
+            <button class="btn btn-link" (click)="updateAbs(abs)">Provide reason <span style="margin-left: 5px" class="fa fa-arrow-circle-right"></span></button>
+          </td>
+          <td *ngIf="clickedUser.userId == connectedUser.userId && abs.reason != null && abs.reasonStatus == 'btn btn-warning'">
+            <button class="btn btn-link" (click)="updateAbs(abs)">Update reason <span style="margin-left: 5px" class="fa fa-arrow-circle-right"></span></button>
           </td>
         </tr>
         </tbody>
