@@ -1,10 +1,10 @@
 <div [ngClass]=" getTheme()? 'bg-dark' :''" style="min-height:250px;margin: -20px">
   <div>
 
-    <mat-nav-list style="margin-top: 30px" >
+    <mat-nav-list style="margin-top: -10px;padding-top: 17px" >
       <a style="margin-bottom: 10px;" mat-list-item>
     <span mat-line>
-   <div style="float: left;width: 20%;padding-top:7px "> Current status : </div>
+   <div style="float: left;width: 20%;padding-top:7px " [ngStyle]="{'color': getTheme() ? 'white' : ''}"> Current status : </div>
       <button disabled style="cursor:default;margin-left: 20px;float: right;width:70%" class="{{clickedAbs.reasonStatus}} reasonBtn">
       <span *ngIf="clickedAbs.reasonStatus == 'btn btn-danger'">Rejected</span>
       <span *ngIf="clickedAbs.reasonStatus == 'btn btn-warning'">Not verified yet</span>
@@ -18,7 +18,7 @@
       <button (click)="updateAbsence('btn btn-danger')" style="width: 45%;float: right" *ngIf="clickedAbs.reasonStatus != 'btn btn-danger'" class="btn btn-danger reasonBtn">Reject</button>
     </span>
       </a>
-      <a disabled style="pointer-events:none;margin-bottom: 10px;" mat-list-item>
+      <a [ngStyle]="{'color': getTheme() ? 'white' : ''}" disabled style="pointer-events:none;margin-bottom: 10px;" mat-list-item>
     <span mat-line *ngIf="clickedAbs.user != null">
      Employee: <b>{{clickedAbs.user.firstName}} {{clickedAbs.user.name}}</b>
     </span>

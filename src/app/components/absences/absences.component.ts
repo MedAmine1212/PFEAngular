@@ -68,7 +68,7 @@ export class AbsencesComponent implements OnInit {
   userCheckIns: Attendance[];
   userCheckOuts: Attendance[];
   loading: boolean;
-  days: string[] = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATRUDAY'];
+  days: string[] = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
   clickedUser: User;
   currentDay: string;
   loadingUser: boolean;
