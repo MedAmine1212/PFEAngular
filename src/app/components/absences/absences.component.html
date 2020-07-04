@@ -165,6 +165,8 @@
           <th class="text-center">Date</th>
           <th class="text-center">Type</th>
           <th class="text-center">Reason</th>
+          <th ></th>
+          <th >State</th>
         </tr>
         </thead>
         <tbody>
@@ -182,9 +184,10 @@
           <td *ngIf="clickedUser.userId == connectedUser.userId && abs.reason == null">
             <button class="btn btn-link" (click)="updateAbs(abs)">Provide reason <span style="margin-left: 5px" class="fa fa-arrow-circle-right"></span></button>
           </td>
-          <td *ngIf="clickedUser.userId == connectedUser.userId && abs.reason != null && abs.reasonStatus == 'btn btn-warning'">
+          <td #element *ngIf="clickedUser.userId == connectedUser.userId && abs.reason != null && abs.reasonStatus == 'btn btn-warning'">
             <button class="btn btn-link" (click)="updateAbs(abs)">Update reason <span style="margin-left: 5px" class="fa fa-arrow-circle-right"></span></button>
           </td>
+          <td>{{getState(abs)}}</td>
         </tr>
         </tbody>
       </table>

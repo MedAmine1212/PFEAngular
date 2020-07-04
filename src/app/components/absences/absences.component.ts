@@ -16,10 +16,10 @@ import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import {AbsenceVerificationComponent} from '../../sheets/absence-verification/absence-verification.component';
 import {DateFormatter} from 'ngx-bootstrap';
 import {AbsenceService} from '../../services/absence/absence.service';
-import {GetRoleService} from "../../services/getRole/get-role.service";
-import {DeleteDialogComponent} from "../../dialogs/delete-dialog/delete-dialog.component";
-import {MatDialog} from "@angular/material/dialog";
-import {UpdateAbsenceComponent} from "../../dialogs/dialog-forms/update-absence/update-absence.component";
+import {GetRoleService} from '../../services/getRole/get-role.service';
+import {DeleteDialogComponent} from '../../dialogs/delete-dialog/delete-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
+import {UpdateAbsenceComponent} from '../../dialogs/dialog-forms/update-absence/update-absence.component';
 @Component({
   selector: 'app-absences',
   templateUrl: './absences.component.html',
@@ -314,5 +314,9 @@ export class AbsencesComponent implements OnInit {
       height: '300px',
       data: abs
     });
+  }
+
+  getState(abs: Absence) {
+    return abs.reasonStatus === 'btn btn-success' ? 'Confirmed' : abs.reasonStatus === 'btn btn-danger' ? 'Rejected' : 'Pending...';
   }
 }
