@@ -118,18 +118,18 @@ export class AbsencesComponent implements OnInit {
   reloadData() {
     this.userService.list().subscribe(r => {
       for (const emp of r) {
-        if(emp.department.planning !== null){
-          if ( emp.department.planning.scheduleDays.indexOf(this.currentDay) > -1 ) {
-            for (const att of emp.attendances) {
-              let date: Date;
-              date = new Date(att.attendanceDate);
-              if (date.toDateString() !== this.time.toDateString()) {
-                emp.attendances.splice(emp.attendances.indexOf(att), 1);
-              }
+        if (emp.department.planning != null ) {
+        if ( emp.department.planning.scheduleDays.indexOf(this.currentDay) > -1 ) {
+          for (const att of emp.attendances) {
+            let date: Date;
+            date = new Date(att.attendanceDate);
+            if (date.toDateString() !== this.time.toDateString()) {
+              emp.attendances.splice(emp.attendances.indexOf(att), 1);
             }
-            this.users.push(emp);
           }
-        }
+          this.users.push(emp);
+       }
+      }
       }
       this.planningService.list().subscribe(r1 => {
         for (const pl of r1) {
@@ -139,11 +139,11 @@ export class AbsencesComponent implements OnInit {
         }
         this.departmentService.list().subscribe(r2 => {
           for (const dep of r2) {
-            if(dep.planning !== null){
-              if (dep.planning.scheduleDays.indexOf(this.days[this.time.getDay()]) > -1) {
-                this.departments.push(dep);
-              }
+            if (dep.planning != null) {
+            if (dep.planning.scheduleDays.indexOf(this.days[this.time.getDay()]) > -1) {
+              this.departments.push(dep);
             }
+          }
           }
           setTimeout(() => {
             this.loading = false;
@@ -242,6 +242,7 @@ export class AbsencesComponent implements OnInit {
 
       this.clickedUser = emp;
       this.absenceThisMonthDesc = this.getTime(this.absenceThisMonth, 2);
+      if (this.clickedUser.department.planning != null) {
       let workTime = this.clickedUser.department.planning.schedule.endHour - this.clickedUser.department.planning.schedule.startHour;
       if (this.clickedUser.department.planning.schedule.pauseTime) {
         workTime = workTime - (this.clickedUser.department.planning.schedule.pauseEnd
@@ -251,7 +252,7 @@ export class AbsencesComponent implements OnInit {
       this.monthClass = this.getClass(this.absenceThisMonth, 'month', workTime);
       this.absenceThisWeekDesc = this.getTime(this.absenceThisWeek, 2);
       this.totalAbsenceDesc = this.getTime(this.totalAbsence, 2);
-      this.clickedUser = emp;
+      }
       this.clickedUser.absences.reverse();
       this.userCheckOuts = [];
       this.userCheckIns = [];
