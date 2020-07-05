@@ -40,9 +40,10 @@ h1{
   margin-left: 25px;
   width: 60%;
 }
-
-.reasonBtn {
+.floatButt{
   float: left;
+}
+.reasonBtn {
   border-radius: 15px;
   min-width: 200px;
   max-width: 50%;
@@ -51,3 +52,6 @@ h1{
   text-decoration: none;
 }
 
+.fa-circle{
+  font-size: 25px;
+}

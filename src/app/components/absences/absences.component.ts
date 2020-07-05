@@ -78,6 +78,14 @@ export class AbsencesComponent implements OnInit {
   clickedUser: User;
   currentDay: string;
   loadingUser: boolean;
+  absenceThisMonth: number;
+  absenceThisWeek: number;
+  totalAbsence: number;
+  absenceThisMonthDesc: string;
+  absenceThisWeekDesc: string;
+  totalAbsenceDesc: string;
+  monthClass: string;
+  weekClass: string;
   constructor(
     public dialog: MatDialog,
     private  roleService: GetRoleService,
@@ -209,8 +217,36 @@ export class AbsencesComponent implements OnInit {
   setEmployee(emp: User) {
     this.loadingUser = true;
     if (emp != null) {
+    emp.absences = [];
+    const today = new Date();
+    this.totalAbsence = 0;
+    this.absenceThisMonth = 0;
+    this.absenceThisWeek = 0;
     this.absenceService.listByUser(emp).subscribe(r => {
-      emp.absences = r;
+      for (const ab of r) {
+        emp.absences.push(ab);
+        this.totalAbsence = this.totalAbsence + ab.absentMinutes;
+        const date = new Date(ab.absenceDate);
+        // tslint:disable-next-line:triple-equals
+        if (date.getMonth() == today.getMonth()) {
+          this.absenceThisMonth = this.absenceThisMonth + ab.absentMinutes;
+        }
+        if (today.getDay() - 6 <= date.getDay() || date.getDay() <= today.getDay() + 6) {
+          this.absenceThisWeek = this.absenceThisWeek + ab.absentMinutes;
+        }
+      }
+
+      this.clickedUser = emp;
+      this.absenceThisMonthDesc = this.getTime(this.absenceThisMonth, 2);
+      let workTime = this.clickedUser.department.planning.schedule.endHour - this.clickedUser.department.planning.schedule.startHour;
+      if (this.clickedUser.department.planning.schedule.pauseTime) {
+        workTime = workTime - (this.clickedUser.department.planning.schedule.pauseEnd
+          - this.clickedUser.department.planning.schedule.pauseStart);
+      }
+      this.weekClass = this.getClass(this.absenceThisMonth, 'week', workTime);
+      this.monthClass = this.getClass(this.absenceThisMonth, 'month', workTime);
+      this.absenceThisWeekDesc = this.getTime(this.absenceThisWeek, 2);
+      this.totalAbsenceDesc = this.getTime(this.totalAbsence, 2);
       this.clickedUser = emp;
       this.clickedUser.absences.reverse();
       this.userCheckOuts = [];
@@ -252,6 +288,24 @@ export class AbsencesComponent implements OnInit {
       }, 300);
     }
   }
+
+  getClass(time, format, workTime) {
+    let total: number;
+    if (format === 'week') {
+      total = workTime * this.connectedUser.department.planning.scheduleDays.length;
+    }
+    if (format === 'month') {
+      total = workTime * this.connectedUser.department.planning.scheduleDays.length * 4;
+    }
+    if (total * 0.05 >= time) {
+      return 'btn-success';
+    } else if (total * 0.05 < time && total * 0.15 >= time) {
+      return 'btn-warning';
+    } else {
+      return 'btn-danger';
+    }
+  }
+
   getTime(hour: number, sender) {
     const h = Math.floor(hour / 60);
     const m = hour % 60;

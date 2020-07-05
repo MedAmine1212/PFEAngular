@@ -91,6 +91,12 @@ export class AttendanceComponent implements OnInit {
     const checkInDelay = emp.department.planning.planningConfigs[0].checkInDelay;
     const checkOutdelay = emp.department.planning.planningConfigs[0].checkOutDelay;
     const endCheckin = emp.department.planning.planningConfigs[0].endCheckin;
+    let absentMinutes = 0;
+    absentMinutes = endHour - startHour;
+    if (emp.department.planning.schedule.pauseTime) {
+      absentMinutes = absentMinutes - (emp.department.planning.schedule.pauseStart
+        - emp.department.planning.schedule.pauseStart);
+    }
     if (type === 'CHECK OUT') {
       if (emp.checkInStatus != null) {
         if (emp.checkInStatus === 'red') {
@@ -128,7 +134,7 @@ export class AttendanceComponent implements OnInit {
         for (const att of emp.attendances) {
           if (att.attendanceType === 'CHECK IN') {
             if (((startHour + checkInDelay) - att.attendanceTime) >= 0) {
-              emp.checkInStatus =  'green';
+              emp.checkInStatus =  'lightgreen';
               emp.checkInMsg = 'checked-in at : ' + this.getTime(att.attendanceTime);
               return;
             } else if (((startHour + checkInDelay) - att.attendanceTime) < 0 && att.attendanceTime <= endCheckin) {
@@ -149,10 +155,10 @@ export class AttendanceComponent implements OnInit {
             // creating all day absence
             if (types.length > 0) {
               if (types.indexOf('All day') === -1) {
-                this.createAbsence(emp, 'All day', 0);
+                this.createAbsence(emp, 'All day', absentMinutes);
               }
             } else {
-              this.createAbsence(emp, 'All day', 0);
+              this.createAbsence(emp, 'All day', absentMinutes);
             }
             return;
         }
@@ -169,10 +175,10 @@ export class AttendanceComponent implements OnInit {
           // creating all day absence
           if (types.length > 0) {
             if (types.indexOf('All day') === -1) {
-              this.createAbsence(emp, 'All day', 0);
+              this.createAbsence(emp, 'All day', absentMinutes);
             }
           } else {
-            this.createAbsence(emp, 'All day', 0);
+            this.createAbsence(emp, 'All day', absentMinutes);
           }
           return;
         } else {
