@@ -248,19 +248,72 @@
             </tr>
             </table>
           </div>
-          <div class="form-group col-md-6">
-            <div class="buttonsDiv">
-              <button type="submit" *ngIf="pl == null" mat-raised-button color="primary" [disabled]="planning.scheduleDays.length === 0 || !formGroup.valid || (!formGroup2.valid && schedule.pauseTime && newSch) || (!formGroup3.valid && newSch) || (noSch && !newSch)" (click)="addPlanning()">Add planning</button>
-              <button type="submit" *ngIf="pl != null" mat-raised-button color="primary" [disabled]="!formGroup.valid || (!formGroup3.valid && newSch) ||(!formGroup2.valid && schedule.pauseTime && newSch)" (click)="updatePlanning()">Update</button>
-              <button type="button" (click)="closeThis()" class="btn btn-light cancelButt">Cancel</button>
-            </div>
-
-          </div>
         </div>
 
       </form>
             </div>
           </div>
         </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Planning configuration</ng-template>
+    <br>
+    <form [formGroup]="formGroup4">
+    <div class="main-card mb-3 card">
+      <div class="card-header">
+        <h1><S></S>Planning config</h1>
+        <hr>
+      </div>
+      <div class="card-body" style="min-height: 300px">
+
+        <div>
+
+            <div class="pauseTimeDiv">
+              <table>
+                <tr>
+                  <td>
+                    <label>Check-in end time</label><br>
+                  <input
+                    [format]="24"  readonly
+                    class="choseTime"
+                    placeholder="End check-in"
+                    formControlName="endCheckIn"
+                    #pickerPauseBeginHour
+                    [ngxTimepicker]="picker5"
+                    [(ngModel)]="chekInEndHour"
+                  >
+                  <ngx-material-timepicker class="timePicker" #picker5></ngx-material-timepicker>
+                </td> </tr>
+              </table>
+            </div>
+            <br><br>
+            <div class="timeLabel">
+              <mat-label>Delays</mat-label>
+            </div>
+            <input
+              class="choseTime"
+              type="number"
+              style="width: 250px"
+              placeholder="Check-in delay margin (minutes)"
+              formControlName="checkInDelay"
+              [(ngModel)]="checkInDelay"
+            >
+            <input
+              style="width: 250px"
+              class="choseTime"
+              placeholder="Early check-out margin (minutes)"
+              formControlName="checkOutDelay"
+              type="number"
+              [(ngModel)]="checkOutDelay"
+            >
+        </div>
+      </div>
+    </div>
+      <div class="buttonsDiv">
+        <button type="submit" *ngIf="pl == null" mat-raised-button color="primary" [disabled]="planning.scheduleDays.length === 0 || !formGroup.valid || (!formGroup2.valid && schedule.pauseTime && newSch) || (!formGroup3.valid && newSch) || (noSch && !newSch) || !formGroup4.valid" (click)="addPlanning()">Add planning</button>
+        <button type="submit" *ngIf="pl != null" mat-raised-button color="primary" [disabled]="!formGroup.valid || (!formGroup3.valid && newSch) ||(!formGroup2.valid && schedule.pauseTime && newSch) || !formGroup4.valid" (click)="updatePlanning()">Update</button>
+        <button type="button" (click)="closeThis()" class="btn btn-light cancelButt">Cancel</button>
+      </div>
+    </form>
+  </mat-step>
       </mat-horizontal-stepper>
 </div>

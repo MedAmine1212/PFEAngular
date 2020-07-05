@@ -31,6 +31,7 @@ export class PlanningDetailsComponent implements OnInit {
   clickedPlanning: Planning;
   connectedUser: User;
   role: string;
+  endCheckIn: string;
 
   constructor(
     private roleService: GetRoleService,
@@ -48,6 +49,7 @@ export class PlanningDetailsComponent implements OnInit {
 
   public setClickedPl(pl: Planning) {
     this.clickedPlanning = pl;
+    this.endCheckIn = this.getTime(this.clickedPlanning.planningConfigs[0].endCheckin);
     this.showBody = false;
     setTimeout(() => {
       this.showBody = true;
@@ -83,5 +85,21 @@ export class PlanningDetailsComponent implements OnInit {
   }
   getRole() {
     this.role = this.roleService.userRole();
+  }
+
+  getTime(hour) {
+    const h = Math.floor(hour / 60);
+    const m = hour % 60;
+    let returnTime: string;
+    returnTime = '';
+    if (h < 10) {
+      returnTime = returnTime + '0';
+    }
+    returnTime = returnTime + h.toString() + ':';
+    if (m < 10) {
+      returnTime = returnTime + '0';
+    }
+    returnTime = returnTime + m.toString();
+    return returnTime;
   }
 }

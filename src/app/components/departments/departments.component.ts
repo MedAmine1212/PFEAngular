@@ -178,8 +178,6 @@ export class DepartmentsComponent implements  OnInit {
     this.clickedDep = new Department();
     this.clickedDep.depId = -1;
     this.fakedep = this.clickedDep;
-    this.treeControl = new FlatTreeControl<DynamicFlatNode>(this.getLevel, this.isExpandable);
-    this.dataSource = new DynamicDataSource(this.treeControl, this.database);
     this.reloadData();
     this.unselectDep();
   }
@@ -197,15 +195,17 @@ export class DepartmentsComponent implements  OnInit {
   }
 
   public reloadData() {
+    this.treeControl = new FlatTreeControl<DynamicFlatNode>(this.getLevel, this.isExpandable);
+    this.dataSource = new DynamicDataSource(this.treeControl, this.database);
     this.data = [];
     this.departmentService.list().subscribe(r => {
-      if (!this.roleService.isAdmin()) {
+      if (this.role !== 'admin') {
       r.forEach(dep => {
         if (dep.depId === this.connectedUser.department.depId && this.roleService.isChefDep()) {
           this.data.push(dep);
         }
       });
-      } else if (this.roleService.isAdmin()) {
+      } else if (this.role === 'admin') {
         this.data = r;
       }
       this.dataSource.data = this.database.initialData(this.data);

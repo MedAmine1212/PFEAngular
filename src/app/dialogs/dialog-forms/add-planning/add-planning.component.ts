@@ -12,6 +12,7 @@ import {UserService} from '../../../services/user/user.service';
 import {User} from '../../../models/User';
 import {UserConfigsService} from '../../../services/UserConfigs/user-configs.service';
 import {NotificationService} from '../../../services/notification/notification.service';
+import {PlanningConfig} from '../../../models/PlanningConfig';
 
 @Component({
   selector: 'app-add-planning',
@@ -41,11 +42,14 @@ export class AddPlanningComponent implements AfterViewInit {
   minDate: Date;
   beginHour: string;
   endHour: string;
+  checkInDelay: string;
+  checkOutDelay: string;
   startDate: string;
   endDate: string;
   pauseStartHour: string;
   pauseEndHour: string;
   formGroup3: FormGroup;
+  formGroup4: FormGroup;
   @ViewChild('stepper') stepper: MatStepper;
   isLinear = false;
   newSch: boolean;
@@ -53,6 +57,7 @@ export class AddPlanningComponent implements AfterViewInit {
   newSchStartMinutes: number;
   newSchEndMinutes: number;
   newSchPauseStart: number;
+  chekInEndHour: string;
   newSchPauseStartMinutes: number;
   newSchPauseEnd: number;
   newSchPauseEndMinutes: number;
@@ -89,6 +94,10 @@ export class AddPlanningComponent implements AfterViewInit {
       this.planning.colorIcon = this.pl.colorIcon;
       this.planning.showPl = this.pl.showPl;
       this.planning.repeatCycle = this.pl.repeatCycle;
+      this.planning.planningConfigs = this.pl.planningConfigs;
+      this.planning.departments = this.pl.departments;
+      this.checkInDelay = this.pl.planningConfigs[0].checkInDelay.toString();
+      this.checkOutDelay = this.pl.planningConfigs[0].checkOutDelay.toString();
 
       // rest
       this.newSch = false;
@@ -121,8 +130,10 @@ export class AddPlanningComponent implements AfterViewInit {
     this.FormGroup();
     this.FormGroup2();
     this.FormGroup3();
+    this.FormGroup4();
     }, 600);
     if (this.pl !== null) {
+      this.chekInEndHour = this.getEndCheckIn(this.pl.planningConfigs[0].endCheckin);
       setTimeout(() => {
         this.stepper.selectedIndex = 1;
       }, 1000);
@@ -165,6 +176,13 @@ export class AddPlanningComponent implements AfterViewInit {
       endHour: [this.endHour, [Validators.required]],
     });
   }
+  FormGroup4() {
+    this.formGroup4 = this.formBuilder.group({
+      endCheckIn: [this.chekInEndHour, [Validators.required]],
+      checkInDelay: [this.checkInDelay, [Validators.required]],
+      checkOutDelay: [this.checkOutDelay, [Validators.required]],
+    });
+  }
   // add or remove days to planning days
   addRemoveDay(day: string) {
     if (this.planning.scheduleDays.indexOf(day) > -1) {
@@ -180,10 +198,13 @@ export class AddPlanningComponent implements AfterViewInit {
   }
   // update planning
   updatePlanning() {
-
     this.planning.showPl = true;
     this.planning.startDate = this.startDate;
     this.planning.endDate = this.endDate;
+    this.planning.planningConfigs[0].checkInDelay = Number.parseInt(this.checkInDelay, 0);
+    this.planning.planningConfigs[0].checkOutDelay = Number.parseInt(this.checkInDelay, 0);
+    this.planning.planningConfigs[0].endCheckin = (Number.parseInt(this.chekInEndHour, 0) * 60) +
+      Number.parseInt(this.chekInEndHour.slice(3, this.chekInEndHour  .length), 0);
     if (this.newSch) {
         this.setFinalSchedule();
         this.scheduleService.add(this.schedule).subscribe(r => {
@@ -253,6 +274,13 @@ saveModifiedPlanning() {
     this.planning.showPl = true;
     this.planning.startDate = this.startDate;
     this.planning.endDate = this.endDate;
+    const planningConfig = new PlanningConfig();
+    planningConfig.checkInDelay = Number.parseInt(this.checkInDelay, 0);
+    planningConfig.checkOutDelay = Number.parseInt(this.checkInDelay, 0);
+    planningConfig.endCheckin = (Number.parseInt(this.chekInEndHour, 0) * 60) +
+      Number.parseInt(this.chekInEndHour.slice(3, this.chekInEndHour  .length), 0);
+    this.planning.planningConfigs = [];
+    this.planning.planningConfigs.push(planningConfig);
     this.userService.findUserWithToken().subscribe(user => {
       // @ts-ignore
       this.user = user;
@@ -293,7 +321,21 @@ saveModifiedPlanning() {
     }
   }
 
-
+  getEndCheckIn(hour: number) {
+    const h = Math.floor(hour / 60);
+    const m = hour % 60;
+    let returnTime: string;
+    returnTime = '';
+    if (h < 10) {
+      returnTime = returnTime + '0';
+    }
+    returnTime = returnTime + h.toString() + ':';
+    if (m < 10) {
+      returnTime = returnTime + '0';
+    }
+    returnTime = returnTime + m.toString();
+    return returnTime;
+  }
   // schedule ToString
   returnSchDesc(sch: Schedule) {
     this.getTime(sch);

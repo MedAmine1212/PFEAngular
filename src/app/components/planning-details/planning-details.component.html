@@ -88,8 +88,36 @@
          </tr>
        </table>
 
-
-         <div *ngIf="onlySpace()" class="element">
+       <div class="element">
+         <h2>
+           Planning configuration
+         </h2>
+         <div class="elementDiv">
+           <table class="table" [ngStyle]="{'color': getTheme() ? 'white' : ''}" [ngClass]="getTheme() ? 'bg-premium-dark' : ''">
+             <thead>
+             <tr>
+               <th>
+                 End check-in
+               </th>
+               <th>
+                 Check-in delay margin
+               </th>
+               <th>
+                 Early check-out margin
+               </th>
+             </tr>
+             </thead>
+             <tbody>
+             <tr>
+               <td>{{endCheckIn}}</td>
+               <td>{{clickedPlanning.planningConfigs[0].checkInDelay}} minutes</td>
+               <td>{{clickedPlanning.planningConfigs[0].checkOutDelay}} minutes</td>
+             </tr>
+             </tbody>
+           </table>
+         </div>
+       </div>
+       <div *ngIf="onlySpace()" class="element">
            <h2>
              Description
            </h2>

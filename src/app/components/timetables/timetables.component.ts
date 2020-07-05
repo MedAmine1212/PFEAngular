@@ -214,6 +214,7 @@ export class TimetablesComponent implements OnInit {
   listPlannings() {
     this.planningService.list().subscribe(list => {
       if (this.role === 'admin') {
+        console.log(list);
         this.plannings = list;
       } else {
         for (const pl of list) {

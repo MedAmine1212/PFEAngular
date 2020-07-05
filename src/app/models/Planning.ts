@@ -1,5 +1,6 @@
 import {Schedule} from './Schedule';
 import {Department} from './Department';
+import {PlanningConfig} from './PlanningConfig';
 
 export class Planning {
   planningId: number;
@@ -14,4 +15,5 @@ export class Planning {
   repeatCycle: number;
   color: string;
   colorIcon: string;
+  planningConfigs: PlanningConfig[];
 }
