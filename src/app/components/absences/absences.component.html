@@ -157,7 +157,7 @@
   <h1 *ngIf="clickedUser == null" style="margin-top:20%;margin-left: 28%">Select an employee to show his absences here</h1>
   <h1 *ngIf="clickedUser != null && clickedUser.absences.length == 0 && !loadingUser" style="margin-top:20%;margin-left: 37%">No absences to show</h1>
   <div [@enterThirdAnimation] *ngIf="!loadingUser && clickedUser != null && clickedUser.absences.length > 0">
-    <div style="width:100%;padding: 15px;margin: 10px" *ngIf="clickedUser != null" [ngClass]="getTheme() ? 'bg-premium-dark' :''" class="card">
+    <div style="width:100%;padding: 15px;margin: 10px;max-height: 500px !important;overflow-y: auto" *ngIf="clickedUser != null" [ngClass]="getTheme() ? 'bg-premium-dark' :''" class="card">
 
       <table [ngClass]="getTheme() ? 'bg-premium-dark text-light' :'text-dark'"  [ngStyle]="{'color': getTheme()? 'white' :''}" class="align-middle text-light mb-0 table table-borderless table-striped table-hover">
         <thead>
@@ -177,8 +177,8 @@
            {{abs.absenceType}} <span *ngIf="abs.absenceType != 'All day'"> (By: {{getTime(abs.absentMinutes, 2)}})</span>
           </td>
           <td>
-           <button (click)="openAbsenceVerificationSheet(abs)" matTooltip="{{getMessage(abs.reasonStatus)}}" *ngIf="abs.reason != null" class="{{abs.reasonStatus}} reasonBtn"> {{abs.reason}}</button>
-           <button disabled style="cursor: default" *ngIf="abs.reason == null" class="btn btn-info reasonBtn">No reason provided</button> <div [ngStyle]="{'color': getTheme()? 'white' :''}" *ngIf="abs.revisedBy != null" style="float: right;width: 47%;margin-left: 10px">Revised by : {{abs.revisedBy}}</div>
+           <button (click)="openAbsenceVerificationSheet(abs)" matTooltip="{{getMessage(abs.reasonStatus)}}" *ngIf="abs.reason != null" class="{{abs.reasonStatus}} reasonBtn floatButt"> {{abs.reason}}</button>
+           <button disabled style="cursor: default" *ngIf="abs.reason == null" class="btn btn-info reasonBtn floatButt">No reason provided</button> <div [ngStyle]="{'color': getTheme()? 'white' :''}" *ngIf="abs.revisedBy != null" style="float: right;width: 47%;margin-left: 10px">Revised by : {{abs.revisedBy}}</div>
           </td>
           <td *ngIf="clickedUser.userId == connectedUser.userId && abs.reason == null">
             <button class="btn btn-link" (click)="updateAbs(abs)">Provide reason <span style="margin-left: 5px" class="fa fa-arrow-circle-right"></span></button>
@@ -193,8 +193,35 @@
         </tbody>
       </table>
     </div>
-
-  </div>
+    <br><br><br>
+    <div style="width:100%;padding: 15px;margin: 10px;max-height: 500px !important;overflow-y: auto" *ngIf="clickedUser != null" [ngClass]="getTheme() ? 'bg-premium-dark' :''" class="card">
+      <table [ngClass]="getTheme() ? 'bg-premium-dark text-light' :'text-dark'"  [ngStyle]="{'color': getTheme()? 'white' :''}" class="align-middle text-light mb-0 table table-borderless table-striped table-hover">
+        <thead>
+        <tr>
+          <th class="text-center">Absence this week</th>
+          <th class="text-center">Absence this month</th>
+          <th class="text-center">Absence total</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr [ngClass]="getTheme() ? 'lightText' :''" [ngStyle]="{'color': getTheme()? 'white' :''}" class="emp">
+          <td class="text-center"><button class="btn {{weekClass}} reasonBtn">{{absenceThisWeekDesc}}  ({{absenceThisWeek}}  minutes)</button></td>
+          <td class="text-center"><button class="btn {{monthClass}} reasonBtn">{{absenceThisMonthDesc}} ({{absenceThisMonth}}  minutes)</button></td>
+          <td class="text-center"><button class="btn btn-info reasonBtn">{{totalAbsenceDesc}}  ({{totalAbsence}} minutes)</button></td>
+        </tr>
+        </tbody>
+      </table>
+      <br>
+      <table style="width: 400px"><tr>
+      <td><span class="fa fa-circle text-success"></span></td><td [ngStyle]="{'color': getTheme() ? 'white' : ''}">  under 5% of work schedule hours</td>
+      </tr><tr>
+        <td> <span class="fa fa-circle text-warning"></span></td><td [ngStyle]="{'color': getTheme() ? 'white' : ''}">  between 5% and 15% of work schedule hours</td>
+      </tr><tr>
+        <td> <span class="fa fa-circle text-danger"></span></td><td [ngStyle]="{'color': getTheme() ? 'white' : ''}"> over 15% of work schedule hours</td>
+      </tr>
+      </table>
+    </div>
+    </div>
 </div>
   </div>
 </div>
