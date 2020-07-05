@@ -88,19 +88,17 @@ export class AddDepartmentComponent implements OnInit {
   }
 
   updateDep() {
-    let update = false;
     if (this.newChefDep != null) {
       this.department.chefDep = this.newChefDep.userId;
-      update = true;
     }
     if (this.newName !== '') {
       this.department.depName = this.newName;
-      update = true;
     }
-    if (update) {
-      this.departmentService.modify(this.department.depId, this.department).subscribe(
-        () => this.dialogRef.close(true), error1 => console.log(error1));
-    }
+    this.confirmUpdate();
+  }
+  confirmUpdate() {
+    this.departmentService.modify(this.department.depId, this.department).subscribe(
+      () => this.dialogRef.close(true), error1 => console.log(error1));
   }
   get depName() {
     return this.registerForm.get('depName') as FormControl;

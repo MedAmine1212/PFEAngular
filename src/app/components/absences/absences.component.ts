@@ -110,16 +110,18 @@ export class AbsencesComponent implements OnInit {
   reloadData() {
     this.userService.list().subscribe(r => {
       for (const emp of r) {
-        if ( emp.department.planning.scheduleDays.indexOf(this.currentDay) > -1 ) {
-          for (const att of emp.attendances) {
-            let date: Date;
-            date = new Date(att.attendanceDate);
-            if (date.toDateString() !== this.time.toDateString()) {
-              emp.attendances.splice(emp.attendances.indexOf(att), 1);
+        if(emp.department.planning !== null){
+          if ( emp.department.planning.scheduleDays.indexOf(this.currentDay) > -1 ) {
+            for (const att of emp.attendances) {
+              let date: Date;
+              date = new Date(att.attendanceDate);
+              if (date.toDateString() !== this.time.toDateString()) {
+                emp.attendances.splice(emp.attendances.indexOf(att), 1);
+              }
             }
+            this.users.push(emp);
           }
-          this.users.push(emp);
-       }
+        }
       }
       this.planningService.list().subscribe(r1 => {
         for (const pl of r1) {
@@ -129,8 +131,10 @@ export class AbsencesComponent implements OnInit {
         }
         this.departmentService.list().subscribe(r2 => {
           for (const dep of r2) {
-            if (dep.planning.scheduleDays.indexOf(this.days[this.time.getDay()]) > -1) {
-              this.departments.push(dep);
+            if(dep.planning !== null){
+              if (dep.planning.scheduleDays.indexOf(this.days[this.time.getDay()]) > -1) {
+                this.departments.push(dep);
+              }
             }
           }
           setTimeout(() => {
