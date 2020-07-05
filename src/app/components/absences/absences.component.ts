@@ -17,9 +17,9 @@ import {AbsenceVerificationComponent} from '../../sheets/absence-verification/ab
 import {DateFormatter} from 'ngx-bootstrap';
 import {AbsenceService} from '../../services/absence/absence.service';
 import {GetRoleService} from '../../services/getRole/get-role.service';
-import {DeleteDialogComponent} from '../../dialogs/delete-dialog/delete-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {UpdateAbsenceComponent} from '../../dialogs/dialog-forms/update-absence/update-absence.component';
+import {MatSnackBar, MatSnackBarConfig} from '@angular/material/snack-bar';
 @Component({
   selector: 'app-absences',
   templateUrl: './absences.component.html',
@@ -87,6 +87,7 @@ export class AbsencesComponent implements OnInit {
   monthClass: string;
   weekClass: string;
   constructor(
+    private snackBar: MatSnackBar,
     public dialog: MatDialog,
     private  roleService: GetRoleService,
     private absenceService: AbsenceService,
@@ -102,8 +103,8 @@ export class AbsencesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getRole();
     this.loading = true;
+    this.getRole();
     this.getConnectedUser();
     this.reloadData();
     setInterval(() => {
@@ -377,5 +378,20 @@ export class AbsencesComponent implements OnInit {
 
   getState(abs: Absence) {
     return abs.reasonStatus === 'btn btn-success' ? 'Confirmed' : abs.reasonStatus === 'btn btn-danger' ? 'Rejected' : 'Pending...';
+  }
+
+  refresh() {
+    this.reloadData();
+    setTimeout(() => {
+      const config = new MatSnackBarConfig();
+      if (this.themeChanger.getTheme()) {
+        config.panelClass = ['snackBar'];
+      } else {
+        config.panelClass = ['snackBarDark'];
+      }
+      config.duration = 3000;
+      this.snackBar.open('Refreshing...', null, config);
+
+    }, 500);
   }
 }
