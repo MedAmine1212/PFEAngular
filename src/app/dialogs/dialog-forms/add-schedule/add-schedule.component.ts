@@ -113,6 +113,7 @@ export class AddScheduleComponent implements OnInit {
 
   modifySchedule() {
     this.setFinalSchedule();
+    console.log(this.schedule.plannings[0].planningConfigs = null);
     this.scheduleService.modify(this.schedule, this.schedule.scheduleId).subscribe(() => {
       this.dialogRef.close(true);
     }, error1 => console.log(error1));
