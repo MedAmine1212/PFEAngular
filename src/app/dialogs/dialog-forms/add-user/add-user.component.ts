@@ -311,14 +311,6 @@ export class AddUserComponent implements  OnInit  {
     }, error => console.log(error));
 
     // add user
-    this.departmentService.findById(this.user.department.depId).subscribe(r => {
-      console.log(r);
-      if (r.chefDep == null) {
-        r.chefDep = this.user.userId;
-        console.log(r);
-        this.departmentService.modify(r.depId, r).subscribe(() => {}, error => console.log(error));
-      }
-    }, error => console.log(error));
     if (this.role === 'admin') {
       this.userService.add(this.user).subscribe(user => {
         setTimeout(() => {

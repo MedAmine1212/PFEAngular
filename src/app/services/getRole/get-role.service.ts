@@ -16,10 +16,8 @@ export class GetRoleService {
     if (this.isAdmin()) {
       return 'admin';
     } else if (this.isChefDep()) {
-      console.log(1);
       return 'chefDep';
     } else {
-      console.log(1);
       return 'user';
     }
     }

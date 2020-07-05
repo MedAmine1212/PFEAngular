@@ -49,7 +49,9 @@ export class PlanningDetailsComponent implements OnInit {
 
   public setClickedPl(pl: Planning) {
     this.clickedPlanning = pl;
+    if (pl != null) {
     this.endCheckIn = this.getTime(this.clickedPlanning.planningConfigs[0].endCheckin);
+    }
     this.showBody = false;
     setTimeout(() => {
       this.showBody = true;

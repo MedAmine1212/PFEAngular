@@ -26,8 +26,8 @@ export class ScheduleService {
     return this.http.delete(this.baseUrl + 'delete/' + id );
   }
 
-  modify( schedule: Schedule , id): Observable<any> {
-    return this.http.put( this.baseUrl + 'update/' + id   , schedule);
+  modify( schedule: Schedule , id, sender): Observable<any> {
+    return this.http.put( this.baseUrl + 'update/' + id + '/' + sender, schedule);
   }
 
   findById(id): Observable<any> {
