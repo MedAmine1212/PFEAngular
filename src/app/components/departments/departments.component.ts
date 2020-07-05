@@ -201,7 +201,8 @@ export class DepartmentsComponent implements  OnInit {
     this.departmentService.list().subscribe(r => {
       if (this.role !== 'admin') {
       r.forEach(dep => {
-        if (dep.depId === this.connectedUser.department.depId && this.roleService.isChefDep()) {
+        if ((dep.depId === this.connectedUser.department.depId) && this.roleService.isChefDep()) {
+          dep.supDep = null;
           this.data.push(dep);
         }
       });

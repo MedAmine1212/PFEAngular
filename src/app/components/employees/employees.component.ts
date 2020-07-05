@@ -425,4 +425,23 @@ export class EmployeesComponent implements OnInit {
   getRole() {
     this.role = this.roleService.userRole();
   }
+
+  revokeAmin(user) {
+    this.userService.changeRole(user.userId, 3).subscribe(r => {
+      // @ts-ignore
+      r.fullImage = user.fullImage;
+      // @ts-ignore
+      this.users[this.users.indexOf(user)] = r;
+      console.log(user.roles[0].roleName);
+    }, error => console.log(error));
+  }
+
+  makeAdmin(user) {
+    this.userService.changeRole(user.userId, 1).subscribe(r => {
+      // @ts-ignore
+      r.fullImage = user.fullImage;
+      // @ts-ignore
+      this.users[this.users.indexOf(user)] = r;
+    }, error => console.log(error));
+  }
 }

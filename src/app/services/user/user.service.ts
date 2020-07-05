@@ -63,12 +63,8 @@ export class UserService {
   getFirstTime() {
     return this.http.get(this.baseurl + 'firstTime');
   }
-
-  idAdmin(): any {
-    this.findUserWithToken().subscribe(user => {
-      // @ts-ignore
-      return user.roles.findIndex(role => role.roleName === 'ADMIN' ) !== -1  ;
-    });
+  changeRole(id, role) {
+    return this.http.get(this.baseurl + 'makeRevokeAdmin/' + id + '/' + role);
   }
 }
 
