@@ -211,5 +211,5 @@ export class AttendanceComponent implements OnInit {
     return this.getTime(endCheckin + startCheckIn);
   }
 
-  
+
 }

@@ -151,6 +151,9 @@ export class AbsencesComponent implements OnInit {
           if (this.attendanceComp != null) {
           this.attendanceComp.reloadAttendances();
           }
+          if (this.clickedUser != null) {
+            this.setEmployee(this.clickedUser, 2);
+          }
           setTimeout(() => {
             this.loading = false;
           }, 500);
@@ -223,81 +226,88 @@ export class AbsencesComponent implements OnInit {
     }, 400 );
     }
   }
-
-  setEmployee(emp: User) {
-    this.loadingUser = true;
+  userAttendances() {
+    this.clickedUser.absences.reverse();
+    this.userCheckOuts = [];
+    this.userCheckIns = [];
+    for (const att of this.clickedUser.attendances) {
+      if (att.attendanceType === 'CHECK OUT') {
+        this.userCheckOuts.push(att);
+      } else {
+        this.userCheckIns.push(att);
+      }
+    }
+  }
+  setEmployee(emp: User, sender) {
     if (emp != null) {
-    emp.absences = [];
-    const today = new Date();
-    this.totalAbsence = 0;
-    this.absenceThisMonth = 0;
-    this.absenceThisWeek = 0;
-    this.absenceService.listByUser(emp).subscribe(r => {
-      for (const ab of r) {
-        emp.absences.push(ab);
-        this.totalAbsence = this.totalAbsence + ab.absentMinutes;
-        const date = new Date(ab.absenceDate);
-        // tslint:disable-next-line:triple-equals
-        if (date.getMonth() == today.getMonth()) {
-          this.absenceThisMonth = this.absenceThisMonth + ab.absentMinutes;
+      this.userService.findById(emp.userId).subscribe(user => {
+        emp = user;
+      emp.absences = [];
+      const today = new Date();
+      this.totalAbsence = 0;
+      this.absenceThisMonth = 0;
+      this.absenceThisWeek = 0;
+      this.absenceService.listByUser(emp).subscribe(r => {
+        for (const ab of r) {
+          emp.absences.push(ab);
+          this.totalAbsence = this.totalAbsence + ab.absentMinutes;
+          const date = new Date(ab.absenceDate);
+          // tslint:disable-next-line:triple-equals
+          if (date.getMonth() == today.getMonth()) {
+            this.absenceThisMonth = this.absenceThisMonth + ab.absentMinutes;
+          }
+          if (today.getDay() - 6 <= date.getDay() || date.getDay() <= today.getDay() + 6) {
+            this.absenceThisWeek = this.absenceThisWeek + ab.absentMinutes;
+          }
         }
-        if (today.getDay() - 6 <= date.getDay() || date.getDay() <= today.getDay() + 6) {
-          this.absenceThisWeek = this.absenceThisWeek + ab.absentMinutes;
-        }
-      }
 
-      this.clickedUser = emp;
-      this.absenceThisMonthDesc = this.getTime(this.absenceThisMonth, 2);
-      if (this.clickedUser.department.planning != null) {
-      let workTime = this.clickedUser.department.planning.schedule.endHour - this.clickedUser.department.planning.schedule.startHour;
-      if (this.clickedUser.department.planning.schedule.pauseTime) {
-        workTime = workTime - (this.clickedUser.department.planning.schedule.pauseEnd
-          - this.clickedUser.department.planning.schedule.pauseStart);
-      }
-      this.weekClass = this.getClass(this.absenceThisMonth, 'week', workTime);
-      this.monthClass = this.getClass(this.absenceThisMonth, 'month', workTime);
-      this.absenceThisWeekDesc = this.getTime(this.absenceThisWeek, 2);
-      this.totalAbsenceDesc = this.getTime(this.totalAbsence, 2);
-      }
-      this.clickedUser.absences.reverse();
-      this.userCheckOuts = [];
-      this.userCheckIns = [];
-      for (const att of emp.attendances) {
-        if (att.attendanceType === 'CHECK OUT') {
-          this.userCheckOuts.push(att);
-        } else {
-          this.userCheckIns.push(att);
+        this.clickedUser = emp;
+        this.absenceThisMonthDesc = this.getTime(this.absenceThisMonth, 2);
+        if (this.clickedUser.department.planning != null) {
+          let workTime = this.clickedUser.department.planning.schedule.endHour - this.clickedUser.department.planning.schedule.startHour;
+          if (this.clickedUser.department.planning.schedule.pauseTime) {
+            workTime = workTime - (this.clickedUser.department.planning.schedule.pauseEnd
+              - this.clickedUser.department.planning.schedule.pauseStart);
+          }
+          this.weekClass = this.getClass(this.absenceThisMonth, 'week', workTime);
+          this.monthClass = this.getClass(this.absenceThisMonth, 'month', workTime);
+          this.absenceThisWeekDesc = this.getTime(this.absenceThisWeek, 2);
+          this.totalAbsenceDesc = this.getTime(this.totalAbsence, 2);
         }
-      }
-      // scroll to Absences div
-      let acceleration = 1;
-      const interval = setInterval(() => {
-        // @ts-ignore
-
-        if (window.scrollY < (this.empAttDiv.nativeElement.offsetTop - 100)) {
-          window.scroll(1, window.scrollY + ((window.innerHeight / 5) * acceleration) );
-          acceleration = acceleration + 0.1;
-        } else {
-          clearInterval(interval);
+        this.userAttendances();
+        if (sender !== 2) {
+        // scroll to Absences div
+        let acceleration = 1;
+        const interval = setInterval(() => {
           // @ts-ignore
-          window.scroll(1, this.empAttDiv.nativeElement.offsetTop - 26);
-      }
-    }, 1);
-      setTimeout(() => {
-        this.loadingUser = false;
-      }, 600);
-    }, error => {
-      console.log(error);
-      setTimeout(() => {
-        this.loadingUser = false;
-    }, 600);
-    });
+
+          if (window.scrollY < (this.empAttDiv.nativeElement.offsetTop - 100)) {
+            window.scroll(1, window.scrollY + ((window.innerHeight / 5) * acceleration) );
+            acceleration = acceleration + 0.1;
+          } else {
+            clearInterval(interval);
+            // @ts-ignore
+            window.scroll(1, this.empAttDiv.nativeElement.offsetTop - 26);
+          }
+        }, 1);
+        }
+        setTimeout(() => {
+          this.loadingUser = false;
+        }, 600);
+      }, error => {
+        console.log(error);
+        setTimeout(() => {
+          this.loadingUser = false;
+        }, 600);
+      });
+      }, error => console.log(error));
     } else {
       this.clickedUser = null;
       setTimeout(() => {
         this.loadingUser = false;
       }, 300);
     }
+    this.loadingUser = true;
   }
 
   getClass(time, format, workTime) {

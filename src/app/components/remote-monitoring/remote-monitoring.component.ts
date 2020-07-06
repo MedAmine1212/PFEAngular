@@ -259,7 +259,7 @@ public reloadFromWebSocket(message) {
     setTimeout (() => {
       if (this.absencesComponent != null) {
         this.clickedEmp = emp;
-        this.absencesComponent.setEmployee(emp);
+        this.absencesComponent.setEmployee(emp, 1);
       }
     }, 1);
   }
