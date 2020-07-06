@@ -302,11 +302,9 @@ export class AbsencesComponent implements OnInit {
 
   getClass(time, format, workTime) {
     let total: number;
-    if (format === 'week') {
-      total = workTime * this.connectedUser.department.planning.scheduleDays.length;
-    }
+    total = workTime * this.connectedUser.department.planning.scheduleDays.length;
     if (format === 'month') {
-      total = workTime * this.connectedUser.department.planning.scheduleDays.length * 4;
+      total = workTime *  4;
     }
     if (total * 0.05 >= time) {
       return 'btn-success';
