@@ -122,7 +122,9 @@ export class AbsencesComponent implements OnInit {
     this.userService.list().subscribe(r => {
       for (const emp of r) {
         if (emp.department.planning != null ) {
-        if ( emp.department.planning.scheduleDays.indexOf(this.currentDay) > -1 && ((this.role === 'chefDep' && emp.department.depId === this.roleService.getConnectedUser().department.depId) || this.role === 'admin')) {
+        if ( emp.department.planning.scheduleDays.indexOf(this.currentDay) > -1 &&
+          ((this.role === 'chefDep' && emp.department.depId === this.roleService.getConnectedUser().department.depId) ||
+            this.role === 'admin')) {
           for (const att of emp.attendances) {
             let date: Date;
             date = new Date(att.attendanceDate);
@@ -148,7 +150,7 @@ export class AbsencesComponent implements OnInit {
           }
         }
         this.departmentService.list().subscribe(r2 => {
-          let depId: number
+          let depId: number;
           for (const dep of r2) {
             if (dep.planning != null) {
             depId = dep.depId;
@@ -270,7 +272,7 @@ export class AbsencesComponent implements OnInit {
     }
     }
   }
-  setEmployee(emp: User) {
+  setEmployee(emp: User, sender) {
     if (emp != null) {
     this.userService.findById(emp.userId).subscribe(user => {
       emp = user;
@@ -290,6 +292,7 @@ export class AbsencesComponent implements OnInit {
             this.userCheckIns.push(att);
           }
         }
+        if (sender === 1) {
         // scroll to Absences div
         let acceleration = 1;
         const interval = setInterval(() => {
@@ -304,6 +307,7 @@ export class AbsencesComponent implements OnInit {
             window.scroll(1, this.empAttDiv.nativeElement.offsetTop - 26);
           }
         }, 1);
+        }
         setTimeout(() => {
           this.loadingUser = false;
         }, 600);
@@ -321,7 +325,6 @@ export class AbsencesComponent implements OnInit {
         this.loadingUser = false;
       }, 300);
     }
-    this.loadingUser = true;
   }
 
   getClass(time, format, workTime) {
@@ -380,10 +383,10 @@ export class AbsencesComponent implements OnInit {
     this.bottomSheet.open(AbsenceVerificationComponent , {
       data: abs
     });
-      this.bottomSheet._openedBottomSheetRef.afterDismissed().subscribe(() => {
-        console.log('qsdqsdqsdqsdqs');
-        this.calculAbsences();
-      });
+    this.bottomSheet._openedBottomSheetRef.afterDismissed().subscribe(() => {
+      console.log('qsdqsdqsdqsdqs');
+      this.calculAbsences();
+    });
     } else {
       return;
     }
