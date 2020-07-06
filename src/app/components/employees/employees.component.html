@@ -135,8 +135,8 @@
               <td *ngIf="emp.userId != connectedUser.userId" style="float: right" class="text-center">
                 <button type="button" id="PopoverCustomT-1" (click)="openDetailsDialog(emp)" style="border-radius: 12px" class="btn btn-primary btn-sm" matTooltip="Employee details"><span class="fa fa-info-circle"></span></button>
                 <button type="button" id="PopoverCustomT-2"  *ngIf="role == 'admin'" (click)="openDeleteEmpDialog(emp)" style="border-radius: 12px" class="btn btn-danger btn-sm" matTooltip="Delete employee"><span class="fa fa-trash-alt"></span></button>
-                <button type="button" id="PopoverCustomT-3"  *ngIf="emp.roles[0].roleName == 'ADMIN'" (click)="revokeAmin(emp)" style="border-radius: 12px" class="btn btn-danger btn-sm" matTooltip="Remove admin"><span class="fa fa-user-times"></span></button>
-                <button type="button" id="PopoverCustomT-4"  *ngIf="emp.roles[0].roleName != 'ADMIN'" (click)="makeAdmin(emp)" style="border-radius: 12px" class="btn btn-info btn-sm" matTooltip="Make system admin"><span class="fa fa-user-shield"></span></button>
+                <button type="button" id="PopoverCustomT-3"  *ngIf="emp.roles[0].roleName == 'ADMIN' && role == 'admin'" (click)="revokeAmin(emp)" style="border-radius: 12px" class="btn btn-danger btn-sm" matTooltip="Remove admin"><span class="fa fa-user-times"></span></button>
+                <button type="button" id="PopoverCustomT-4"  *ngIf="emp.roles[0].roleName != 'ADMIN' && role == 'admin'" (click)="makeAdmin(emp)" style="border-radius: 12px" class="btn btn-info btn-sm" matTooltip="Make system admin"><span class="fa fa-user-shield"></span></button>
               </td>
               <td  style="float: right;padding-right: 25px" class="text-center" *ngIf="emp.userId == connectedUser.userId">
                 <div>Current user</div>

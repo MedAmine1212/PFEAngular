@@ -188,6 +188,8 @@ public reloadFromWebSocket(message) {
         this.employeesComponent.reloadFromSocket();
       } else if (webSocketMessage === 'tempUser') {
         this.navComponent.reloadNotifs();
+      } else if (webSocketMessage === 'absence') {
+        this.navComponent.reloadNotifs();
       } else if (webSocketMessage === 'att') {
           this.absencesComponent.refresh();
       } else  if (webSocketMessage === 'employee') {
@@ -259,7 +261,7 @@ public reloadFromWebSocket(message) {
     setTimeout (() => {
       if (this.absencesComponent != null) {
         this.clickedEmp = emp;
-        this.absencesComponent.setEmployee(emp);
+        this.absencesComponent.setEmployee(emp, 1);
       }
     }, 1);
   }

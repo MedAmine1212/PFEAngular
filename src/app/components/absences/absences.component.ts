@@ -122,39 +122,48 @@ export class AbsencesComponent implements OnInit {
     this.userService.list().subscribe(r => {
       for (const emp of r) {
         if (emp.department.planning != null ) {
-          if ( emp.department.planning.scheduleDays.indexOf(this.currentDay) > -1 ) {
-            for (const att of emp.attendances) {
-              let date: Date;
-              date = new Date(att.attendanceDate);
-              if (date.toDateString() !== this.time.toDateString()) {
-                emp.attendances.splice(emp.attendances.indexOf(att), 1);
-              }
+        if ( emp.department.planning.scheduleDays.indexOf(this.currentDay) > -1 && ((this.role === 'chefDep' && emp.department.depId === this.roleService.getConnectedUser().department.depId) || this.role === 'admin')) {
+          for (const att of emp.attendances) {
+            let date: Date;
+            date = new Date(att.attendanceDate);
+            if (date.toDateString() !== this.time.toDateString()) {
+              emp.attendances.splice(emp.attendances.indexOf(att), 1);
             }
-            this.users.push(emp);
           }
-        }
+          this.users.push(emp);
+       }
+      }
       }
       this.planningService.list().subscribe(r1 => {
+        let depIds: number[];
         for (const pl of r1) {
-          if (pl.scheduleDays.indexOf(this.days[this.time.getDay()]) > -1) {
+          depIds = [];
+          for ( const dep of pl.departments) {
+            depIds.push(dep.depId);
+          }
+          if (pl.scheduleDays.indexOf(this.days[this.time.getDay()]) > -1 &&
+            (this.role === 'admin' || (this.role === 'chefDep' &&
+              depIds.indexOf(this.roleService.getConnectedUser().department.depId) > -1))) {
             this.plannings.push(pl);
           }
         }
         this.departmentService.list().subscribe(r2 => {
+          let depId: number
           for (const dep of r2) {
             if (dep.planning != null) {
-              if (dep.planning.scheduleDays.indexOf(this.days[this.time.getDay()]) > -1) {
-                this.departments.push(dep);
-              }
+            depId = dep.depId;
+            if (dep.planning.scheduleDays.indexOf(this.days[this.time.getDay()]) > -1 &&
+              (this.role === 'admin' || (this.role === 'chefDep' &&
+                depId === this.roleService.getConnectedUser().department.depId))) {
+              this.departments.push(dep);
             }
+          }
           }
           if (this.attendanceComp != null) {
             this.attendanceComp.reloadAttendances();
           }
           if (this.clickedUser != null) {
-            this.userService.findById(this.clickedUser.userId).subscribe(user => {
-              this.clickedUser = user;
-            }, error => console.log(error));
+            this.setEmployee(this.clickedUser, 2);
           }
           setTimeout(() => {
             this.loading = false;
@@ -312,6 +321,7 @@ export class AbsencesComponent implements OnInit {
         this.loadingUser = false;
       }, 300);
     }
+    this.loadingUser = true;
   }
 
   getClass(time, format, workTime) {
@@ -365,14 +375,18 @@ export class AbsencesComponent implements OnInit {
   }
 
   openAbsenceVerificationSheet(abs: Absence) {
+    if (this.role !== 'user') {
     abs.user = this.clickedUser;
     this.bottomSheet.open(AbsenceVerificationComponent , {
       data: abs
     });
-    this.bottomSheet._openedBottomSheetRef.afterDismissed().subscribe(() => {
-      console.log('qsdqsdqsdqsdqs');
-      this.calculAbsences();
-    });
+      this.bottomSheet._openedBottomSheetRef.afterDismissed().subscribe(() => {
+        console.log('qsdqsdqsdqsdqs');
+        this.calculAbsences();
+      });
+    } else {
+      return;
+    }
   }
 
   getRole() {
@@ -407,15 +421,15 @@ export class AbsencesComponent implements OnInit {
     this.users = [];
     this.reloadData();
     setTimeout(() => {
-    const config = new MatSnackBarConfig();
-    if (this.themeChanger.getTheme()) {
-      config.panelClass = ['snackBar'];
-    } else {
-      config.panelClass = ['snackBarDark'];
-    }
-    config.duration = 3000;
-    this.snackBar.open('Refreshing...', null, config);
+      const config = new MatSnackBarConfig();
+      if (this.themeChanger.getTheme()) {
+        config.panelClass = ['snackBar'];
+      } else {
+        config.panelClass = ['snackBarDark'];
+      }
+      config.duration = 3000;
+      this.snackBar.open('Refreshing...', null, config);
 
-  }, 500);
+    }, 500);
   }
 }
