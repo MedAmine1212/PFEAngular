@@ -210,4 +210,6 @@ export class AttendanceComponent implements OnInit {
   calculEndCheckIn(endCheckin, startCheckIn) {
     return this.getTime(endCheckin + startCheckIn);
   }
+
+  
 }
