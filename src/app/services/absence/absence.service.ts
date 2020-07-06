@@ -3,7 +3,7 @@ import {Observable} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {Absence} from '../../models/Absence';
-import {User} from "../../models/User";
+import {User} from '../../models/User';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +30,7 @@ export class AbsenceService {
   }
 
   modify( absence: Absence , id): Observable<any> {
-    return this.http.put( this.baseUrl + 'update/' + id   , absence);
+    return this.http.put( this.baseUrl + 'update/' + id, absence);
   }
 
   findById(id): Observable<any> {

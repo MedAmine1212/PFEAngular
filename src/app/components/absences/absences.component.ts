@@ -122,17 +122,17 @@ export class AbsencesComponent implements OnInit {
     this.userService.list().subscribe(r => {
       for (const emp of r) {
         if (emp.department.planning != null ) {
-        if ( emp.department.planning.scheduleDays.indexOf(this.currentDay) > -1 ) {
-          for (const att of emp.attendances) {
-            let date: Date;
-            date = new Date(att.attendanceDate);
-            if (date.toDateString() !== this.time.toDateString()) {
-              emp.attendances.splice(emp.attendances.indexOf(att), 1);
+          if ( emp.department.planning.scheduleDays.indexOf(this.currentDay) > -1 ) {
+            for (const att of emp.attendances) {
+              let date: Date;
+              date = new Date(att.attendanceDate);
+              if (date.toDateString() !== this.time.toDateString()) {
+                emp.attendances.splice(emp.attendances.indexOf(att), 1);
+              }
             }
+            this.users.push(emp);
           }
-          this.users.push(emp);
-       }
-      }
+        }
       }
       this.planningService.list().subscribe(r1 => {
         for (const pl of r1) {
@@ -143,13 +143,18 @@ export class AbsencesComponent implements OnInit {
         this.departmentService.list().subscribe(r2 => {
           for (const dep of r2) {
             if (dep.planning != null) {
-            if (dep.planning.scheduleDays.indexOf(this.days[this.time.getDay()]) > -1) {
-              this.departments.push(dep);
+              if (dep.planning.scheduleDays.indexOf(this.days[this.time.getDay()]) > -1) {
+                this.departments.push(dep);
+              }
             }
           }
-          }
           if (this.attendanceComp != null) {
-          this.attendanceComp.reloadAttendances();
+            this.attendanceComp.reloadAttendances();
+          }
+          if (this.clickedUser != null) {
+            this.userService.findById(this.clickedUser.userId).subscribe(user => {
+              this.clickedUser = user;
+            }, error => console.log(error));
           }
           setTimeout(() => {
             this.loading = false;
@@ -217,24 +222,20 @@ export class AbsencesComponent implements OnInit {
       this.hoveredUserService.setPlusTop(135);
     }
     if (filter !== this.selectedFilter) {
-    this.selectedFilter = '';
-    setTimeout(() => {
-      this.selectedFilter = filter;
-    }, 400 );
+      this.selectedFilter = '';
+      setTimeout(() => {
+        this.selectedFilter = filter;
+      }, 400 );
     }
   }
-
-  setEmployee(emp: User) {
-    this.loadingUser = true;
-    if (emp != null) {
-    emp.absences = [];
-    const today = new Date();
+  calculAbsences() {
+    if (this.clickedUser.absences != null) {
     this.totalAbsence = 0;
     this.absenceThisMonth = 0;
     this.absenceThisWeek = 0;
-    this.absenceService.listByUser(emp).subscribe(r => {
-      for (const ab of r) {
-        emp.absences.push(ab);
+    const today = new Date();
+    for (const ab of this.clickedUser.absences) {
+      if (ab.reasonStatus !== 'btn btn-success') {
         this.totalAbsence = this.totalAbsence + ab.absentMinutes;
         const date = new Date(ab.absenceDate);
         // tslint:disable-next-line:triple-equals
@@ -245,10 +246,9 @@ export class AbsencesComponent implements OnInit {
           this.absenceThisWeek = this.absenceThisWeek + ab.absentMinutes;
         }
       }
-
-      this.clickedUser = emp;
-      this.absenceThisMonthDesc = this.getTime(this.absenceThisMonth, 2);
-      if (this.clickedUser.department.planning != null) {
+    }
+    this.absenceThisMonthDesc = this.getTime(this.absenceThisMonth, 2);
+    if (this.clickedUser.department.planning != null) {
       let workTime = this.clickedUser.department.planning.schedule.endHour - this.clickedUser.department.planning.schedule.startHour;
       if (this.clickedUser.department.planning.schedule.pauseTime) {
         workTime = workTime - (this.clickedUser.department.planning.schedule.pauseEnd
@@ -258,40 +258,54 @@ export class AbsencesComponent implements OnInit {
       this.monthClass = this.getClass(this.absenceThisMonth, 'month', workTime);
       this.absenceThisWeekDesc = this.getTime(this.absenceThisWeek, 2);
       this.totalAbsenceDesc = this.getTime(this.totalAbsence, 2);
-      }
-      this.clickedUser.absences.reverse();
-      this.userCheckOuts = [];
-      this.userCheckIns = [];
-      for (const att of emp.attendances) {
-        if (att.attendanceType === 'CHECK OUT') {
-          this.userCheckOuts.push(att);
-        } else {
-          this.userCheckIns.push(att);
+    }
+    }
+  }
+  setEmployee(emp: User) {
+    if (emp != null) {
+    this.userService.findById(emp.userId).subscribe(user => {
+      emp = user;
+      this.loadingUser = true;
+      emp.absences = [];
+      this.absenceService.listByUser(emp).subscribe(r => {
+        this.clickedUser = emp;
+        this.clickedUser.absences = r;
+        this.calculAbsences();
+        this.clickedUser.absences.reverse();
+        this.userCheckOuts = [];
+        this.userCheckIns = [];
+        for (const att of emp.attendances) {
+          if (att.attendanceType === 'CHECK OUT') {
+            this.userCheckOuts.push(att);
+          } else {
+            this.userCheckIns.push(att);
+          }
         }
-      }
-      // scroll to Absences div
-      let acceleration = 1;
-      const interval = setInterval(() => {
-        // @ts-ignore
-
-        if (window.scrollY < (this.empAttDiv.nativeElement.offsetTop - 100)) {
-          window.scroll(1, window.scrollY + ((window.innerHeight / 5) * acceleration) );
-          acceleration = acceleration + 0.1;
-        } else {
-          clearInterval(interval);
+        // scroll to Absences div
+        let acceleration = 1;
+        const interval = setInterval(() => {
           // @ts-ignore
-          window.scroll(1, this.empAttDiv.nativeElement.offsetTop - 26);
-      }
-    }, 1);
-      setTimeout(() => {
-        this.loadingUser = false;
-      }, 600);
-    }, error => {
-      console.log(error);
-      setTimeout(() => {
-        this.loadingUser = false;
-    }, 600);
-    });
+
+          if (window.scrollY < (this.empAttDiv.nativeElement.offsetTop - 100)) {
+            window.scroll(1, window.scrollY + ((window.innerHeight / 5) * acceleration) );
+            acceleration = acceleration + 0.1;
+          } else {
+            clearInterval(interval);
+            // @ts-ignore
+            window.scroll(1, this.empAttDiv.nativeElement.offsetTop - 26);
+          }
+        }, 1);
+        setTimeout(() => {
+          this.loadingUser = false;
+        }, 600);
+      }, error => {
+        console.log(error);
+        setTimeout(() => {
+          this.loadingUser = false;
+        }, 600);
+      });
+
+    }, error => console.log(error));
     } else {
       this.clickedUser = null;
       setTimeout(() => {
@@ -302,9 +316,11 @@ export class AbsencesComponent implements OnInit {
 
   getClass(time, format, workTime) {
     let total: number;
-    total = workTime * this.connectedUser.department.planning.scheduleDays.length;
+    if (format === 'week') {
+      total = workTime * this.connectedUser.department.planning.scheduleDays.length;
+    }
     if (format === 'month') {
-      total = workTime *  4;
+      total = workTime * this.connectedUser.department.planning.scheduleDays.length * 4;
     }
     if (total * 0.05 >= time) {
       return 'btn-success';
@@ -353,6 +369,10 @@ export class AbsencesComponent implements OnInit {
     this.bottomSheet.open(AbsenceVerificationComponent , {
       data: abs
     });
+    this.bottomSheet._openedBottomSheetRef.afterDismissed().subscribe(() => {
+      console.log('qsdqsdqsdqsdqs');
+      this.calculAbsences();
+    });
   }
 
   getRole() {
@@ -387,15 +407,15 @@ export class AbsencesComponent implements OnInit {
     this.users = [];
     this.reloadData();
     setTimeout(() => {
-      const config = new MatSnackBarConfig();
-      if (this.themeChanger.getTheme()) {
-        config.panelClass = ['snackBar'];
-      } else {
-        config.panelClass = ['snackBarDark'];
-      }
-      config.duration = 3000;
-      this.snackBar.open('Refreshing...', null, config);
+    const config = new MatSnackBarConfig();
+    if (this.themeChanger.getTheme()) {
+      config.panelClass = ['snackBar'];
+    } else {
+      config.panelClass = ['snackBarDark'];
+    }
+    config.duration = 3000;
+    this.snackBar.open('Refreshing...', null, config);
 
-    }, 500);
+  }, 500);
   }
 }

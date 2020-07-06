@@ -190,7 +190,7 @@ public reloadFromWebSocket(message) {
         this.navComponent.reloadNotifs();
       } else if (webSocketMessage === 'att') {
           this.absencesComponent.refresh();
-      }else  if (webSocketMessage === 'employee') {
+      } else  if (webSocketMessage === 'employee') {
         setTimeout(() => {
           this.employeesComponent.reloadFromSocket();
           this.openSnackBar('Employees updated', null);
