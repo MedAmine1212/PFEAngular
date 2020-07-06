@@ -188,9 +188,11 @@ public reloadFromWebSocket(message) {
         this.employeesComponent.reloadFromSocket();
       } else if (webSocketMessage === 'tempUser') {
         this.navComponent.reloadNotifs();
+      } else if (webSocketMessage === 'absence') {
+        this.navComponent.reloadNotifs();
       } else if (webSocketMessage === 'att') {
           this.absencesComponent.refresh();
-      }else  if (webSocketMessage === 'employee') {
+      } else  if (webSocketMessage === 'employee') {
         setTimeout(() => {
           this.employeesComponent.reloadFromSocket();
           this.openSnackBar('Employees updated', null);
