@@ -122,7 +122,7 @@ export class AbsencesComponent implements OnInit {
     this.userService.list().subscribe(r => {
       for (const emp of r) {
         if (emp.department.planning != null ) {
-        if ( emp.department.planning.scheduleDays.indexOf(this.currentDay) > -1 ) {
+        if ( emp.department.planning.scheduleDays.indexOf(this.currentDay) > -1 && ((this.role === 'chefDep' && emp.department.depId === this.roleService.getConnectedUser().department.depId) || this.role === 'admin')) {
           for (const att of emp.attendances) {
             let date: Date;
             date = new Date(att.attendanceDate);
@@ -135,15 +135,26 @@ export class AbsencesComponent implements OnInit {
       }
       }
       this.planningService.list().subscribe(r1 => {
+        let depIds: number[];
         for (const pl of r1) {
-          if (pl.scheduleDays.indexOf(this.days[this.time.getDay()]) > -1) {
+          depIds = [];
+          for ( const dep of pl.departments) {
+            depIds.push(dep.depId);
+          }
+          if (pl.scheduleDays.indexOf(this.days[this.time.getDay()]) > -1 &&
+            (this.role === 'admin' || (this.role === 'chefDep' &&
+              depIds.indexOf(this.roleService.getConnectedUser().department.depId) > -1))) {
             this.plannings.push(pl);
           }
         }
         this.departmentService.list().subscribe(r2 => {
+          let depId: number
           for (const dep of r2) {
             if (dep.planning != null) {
-            if (dep.planning.scheduleDays.indexOf(this.days[this.time.getDay()]) > -1) {
+            depId = dep.depId;
+            if (dep.planning.scheduleDays.indexOf(this.days[this.time.getDay()]) > -1 &&
+              (this.role === 'admin' || (this.role === 'chefDep' &&
+                depId === this.roleService.getConnectedUser().department.depId))) {
               this.departments.push(dep);
             }
           }
@@ -361,10 +372,14 @@ export class AbsencesComponent implements OnInit {
   }
 
   openAbsenceVerificationSheet(abs: Absence) {
+    if (this.role !== 'user') {
     abs.user = this.clickedUser;
     this.bottomSheet.open(AbsenceVerificationComponent , {
       data: abs
     });
+    } else {
+      return;
+    }
   }
 
   getRole() {
