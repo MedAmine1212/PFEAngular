@@ -137,7 +137,7 @@ export class AttendanceComponent implements OnInit {
               emp.checkInStatus =  'lightgreen';
               emp.checkInMsg = 'checked-in at : ' + this.getTime(att.attendanceTime);
               return;
-            } else if (((startHour + checkInDelay) - att.attendanceTime) < 0 && att.attendanceTime <= endCheckin) {
+            } else if (((startHour + checkInDelay) - att.attendanceTime) < 0 && att.attendanceTime <= startHour + endCheckin) {
           emp.checkInStatus =  'yellow';
           emp.checkInMsg = 'Late check-in ! (checked-in at : ' + this.getTime(att.attendanceTime) + ')';
           // creating late check-in absence
@@ -149,7 +149,7 @@ export class AttendanceComponent implements OnInit {
             this.createAbsence(emp, 'Late check-in', (att.attendanceTime - (startHour + checkInDelay)));
           }
           return;
-        } else if (att.attendanceTime > endCheckin) {
+        } else if (att.attendanceTime > endCheckin + startHour) {
             emp.checkInStatus =  'red';
             emp.checkInMsg = 'Absent ! ';
             // creating all day absence

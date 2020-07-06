@@ -189,7 +189,7 @@ public reloadFromWebSocket(message) {
       } else if (webSocketMessage === 'tempUser') {
         this.navComponent.reloadNotifs();
       } else if (webSocketMessage === 'att') {
-          this.absencesComponent.reloadData();
+          this.absencesComponent.refresh();
       }else  if (webSocketMessage === 'employee') {
         setTimeout(() => {
           this.employeesComponent.reloadFromSocket();
