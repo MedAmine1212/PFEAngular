@@ -206,4 +206,8 @@ export class AttendanceComponent implements OnInit {
       console.log(res);
     }, error => console.log(error));
   }
+
+  calculEndCheckIn(endCheckin, startCheckIn) {
+    return this.getTime(endCheckin + startCheckIn);
+  }
 }

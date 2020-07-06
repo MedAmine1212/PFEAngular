@@ -19,8 +19,11 @@
   <thead>
   <tr>
     <th class="text-center">Employee</th>
-    <th class="text-center">Check-in</th>
-    <th class="text-center">Check-out</th>
+    <th class="text-center">Check-in time</th>
+    <th class="text-center">Check-in status</th>
+    <th class="text-center">End Check-in</th>
+    <th class="text-center">Check-out time</th>
+    <th class="text-center">Check-out status</th>
 <!--    <th class="text-center">date</th>-->
   </tr>
   </thead>
@@ -30,10 +33,19 @@
       {{emp.firstName}} {{emp.name}} <span class="fa fa-info-circle" style="font-size:25px;float: right;color: #3f6ad8" (mouseenter)="showUserProfile(emp, $event)" (mouseleave)="hideUserProfile()"></span>
     </td>
     <td  class="text-center">
+      <span>{{getTime(emp.department.planning.schedule.startHour)}}</span>
+    </td>
+    <td  class="text-center">
       <span class="fa fa-circle" matTooltip="{{emp.checkInMsg}}" [ngStyle]="{'color': emp.checkInStatus}"></span>
     </td>
     <td  class="text-center">
-      <span class="fa fa-circle" matTooltip="{{emp.checkOutMsg}}" [ngStyle]="{'color': emp.checkOutStatus}"></span>
+      <span>{{calculEndCheckIn(emp.department.planning.planningConfigs[0].endCheckin, emp.department.planning.schedule.startHour)}}</span>
+    </td>
+    <td  class="text-center">
+      <span>{{getTime(emp.department.planning.schedule.endHour)}}</span>
+    </td>
+    <td  class="text-center">
+     <span class="fa fa-circle" matTooltip="{{emp.checkOutMsg}}" [ngStyle]="{'color': emp.checkOutStatus}"></span>
     </td>
   </tr>
     </tbody>

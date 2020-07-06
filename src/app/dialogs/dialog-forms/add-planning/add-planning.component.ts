@@ -57,7 +57,7 @@ export class AddPlanningComponent implements AfterViewInit {
   newSchStartMinutes: number;
   newSchEndMinutes: number;
   newSchPauseStart: number;
-  chekInEndHour: string;
+  checkInEndHour: string;
   newSchPauseStartMinutes: number;
   newSchPauseEnd: number;
   newSchPauseEndMinutes: number;
@@ -98,6 +98,7 @@ export class AddPlanningComponent implements AfterViewInit {
       this.planning.departments = this.pl.departments;
       this.checkInDelay = this.pl.planningConfigs[0].checkInDelay.toString();
       this.checkOutDelay = this.pl.planningConfigs[0].checkOutDelay.toString();
+      this.checkInEndHour = this.pl.planningConfigs[0].endCheckin.toString();
 
       // rest
       this.newSch = false;
@@ -133,7 +134,6 @@ export class AddPlanningComponent implements AfterViewInit {
     this.FormGroup4();
     }, 600);
     if (this.pl !== null) {
-      this.chekInEndHour = this.getEndCheckIn(this.pl.planningConfigs[0].endCheckin);
       setTimeout(() => {
         this.stepper.selectedIndex = 1;
       }, 1000);
@@ -178,7 +178,7 @@ export class AddPlanningComponent implements AfterViewInit {
   }
   FormGroup4() {
     this.formGroup4 = this.formBuilder.group({
-      endCheckIn: [this.chekInEndHour, [Validators.required]],
+      checkInEndHour: ['', [Validators.required]],
       checkInDelay: [this.checkInDelay, [Validators.required]],
       checkOutDelay: [this.checkOutDelay, [Validators.required]],
     });
@@ -203,8 +203,7 @@ export class AddPlanningComponent implements AfterViewInit {
     this.planning.endDate = this.endDate;
     this.planning.planningConfigs[0].checkInDelay = Number.parseInt(this.checkInDelay, 0);
     this.planning.planningConfigs[0].checkOutDelay = Number.parseInt(this.checkInDelay, 0);
-    this.planning.planningConfigs[0].endCheckin = (Number.parseInt(this.chekInEndHour, 0) * 60) +
-      Number.parseInt(this.chekInEndHour.slice(3, this.chekInEndHour  .length), 0);
+    this.planning.planningConfigs[0].endCheckin = Number.parseInt(this.checkInEndHour, 0);
     if (this.newSch) {
         this.setFinalSchedule();
         this.scheduleService.add(this.schedule).subscribe(r => {
@@ -277,8 +276,7 @@ saveModifiedPlanning() {
     const planningConfig = new PlanningConfig();
     planningConfig.checkInDelay = Number.parseInt(this.checkInDelay, 0);
     planningConfig.checkOutDelay = Number.parseInt(this.checkInDelay, 0);
-    planningConfig.endCheckin = (Number.parseInt(this.chekInEndHour, 0) * 60) +
-      Number.parseInt(this.chekInEndHour.slice(3, this.chekInEndHour  .length), 0);
+    planningConfig.endCheckin = Number.parseInt(this.checkInEndHour, 0);
     this.planning.planningConfigs = [];
     this.planning.planningConfigs.push(planningConfig);
     this.userService.findUserWithToken().subscribe(user => {
@@ -321,21 +319,7 @@ saveModifiedPlanning() {
     }
   }
 
-  getEndCheckIn(hour: number) {
-    const h = Math.floor(hour / 60);
-    const m = hour % 60;
-    let returnTime: string;
-    returnTime = '';
-    if (h < 10) {
-      returnTime = returnTime + '0';
-    }
-    returnTime = returnTime + h.toString() + ':';
-    if (m < 10) {
-      returnTime = returnTime + '0';
-    }
-    returnTime = returnTime + m.toString();
-    return returnTime;
-  }
+
   // schedule ToString
   returnSchDesc(sch: Schedule) {
     this.getTime(sch);

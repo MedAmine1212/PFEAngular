@@ -20,6 +20,7 @@ import {GetRoleService} from '../../services/getRole/get-role.service';
 import {MatDialog} from '@angular/material/dialog';
 import {UpdateAbsenceComponent} from '../../dialogs/dialog-forms/update-absence/update-absence.component';
 import {MatSnackBar, MatSnackBarConfig} from '@angular/material/snack-bar';
+import {AttendanceComponent} from '../attendance/attendance.component';
 @Component({
   selector: 'app-absences',
   templateUrl: './absences.component.html',
@@ -56,6 +57,7 @@ import {MatSnackBar, MatSnackBarConfig} from '@angular/material/snack-bar';
 })
 export class AbsencesComponent implements OnInit {
   @ViewChild('empAtt') empAttDiv: HTMLDivElement;
+  @ViewChild(AttendanceComponent) attendanceComp: AttendanceComponent;
   role: string;
   connectedUser: User;
   format = new DateFormatter();
@@ -145,6 +147,9 @@ export class AbsencesComponent implements OnInit {
               this.departments.push(dep);
             }
           }
+          }
+          if (this.attendanceComp != null) {
+          this.attendanceComp.reloadAttendances();
           }
           setTimeout(() => {
             this.loading = false;
@@ -381,6 +386,7 @@ export class AbsencesComponent implements OnInit {
   }
 
   refresh() {
+    this.users = [];
     this.reloadData();
     setTimeout(() => {
       const config = new MatSnackBarConfig();
