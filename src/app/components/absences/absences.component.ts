@@ -105,6 +105,7 @@ export class AbsencesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.triggerReloadAbsences();
     this.loading = true;
     this.getRole();
     this.getConnectedUser();
@@ -436,5 +437,14 @@ export class AbsencesComponent implements OnInit {
       this.snackBar.open('Refreshing...', null, config);
 
     }, 500);
+  }
+
+  triggerReloadAbsences() {
+    this.absenceService.refreshAbsences().subscribe(() => {
+      setTimeout(() => {
+        this.refresh();
+      }, 200);
+    }, error => console.log(error));
+
   }
 }

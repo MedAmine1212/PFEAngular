@@ -4,7 +4,7 @@
       Today's Attendance
       <img height="25" width="25" matTooltip="Live attendance" src="assets/images/stream.png" style="margin-left: 10px"/>
     </h3>
-    <div style="width: 80%"><button style="float: right;" [ngClass]="{'bg-premium-dark': getTheme()}" (click)="refresh()"  mat-raised-button  class="btn btn-outline-primary addUser" matTooltip="Refresh"><span  class="fa fa-sync-alt"></span></button></div>
+    <div style="width: 80%"><button style="float: right;" [ngClass]="{'bg-premium-dark': getTheme()}" (click)="triggerReloadAbsences()"  mat-raised-button  class="btn btn-outline-primary addUser" matTooltip="Refresh"><span  class="fa fa-sync-alt"></span></button></div>
   </div>
   <div *ngIf="loading" style="padding-top: 15%;width:100%">
     <div style="width:200px;margin:auto">

@@ -3,10 +3,8 @@ import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.ser
 import {AttendanceService} from '../../services/Attendance/attendance.service';
 import {User} from '../../models/User';
 import {HoveredUserService} from '../../services/hoveredUser/hovered-user.service';
-import {Absence} from '../../models/Absence';
 import {DateFormatter} from 'ngx-bootstrap';
 import {AbsenceService} from '../../services/absence/absence.service';
-import {Attendance} from "../../models/Attendance";
 @Component({
   selector: 'app-attendance',
   templateUrl: './attendance.component.html',
@@ -100,37 +98,64 @@ export class AttendanceComponent implements OnInit {
         types.push(ab.absenceType);
       }
     }
-
-    emp.checkOutStatus = 'grey';
-    emp.checkOutMsg = 'Didn\'t check-out yet';
-    emp.checkInStatus = 'grey';
-    emp.checkInMsg = 'Didn\'t check-out yet';
-    if (types.indexOf('All day') > -1) {
-      emp.checkOutStatus = 'red';
-      emp.checkOutMsg = 'Absent !';
-      emp.checkInStatus = 'red';
-      emp.checkInMsg = 'Absent !';
-    } else if (types.indexOf('Late check-in') > -1) {
-      let time: number;
-      for (const att of emp.attendances) {
-        if (att.attendanceType === 'CHECK IN') {
-          time = att.attendanceTime;
-          break;
+    if (type.length > 0) {
+      if (types.indexOf('All day') > -1) {
+        emp.checkOutStatus = 'red';
+        emp.checkOutMsg = 'Absent !';
+        emp.checkInStatus = 'red';
+        emp.checkInMsg = 'Absent !';
+        return;
+      } else {
+        if (types.indexOf('Early check-out') > -1) {
+        let time: number;
+        for (const att of emp.attendances) {
+          if (att.attendanceType === 'CHECK OUT') {
+            time = att.attendanceTime;
+            if (type === 'CHECK OUT') {
+              return;
+            }
+            break;
+          }
+          emp.checkOutStatus = 'yellow';
+          emp.checkOutMsg = 'Early check-out ! (checked-out at: ' + this.getTime(time) + ')';
         }
       }
-      emp.checkInStatus = 'yellow';
-      emp.checkInMsg = 'Late check-in ! (checked-in at: ' + this.getTime(time) + ')';
-    } else if (types.indexOf('Early check-out') > -1) {
-      let time: number;
+        if (types.indexOf('Late check-in') > -1) {
+          let time: number;
+          for (const att of emp.attendances) {
+            if (att.attendanceType === 'CHECK IN') {
+              time = att.attendanceTime;
+              if (type === 'CHECK IN') {
+                return;
+              }
+              break;
+            }
+          }
+          emp.checkInStatus = 'yellow';
+          emp.checkInMsg = 'Late check-in ! (checked-in at: ' + this.getTime(time) + ')';
+        }
+    }
+    }
+    if (type === 'CHECK OUT') {
+      emp.checkOutStatus = 'grey';
+      emp.checkOutMsg = 'Didn\'t check-out yet';
       for (const att of emp.attendances) {
         if (att.attendanceType === 'CHECK OUT') {
-          time = att.attendanceTime;
-          break;
+          emp.checkOutStatus = 'lightgreen';
+          emp.checkOutMsg = 'Checked out at: ' + this.getTime(att.attendanceTime);
+          return;
         }
-        emp.checkOutStatus = 'yellow';
-        emp.checkOutMsg = 'Early check-out ! (checked-out at: ' + this.getTime(time) + ')';
       }
     } else {
+      emp.checkInStatus = 'grey';
+      emp.checkInMsg = 'Didn\'t check-out yet';
+      for (const att of emp.attendances) {
+        if (att.attendanceType === 'CHECK IN') {
+          emp.checkInStatus = 'lightgreen';
+          emp.checkInMsg = 'Checked in at: ' + this.getTime(att.attendanceTime);
+          return;
+        }
+      }
       if (((this.time.getMinutes() + (this.time.getHours() * 60)) > startHour + checkInDelay) &&
         (this.time.getMinutes() + (this.time.getHours() * 60)) <= (startHour + endCheckin)) {
         emp.checkInStatus = 'yellow';
@@ -138,7 +163,6 @@ export class AttendanceComponent implements OnInit {
         return;
       }
     }
-
   }
 
   calculEndCheckIn(endCheckin, startCheckIn) {

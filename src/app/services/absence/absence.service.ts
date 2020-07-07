@@ -36,4 +36,8 @@ export class AbsenceService {
   findById(id): Observable<any> {
     return this.http.get(this.baseUrl + 'findById/'  + id);
   }
+
+  refreshAbsences() {
+    return this.http.get(this.baseUrl + 'markAbsences');
+  }
 }
