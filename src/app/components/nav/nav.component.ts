@@ -284,7 +284,9 @@ export class NavComponent implements OnInit {
   isAdmin() {
     return this.connectedUser.roles.findIndex(role => role.roleName === 'ADMIN') !== -1;
   }
-
+  isSuperAdmin() {
+    return this.connectedUser.roles.findIndex(role => role.roleName === 'SUPER_ADMIN') !== -1;
+  }
   isChefDep() {
     return this.connectedUser.roles.findIndex(role => role.roleName === 'CHEF_DEPARTMENT') !== -1;
   }

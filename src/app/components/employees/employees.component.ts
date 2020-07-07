@@ -70,6 +70,7 @@ export class EmployeesComponent implements OnInit {
   clickedEmp: User;
   connectedUser: User;
   role: string;
+  superAdmin: boolean;
   constructor(
           private roleService: GetRoleService,
           private planningService: PlanningService,
@@ -90,6 +91,7 @@ export class EmployeesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.superAdmin = this.roleService.isSuperAdmin();
     this.getRole();
     this.connectedUser = this.roleService.getConnectedUser();
     this.showUsers = true;
@@ -255,7 +257,7 @@ export class EmployeesComponent implements OnInit {
 
       } else {
         this.users = [];
-        if (this.roleService.isAdmin()) {
+        if (this.roleService.isAdmin() || this.roleService.isSuperAdmin()) {
           this.users = r;
         } else if (this.roleService.isChefDep()) {
           for (const emp of r) {

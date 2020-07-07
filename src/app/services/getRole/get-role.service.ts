@@ -13,7 +13,7 @@ export class GetRoleService {
 
   userRole() {
     if (this.connectedUser != null) {
-    if (this.isAdmin()) {
+    if (this.isAdmin() || this.isSuperAdmin()) {
       return 'admin';
     } else if (this.isChefDep()) {
       return 'chefDep';
@@ -26,6 +26,11 @@ export class GetRoleService {
   isAdmin() {
     if (this.connectedUser != null) {
       return this.connectedUser.roles.findIndex(role => role.roleName === 'ADMIN') !== -1;
+    }
+  }
+  isSuperAdmin() {
+    if (this.connectedUser != null) {
+      return this.connectedUser.roles.findIndex(role => role.roleName === 'SUPER_ADMIN') !== -1;
     }
   }
   isChefDep() {
