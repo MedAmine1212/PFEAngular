@@ -137,6 +137,7 @@ export class AbsencesComponent implements OnInit {
       }
       }
       this.planningService.list().subscribe(r1 => {
+        this.plannings = [];
         let depIds: number[];
         for (const pl of r1) {
           depIds = [];
@@ -150,6 +151,7 @@ export class AbsencesComponent implements OnInit {
           }
         }
         this.departmentService.list().subscribe(r2 => {
+          this.departments = [];
           let depId: number;
           for (const dep of r2) {
             if (dep.planning != null) {
