@@ -5,7 +5,7 @@ export class Attendance {
   attendanceType: string;
   inputType: string;
   attendanceTime: number;
-  attendanceDate: Date;
+  attendanceDate: any;
   user: User;
   constructor() {
   }
