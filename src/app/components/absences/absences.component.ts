@@ -105,13 +105,15 @@ export class AbsencesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loading = true;
     this.getRole();
     this.getConnectedUser();
-    this.reloadData();
-    setInterval(() => {
-      this.time = new Date();
-    }, 1000);
+    if (this.role !== 'user') {
+      this.loading = true;
+      this.reloadData();
+      setInterval(() => {
+        this.time = new Date();
+      }, 1000);
+    }
     this.showAbsences = false;
     this.showPoint = true;
   }
@@ -122,9 +124,7 @@ export class AbsencesComponent implements OnInit {
     this.userService.list().subscribe(r => {
       for (const emp of r) {
         if (emp.department.planning != null ) {
-        if ( emp.department.planning.scheduleDays.indexOf(this.currentDay) > -1 &&
-          ((this.role === 'chefDep' && emp.department.depId === this.roleService.getConnectedUser().department.depId) ||
-            this.role === 'admin')) {
+        if ( emp.department.planning.scheduleDays.indexOf(this.currentDay) > -1) {
           for (const att of emp.attendances) {
             let date: Date;
             date = new Date(att.attendanceDate);
@@ -138,27 +138,16 @@ export class AbsencesComponent implements OnInit {
       }
       this.planningService.list().subscribe(r1 => {
         this.plannings = [];
-        let depIds: number[];
         for (const pl of r1) {
-          depIds = [];
-          for ( const dep of pl.departments) {
-            depIds.push(dep.depId);
-          }
-          if (pl.scheduleDays.indexOf(this.days[this.time.getDay()]) > -1 &&
-            (this.role === 'admin' || (this.role === 'chefDep' &&
-              depIds.indexOf(this.roleService.getConnectedUser().department.depId) > -1))) {
+          if (pl.scheduleDays.indexOf(this.days[this.time.getDay()]) > -1) {
             this.plannings.push(pl);
           }
         }
         this.departmentService.list().subscribe(r2 => {
           this.departments = [];
-          let depId: number;
           for (const dep of r2) {
             if (dep.planning != null) {
-            depId = dep.depId;
-            if (dep.planning.scheduleDays.indexOf(this.days[this.time.getDay()]) > -1 &&
-              (this.role === 'admin' || (this.role === 'chefDep' &&
-                depId === this.roleService.getConnectedUser().department.depId))) {
+            if (dep.planning.scheduleDays.indexOf(this.days[this.time.getDay()]) > -1) {
               this.departments.push(dep);
             }
           }
