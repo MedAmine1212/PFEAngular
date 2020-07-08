@@ -8,7 +8,7 @@
         </div>
       </div>
       <div class="buttons" *ngIf="!thisIsEmp && clickedDep.depId!=-1">
-        <button mat-raised-button class="btn btn-info" (click)="showAddUserDialog()" matTooltip="Add Employee">
+        <button *ngIf="role == 'admin' || connectedUser.userId == clickedDep.chefDep" mat-raised-button class="btn btn-info" (click)="showAddUserDialog()" matTooltip="Add Employee">
           <span style="cursor:pointer;color:white" title="add" class="fa fa-user-plus"></span>
         </button>
         <button mat-raised-button class="btn btn-success" *ngIf="role == 'admin'" (click)="showAddDepDialog()" matTooltip="Add departement"><span class="fas fa-plus"></span></button>
