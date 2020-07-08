@@ -63,12 +63,16 @@ export class AbsencesComponent implements OnInit {
   format = new DateFormatter();
   date = new Date();
   showPoint: boolean;
+  searchTextAbs;
+  showHideInputAbs: boolean;
   showAbsences: boolean;
   time = new Date();
   departments: Department[] = [];
   plannings: Planning[] = [];
   users: User[] = [];
   selectedFilter: string;
+  showHideInputPoint: boolean;
+  searchTextPoint;
   showHideInput: boolean;
   showHideInput2: boolean;
   searchText;

@@ -99,6 +99,15 @@
     <div *ngIf="showPoint" [@enterSecondAnimation]>
       <h1 style="margin-top:20%;margin-left: 28%" *ngIf="clickedUser == null">Select an employee to show his attendance here</h1>
       <div [@enterThirdAnimation] *ngIf="!loadingUser && clickedUser != null">
+        <div class="search-wrapper" style="margin-left: 30px;margin-top: 20px">
+          <div style="position: absolute;background-color: transparent;margin-top: -15px;margin-left: -35px;" [ngClass]="{'search-wrapper active': showHideInputPoint}">
+            <div class="input-holder" [ngClass]=" getTheme() && showHideInput? 'bg-dark' :''">
+              <input [ngStyle]="{'color': getTheme()? 'white' :''}" type="text" [(ngModel)]="searchTextPoint" style="width: 100%" class="search-input" placeholder="Search by date (YYY-MM-DD)...">
+              <button (click)="showHideInputPoint = true;" class="search-icon"><span></span></button>
+            </div>
+            <button (click)="showHideInputPoint = false;" class="close"></button>
+          </div>
+        </div><br><br>
         <div style="display: inline-block;width:45%;padding: 15px;margin: 10px" *ngIf="clickedUser != null" [ngClass]="getTheme() ? 'bg-premium-dark' :''" class="card">
           <h1 >Check-in</h1>
           <br>
@@ -111,7 +120,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr [ngClass]="getTheme() ? 'lightText' :''" [ngStyle]="{'color': getTheme()? 'white' :''}" class="emp" *ngFor="let att of userCheckIns">
+            <tr [ngClass]="getTheme() ? 'lightText' :''" [ngStyle]="{'color': getTheme()? 'white' :''}" class="emp" *ngFor="let att of userCheckIns | filter: searchTextPoint">
               <td  class="text-center">
                 {{att.attendanceDate}}
               </td>
@@ -137,7 +146,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr [ngClass]="getTheme() ? 'lightText' :''" [ngStyle]="{'color': getTheme()? 'white' :''}" class="emp" *ngFor="let att of userCheckOuts">
+            <tr [ngClass]="getTheme() ? 'lightText' :''" [ngStyle]="{'color': getTheme()? 'white' :''}" class="emp" *ngFor="let att of userCheckOuts | filter: searchTextPoint">
               <td  class="text-center">
                 {{att.attendanceDate}}
               </td>
@@ -160,6 +169,15 @@
       <div [@enterThirdAnimation] *ngIf="!loadingUser && clickedUser != null && clickedUser.absences.length > 0">
         <div style="width:100%;padding: 15px;margin: 10px;max-height: 500px !important;overflow-y: auto" *ngIf="clickedUser != null" [ngClass]="getTheme() ? 'bg-premium-dark' :''" class="card">
 
+          <div class="search-wrapper" style="margin-left: 30px;margin-top: 20px">
+            <div style="position: absolute;background-color: transparent;margin-top: -15px;margin-left: -35px;" [ngClass]="{'search-wrapper active': showHideInputAbs}">
+              <div class="input-holder" [ngClass]=" getTheme() && showHideInput? 'bg-dark' :''">
+                <input [ngStyle]="{'color': getTheme()? 'white' :''}" type="text" [(ngModel)]="searchTextAbs" style="width: 100%" class="search-input" placeholder="Search by date (YYY-MM-DD) ...">
+                <button (click)="showHideInputAbs = true;" class="search-icon"><span></span></button>
+              </div>
+              <button (click)="showHideInputAbs = false;" class="close"></button>
+            </div>
+          </div><br><br>
           <table [ngClass]="getTheme() ? 'bg-premium-dark text-light' :'text-dark'"  [ngStyle]="{'color': getTheme()? 'white' :''}" class="align-middle text-light mb-0 table table-borderless table-striped table-hover">
             <thead>
             <tr>
@@ -170,7 +188,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr [ngClass]="getTheme() ? 'lightText' :''" [ngStyle]="{'color': getTheme()? 'white' :''}" class="emp" *ngFor="let abs of clickedUser.absences">
+            <tr [ngClass]="getTheme() ? 'lightText' :''" [ngStyle]="{'color': getTheme()? 'white' :''}" class="emp" *ngFor="let abs of clickedUser.absences | filter: searchTextAbs">
               <td  class="text-center" style="min-width: 150px">
                 {{abs.absenceDate}} <span *ngIf="abs.absenceDate == format.format(date, 'YYYY-MM-DD', null)" style="margin-right: -45px;color: red"> Today</span>
               </td>
