@@ -218,8 +218,10 @@ export class TimetablesComponent implements OnInit {
         this.plannings = list;
       } else {
         for (const pl of list) {
+          if (this.connectedUser.department.planning != null) {
         if (this.connectedUser.department.planning.planningId === pl.planningId) {
           this.plannings.push(pl);
+        }
         }
         }
       }
