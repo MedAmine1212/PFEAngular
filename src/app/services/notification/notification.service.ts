@@ -19,8 +19,8 @@ export class NotificationService {
   remove(id) {
     return this.http.delete(this.baseUrl + 'delete/' + id);
   }
-  modify( notif: NotificationMessage , id): Observable<any> {
-    return this.http.put( this.baseUrl + 'update/' + id   , notif);
+  modify( notif: NotificationMessage , id, sender): Observable<any> {
+    return this.http.put( this.baseUrl + 'update/' + id + '/' + sender   , notif);
   }
   list() {
     return this.http.get( this.baseUrl + 'list');

@@ -61,6 +61,7 @@ export class AddUserComponent implements  OnInit  {
   tempPost: string;
   base64Data: any;
   uploadImageData: FormData;
+  allDeps: boolean;
   subscribingUser: boolean;
   savingUser: boolean;
   allDone: boolean;
@@ -146,6 +147,9 @@ export class AddUserComponent implements  OnInit  {
               private imageService: ImageService,
               private tempUserService: TempUserService
   ) {
+    if(data[2] != null) {
+      this.allDeps = true;
+    }
     this.userPost = null;
     if (this.data != null ) {
       if (this.data[1] === 1) {
@@ -216,7 +220,7 @@ export class AddUserComponent implements  OnInit  {
       }
       this.departmentService.list().subscribe(r => {
         this.departments = r;
-        if (this.user.department !== null && this.data[1] === 1) {
+        if (this.router.url === '/RemoteMonitoring/(mainCon:Departments)' || this.router.url === '/') {
           setTimeout(() => {
             this.stepper.selectedIndex = 1;
           }, 900);
@@ -684,7 +688,6 @@ export class AddUserComponent implements  OnInit  {
   }
 
   acceptUser() {
-      console.log(this.user);
       this.tempUserService.acceptRequest(this.user, 'add').subscribe(usr => {
         this.dialogRef.close(1);
       }, error => console.log(error));
@@ -692,7 +695,7 @@ export class AddUserComponent implements  OnInit  {
 
   declineUser() {
     this.tempUserService.declineRequest(this.data[0].userId).subscribe(usr => {
-     this.dialogRef.close(-1);
+     this.dialogRef.close(true);
     }, err => console.log(err));
   }
 }

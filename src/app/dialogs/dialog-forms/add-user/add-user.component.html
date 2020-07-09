@@ -21,7 +21,7 @@
       <mat-step *ngIf="data[1] != 4" [stepControl]="firstFormGroup" >
         <div  class="main-card mb-3 card">
           <ng-template matStepLabel>Select department</ng-template>
-          <div *ngIf="router.url !=='/RemoteMonitoring/(mainCon:Departments)' && router.url !== '/'" >
+          <div *ngIf="(router.url !=='/RemoteMonitoring/(mainCon:Departments)' && router.url !== '/') || allDeps" >
             <div class="card-header">
               <h1>Department</h1>
               <hr>
@@ -51,7 +51,7 @@
             </div>
           </div>
 
-          <div *ngIf="router.url === '/RemoteMonitoring/(mainCon:Departments)' || router.url === '/'">
+          <div *ngIf="(router.url === '/RemoteMonitoring/(mainCon:Departments)' || router.url === '/') && !allDeps">
             <div class="card-header">
               <h1>Department</h1>
               <hr>

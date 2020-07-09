@@ -146,7 +146,7 @@ export class NavComponent implements OnInit {
       for (const ntf of this.notifs) {
         if (!ntf.isViewed) {
           ntf.isViewed = true;
-          this.notifService.modify(ntf, ntf.notifId).subscribe();
+          this.notifService.modify(ntf, ntf.notifId, 1).subscribe();
         }
       }
     }
@@ -155,7 +155,7 @@ export class NavComponent implements OnInit {
   viewOne(ntf: NotificationMessage) {
     if (!ntf.isHovered) {
       ntf.isHovered = true;
-      this.notifService.modify(ntf, ntf.notifId).subscribe();
+      this.notifService.modify(ntf, ntf.notifId, 1).subscribe();
     }
   }
 
@@ -298,17 +298,17 @@ export class NavComponent implements OnInit {
           width: '900px',
           height: '625px',
           panelClass: 'matDialogClass',
-          data: [r, 5]
+          data: [r, 5, 'allDeps']
         });
         dialogRef.afterClosed().subscribe(result => {
-          // tslint:disable-next-line:triple-equals
-          if (result != false) {
-            ntf.idTarget = 0;
-            this.notifService.modify(ntf, ntf.notifId).subscribe(() => {
-            }, error => console.log(error));
-            this.reloadNotifs();
-          } else {
-
+          if (result != null) {
+            // tslint:disable-next-line:triple-equals
+            if (result != false) {
+              this.notifService.modify(ntf, ntf.notifId, 2).subscribe(() => {
+                  ntf.idTarget = 0;
+              }, error => console.log(error));
+              this.reloadNotifs();
+            }
           }
         });
       }, error => console.log(error));
