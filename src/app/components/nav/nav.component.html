@@ -52,7 +52,7 @@
             <a [routerLink]="[{ outlets: {mainCon: ['Posts'] } }]" [ngClass]="router.url === '/RemoteMonitoring/(mainCon:Posts)' ? 'current' : ''" class="nav-link">Posts</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" *ngIf="isAdmin() || isSuperAdmin()"  [matMenuTriggerFor]="menuDB" (click)="openedDataBaseMenu = true">
+            <a class="nav-link" *ngIf="isSuperAdmin()"  [matMenuTriggerFor]="menuDB" (click)="openedDataBaseMenu = true">
               Database
               <i [ngStyle]="{'color': openedDataBaseMenu ? '#007bff' : ''}" class="fa fa-angle-down ml-2 opacity-8"></i>
             </a>
