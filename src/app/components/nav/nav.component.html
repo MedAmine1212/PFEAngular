@@ -99,7 +99,7 @@
               </div>
             </div>
             <div>
-              <mat-icon matBadge="{{notViewdNotifs}}" matBadgeColor="warn" (click)="viewAll()" [matMenuTriggerFor]="menu2" [ngStyle]="{'color': openedNotif ? '#007bff' : getTheme()? 'white' :'dimgrey'}" class="fa fa-bell notifBell openMenuButt"></mat-icon>
+              <mat-icon matBadge="{{notViewdNotifs}}" matBadgeColor="warn" (click)="viewAll()" matTooltip="Notifications" [matMenuTriggerFor]="menu2" [ngStyle]="{'color': openedNotif || notViewdNotifs > 0 ? '#007bff' : getTheme()? 'white' :'dimgrey'}" class="fa fa-bell notifBell openMenuButt"></mat-icon>
               <mat-menu (close)="openedNotif = false;" [class]="getTheme() ? 'notifMenu bg-dark': 'notifMenu'" #menu2="matMenu" xPosition="before">
                 <div class="notifDiv" style="text-align: center" *ngIf="notifs.length == 0">
                   <div [ngStyle]="{'color': getTheme()? 'white' :'dimgrey'}" class="noNotifMessage"> No notifications to show</div>
@@ -113,8 +113,8 @@
                     <tbody>
                     <tr [ngStyle]="{'cursor': ntf.idTarget != 0 ? 'pointer' : ''}" (click)="verifYUser(ntf)" style="padding: 3px" *ngFor="let ntf of notifs">
                       <td style="border-radius: 10px">
-                        <div (mouseleave)="viewOne(ntf)" class="notifContainer"  [ngClass]="!ntf.isHovered && getTheme() ? 'notifContainerNotHovered notifContainerNotHoveredDark' : !ntf.isHovered && !getTheme() ? 'notifContainerNotHovered notifContainerNotHoveredLight' :
-                     !getTheme() ?  'notifContainerDark' : 'notifContainerLight'" [ngStyle]="{'background-color': !ntf.isHovered && getTheme()? '#454d55' : !ntf.isHovered && !getTheme()? '#dee2e6' : '' }">
+                        <div (mouseleave)="viewOne(ntf)" class="notifContainer"  [ngClass]="(!ntf.isHovered || ntf.idTarget != 0) && getTheme() ? 'notifContainerNotHovered notifContainerNotHoveredDark' : (!ntf.isHovered || ntf.idTarget != 0) && !getTheme() ? 'notifContainerNotHovered notifContainerNotHoveredLight' :
+                     !getTheme() ?  'notifContainerDark' : 'notifContainerLight'" [ngStyle]="{'background-color': (ntf.idTarget != 0 || !ntf.isHovered) && getTheme()? '#454d55' : (!ntf.isHovered || ntf.idTarget != 0) && !getTheme()? '#dee2e6' : '' }">
                           <h2 style="font-size: 20px !important;">
                             {{ntf.notifTitle}}
                           </h2>
@@ -129,7 +129,7 @@
                           <div style="padding-left: 28px;margin-bottom: 30px">
                             <span (click)="deleteNotif($event, ntf)" matTooltip="Delete" [ngStyle]="{'color': getTheme() ? 'white' :'grey'}" class="fa fa-trash-alt deleteNotif"></span>
                           </div>
-                          <div *ngIf="!ntf.isHovered" matTooltip="Unseen">
+                          <div *ngIf="!ntf.isHovered || ntf.idTarget != 0" matTooltip="Unseen">
                             <span style="font-size: 20px;margin-left: 10px" class="fa fa-exclamation-circle"></span>
                           </div>
                         </div>

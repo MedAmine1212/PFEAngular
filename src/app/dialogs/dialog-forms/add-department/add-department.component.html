@@ -35,13 +35,13 @@
   <div *ngIf="role == 'admin'" class="main-card mb-3 card">
     <div class="card-body">
       <div class="line">
-        <label for="supDep">Chef. Department</label>
+        <label for="supDep">Department chief</label>
         <input *ngIf="chefDep !=null" disabled type="text"  class="form-control" value="{{chefDep.name}} {{chefDep.firstName}}">
         <input *ngIf="chefDep === null" disabled type="text"  class="form-control" value="No chef. Department is set.">
       </div>
 
       <div class="line">
-        <label>Change chef. Department</label>
+        <label>Change Department chief</label>
         <select (change)="enableDisableButt()" required class="custom-select" id="inputGroupSelect01" [(ngModel)]="newChefDep"[ngModelOptions]="{standalone: true}">
           <option style="color:#3f6ad8;font-weight: bolder"  [ngValue]="null">Unchanged </option>
           <option *ngFor="let user of dep.users" [ngValue]="user">
