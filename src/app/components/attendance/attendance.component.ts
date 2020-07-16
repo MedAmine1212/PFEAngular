@@ -111,13 +111,13 @@ export class AttendanceComponent implements OnInit {
         for (const att of emp.attendances) {
           if (att.attendanceType === 'CHECK OUT') {
             time = att.attendanceTime;
+            emp.checkOutStatus = 'yellow';
+            emp.checkOutMsg = 'Early check-out ! (checked-out at: ' + this.getTime(time) + ')';
             if (type === 'CHECK OUT') {
               return;
             }
             break;
           }
-          emp.checkOutStatus = 'yellow';
-          emp.checkOutMsg = 'Early check-out ! (checked-out at: ' + this.getTime(time) + ')';
         }
       }
         if (types.indexOf('Late check-in') > -1) {
