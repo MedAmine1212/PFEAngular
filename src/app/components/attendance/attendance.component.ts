@@ -148,7 +148,7 @@ export class AttendanceComponent implements OnInit {
       }
     } else {
       emp.checkInStatus = 'grey';
-      emp.checkInMsg = 'Didn\'t check-out yet';
+      emp.checkInMsg = 'Didn\'t check-in yet';
       for (const att of emp.attendances) {
         if (att.attendanceType === 'CHECK IN') {
           emp.checkInStatus = 'lightgreen';

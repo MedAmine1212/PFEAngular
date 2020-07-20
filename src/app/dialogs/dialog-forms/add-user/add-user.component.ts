@@ -390,16 +390,16 @@ export class AddUserComponent implements  OnInit  {
         // @ts-ignore
         if (this.data[1] === 2 || this.data[1] === 5) {
           if (this.data[0].email !== user.email) {
-            emails.push(user.email);
+            emails.push(user.email.toLowerCase());
           }
         } else {
-          emails.push(user.email);
+          emails.push(user.email.toLowerCase());
         }
       }
     });
     return new Observable(observer => {
       setTimeout(() => {
-        const result = (emails.indexOf(control.value) !== -1) ? { alreadyInUse: true } : null;
+        const result = (emails.indexOf(control.value.toLowerCase()) !== -1) ? { alreadyInUse: true } : null;
         observer.next(result);
         observer.complete();
       }, 1000);
