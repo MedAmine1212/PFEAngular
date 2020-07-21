@@ -113,7 +113,6 @@ export class AbsencesComponent implements OnInit {
     this.loading = true;
     this.getRole();
     this.getConnectedUser();
-    this.reloadData();
     setInterval(() => {
       this.time = new Date();
     }, 1000);
@@ -125,6 +124,7 @@ export class AbsencesComponent implements OnInit {
   // console.log(date.toDateString());
   reloadData() {
     this.userService.list().subscribe(r => {
+      console.log('qsdqsdqsdqsdqsdqssdq');
       for (const emp of r) {
         if (emp.department.planning != null ) {
         if ( emp.department.planning.scheduleDays.indexOf(this.currentDay) > -1 &&
@@ -448,7 +448,10 @@ export class AbsencesComponent implements OnInit {
       setTimeout(() => {
         this.refresh();
       }, 200);
-    }, error => console.log(error));
+    }, error => {
+      console.log(error);
+      this.loading = false;
+    });
 
   }
 }
