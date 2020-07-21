@@ -309,9 +309,9 @@ export class AbsencesComponent implements OnInit {
             window.scroll(1, window.scrollY + ((window.innerHeight / 5) * acceleration) );
             acceleration = acceleration + 0.1;
           } else {
-            clearInterval(interval);
             // @ts-ignore
             window.scroll(1, this.empAttDiv.nativeElement.offsetTop - 26);
+            clearInterval(interval);
           }
         }, 1);
         }

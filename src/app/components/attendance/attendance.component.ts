@@ -127,9 +127,6 @@ export class AttendanceComponent implements OnInit {
           for (const att of emp.attendances) {
             if (att.attendanceType === 'CHECK IN') {
               time = att.attendanceTime;
-              if (type === 'CHECK IN') {
-                return;
-              }
               break;
             }
           }
