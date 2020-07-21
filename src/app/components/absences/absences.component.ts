@@ -237,7 +237,7 @@ export class AbsencesComponent implements OnInit {
     if (filter === 'employees') {
       this.hoveredUserService.setPlusTop(0);
     } else {
-      this.hoveredUserService.setPlusTop(135);
+      this.hoveredUserService.setPlusTop(-5);
     }
     if (filter !== this.selectedFilter) {
       this.selectedFilter = '';

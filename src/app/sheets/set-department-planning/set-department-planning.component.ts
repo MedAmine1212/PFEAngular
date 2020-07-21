@@ -7,8 +7,7 @@ import {ThemeChangerService} from '../../services/ThemeChanger/theme-changer.ser
 import {PlanningService} from '../../services/planning/planning.service';
 import {Planning} from '../../models/Planning';
 import {Schedule} from '../../models/Schedule';
-import {DepartmentService} from '../../services/department/department.service';
-import {DeleteDialogComponent} from "../../dialogs/delete-dialog/delete-dialog.component";
+import {DeleteDialogComponent} from '../../dialogs/delete-dialog/delete-dialog.component';
 
 @Component({
   selector: 'app-set-department-planning',
@@ -40,6 +39,7 @@ export class SetDepartmentPlanningComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
+    this.changeDetectorRef.markForCheck();
     this.reloadData();
   }
   reloadData() {
@@ -52,14 +52,26 @@ export class SetDepartmentPlanningComponent implements OnInit {
     }
     if (r.indexOf(pl) === (r.length - 1)) {
       this.loading = false;
+      setTimeout(() => {
+        console.log('sdqs');
+        this.changeDetectorRef.detectChanges();
+      }, 500);
     }
   }
     } else {
       this.plannings = r;
       this.loading = false;
+      setTimeout(() => {
+        console.log('qsd');
+        this.changeDetectorRef.detectChanges();
+      }, 500);
     }
   }, error => {
     this.loading = false;
+    setTimeout(() => {
+      console.log('lee');
+      this.changeDetectorRef.detectChanges();
+    }, 500);
     console.log(error);
   });
   }
