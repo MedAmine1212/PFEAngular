@@ -18,6 +18,7 @@ import {DataBaseExportImportService} from '../../services/dataBaseImportExport/d
 import {AbsencesComponent} from '../absences/absences.component';
 import {HoveredUserService} from '../../services/hoveredUser/hovered-user.service';
 import {GetRoleService} from '../../services/getRole/get-role.service';
+import {log} from "util";
 @Component({
   selector: 'app-remmote-monitoring',
   animations: [
@@ -189,6 +190,18 @@ public reloadFromWebSocket(message) {
       } else if (webSocketMessage === 'tempUser') {
         this.navComponent.reloadNotifs();
       } else if (webSocketMessage === 'absence') {
+        if (this.role !== 'user') {
+        if (this.clickedEmp != null) {
+          this.userService.findById(this.clickedEmp.userId).subscribe(r => {
+            this.clickedEmp = r;
+            this.setClickedUser(this.clickedEmp);
+          }, error => console.log(error));
+        }
+        } else {
+          this.connectedUser = this.roleService.getConnectedUser();
+          this.clickedEmp = this.connectedUser;
+          this.setClickedUser(this.clickedEmp);
+        }
         this.navComponent.reloadNotifs();
       } else if (webSocketMessage === 'att') {
           this.absencesComponent.refresh();

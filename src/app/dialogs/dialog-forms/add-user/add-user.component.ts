@@ -656,8 +656,14 @@ export class AddUserComponent implements  OnInit  {
         }, 400);
       } else if (!isDeleted) {
         console.log('couldn\'t delete the file ');
+        setTimeout(() => {
+          this.dialogRef.close(true);
+        }, 400);
       } else {
         console.log('image not found');
+        setTimeout(() => {
+          this.dialogRef.close(true);
+        }, 400);
       }
     }, error => {
       setTimeout(() => {
