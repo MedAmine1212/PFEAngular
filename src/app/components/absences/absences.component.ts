@@ -304,7 +304,7 @@ export class AbsencesComponent implements OnInit {
         let acceleration = 1;
         const interval = setInterval(() => {
           // @ts-ignore
-
+ 
           if (window.scrollY < (this.empAttDiv.nativeElement.offsetTop - 100)) {
             window.scroll(1, window.scrollY + ((window.innerHeight / 5) * acceleration) );
             acceleration = acceleration + 0.1;

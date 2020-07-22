@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  ipAddress: 'http://' + 'localhost' + ':',
+  // ipAddress: 'http://' + 'localhost' + ':',
+  ipAddress: 'http://' + '192.168.43.5' + ':',
   port: '81'
 };
 
