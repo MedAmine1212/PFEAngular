@@ -73,7 +73,6 @@ export class AttendanceComponent implements OnInit {
   }
 
   showUserProfile(user: User, event) {
-    console.log(event);
     this.topProfile = (event.pageY - 110 +
       this.hoveredUserService.getPlusTop()) + 'px';
     this.leftProfile = (event.target.offsetLeft + this.hoveredUserService.getClosedSideBarValue()) + 'px';
@@ -132,6 +131,7 @@ export class AttendanceComponent implements OnInit {
           }
           emp.checkInStatus = 'yellow';
           emp.checkInMsg = 'Late check-in ! (checked-in at: ' + this.getTime(time) + ')';
+          return;
         }
     }
     }
